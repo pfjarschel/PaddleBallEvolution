@@ -2,7 +2,7 @@
 -- Box2D Physics Related Functions & Stuff --
 ---------------------------------------------
 
- -- Load Box2D library
+-- Load Box2D library
 require "box2d"
 
 -- Declare world and debugDraw

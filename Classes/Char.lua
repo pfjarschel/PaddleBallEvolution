@@ -10,7 +10,7 @@ Char.lif = nil
 Char.int = nil
 Char.skl = nil
 Char.def = nil
-Char.skill = nil
+Char.skill = "none"
 
 Char.atkFactor = nil
 Char.dexFactor = nil
@@ -42,15 +42,14 @@ function Char:init(class)
 		self.skl = 10
 		self.def = 1
 	else
-		local attrs = lines_from("Chars/" .. class .. ".cls")
-		self.atk = tonumber(attrs[1])
-		self.mov = tonumber(attrs[2])
-		self.lif = tonumber(attrs[3])
-		self.int = tonumber(attrs[4])
-		self.skl = tonumber(attrs[5])
-		self.def = tonumber(attrs[6])
-		if attrs[7] ~= nil then
-			self.skill = Skills.new(attrs[7])
+		self.atk = classTable[class][1]
+		self.mov = classTable[class][2]
+		self.lif = classTable[class][3]
+		self.int = classTable[class][4]
+		self.skl = classTable[class][5]
+		self.def = classTable[class][6]
+		if classTable[class][7] ~= nil then
+			self.skill = Skills.new(classTable[class][7])
 		end
 	end
 	

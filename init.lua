@@ -9,9 +9,8 @@ math.random(1)
 
 -- Etc --
 print("Init-ing...")
-application:setBackgroundColor(0x000000)
--- Initialize Character class table --
-classTable = {}
+application:setBackgroundColor(0x000000) -- Black Screen
+classTable = {} -- Initialize Character class table
 
 -- Collect Lots of Garbage --
 function gc()
@@ -35,4 +34,11 @@ function lines_from(file)
 		lines[#lines + 1] = line
 	end
 	return lines
+end
+
+-- Get number of elements in a table --
+function tablelength(T)
+  local count = 0
+  for _ in pairs(T) do count = count + 1 end
+  return count
 end

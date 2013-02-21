@@ -51,7 +51,7 @@ function loadArena(mode, difficulty, extra)
 end
 
 -----------------------------------------
--- Initialization: Loads stuff and all --
+-- Initialization --
 
 -- Initialize Physics --
 PhysicsScale = 20 -- 20 pixels are equivalent to 1 meter
@@ -60,6 +60,7 @@ goPhysics(PhysicsScale)
 -- Load stuff --
 sounds = SoundLoader.new()
 textures = TextureLoader.new()
+fonts = FontLoader.new()
 
 -- Load Main Menu --
 loadMainMenu()

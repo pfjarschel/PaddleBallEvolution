@@ -11,6 +11,7 @@ ArenaClassic.score0 = 0
 ArenaClassic.score1 = 0
 ArenaClassic.difFactor = 5/5 -- 1/5 to 10/5
 ArenaClassic.paused = false
+ArenaClassic.font = nil
 
 local function onEnterFrame()
 	updatePhysics()
@@ -21,6 +22,7 @@ end
 
 -- Initialization function
 function ArenaClassic:init(difficulty)
+	self.font = fonts.arialroundedBig
 	self.bitmap = textures.pongbg
 	self.bitmap:setScale(1, 1)
 	self.difFactor = difficulty/5
@@ -31,7 +33,7 @@ function ArenaClassic:init(difficulty)
 	self:setAlpha(0)
 	self:createBoundaries()
 	
-	local menuBut = SmallMenuBut.new(textures.menuBut)
+	local menuBut = MenuBut.new(textures.menuBut, 40, 40)
 	menuBut.bitmap:setPosition(WX/2, WY - menuBut.bitmap:getHeight()/2)
 	menuBut:setAlpha(0.4)
 	self:addChild(menuBut)
@@ -45,7 +47,7 @@ function ArenaClassic:init(difficulty)
 				local pausebg = Sprite:new()
 				pausebg:addChild(textures.pausebg)
 				
-				local resumeBut = BigMenuBut.new(textures.returnBut)
+				local resumeBut = MenuBut.new(textures.returnBut, 150, 40)
 				resumeBut.bitmap:setPosition(WX/2, WY/2 - resumeBut:getHeight())
 				resumeBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
 					if resumeBut:hitTestPoint(event.touch.x, event.touch.y) then
@@ -56,7 +58,7 @@ function ArenaClassic:init(difficulty)
 					end
 				end)
 				pausebg:addChild(resumeBut)
-				local quitBut = BigMenuBut.new(textures.exitBut)
+				local quitBut = MenuBut.new(textures.exitBut, 150, 40)
 				quitBut.bitmap:setPosition(WX/2, WY/2 + quitBut:getHeight())
 				quitBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
 					if quitBut:hitTestPoint(event.touch.x, event.touch.y) then
@@ -121,8 +123,6 @@ end
 function ArenaClassic:gameOver()
 	self:removeEventListener(Event.ENTER_FRAME, onEnterFrame)
 	fadeOut(self)
-	local fontSize = 50
-	local font = TTFont.new("Fonts/arial-rounded.ttf", fontSize)
 	local gameOverString = nil
 	if self.score0 > self.score1 then
 		gameOverString = "Congratulations, you won!"
@@ -131,13 +131,13 @@ function ArenaClassic:gameOver()
 		gameOverString = "You lost... :("
 		sounds.lose:play()
 	end
-	local gameOverTextBox = TextField.new(font, gameOverString)
+	local gameOverTextBox = TextField.new(self.font, gameOverString)
 	gameOverTextBox:setTextColor(0x3c78a0)
 	gameOverTextBox:setPosition(0.5*WX - gameOverTextBox:getWidth()/2, 0.25*WY + gameOverTextBox:getHeight()/2)
 	
-	local againBut = BigMenuBut.new(textures.againBut)
+	local againBut = MenuBut.new(textures.againBut, 150, 40)
 	againBut.bitmap:setPosition(WX/2, WY/2 + 100)
-	local returnBut = BigMenuBut.new(textures.returnBut)
+	local returnBut = MenuBut.new(textures.returnBut, 150, 40)
 	returnBut.bitmap:setPosition(returnBut:getWidth()/2 + 10, WY/2 + 210)
 	
 	againBut:addEventListener(Event.TOUCHES_BEGIN, function(event)

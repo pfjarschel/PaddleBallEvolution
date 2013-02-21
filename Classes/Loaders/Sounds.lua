@@ -4,13 +4,6 @@
 
 SoundLoader = Core.class()
 
---SoundLoader.hit1 = nil
---SoundLoader.hit2 = nil
---SoundLoader.goal1 = nil
---SoundLoader.goal2 = nil
---SoundLoader.win = nil
---SoundLoader.lose = nil
-
 -- Load a bunch of sounds and sets them to variables
 function SoundLoader:init()
 	self.hit1 = Sound.new("audio/hit1.wav")
