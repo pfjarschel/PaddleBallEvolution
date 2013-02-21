@@ -2,42 +2,10 @@
  <properties autorotation="0" encrypt="0" fps="60" scaleMode="5" mouseToTouch="1" iosDevice="0" packageName="com.yourdomain.yourapp" logicalHeight="800" logicalWidth="480" mouseTouchOrder="0" retinaDisplay="0" touchToMouse="1" assetsOnly="0" orientation="1" architecture="1">
   <imageScales/>
  </properties>
- <folder name="Fonts">
-  <file source="Fonts/tahoma.ttf"/>
-  <file source="Fonts/arial-rounded.ttf"/>
- </folder>
- <file source="Physics.lua"/>
  <folder name="Include">
   <file source="Include/strict.lua"/>
   <file source="Include/socket.lua"/>
  </folder>
- <folder name="Classes">
-  <file source="Classes/SmallMenuBut.lua"/>
-  <file source="Classes/Skills.lua"/>
-  <file source="Classes/Player.lua"/>
-  <file source="Classes/Paddle.lua"/>
-  <file source="Classes/MainMenu.lua"/>
-  <file source="Classes/CombatStats.lua"/>
-  <file source="Classes/Char.lua"/>
-  <file source="Classes/BigMenuBut.lua"/>
-  <file source="Classes/Ball.lua"/>
-  <file source="Classes/ArenaSurvival.lua"/>
-  <file source="Classes/ArenaClassic.lua"/>
-  <file source="Classes/ArenaArena.lua"/>
-  <folder name="Loaders">
-   <file source="Classes/loaders/Textures.lua"/>
-   <file source="Classes/loaders/Sounds.lua"/>
-   <file source="Classes/loaders/ClassTable.lua"/>
-  </folder>
- </folder>
- <folder name="Chars">
-  <file source="Chars/warrior.cls"/>
-  <file source="Chars/swampspawn.cls"/>
-  <file source="Chars/ninja.cls"/>
-  <file source="Chars/acrobat.cls"/>
- </folder>
- <file source="init.lua"/>
- <file source="main.lua"/>
  <folder name="Imgs">
   <file source="imgs/skillBut.png"/>
   <file source="imgs/pausebg.png"/>
@@ -72,6 +40,38 @@
   <file source="audio/goal2.wav"/>
   <file source="audio/goal1.wav"/>
  </folder>
+ <folder name="Fonts">
+  <file source="Fonts/tahoma.ttf"/>
+  <file source="Fonts/arial-rounded.ttf"/>
+ </folder>
+ <folder name="Chars">
+  <file source="Chars/warrior.cls"/>
+  <file source="Chars/swampspawn.cls"/>
+  <file source="Chars/ninja.cls"/>
+  <file source="Chars/acrobat.cls"/>
+ </folder>
+ <folder name="Classes">
+  <file source="Classes/SmallMenuBut.lua"/>
+  <file source="Classes/Skills.lua"/>
+  <file source="Classes/Player.lua"/>
+  <file source="Classes/Paddle.lua"/>
+  <file source="Classes/MainMenu.lua"/>
+  <file source="Classes/CombatStats.lua"/>
+  <file source="Classes/Char.lua"/>
+  <file source="Classes/BigMenuBut.lua"/>
+  <file source="Classes/Ball.lua"/>
+  <file source="Classes/ArenaSurvival.lua"/>
+  <file source="Classes/ArenaClassic.lua"/>
+  <file source="Classes/ArenaArena.lua"/>
+  <folder name="Loaders">
+   <file source="Classes/loaders/Textures.lua"/>
+   <file source="Classes/loaders/Sounds.lua"/>
+   <file source="Classes/loaders/ClassTable.lua"/>
+  </folder>
+ </folder>
+ <file source="init.lua"/>
+ <file source="main.lua"/>
+ <file source="Physics.lua"/>
  <dependency from="init.lua" to="Include/strict.lua"/>
  <dependency from="init.lua" to="Include/socket.lua"/>
  <dependency from="Classes/ArenaArena.lua" to="Classes/Player.lua"/>
