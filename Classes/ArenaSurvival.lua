@@ -112,7 +112,7 @@ end
 -- This function creates the arena stuff
 function ArenaSurvival:createArenaChildren()
 	self.ball = Ball.new(self.difFactor)
-	self.leftPlayer = Player.new(0, true, self.difFactor, "survivalLeft")
+	self.leftPlayer = Player.new(0, false, self.difFactor, "survivalLeft")
 	self.rightPlayer = Player.new(1, false, self.difFactor, "survivalRight")
 	self.ball.baseSpeed = self.ball.baseSpeed*self.leftPlayer.char.atkFactor
 	self.leftPlayer.paddle.body.atkFactor = 1

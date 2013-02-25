@@ -9,12 +9,15 @@ MenuBut.bitmap = nil
 MenuBut.width = 40
 MenuBut.height = 40
 
--- Initialize according to given bitmap
+-- Initialize according to given bitmap --
 function MenuBut:init(texture, width, height)
 	self.bitmap = texture
 	self.width = width
 	self.height = height
-	self.bitmap:setScale(1, 1) -- Texture loader requires this reinitialization transform (because of passing values by reference)
+	
+	-- Texture loader requires this reinitialization transform (because of passing values by reference) --
+	self.bitmap:setScale(1, 1)
+	
 	self:addChild(self.bitmap)
 	local textureW = self.bitmap:getWidth()
 	local textureH = self.bitmap:getHeight()

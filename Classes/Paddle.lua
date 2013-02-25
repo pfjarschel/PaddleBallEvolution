@@ -4,7 +4,7 @@
 
 Paddle = Core.class(Sprite)
 
--- Declare stuff
+-- Declare stuff --
 Paddle.bitmap = nil
 Paddle.body = nil
 Paddle.paddleW = 15
@@ -16,28 +16,9 @@ Paddle.side = 0
 Paddle.atkFactor = 1
 Paddle.defFactor = 1
 
--- Initialize
-function Paddle:init(side, atkFactor, defFactor)
-	self.side = side
-	self.atkFactor = atkFactor
-	self.defFactor = defFactor
-	self.paddleH = self.paddleH*defFactor
-	self.bitmap = Bitmap.new(Texture.new("imgs/paddle2.png")) -- Has to load separatedly (transforms?)
-	self.bitmap:setScale(1, 1)
-	self:addChild(self.bitmap)
-	self.textureW = self.bitmap:getWidth()
-	self.textureH = self.bitmap:getHeight()
-	self.bitmap:setAnchorPoint(0.5, 0.5)
-	self:setPosition(1.5*self.paddleW + side*(WX - self.paddleW*3), 0.5*WY)
-	self.bitmap:setScale(self.paddleW/self.textureW, self.paddleH/self.textureH)
-	self:setRotation(side*180)
-	self.bitmap:setColorTransform(math.random(300, 1000)/1000, math.random(300, 1000)/1000, math.random(300, 1000)/1000, 1)
-	self:createBody()
-	arena:addChild(self)
-end
-
--- Create physics stuff
+-- Create physics stuff --
 function Paddle:createBody()
+	-- Would it be better to create a KNIETIC body? --
 	local x, y = self:getPosition()
 	self.body = world:createBody{
 		type = b2.DYNAMIC_BODY,
@@ -45,10 +26,13 @@ function Paddle:createBody()
 		angularDamping = 10000,
 		linearDamping = 0.5
 	}
+	
+	-- Propagate useful variables to body --
 	self.body.name = "paddle" .. tostring(self.side)
-	self.body.side = self.side -- Propagate these variables to the body for later use
+	self.body.side = self.side
 	self.body.paddleH = self.paddleH
 	self.body.atkFactor = self.atkFactor
+	
 	local shape = b2.PolygonShape.new()
 	shape:setAsBox(self.paddleW/2, self.paddleH/2, 0, 0, 0)
 	self.body:createFixture{
@@ -60,7 +44,11 @@ function Paddle:createBody()
 	}
 	self.body:setAngle(self.side*math.pi)
 	
-	-- Delay (0) necessary to avoid world lock, schedules action to next frame, before pysics resolve
+	-----------------------------------------------------------------------------------
+	-- Collision hadler for when paddle collides with ball. Sets direction according --
+	-- to collision point, speed depends on character ATK attribute. Delay (0) is    --
+	-- necessary to avoid world lock, schedules action to next frame.                --
+	-----------------------------------------------------------------------------------
 	function self.body:collide(event)
 		Timer.delayedCall(0, function()
 			self:setAngle(self.side*math.pi)
@@ -87,10 +75,33 @@ function Paddle:createBody()
 	end
 end
 
--- Reset position
+-- Reset position --
 function Paddle:reset()
 	arena:removeChild(self)
 	self.body:setLinearVelocity(0,0)
 	arena:addChild(self)
 	self.body:setPosition(1.5*self.paddleW + self.side*(WX - self.paddleW*3), 0.5*WY)
+end
+
+-- Initialize --
+function Paddle:init(side, atkFactor, defFactor)
+	self.side = side
+	self.atkFactor = atkFactor
+	self.defFactor = defFactor
+	self.paddleH = self.paddleH*defFactor
+	
+	-- Has to load separatedly from other textures (transforms? I don't know =/) --
+	self.bitmap = Bitmap.new(Texture.new("imgs/paddle2.png"))
+	
+	self.bitmap:setScale(1, 1)
+	self:addChild(self.bitmap)
+	self.textureW = self.bitmap:getWidth()
+	self.textureH = self.bitmap:getHeight()
+	self.bitmap:setAnchorPoint(0.5, 0.5)
+	self:setPosition(1.5*self.paddleW + side*(WX - self.paddleW*3), 0.5*WY)
+	self.bitmap:setScale(self.paddleW/self.textureW, self.paddleH/self.textureH)
+	self:setRotation(side*180)
+	self.bitmap:setColorTransform(math.random(300, 1000)/1000, math.random(300, 1000)/1000, math.random(300, 1000)/1000, 1)
+	self:createBody()
+	arena:addChild(self)
 end

@@ -4,6 +4,7 @@
 
 Char = Core.class()
 
+-- Declare attributes and skill strng --
 Char.atk = nil
 Char.mov = nil
 Char.lif = nil
@@ -19,6 +20,17 @@ Char.intFactor = nil
 Char.sklFactor = nil
 Char.defFactor = nil
 
+-- Calculates attributes modification factors --
+function Char:updateAttr()
+	self.atkFactor = 0.24 + self.atk/16.5 -- 0.3 to 2
+	self.movFactor = 0.21 + self.mov/11 -- 0.3 to 3
+	self.lifFactor = self.lif
+	self.intFactor = 1.54 - self.int/26.5 -- 1.5 to 0.4
+	self.sklFactor = self.skl
+	self.defFactor = 0.21 + self.def/11 -- 0.3 to 3
+end
+
+-- Initialization, load from charTable if not standard char --
 function Char:init(class)
 	if class == "classic" then
 		self.atk = 10
@@ -29,9 +41,9 @@ function Char:init(class)
 		self.def = 10
 	elseif class == "survivalLeft" then
 		self.atk = 1
-		self.mov = 13
+		self.mov = 30
 		self.lif = 10
-		self.int = 1
+		self.int = 30
 		self.skl = 10
 		self.def = 30
 	elseif class == "survivalRight" then
@@ -54,13 +66,4 @@ function Char:init(class)
 	end
 	
 	self:updateAttr()
-end
-
-function Char:updateAttr()
-	self.atkFactor = 0.24 + self.atk/16.5 -- 0.3 to 2
-	self.movFactor = 0.21 + self.mov/11 -- 0.3 to 3
-	self.lifFactor = self.lif
-	self.intFactor = 1.54 - self.int/26.5 -- 1.5 to 0.4
-	self.sklFactor = self.skl
-	self.defFactor = 0.21 + self.def/11 -- 0.3 to 3
 end

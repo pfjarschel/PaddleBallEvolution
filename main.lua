@@ -2,17 +2,16 @@
 -- Main --
 ----------
 
------------------------------------------------
 -- Global Variables --
-WX = 800 -- World X Units
-WY = 480 -- World Y Units
-WBounds = 13 -- Boundaries height
+WX = 800
+WY = 480
+-- Boundaries height --
+WBounds = 13
 mainmenu = nil
 arena = nil
 
------------------------------------------------
--- Global Functions --
 
+-- Global Functions --
 function fadeIn(sceneVar)
 	local function fadeInFunc()
 		if sceneVar:getAlpha() < 1 then  
@@ -50,11 +49,8 @@ function loadArena(mode, difficulty, extra)
 	end
 end
 
------------------------------------------
--- Initialization --
-
--- Initialize Physics --
-PhysicsScale = 20 -- 20 pixels are equivalent to 1 meter
+-- Initialize Physics, Scale pixels are equivalent to 1 meter --
+PhysicsScale = 20
 goPhysics(PhysicsScale)
 
 -- Load stuff --

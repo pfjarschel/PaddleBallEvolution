@@ -4,32 +4,14 @@
 
 Ball = Core.class(Sprite)
 
-
--- Declare stuff
+-- Declare stuff --
 Ball.bitmap = nil
 Ball.body = nil
 Ball.radius = 10
 Ball.baseSpeed = 20
 Ball.difFactor = 1
 
--- Initialize
-function Ball:init(difFactor)
-	self.bitmap = textures.pongball
-	self.bitmap:setScale(1, 1)
-	self.difFactor = difFactor
-	self.baseSpeed = self.baseSpeed*(0.7 + self.difFactor*0.9)
-	self:addChild(self.bitmap)
-	local textureW = self.bitmap:getWidth()
-	local textureH = self.bitmap:getHeight()
-	self.bitmap:setAnchorPoint(0.5, 0.5)
-	self.bitmap:setScale(self.radius*2/textureW, self.radius*2/textureH)
-	self:setPosition(0.5*WX, 0.5*WY)
-	self.bitmap:setColorTransform(math.random(300, 1000)/1000, math.random(300, 1000)/1000, math.random(300, 1000)/1000, 1)
-	self:createBody()
-	arena:addChild(self)
-end
-
--- Create Physics stuff
+-- Create Physics stuff --
 function Ball:createBody()
 	local x, y = self:getPosition()
 	self.body = world:createBody{
@@ -38,6 +20,7 @@ function Ball:createBody()
 		bullet = true
 	}
 	self.body.name = "ball"
+	
 	local shape = b2.CircleShape.new(0, 0, self.radius)
 	self.body:createFixture{
 		shape = shape,
@@ -45,6 +28,11 @@ function Ball:createBody()
 		restitution = 1, 
 		friction = 0,
 	}
+	
+	--------------------------------------------------------------------------------
+	-- Collision handler. Play different souds depending on second collision body --
+	-- and sets new AI random factor. If X velocity is too small, increases it.   --
+	--------------------------------------------------------------------------------
 	function self.body:collide(event)
 		local body1 = event.fixtureA:getBody()
 		local body2 = event.fixtureB:getBody()
@@ -64,14 +52,16 @@ function Ball:createBody()
 	end
 end
 
--- Reset position
+-- Reset to random position and launch ball --
 function Ball:reset()
 	self.body:setLinearVelocity(0,0)
-	local startY = math.random(40, WY-40)
+	local startY = math.random(WBounds + self.radius + 1, WY - WBounds - self.radius - 1)
 	local vx0 = 0
-	while math.abs(vx0) < self.baseSpeed/4 do vx0 = math.random(-self.baseSpeed*0.7, self.baseSpeed*0.7) end
+	while math.abs(vx0) < self.baseSpeed/4 do 
+		vx0 = math.random(-self.baseSpeed*0.8, self.baseSpeed*0.8)
+	end
 	local vy0 = math.sqrt(self.baseSpeed*self.baseSpeed - vx0*vx0)
-	local direction = math.pow(-1,math.random(1,10000))
+	local direction = math.pow(-1, math.random(1,10000))
 	self.body:setPosition(WX/2, startY)
 	local launchTime = math.random(300, 3000)
 	Timer.delayedCall(launchTime, function ()
@@ -79,4 +69,21 @@ function Ball:reset()
 			self.body:setLinearVelocity(vx0, direction*vy0)
 		end
 	end)
+end
+
+-- Initialize --
+function Ball:init(difFactor)
+	self.bitmap = textures.pongball
+	self.bitmap:setScale(1, 1)
+	self.difFactor = difFactor
+	self.baseSpeed = self.baseSpeed*(0.7 + self.difFactor*0.9)
+	self:addChild(self.bitmap)
+	local textureW = self.bitmap:getWidth()
+	local textureH = self.bitmap:getHeight()
+	self.bitmap:setAnchorPoint(0.5, 0.5)
+	self.bitmap:setScale(self.radius*2/textureW, self.radius*2/textureH)
+	self:setPosition(0.5*WX, 0.5*WY)
+	self.bitmap:setColorTransform(math.random(300, 1000)/1000, math.random(300, 1000)/1000, math.random(300, 1000)/1000, 1)
+	self:createBody()
+	arena:addChild(self)
 end

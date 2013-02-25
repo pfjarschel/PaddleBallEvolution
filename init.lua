@@ -2,16 +2,6 @@
 -- Basic Initialization and General Function Definitions --
 -----------------------------------------------------------
 
--- Lua Random Seed Fix --
---math.randomseed(os.time())
-math.randomseed(socket.gettime()*1000)
-math.random(1)
-
--- Etc --
-print("Init-ing...")
-application:setBackgroundColor(0x000000) -- Black Screen
-classTable = {} -- Initialize Character class table
-
 -- Collect Lots of Garbage --
 function gc()
 	collectgarbage()
@@ -42,3 +32,13 @@ function tablelength(T)
   for _ in pairs(T) do count = count + 1 end
   return count
 end
+
+-- Lua Random Seed Fix --
+--math.randomseed(os.time())
+math.randomseed(socket.gettime()*1000)
+math.random(1)
+
+-- Etc --
+print("Init-ing...")
+application:setBackgroundColor(0x000000)
+classTable = {}
