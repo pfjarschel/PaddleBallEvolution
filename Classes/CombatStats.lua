@@ -5,8 +5,8 @@
 CombatStats = Core.class()
 
 -- Declare stuff --
+CombatStats.font = nil
 CombatStats.fontSize = 50
-CombatStats.font = TTFont.new("Fonts/arial-rounded.ttf", CombatStats.fontSize)
 CombatStats.hp1Text = nil
 CombatStats.hp2Text = nil
 
@@ -29,7 +29,10 @@ end
 
 -- Initialize score texts --
 function CombatStats:init()
+	self.font = fonts.arialroundedBig
+
 	local initStr = "--"
+	
 	self.hp1Text = TextField.new(self.font, initStr)
 	self.hp1Text:setTextColor(0xffffff)
 	self.hp1Text:setPosition(0.5*WX - #initStr*self.fontSize*0.75, self.fontSize*1.2)
