@@ -41,9 +41,9 @@ function Char:init(class)
 		self.def = 10
 	elseif class == "survivalLeft" then
 		self.atk = 1
-		self.mov = 30
+		self.mov = 13
 		self.lif = 10
-		self.int = 30
+		self.int = 10
 		self.skl = 10
 		self.def = 30
 	elseif class == "survivalRight" then
