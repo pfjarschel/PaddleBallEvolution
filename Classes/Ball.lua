@@ -56,13 +56,15 @@ end
 function Ball:reset()
 	self.body:setLinearVelocity(0,0)
 	local startY = math.random(WBounds + self.radius + 1, WY - WBounds - self.radius - 1)
+	self.body:setPosition(WX/2, startY)
+end
+function Ball:launch()
 	local vx0 = 0
 	while math.abs(vx0) < self.baseSpeed/4 do 
 		vx0 = math.random(-self.baseSpeed*0.8, self.baseSpeed*0.8)
 	end
 	local vy0 = math.sqrt(self.baseSpeed*self.baseSpeed - vx0*vx0)
 	local direction = math.pow(-1, math.random(1,10000))
-	self.body:setPosition(WX/2, startY)
 	local launchTime = math.random(300, 3000)
 	Timer.delayedCall(launchTime, function ()
 		if self.body ~= nil then

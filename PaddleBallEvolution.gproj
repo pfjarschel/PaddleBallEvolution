@@ -3,6 +3,8 @@
   <imageScales/>
  </properties>
  <folder name="Include">
+  <file source="Include/scenemanager.lua"/>
+  <file source="Include/easing.lua"/>
   <file source="Include/strict.lua"/>
   <file source="Include/socket.lua"/>
  </folder>
@@ -45,6 +47,9 @@
   <file source="Fonts/arial-rounded.ttf"/>
  </folder>
  <folder name="Classes">
+  <file source="Classes/BlackScreen.lua"/>
+  <file source="Classes/MainMenu_Classic.lua"/>
+  <file source="Classes/MainMenu_Arena.lua"/>
   <file source="Classes/MenuBut.lua"/>
   <file source="Classes/Skills.lua"/>
   <file source="Classes/Player.lua"/>
@@ -68,19 +73,20 @@
  <file source="Physics.lua"/>
  <dependency from="init.lua" to="Include/strict.lua"/>
  <dependency from="init.lua" to="Include/socket.lua"/>
- <dependency from="Classes/ArenaArena.lua" to="Classes/Player.lua"/>
- <dependency from="Classes/ArenaArena.lua" to="Classes/MenuBut.lua"/>
+ <dependency from="init.lua" to="Include/scenemanager.lua"/>
  <dependency from="Classes/ArenaArena.lua" to="Physics.lua"/>
+ <dependency from="Classes/ArenaArena.lua" to="Classes/MenuBut.lua"/>
+ <dependency from="Classes/ArenaArena.lua" to="Classes/Player.lua"/>
  <dependency from="Classes/ArenaArena.lua" to="Classes/CombatStats.lua"/>
  <dependency from="Classes/ArenaArena.lua" to="Classes/Ball.lua"/>
- <dependency from="Classes/ArenaClassic.lua" to="Classes/Player.lua"/>
- <dependency from="Classes/ArenaClassic.lua" to="Classes/MenuBut.lua"/>
  <dependency from="Classes/ArenaClassic.lua" to="Physics.lua"/>
+ <dependency from="Classes/ArenaClassic.lua" to="Classes/MenuBut.lua"/>
+ <dependency from="Classes/ArenaClassic.lua" to="Classes/Player.lua"/>
  <dependency from="Classes/ArenaClassic.lua" to="Classes/CombatStats.lua"/>
  <dependency from="Classes/ArenaClassic.lua" to="Classes/Ball.lua"/>
- <dependency from="Classes/ArenaSurvival.lua" to="Classes/Player.lua"/>
- <dependency from="Classes/ArenaSurvival.lua" to="Classes/MenuBut.lua"/>
  <dependency from="Classes/ArenaSurvival.lua" to="Physics.lua"/>
+ <dependency from="Classes/ArenaSurvival.lua" to="Classes/MenuBut.lua"/>
+ <dependency from="Classes/ArenaSurvival.lua" to="Classes/Player.lua"/>
  <dependency from="Classes/ArenaSurvival.lua" to="Classes/CombatStats.lua"/>
  <dependency from="Classes/ArenaSurvival.lua" to="Classes/Ball.lua"/>
  <dependency from="Classes/Ball.lua" to="Physics.lua"/>
@@ -88,24 +94,28 @@
  <dependency from="Classes/MainMenu.lua" to="Classes/ArenaSurvival.lua"/>
  <dependency from="Classes/MainMenu.lua" to="Classes/ArenaClassic.lua"/>
  <dependency from="Classes/MainMenu.lua" to="Classes/ArenaArena.lua"/>
+ <dependency from="Classes/MainMenu.lua" to="Classes/MainMenu_Classic.lua"/>
+ <dependency from="Classes/MainMenu.lua" to="Classes/MainMenu_Arena.lua"/>
+ <dependency from="Classes/MainMenu.lua" to="Classes/BlackScreen.lua"/>
  <dependency from="Classes/Paddle.lua" to="Physics.lua"/>
- <dependency from="Classes/Player.lua" to="Classes/Paddle.lua"/>
  <dependency from="Classes/Player.lua" to="Physics.lua"/>
+ <dependency from="Classes/Player.lua" to="Classes/Paddle.lua"/>
  <dependency from="Classes/Player.lua" to="Classes/Char.lua"/>
+ <dependency from="Include/scenemanager.lua" to="Include/easing.lua"/>
  <dependency from="Physics.lua" to="Include/strict.lua"/>
  <dependency from="Physics.lua" to="Include/socket.lua"/>
+ <dependency from="Physics.lua" to="Classes/Loaders/Textures.lua"/>
+ <dependency from="Physics.lua" to="Classes/Loaders/Sounds.lua"/>
  <dependency from="Physics.lua" to="Classes/Loaders/ClassTable.lua"/>
  <dependency from="Physics.lua" to="Classes/Loaders/Fonts.lua"/>
- <dependency from="Physics.lua" to="Classes/Loaders/Sounds.lua"/>
- <dependency from="Physics.lua" to="Classes/Loaders/Textures.lua"/>
- <dependency from="main.lua" to="Classes/Paddle.lua"/>
- <dependency from="main.lua" to="Classes/Player.lua"/>
- <dependency from="main.lua" to="Classes/MainMenu.lua"/>
- <dependency from="main.lua" to="Physics.lua"/>
  <dependency from="main.lua" to="init.lua"/>
+ <dependency from="main.lua" to="Physics.lua"/>
  <dependency from="main.lua" to="Include/strict.lua"/>
  <dependency from="main.lua" to="Include/socket.lua"/>
  <dependency from="main.lua" to="Classes/Skills.lua"/>
+ <dependency from="main.lua" to="Classes/Player.lua"/>
+ <dependency from="main.lua" to="Classes/Paddle.lua"/>
+ <dependency from="main.lua" to="Classes/MainMenu.lua"/>
  <dependency from="main.lua" to="Classes/CombatStats.lua"/>
  <dependency from="main.lua" to="Classes/Char.lua"/>
  <dependency from="main.lua" to="Classes/Ball.lua"/>

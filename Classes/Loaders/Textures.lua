@@ -22,6 +22,7 @@ function TextureLoader:init()
 	self.careermodeBut = Bitmap.new(Texture.new("imgs/careermodeBut.png"))
 	self.arenaBut = Bitmap.new(Texture.new("imgs/arenaBut.png"))
 	self.mainmenubg = Bitmap.new(Texture.new("imgs/mainmenubg.png"))
+	self.mainmenubg2 = Bitmap.new(Texture.new("imgs/mainmenubg.png"))
 	
 	-- For some reason, this one needs to be loaded at the time (something to do with the transforms applied?)
 	--self.paddle = Bitmap.new(Texture.new("imgs/paddle2.png"))
