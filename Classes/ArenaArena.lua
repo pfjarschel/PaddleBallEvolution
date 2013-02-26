@@ -18,12 +18,7 @@ ArenaArena.font = nil
 -- Main Match Loop --
 local function onEnterFrame()
 	updatePhysics()
-	
-	-- If ball is invisible, do not move AI (crude) --
-	if arena.ball:getAlpha() == 1 then
-		arena:moveAI()
-	end
-	
+	arena:moveAI()
 	arena:moveHuman()
 	arena:checkGoal()
 end
@@ -105,6 +100,7 @@ function ArenaArena:addSkillBut()
 	skillBut.bitmap:setPosition(WX/2, skillBut.bitmap:getHeight()/2)
 	skillBut:setAlpha(0.5)
 	self:addChild(skillBut)
+	
 	skillBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
 		-- Skill needs to be inactive (over) to function --
 		if skillBut:hitTestPoint(event.touch.x, event.touch.y) and self.leftPlayer.skillActive == false then

@@ -10,6 +10,7 @@ Ball.body = nil
 Ball.radius = 10
 Ball.baseSpeed = 20
 Ball.difFactor = 1
+Ball.launched = false
 
 -- Create Physics stuff --
 function Ball:createBody()
@@ -46,18 +47,21 @@ function Ball:createBody()
 		
 		local ballVx, ballVy = self:getLinearVelocity()
 		if ballVx == 0 then ballVx = 0.01 end
-		if math.abs(ballVx) < arena.ball.baseSpeed/6 then
-			self:setLinearVelocity((ballVx/math.abs(ballVx))*arena.ball.baseSpeed/6, ballVy)
+		if math.abs(ballVx) < arena.ball.baseSpeed/10 then
+			self:setLinearVelocity((ballVx/math.abs(ballVx))*arena.ball.baseSpeed/10, ballVy)
 		end
 	end
 end
 
--- Reset to random position and launch ball --
+-- Reset to random position --
 function Ball:reset()
 	self.body:setLinearVelocity(0,0)
 	local startY = math.random(WBounds + self.radius + 1, WY - WBounds - self.radius - 1)
 	self.body:setPosition(WX/2, startY)
+	self.launched = false
 end
+
+-- Launch Ball --
 function Ball:launch()
 	local vx0 = 0
 	while math.abs(vx0) < self.baseSpeed/4 do 
@@ -69,6 +73,7 @@ function Ball:launch()
 	Timer.delayedCall(launchTime, function ()
 		if self.body ~= nil then
 			self.body:setLinearVelocity(vx0, direction*vy0)
+			self.launched = true
 		end
 	end)
 end
