@@ -23,7 +23,7 @@ Char.defFactor = nil
 -- Calculates attributes modification factors --
 function Char:updateAttr()
 	self.atkFactor = 0.24 + self.atk/16.5 -- 0.3 to 2
-	self.movFactor = 0.21 + self.mov/11 -- 0.3 to 3
+	self.movFactor = 0.16 + self.mov/22.5 -- 0.2 to 1.5
 	self.lifFactor = self.lif
 	self.intFactor = 1.54 - self.int/26.5 -- 1.5 to 0.4
 	self.sklFactor = self.skl
@@ -34,21 +34,21 @@ end
 function Char:init(class)
 	if class == "classic" then
 		self.atk = 10
-		self.mov = 13
+		self.mov = 19
 		self.lif = 10
 		self.int = 10
 		self.skl = 10
 		self.def = 10
 	elseif class == "survivalLeft" then
-		self.atk = 1
-		self.mov = 13
+		self.atk = 12.5
+		self.mov = 19
 		self.lif = 10
 		self.int = 10
 		self.skl = 10
 		self.def = 30
 	elseif class == "survivalRight" then
-		self.atk = 1
-		self.mov = 13
+		self.atk = 12.5
+		self.mov = 19
 		self.lif = 10
 		self.int = 1
 		self.skl = 10

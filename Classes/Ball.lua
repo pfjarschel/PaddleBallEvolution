@@ -22,6 +22,9 @@ function Ball:createBody()
 	}
 	self.body.name = "ball"
 	
+	-- Propagate attributes --
+	self.body.baseSpeed = self.baseSpeed
+	
 	local shape = b2.CircleShape.new(0, 0, self.radius)
 	self.body:createFixture{
 		shape = shape,
@@ -32,7 +35,7 @@ function Ball:createBody()
 	
 	--------------------------------------------------------------------------------
 	-- Collision handler. Play different souds depending on second collision body --
-	-- and sets new AI random factor. If X velocity is too small, increases it.   --
+	-- and sets new AI random factor. If vertical angle is too small, increase it.   --
 	--------------------------------------------------------------------------------
 	function self.body:collide(event)
 		local body1 = event.fixtureA:getBody()
@@ -47,8 +50,10 @@ function Ball:createBody()
 		
 		local ballVx, ballVy = self:getLinearVelocity()
 		if ballVx == 0 then ballVx = 0.01 end
-		if math.abs(ballVx) < arena.ball.baseSpeed/10 then
-			self:setLinearVelocity((ballVx/math.abs(ballVx))*arena.ball.baseSpeed/10, ballVy)
+		if math.abs(ballVy)/math.abs(ballVx) > 4 then
+			local setBallVy = 0.97*(math.abs(ballVy)/ballVy)*self.baseSpeed
+			local setBallVx = (math.abs(ballVx)/ballVx)*math.sqrt(self.baseSpeed*self.baseSpeed - setBallVy*setBallVy)
+			self:setLinearVelocity(setBallVx, setBallVy)
 		end
 	end
 end

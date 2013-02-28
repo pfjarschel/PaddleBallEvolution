@@ -16,8 +16,10 @@ ArenaClassic.font = nil
 -- Main Match Loop --
 local function onEnterFrame()
 	updatePhysics()
-	arena:moveAI()
-	arena:moveHuman()
+	arena.leftPlayer:aiMove()
+	arena.leftPlayer:humanMove()
+	arena.rightPlayer:aiMove()
+	arena.rightPlayer:humanMove()
 	arena:checkGoal()
 end
 
@@ -47,8 +49,8 @@ end
 
 -- This function creates the in-game menu --
 function ArenaClassic:addMenu()
-	local menuBut = MenuBut.new(textures.menuBut, 40, 40)
-	menuBut.bitmap:setPosition(WX/2, WY - menuBut.bitmap:getHeight()/2)
+	local menuBut = MenuBut.new(textures.menuBut, 60, 60)
+	menuBut.bitmap:setPosition(WX - menuBut.bitmap:getWidth()/2, WY - menuBut.bitmap:getHeight()/2)
 	menuBut:setAlpha(0.4)
 	self:addChild(menuBut)
 	menuBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
@@ -138,6 +140,7 @@ function ArenaClassic:gameOver()
 	
 	returnBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
 		if returnBut:hitTestPoint(event.touch.x, event.touch.y) then
+			event:stopPropagation()
 			stage:removeChild(gameOverTextBox)
 			stage:removeChild(returnBut)
 			stage:removeChild(againBut)
@@ -185,18 +188,6 @@ function ArenaClassic:checkGoal()
 		sounds.goal2:play()
 		updateOrReset()
 	end
-end
-
--- Calls AI movement routines --
-function ArenaClassic:moveAI()
-	self.leftPlayer:aiMove(self.ball)
-	self.rightPlayer:aiMove(self.ball)
-end
-
--- Handles Input --
-function ArenaClassic:moveHuman()
-	self.leftPlayer:humanMove()
-	self.rightPlayer:humanMove()
 end
 
 -- Initialization --

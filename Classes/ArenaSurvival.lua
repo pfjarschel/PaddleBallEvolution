@@ -16,8 +16,10 @@ ArenaSurvival.font = nil
 -- Main Match Loop --
 local function onEnterFrame()
 	updatePhysics()
-	arena:moveAI()
-	arena:moveHuman()
+	arena.leftPlayer:aiMove()
+	arena.leftPlayer:humanMove()
+	arena.rightPlayer:aiMove()
+	arena.rightPlayer:humanMove()
 	arena:checkGoal()
 end
 
@@ -47,8 +49,8 @@ end
 
 -- This function creates the in-game menu --
 function ArenaSurvival:addMenu()
-	local menuBut = MenuBut.new(textures.menuBut, 40, 40)
-	menuBut.bitmap:setPosition(WX/2, WY - menuBut.bitmap:getHeight()/2)
+	local menuBut = MenuBut.new(textures.menuBut, 60, 60)
+	menuBut.bitmap:setPosition(WX - menuBut.bitmap:getWidth()/2, WY - menuBut.bitmap:getHeight()/2)
 	menuBut:setAlpha(0.4)
 	self:addChild(menuBut)
 	menuBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
@@ -132,6 +134,7 @@ function ArenaSurvival:gameOver()
 	
 	returnBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
 		if returnBut:hitTestPoint(event.touch.x, event.touch.y) then
+			event:stopPropagation()
 			stage:removeChild(gameOverTextBox)
 			stage:removeChild(returnBut)
 			stage:removeChild(againBut)
@@ -194,18 +197,17 @@ function ArenaSurvival:checkGoal()
 		self.leftPlayer.char:updateAttr()
 		self.rightPlayer.char:updateAttr()
 		self.ball.baseSpeed = self.ball.baseSpeed*self.leftPlayer.char.atkFactor
+		self.ball.body.baseSpeed = self.ball.baseSpeed
 		self.leftPlayer.paddle.paddleH = self.leftPlayer.paddle.basepaddleH*self.leftPlayer.char.defFactor
 		self.leftPlayer.paddle.bitmap:setScale(1, 1)
 		self.leftPlayer.paddle.bitmap:setScale(self.leftPlayer.paddle.paddleW/self.leftPlayer.paddle.textureW, self.leftPlayer.paddle.paddleH/self.leftPlayer.paddle.textureH)
 		world:destroyBody(self.leftPlayer.paddle.body)
 		self.leftPlayer.paddle:createBody()
-		self.leftPlayer.paddle.body.atkFactor = 1
 		self.rightPlayer.paddle.paddleH = self.rightPlayer.paddle.basepaddleH*self.rightPlayer.char.defFactor
 		self.rightPlayer.paddle.bitmap:setScale(1, 1)
 		self.rightPlayer.paddle.bitmap:setScale(self.rightPlayer.paddle.paddleW/self.rightPlayer.paddle.textureW, self.rightPlayer.paddle.paddleH/self.rightPlayer.paddle.textureH)
 		world:destroyBody(self.rightPlayer.paddle.body)
 		self.rightPlayer.paddle:createBody()
-		self.rightPlayer.paddle.body.atkFactor = 1
 		
 		self.ball:reset()
 		self.ball:launch()
@@ -221,18 +223,6 @@ function ArenaSurvival:checkGoal()
 		self.score1 = self.score1 + 1
 		self:gameOver()
 	end
-end
-
--- Calls AI movement routines --
-function ArenaSurvival:moveAI()
-	self.leftPlayer:aiMove(self.ball)
-	self.rightPlayer:aiMove(self.ball)
-end
-
--- Handles Input --
-function ArenaSurvival:moveHuman()
-	self.leftPlayer:humanMove()
-	self.rightPlayer:humanMove()
 end
 
 -- Initialization --

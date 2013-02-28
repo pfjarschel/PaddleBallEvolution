@@ -15,8 +15,10 @@ function Skills:init(skill)
 	self.basetime = 5*1000*WX/(arena.ball.baseSpeed*20)
 end
 
-function Skills:start(side)
+function Skills:endAction()
+end
 
+function Skills:start(side)
 
 --------------------------------------------------------
 -- PowerShot: The next ball return will be VERY fast! --
@@ -31,8 +33,8 @@ function Skills:start(side)
 			arena.rightPlayer.paddle.body.atkFactor = arena.rightPlayer.paddle.atkFactor*10
 		end
 		
-		-- Sets timer to end skill --
-		Timer.delayedCall(self.basetime, function()
+		-- Action to end skill --
+		self.endAction = function()
 			if side == 0 then
 				arena.leftPlayer.paddle.body.atkFactor = arena.leftPlayer.paddle.atkFactor
 				arena.leftPlayer.skillActive = false
@@ -40,6 +42,11 @@ function Skills:start(side)
 				arena.rightPlayer.paddle.body.atkFactor = arena.rightPlayer.paddle.atkFactor
 				arena.rightPlayer.skillActive = false
 			end
+		end
+		
+		-- Sets timer to end skill --
+		Timer.delayedCall(self.basetime,  function()
+			self:endAction() 
 			sounds.powerup2over:play()
 		end)
 	end
@@ -49,21 +56,30 @@ function Skills:start(side)
 -- Viscous Field: Ball speed is greatly reduced --
 --------------------------------------------------
 	if self.skill == "viscousfield" then
-		sounds.powerup2over:play()
-		
 		-- Gets ball speed and reduces it --
 		local ballVx, ballVy = arena.ball.body:getLinearVelocity()
 		local desVx = ballVx/10
 		local desVy = ballVy/10
-		arena.ball.body:setLinearVelocity(desVx, desVy)
 		
-		-- Sets timer to end skill --
-		Timer.delayedCall(self.basetime/2, function()
+		-- Prevents too many slow-downs, any direction speed must be greater than minimum base speed --
+		if ballVx > arena.ball.baseSpeed*0.3/1.41 or ballVy > arena.ball.baseSpeed*0.3/1.41 or
+		ballVx < -arena.ball.baseSpeed*0.3/1.41 or ballVy < -arena.ball.baseSpeed*0.3/1.41 then
+			sounds.powerup2over:play()
+			arena.ball.body:setLinearVelocity(desVx, desVy)
+		end
+		
+		-- Action to end skill --
+		self.endAction = function() 
 			if side == 0 then
 				arena.leftPlayer.skillActive = false
 			else
 				arena.rightPlayer.skillActive = false
 			end
+		end
+		
+		-- Sets timer to end skill --
+		Timer.delayedCall(self.basetime/10,  function()
+			self:endAction()
 		end)
 	end
 
@@ -80,25 +96,30 @@ function Skills:start(side)
 		-- Sets AI intelligence very bad --
 		local leftIntFactor = arena.leftPlayer.char.intFactor
 		local rightIntFactor = arena.leftPlayer.char.intFactor
-		arena.leftPlayer.char.intFactor = 5
-		arena.rightPlayer.char.intFactor = 5
+		arena.leftPlayer.char.intFactor = 7
+		arena.rightPlayer.char.intFactor = 7
 		arena.leftPlayer:aiRandomFactor()
 		arena.rightPlayer:aiRandomFactor()
 		
-		-- Sets timer to end skill --
-		Timer.delayedCall(self.basetime/3, function()
+		-- Action to end skill --
+		self.endAction = function()
 			arena.ball:setAlpha(1)
 			arena.leftPlayer.char.intFactor = leftIntFactor
 			arena.rightPlayer.char.intFactor = rightIntFactor
 			arena.leftPlayer:aiRandomFactor()
 			arena.rightPlayer:aiRandomFactor()
-			sounds.powerup2over:play()
 			
 			if side == 0 then
 				arena.leftPlayer.skillActive = false
 			else
 				arena.rightPlayer.skillActive = false
 			end
+		end
+		
+		-- Sets timer to end skill --
+		Timer.delayedCall(self.basetime/3, function()
+			self:endAction()
+			sounds.powerup2over:play()
 		end)
 	end
 
@@ -110,15 +131,24 @@ function Skills:start(side)
 		sounds.powerup2:play()
 		
 		-- Each frame, applies force on ball, to make it do crazy curves --
-		local direction = -1
-		local crazyFactor = 4*arena.ball.baseSpeed
+		local ballVx0, ballVy0 = arena.ball.body:getLinearVelocity()
+		local ballV0 = math.sqrt(ballVx0*ballVx0 + ballVy0*ballVy0)
+		local crazyFactor = 3*ballV0
+		local direction = 0
+		
+		if ballVy0 > 0 then
+			direction = -1
+		else
+			direction = 1
+		end
+		
 		local function curveball()
 			local ballX, ballY = arena.ball.body:getPosition()
 			local ballVx, ballVy = arena.ball.body:getLinearVelocity()
 			
-			if ballVy > arena.ball.baseSpeed then
+			if ballVy > ballV0 then
 				direction = direction*-1
-			elseif ballVy < -arena.ball.baseSpeed then
+			elseif ballVy < -ballV0 then
 				direction = direction*-1
 			end
 			
@@ -131,16 +161,25 @@ function Skills:start(side)
 		-- Adds event listener --
 		stage:addEventListener(Event.ENTER_FRAME, curveball)
 		
-		-- Sets timer to end skill --
-		Timer.delayedCall(self.basetime/2, function()
+		-- Action to end Skill --
+		self.endAction = function()
 			stage:removeEventListener(Event.ENTER_FRAME, curveball)
-			sounds.powerup2over:play()
 			
 			if side == 0 then
 				arena.leftPlayer.skillActive = false
 			else
 				arena.rightPlayer.skillActive = false
 			end
+		end 
+		
+		-- Sets timer to end skill --
+		Timer.delayedCall(self.basetime/2, function()
+			self:endAction() 
+			sounds.powerup2over:play()
+			
+			-- Returns ball to previous state --
+			local ballVxRet = arena.ball.body:getLinearVelocity()
+			arena.ball.body:setLinearVelocity(math.abs(ballVxRet*ballVx0)/ballVxRet, ballVy0)
 		end)
 	end
 

@@ -18,8 +18,10 @@ ArenaArena.font = nil
 -- Main Match Loop --
 local function onEnterFrame()
 	updatePhysics()
-	arena:moveAI()
-	arena:moveHuman()
+	arena.leftPlayer:aiMove()
+	arena.leftPlayer:humanMove()
+	arena.rightPlayer:aiMove()
+	arena.rightPlayer:humanMove()
 	arena:checkGoal()
 end
 
@@ -44,13 +46,14 @@ end
 
 -- This function creates the in-game menu --
 function ArenaArena:addMenu()
-	local menuBut = MenuBut.new(textures.menuBut, 40, 40)
-	menuBut.bitmap:setPosition(WX/2, WY - menuBut.bitmap:getHeight()/2)
+	local menuBut = MenuBut.new(textures.menuBut, 60, 60)
+	menuBut.bitmap:setPosition(WX - menuBut.bitmap:getWidth()/2, WY - menuBut.bitmap:getHeight()/2)
 	menuBut:setAlpha(0.4)
 	self:addChild(menuBut)
 	menuBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
 		if menuBut:hitTestPoint(event.touch.x, event.touch.y) then
 			event:stopPropagation()
+			Timer:pauseAll()
 			if not self.paused then
 				self.paused = true
 				self:removeEventListener(Event.ENTER_FRAME, onEnterFrame)
@@ -63,6 +66,7 @@ function ArenaArena:addMenu()
 				resumeBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
 					if resumeBut:hitTestPoint(event.touch.x, event.touch.y) then
 						event:stopPropagation()
+						Timer:resumeAll()
 						stage:removeChild(pausebg)
 						self.paused = false
 						self:addEventListener(Event.ENTER_FRAME, onEnterFrame)
@@ -75,6 +79,10 @@ function ArenaArena:addMenu()
 				quitBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
 					if quitBut:hitTestPoint(event.touch.x, event.touch.y) then
 						event:stopPropagation()
+						Timer.resumeAll()
+						Timer.stopAll()
+						self.leftPlayer.char.skill:endAction()
+						self.rightPlayer.char.skill:endAction()
 						stage:removeChild(pausebg)
 						world:destroyBody(self.ball.body)
 						self.ball.body = nil
@@ -96,17 +104,19 @@ end
 
 -- Inserts Skill Button (Left Player only) --
 function ArenaArena:addSkillBut()
-	local skillBut = MenuBut.new(textures.skillBut, 40, 40)
-	skillBut.bitmap:setPosition(WX/2, skillBut.bitmap:getHeight()/2)
+	local skillBut = MenuBut.new(textures.skillBut, 60, 60)
+	skillBut.bitmap:setPosition(WX/4, WY - skillBut.bitmap:getHeight()/2)
 	skillBut:setAlpha(0.5)
 	self:addChild(skillBut)
 	
 	skillBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
-		-- Skill needs to be inactive (over) to function --
-		if skillBut:hitTestPoint(event.touch.x, event.touch.y) and self.leftPlayer.skillActive == false then
+		-- Skill needs to be inactive (over) to function, and ball launched --
+		if skillBut:hitTestPoint(event.touch.x, event.touch.y) then
 			event:stopPropagation()
-			self.leftPlayer.char.skill:start(0)
-			self.leftPlayer.skillActive = true
+			if self.leftPlayer.skillActive == false	and self.ball.launched then
+				self.leftPlayer.char.skill:start(0)
+				self.leftPlayer.skillActive = true
+			end
 		end
 	end)
 end
@@ -152,6 +162,11 @@ function ArenaArena:gameOver()
 	
 	returnBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
 		if returnBut:hitTestPoint(event.touch.x, event.touch.y) then
+			event:stopPropagation()
+			Timer.resumeAll()
+			Timer.stopAll()
+			self.leftPlayer.char.skill:endAction()
+			self.rightPlayer.char.skill:endAction()
 			stage:removeChild(gameOverTextBox)
 			stage:removeChild(returnBut)
 			stage:removeChild(againBut)
@@ -179,9 +194,19 @@ function ArenaArena:checkGoal()
 	
 	local function updateOrReset()
 		if self.score0 <= 0 or self.score1 <= 0 then
+			self.leftPlayer.skillActive = false
+			self.rightPlayer.skillActive = false
+			Timer.stopAll()
+			self.leftPlayer.char.skill:endAction()
+			self.rightPlayer.char.skill:endAction()
 			self:gameOver()
 		else
 			self.combatStats:update(self.score0, self.score1)
+			self.leftPlayer.skillActive = false
+			self.rightPlayer.skillActive = false
+			Timer.stopAll()
+			self.leftPlayer.char.skill:endAction()
+			self.rightPlayer.char.skill:endAction()
 			self.ball:reset()
 			self.ball:launch()
 			self.leftPlayer.paddle:reset()
@@ -194,14 +219,10 @@ function ArenaArena:checkGoal()
 		self.score1 = self.score1 - 1
 		sounds.goal1:play()
 		updateOrReset()
-		self.leftPlayer.skillActive = false
-		self.rightPlayer.skillActive = false
 	elseif ballX <  -2*self.ball.radius then
 		self.score0 = self.score0 - 1
 		sounds.goal2:play()
 		updateOrReset()
-		self.leftPlayer.skillActive = false
-		self.rightPlayer.skillActive = false
 	end
 end
 
@@ -216,12 +237,6 @@ function ArenaArena:moveAI()
 		self.rightPlayer.char.skill:start(1)
 		self.rightPlayer.skillActive = true
 	end
-end
-
--- Handles Input --
-function ArenaArena:moveHuman()
-	self.leftPlayer:humanMove()
-	self.rightPlayer:humanMove()
 end
 
 -- Initialization --

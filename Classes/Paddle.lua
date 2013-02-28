@@ -31,6 +31,7 @@ function Paddle:createBody()
 	self.body.name = "paddle" .. tostring(self.side)
 	self.body.side = self.side
 	self.body.paddleH = self.paddleH
+	self.body.paddleW = self.paddleW
 	self.body.atkFactor = self.atkFactor
 	
 	local shape = b2.PolygonShape.new()
@@ -59,14 +60,16 @@ function Paddle:createBody()
 				local padX, padY = self:getPosition()
 				local colDistY = colY - padY
 				local setSpeed = arena.ball.baseSpeed*self.atkFactor
-				local setVy = (colDistY*setSpeed)/(self.paddleH/2)
+				local setVy = 0.97*(colDistY*setSpeed)/(self.paddleH/2)
 				local setVx = -2*(self.side - 0.5)*math.sqrt(math.abs(setSpeed*setSpeed - setVy*setVy))
 				if self.side == 0 then
-					if colY > (padY - self.paddleH/2 - arena.ball.radius/2) and colY < (padY + self.paddleH/2 + arena.ball.radius/2) and colX > padX then
+					if colY > (padY - self.paddleH/2 - 1.2*arena.ball.radius) and colY < (padY + self.paddleH/2 + 1.2*arena.ball.radius)
+					and colX > padX - self.paddleW/2 then
 						arena.ball.body:setLinearVelocity(setVx,setVy)
 					end
 				else
-					if colY > (padY - self.paddleH/2 - arena.ball.radius/2) and colY < (padY + self.paddleH/2 + arena.ball.radius/2) and colX < padX then
+					if colY > (padY - self.paddleH/2 - 1.2*arena.ball.radius) and colY < (padY + self.paddleH/2 + 1.2*arena.ball.radius)
+					and colX < padX + self.paddleW/2 then
 						arena.ball.body:setLinearVelocity(setVx,setVy)
 					end
 				end
@@ -81,6 +84,8 @@ function Paddle:reset()
 	self.body:setLinearVelocity(0,0)
 	arena:addChild(self)
 	self.body:setPosition(1.5*self.paddleW + self.side*(WX - self.paddleW*3), 0.5*WY)
+	arena.leftPlayer.touchY = WY/2
+	arena.rightPlayer.touchY = WY/2
 end
 
 -- Initialize --
