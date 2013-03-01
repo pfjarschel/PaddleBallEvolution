@@ -12,6 +12,7 @@ ArenaClassic.score1 = 0
 ArenaClassic.difFactor = 5/5 -- 1/5 to 10/5
 ArenaClassic.paused = false
 ArenaClassic.font = nil
+ArenaClassic.pausebg = nil
 
 -- Main Match Loop --
 local function onEnterFrame()
@@ -47,8 +48,73 @@ function ArenaClassic:createBoundaries()
 	end
 end
 
+function ArenaClassic:openMenu()
+	if not self.paused then
+		self.paused = true
+		self:removeEventListener(Event.ENTER_FRAME, onEnterFrame)
+		
+		self.pausebg = Sprite:new()
+		self.pausebg:addChild(textures.pausebg)
+		
+		-- Adds Resume Button --
+		local resumeBut = MenuBut.new(textures.returnBut, 150, 40)
+		resumeBut.bitmap:setPosition(WX/2, WY/2 - 2*resumeBut:getHeight())
+		resumeBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
+			if resumeBut:hitTestPoint(event.touch.x, event.touch.y) then
+				event:stopPropagation()
+				stage:removeChild(self.pausebg)
+				self.paused = false
+				self:addEventListener(Event.ENTER_FRAME, onEnterFrame)
+			end
+		end)
+		self.pausebg:addChild(resumeBut)
+		
+		-- Adds Restart Button --
+		local restartBut = MenuBut.new(textures.againBut, 150, 40)
+		restartBut.bitmap:setPosition(WX/2, WY/2)
+		restartBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
+			if restartBut:hitTestPoint(event.touch.x, event.touch.y) then
+				event:stopPropagation()
+				stage:removeChild(self.pausebg)
+				world:destroyBody(self.ball.body)
+				self.ball.body = nil
+				world:destroyBody(self.leftPlayer.paddle.body)
+				world:destroyBody(self.rightPlayer.paddle.body)
+				world:destroyBody(self.bounds)
+				local difficulty = self.difFactor*5
+				self = nil
+				arena = nil
+				sceneMan:changeScene("classic", transTime, SceneManager.fade, easing.linear, { userData = difficulty })
+			end
+		end)
+		self.pausebg:addChild(restartBut)
+		
+		-- Adds Quit Button --
+		local quitBut = MenuBut.new(textures.exitBut, 150, 40)
+		quitBut.bitmap:setPosition(WX/2, WY/2 + 2*quitBut:getHeight())
+		quitBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
+			if quitBut:hitTestPoint(event.touch.x, event.touch.y) then
+				event:stopPropagation()
+				stage:removeChild(self.pausebg)
+				world:destroyBody(self.ball.body)
+				self.ball.body = nil
+				world:destroyBody(self.leftPlayer.paddle.body)
+				world:destroyBody(self.rightPlayer.paddle.body)
+				world:destroyBody(self.bounds)
+				self = nil
+				arena = nil
+				sceneMan:changeScene("mainMenu", transTime, SceneManager.fade, easing.linear)
+			end
+		end)
+		self.pausebg:addChild(quitBut)
+		
+		stage:addChild(self.pausebg)
+	end
+end
+
 -- This function creates the in-game menu --
 function ArenaClassic:addMenu()
+	-- Adds Menu Button --
 	local menuBut = MenuBut.new(textures.menuBut, 60, 60)
 	menuBut.bitmap:setPosition(WX - menuBut.bitmap:getWidth()/2, WY - menuBut.bitmap:getHeight()/2)
 	menuBut:setAlpha(0.4)
@@ -56,47 +122,21 @@ function ArenaClassic:addMenu()
 	menuBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
 		if menuBut:hitTestPoint(event.touch.x, event.touch.y) then
 			event:stopPropagation()
-			if not self.paused then
-				self.paused = true
-				self:removeEventListener(Event.ENTER_FRAME, onEnterFrame)
-				
-				local pausebg = Sprite:new()
-				pausebg:addChild(textures.pausebg)
-				
-				local resumeBut = MenuBut.new(textures.returnBut, 150, 40)
-				resumeBut.bitmap:setPosition(WX/2, WY/2 - resumeBut:getHeight())
-				resumeBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
-					if resumeBut:hitTestPoint(event.touch.x, event.touch.y) then
-						event:stopPropagation()
-						stage:removeChild(pausebg)
-						self.paused = false
-						self:addEventListener(Event.ENTER_FRAME, onEnterFrame)
-					end
-				end)
-				pausebg:addChild(resumeBut)
-				
-				local quitBut = MenuBut.new(textures.exitBut, 150, 40)
-				quitBut.bitmap:setPosition(WX/2, WY/2 + quitBut:getHeight())
-				quitBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
-					if quitBut:hitTestPoint(event.touch.x, event.touch.y) then
-						event:stopPropagation()
-						stage:removeChild(pausebg)
-						world:destroyBody(self.ball.body)
-						self.ball.body = nil
-						world:destroyBody(self.leftPlayer.paddle.body)
-						world:destroyBody(self.rightPlayer.paddle.body)
-						world:destroyBody(self.bounds)
-						self = nil
-						arena = nil
-						sceneMan:changeScene("mainMenu", transTime, SceneManager.fade, easing.linear)
-					end
-				end)
-				pausebg:addChild(quitBut)
-				
-				stage:addChild(pausebg)
-			end
+			self:openMenu()
 		end
 	end)
+end
+
+-- Handles Keys --
+local function onKeyDown(event)
+	if event.keyCode == 303 then
+		arena:openMenu()
+	end
+	if event.keyCode == 301 and arena.paused then
+		stage:removeChild(arena.pausebg)
+		arena.paused = false
+		arena:addEventListener(Event.ENTER_FRAME, onEnterFrame)
+	end
 end
 
 -- Function to Handle the End of the Match -- 
@@ -217,4 +257,7 @@ function ArenaClassic:init(difficulty)
 		self.ball:launch()
 	end)
 	self:addEventListener(Event.ENTER_FRAME, onEnterFrame)
+	
+	-- Listen to Keys --
+	self:addEventListener(Event.KEY_DOWN, onKeyDown)
 end

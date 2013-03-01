@@ -7,6 +7,13 @@ MainMenu = Core.class(Sprite)
 -- Declarations --
 MainMenu.font = nil
 
+-- Handles Keys --
+local function onKeyDown(event)
+	if event.keyCode == 301 then
+		sceneMan:changeScene("blackScreen", transTime/2, SceneManager.fade, easing.linear)
+	end
+end
+
 -- Initialization --
 function MainMenu:init()
 	gc()
@@ -63,4 +70,7 @@ function MainMenu:init()
 			sceneMan:changeScene("blackScreen", transTime/2, SceneManager.fade, easing.linear)
 		end
 	end)
+	
+	-- Listen to Keys --
+	self:addEventListener(Event.KEY_DOWN, onKeyDown)
 end

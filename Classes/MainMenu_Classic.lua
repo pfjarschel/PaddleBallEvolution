@@ -7,6 +7,13 @@ MainMenu_Classic = Core.class(Sprite)
 -- Declarations --
 MainMenu_Classic.font = nil
 
+-- Handles Keys --
+local function onKeyDown(event)
+	if event.keyCode == 301 then
+		sceneMan:changeScene("mainMenu", transTime, SceneManager.fade, easing.linear) 
+	end
+end
+
 -- Initialization --
 function MainMenu_Classic:init()
 	self.font = fonts.arialroundedSmall
@@ -75,4 +82,7 @@ function MainMenu_Classic:init()
 			sceneMan:changeScene("mainMenu", transTime, SceneManager.fade, easing.linear) 
 		end
 	end)
+	
+	-- Listen to Keys --
+	self:addEventListener(Event.KEY_DOWN, onKeyDown)
 end

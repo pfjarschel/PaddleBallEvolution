@@ -15,6 +15,7 @@ function Skills:init(skill)
 	self.basetime = 5*1000*WX/(arena.ball.baseSpeed*20)
 end
 
+-- Declare this function to later hold skill specific action to end it --
 function Skills:endAction()
 end
 
