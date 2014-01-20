@@ -59,10 +59,10 @@
   <file source="fonts/arial-rounded.ttf"/>
  </folder>
  <folder name="classes">
-  <file source="arenaai.lua"/>
-  <file source="mainmenu_help.lua"/>
-  <file source="splash.lua"/>
-  <file source="mainmenu_options.lua"/>
+  <file source="classes/splash.lua"/>
+  <file source="classes/mainmenu_options.lua"/>
+  <file source="classes/mainmenu_help.lua"/>
+  <file source="classes/arenaai.lua"/>
   <file source="classes/skills.lua"/>
   <file source="classes/player.lua"/>
   <file source="classes/paddle.lua"/>
