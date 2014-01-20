@@ -12,11 +12,16 @@ WY = 480
 -- Boundaries height --
 WBounds = 13
 
--- Holds all arena objects --
+-- World, and holds all arena objects --
+debugDraw = nil
+world = nil
 arena = nil
 
 -- Etc --
 transTime = 1.5
+
+-- Defined Options --
+controlMethod = "Touch"
 
 ----------------------
 -- Global Functions --
@@ -50,15 +55,18 @@ fonts = FontLoader.new()
 
 -- Create scenes for the Scene Manager --
 sceneMan = SceneManager.new({
+	["splash"] = Splash,
 	["mainMenu"] = MainMenu,
 	["mainMenu_Classic"] = MainMenu_Classic,
 	["mainMenu_Arena"] = MainMenu_Arena,
 	["arena"] = ArenaArena,
 	["classic"] = ArenaClassic,
 	["survival"] = ArenaSurvival,
+	["mainMenu_Options"] = MainMenu_Options,
+	["mainMenu_Help"] = MainMenu_Help,
 	["blackScreen"] = BlackScreen
 })
 
--- Load Main Menu --
+-- Load Splash Screen and then Main Menu --
 stage:addChild(sceneMan)
-sceneMan:changeScene("mainMenu", transTime, SceneManager.fade, easing.linear)
+sceneMan:changeScene("splash", transTime, SceneManager.fade, easing.linear)

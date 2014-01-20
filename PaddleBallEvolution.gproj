@@ -1,11 +1,12 @@
 <project>
- <properties autorotation="0" encrypt="0" fps="60" scaleMode="5" mouseToTouch="1" iosDevice="0" packageName="com.yourdomain.yourapp" logicalHeight="800" logicalWidth="480" mouseTouchOrder="0" retinaDisplay="0" touchToMouse="1" assetsOnly="0" orientation="1" architecture="1">
+ <properties autorotation="0" encryptAssets="0" fps="60" scaleMode="5" mouseToTouch="1" iosDevice="0" packageName="com.blackandwhitecat.paddleball" logicalHeight="800" logicalWidth="480" mouseTouchOrder="0" encryptCode="0" retinaDisplay="0" touchToMouse="1" assetsOnly="1" orientation="1" architecture="1">
   <imageScales/>
  </properties>
  <file source="physics.lua"/>
  <file source="main.lua"/>
  <file source="init.lua"/>
  <folder name="include">
+  <file source="include/TextWrap.lua"/>
   <file source="include/strict.lua"/>
   <file source="include/socket.lua"/>
   <file source="include/scenemanager.lua"/>
@@ -24,6 +25,13 @@
   <file source="audio/goal1.wav"/>
  </folder>
  <folder name="imgs">
+  <file source="imgs/help_interface.png"/>
+  <file source="imgs/black.png"/>
+  <file source="imgs/help.png"/>
+  <file source="imgs/gear.png"/>
+  <file source="imgs/splash.png"/>
+  <file source="imgs/optionsBut.png"/>
+  <file source="imgs/controlarrows.png"/>
   <file source="imgs/survivalmodeBut.png"/>
   <file source="imgs/skillBut.png"/>
   <file source="imgs/returnBut.png"/>
@@ -51,6 +59,9 @@
   <file source="fonts/arial-rounded.ttf"/>
  </folder>
  <folder name="classes">
+  <file source="mainmenu_help.lua"/>
+  <file source="splash.lua"/>
+  <file source="mainmenu_options.lua"/>
   <file source="classes/skills.lua"/>
   <file source="classes/player.lua"/>
   <file source="classes/paddle.lua"/>
@@ -72,40 +83,41 @@
    <file source="classes/loaders/classtable.lua"/>
   </folder>
  </folder>
- <dependency from="init.lua" to="include/socket.lua"/>
- <dependency from="init.lua" to="include/strict.lua"/>
- <dependency from="init.lua" to="include/easing.lua"/>
- <dependency from="init.lua" to="include/scenemanager.lua"/>
- <dependency from="init.lua" to="classes/loaders/textures.lua"/>
- <dependency from="init.lua" to="classes/loaders/fonts.lua"/>
- <dependency from="init.lua" to="classes/loaders/sounds.lua"/>
  <dependency from="init.lua" to="physics.lua"/>
- <dependency from="classes/arenaarena.lua" to="classes/ball.lua"/>
- <dependency from="classes/arenaarena.lua" to="classes/combatstats.lua"/>
+ <dependency from="init.lua" to="include/scenemanager.lua"/>
+ <dependency from="init.lua" to="include/easing.lua"/>
+ <dependency from="init.lua" to="classes/loaders/textures.lua"/>
+ <dependency from="init.lua" to="classes/loaders/sounds.lua"/>
+ <dependency from="init.lua" to="classes/loaders/fonts.lua"/>
+ <dependency from="init.lua" to="include/strict.lua"/>
+ <dependency from="init.lua" to="include/socket.lua"/>
+ <dependency from="init.lua" to="include/TextWrap.lua"/>
  <dependency from="classes/arenaarena.lua" to="classes/player.lua"/>
- <dependency from="classes/arenaclassic.lua" to="classes/ball.lua"/>
- <dependency from="classes/arenaclassic.lua" to="classes/combatstats.lua"/>
+ <dependency from="classes/arenaarena.lua" to="classes/combatstats.lua"/>
+ <dependency from="classes/arenaarena.lua" to="classes/ball.lua"/>
  <dependency from="classes/arenaclassic.lua" to="classes/player.lua"/>
- <dependency from="classes/arenasurvival.lua" to="classes/ball.lua"/>
- <dependency from="classes/arenasurvival.lua" to="classes/combatstats.lua"/>
+ <dependency from="classes/arenaclassic.lua" to="classes/combatstats.lua"/>
+ <dependency from="classes/arenaclassic.lua" to="classes/ball.lua"/>
  <dependency from="classes/arenasurvival.lua" to="classes/player.lua"/>
- <dependency from="classes/char.lua" to="classes/loaders/classtable.lua"/>
+ <dependency from="classes/arenasurvival.lua" to="classes/combatstats.lua"/>
+ <dependency from="classes/arenasurvival.lua" to="classes/ball.lua"/>
  <dependency from="classes/char.lua" to="classes/skills.lua"/>
- <dependency from="classes/loaders/classtable.lua" to="include/socket.lua"/>
- <dependency from="classes/loaders/classtable.lua" to="include/strict.lua"/>
- <dependency from="classes/loaders/classtable.lua" to="include/easing.lua"/>
- <dependency from="classes/loaders/classtable.lua" to="include/scenemanager.lua"/>
+ <dependency from="classes/char.lua" to="classes/loaders/classtable.lua"/>
  <dependency from="classes/loaders/classtable.lua" to="init.lua"/>
- <dependency from="classes/mainmenu.lua" to="classes/blackscreen.lua"/>
- <dependency from="classes/mainmenu.lua" to="classes/mainmenu_arena.lua"/>
- <dependency from="classes/mainmenu.lua" to="classes/mainmenu_classic.lua"/>
+ <dependency from="classes/loaders/classtable.lua" to="include/scenemanager.lua"/>
+ <dependency from="classes/loaders/classtable.lua" to="include/easing.lua"/>
+ <dependency from="classes/loaders/classtable.lua" to="include/strict.lua"/>
+ <dependency from="classes/loaders/classtable.lua" to="include/socket.lua"/>
  <dependency from="classes/mainmenu.lua" to="classes/menubut.lua"/>
+ <dependency from="classes/mainmenu.lua" to="classes/mainmenu_classic.lua"/>
+ <dependency from="classes/mainmenu.lua" to="classes/mainmenu_arena.lua"/>
+ <dependency from="classes/mainmenu.lua" to="classes/blackscreen.lua"/>
  <dependency from="classes/mainmenu.lua" to="classes/arenasurvival.lua"/>
- <dependency from="classes/mainmenu.lua" to="classes/arenaarena.lua"/>
  <dependency from="classes/mainmenu.lua" to="classes/arenaclassic.lua"/>
+ <dependency from="classes/mainmenu.lua" to="classes/arenaarena.lua"/>
  <dependency from="classes/mainmenu_arena.lua" to="classes/arenaarena.lua"/>
  <dependency from="classes/mainmenu_classic.lua" to="classes/arenaclassic.lua"/>
- <dependency from="classes/player.lua" to="classes/char.lua"/>
  <dependency from="classes/player.lua" to="classes/paddle.lua"/>
+ <dependency from="classes/player.lua" to="classes/char.lua"/>
  <dependency from="main.lua" to="classes/mainmenu.lua"/>
 </project>

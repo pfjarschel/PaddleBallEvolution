@@ -13,10 +13,22 @@ ArenaSurvival.difFactor = 5/5 -- 1/5 to 10/5
 ArenaSurvival.paused = false
 ArenaSurvival.font = nil
 ArenaSurvival.pausebg = nil
+ArenaSurvival.name = "survival"
+ArenaSurvival.controlarrows = nil
+ArenaSurvival.accelerometer = nil
+
+-- Tilt variables --
+local afx = 0
+local afy = 0
+local afz = 0
+local afx0 = 0
 
 -- Main Match Loop --
 local function onEnterFrame()
 	updatePhysics()
+	if controlMethod == "Tilt" then
+		arena:tilt()
+	end
 	arena.leftPlayer:aiMove()
 	arena.leftPlayer:humanMove()
 	arena.rightPlayer:aiMove()
@@ -116,7 +128,7 @@ end
 function ArenaSurvival:addMenu()
 	-- Adds Menu Button --
 	local menuBut = MenuBut.new(textures.menuBut, 60, 60)
-	menuBut.bitmap:setPosition(WX - menuBut.bitmap:getWidth()/2, WY - menuBut.bitmap:getHeight()/2)
+	menuBut.bitmap:setPosition(WX - menuBut.bitmap:getWidth()/1.5, WY - menuBut.bitmap:getHeight())
 	menuBut:setAlpha(0.4)
 	self:addChild(menuBut)
 	menuBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
@@ -125,6 +137,52 @@ function ArenaSurvival:addMenu()
 			self:openMenu()
 		end
 	end)
+end
+
+-- Inserts control arrows, handles touch --
+function ArenaSurvival:addControlArrows()
+	local controlarrows = textures.controlarrows
+	controlarrows:setScale(1, 1)
+	self:addChild(controlarrows)
+	local textureW = controlarrows:getWidth()
+	local textureH = controlarrows:getHeight()
+	controlarrows:setScale(WX*0.1/textureW, WY/textureH)
+	controlarrows:setPosition(3*WX/4 - controlarrows:getWidth()/2, WY/2 - controlarrows:getHeight()/2)
+	controlarrows:setAlpha(0.4)
+	
+	controlarrows:addEventListener(Event.TOUCHES_BEGIN, function(event)
+		if not arena.paused and controlarrows:hitTestPoint(event.touch.x, event.touch.y) then
+			self.leftPlayer.touchY = event.touch.y
+		end
+	end)
+	controlarrows:addEventListener(Event.TOUCHES_MOVE, function(event)
+		if not arena.paused and controlarrows:hitTestPoint(event.touch.x, event.touch.y) then
+			self.leftPlayer.touchY = event.touch.y
+		end
+	end)
+	controlarrows:addEventListener(Event.TOUCHES_END, function(event)
+		
+	end)
+end
+
+-- Initialize Tilt --
+function ArenaSurvival:tiltInit()
+	self.accelerometer = Accelerometer.new()
+	self.accelerometer:start()
+	afx0 = self.accelerometer:getAcceleration()
+end
+
+-- Handles Tilt --
+function ArenaSurvival:tilt()
+	if not arena.paused then
+		local x, y, z = self.accelerometer:getAcceleration()
+		local filter = 0.1;
+		afx = x * filter + afx * (1 - filter)
+		afy = y * filter + afy * (1 - filter)
+		afz = z * filter + afz * (1 - filter)
+		
+		self.leftPlayer.touchY = WY/2 - (afx - afx0)*WY *1.5
+	end
 end
 
 -- Handles Keys --
@@ -136,6 +194,26 @@ local function onKeyDown(event)
 		stage:removeChild(arena.pausebg)
 		arena.paused = false
 		arena:addEventListener(Event.ENTER_FRAME, onEnterFrame)
+	end
+	if controlMethod == "Keys" then
+		if event.keyCode == 40 then
+			arena.leftPlayer.touchY = WY
+		end
+		if event.keyCode == 38 then
+			arena.leftPlayer.touchY = 0
+		end
+	end
+end
+local function onKeyUp(event)
+	if controlMethod == "Keys" then
+		if event.keyCode == 40 then
+			local posx, posy = arena.leftPlayer.paddle.body:getPosition()
+			arena.leftPlayer.touchY = posy
+		end
+		if event.keyCode == 38 then
+			local posx, posy = arena.leftPlayer.paddle.body:getPosition()
+			arena.leftPlayer.touchY = posy
+		end
 	end
 end
 
@@ -281,6 +359,10 @@ function ArenaSurvival:init(difficulty)
 	
 	self:addMenu()
 	
+	if controlMethod == "Touch" then
+		self:addControlArrows()
+	end
+	
 	self:createBoundaries()
 	
 	self.ball = Ball.new(self.difFactor)
@@ -300,4 +382,10 @@ function ArenaSurvival:init(difficulty)
 	
 	-- Listen to Keys --
 	self:addEventListener(Event.KEY_DOWN, onKeyDown)
+	self:addEventListener(Event.KEY_UP, onKeyUp)
+	
+	-- Initialize tilt --
+	if controlMethod == "Tilt" then
+		self:tiltInit()
+	end
 end

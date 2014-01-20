@@ -62,9 +62,27 @@ function MainMenu:init()
 		end
 	end)
 	
+	self.optionsBut = MenuBut.new(textures.optionsBut, 40, 40)
+	self:addChild(self.optionsBut)
+	self.optionsBut.bitmap:setPosition(52 + 40 + 16, WY/2 + 5*self.optionsBut.height)
+	self.optionsBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
+		if self.optionsBut:hitTestPoint(event.touch.x, event.touch.y) then
+			sceneMan:changeScene("mainMenu_Options", transTime, SceneManager.fade, easing.linear)
+		end
+	end)
+	
+	self.helpBut = MenuBut.new(textures.helpBut, 40, 40)
+	self:addChild(self.helpBut)
+	self.helpBut.bitmap:setPosition(52, WY/2 + 5*self.helpBut.height)
+	self.helpBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
+		if self.helpBut:hitTestPoint(event.touch.x, event.touch.y) then
+			sceneMan:changeScene("mainMenu_Help", transTime, SceneManager.fade, easing.linear)
+		end
+	end)
+	
 	self.exitBut = MenuBut.new(textures.exitBut, 150, 40)
 	self:addChild(self.exitBut)
-	self.exitBut.bitmap:setPosition(WX/2, WY/2 + 4*self.exitBut.height)
+	self.exitBut.bitmap:setPosition(WX - 32 - self.exitBut:getWidth()/2, WY/2 + 5*self.exitBut.height)
 	self.exitBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
 		if self.exitBut:hitTestPoint(event.touch.x, event.touch.y) then
 			sceneMan:changeScene("blackScreen", transTime/2, SceneManager.fade, easing.linear)

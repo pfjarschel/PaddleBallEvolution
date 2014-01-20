@@ -135,7 +135,7 @@ end
 -- constant speed, which depends on game mode and/or character MOV attribute.      --
 -------------------------------------------------------------------------------------
 function Player:humanMove()
-	if self.human then
+	if self.human then		
 		local px, py = self.paddle.body:getPosition()
 		local delta = (self.touchY - py)
 
@@ -149,7 +149,7 @@ function Player:humanMove()
 	end
 end
 
--- Initialize objects, add control Listeners --
+-- Initialize objects --
 function Player:init(side, human, difFactor, class)
 	self.side = side
 	self.human = human
@@ -157,20 +157,4 @@ function Player:init(side, human, difFactor, class)
 	self.difFactor = difFactor
 	self.paddle = Paddle.new(side, self.char.atkFactor, self.char.defFactor)
 	self.touchY = WY/2
-	if human then
-		arena:addEventListener(Event.TOUCHES_BEGIN, function(event)
-			if not arena.paused then
-				self.touchY = event.touch.y
-			end
-		end)
-		arena:addEventListener(Event.TOUCHES_MOVE, function(event)
-			if not arena.paused then
-				self.touchY = event.touch.y
-			end
-		end)
-		arena:addEventListener(Event.TOUCHES_END, function(event)
-			
-		end)
-
-	end
 end

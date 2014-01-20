@@ -152,15 +152,14 @@ function Skills:start(side)
 			elseif ballVy < -ballV0 then
 				direction = direction*-1
 			end
-			
-			-- Only if ball is launched --
-			if arena.ball.launched then
-				arena.ball.body:applyForce(0, direction*crazyFactor, ballX, ballY)
-			end
+		
+			arena.ball.body:applyForce(0, direction*crazyFactor, ballX, ballY)
 		end
 		
-		-- Adds event listener --
-		stage:addEventListener(Event.ENTER_FRAME, curveball)
+		-- Adds event listener only if ball is launched --
+		if arena.ball.launched and ballVx0 > 0 then
+			stage:addEventListener(Event.ENTER_FRAME, curveball)
+		end
 		
 		-- Action to end Skill --
 		self.endAction = function()
@@ -183,6 +182,73 @@ function Skills:start(side)
 			arena.ball.body:setLinearVelocity(math.abs(ballVxRet*ballVx0)/ballVxRet, ballVy0)
 		end)
 	end
+	
 
+---------------------------------------------------------
+-- ArrowBall: Ball moves in a straight line to the goal --
+---------------------------------------------------------
+	if self.skill == "arrowball" then
+		sounds.powerup2:play()
+		
+		-- Gets velocity, direction and sets Vy = 0 --
+		local ballVx0, ballVy0 = arena.ball.body:getLinearVelocity()
+		local ballV0 = math.sqrt(ballVx0*ballVx0 + ballVy0*ballVy0)
+		local direction = 0
+		
+		if ballVx0 < 0 then
+			direction = -1
+		else
+			direction = 1
+		end
+		
+		-- Only if ball is launched --
+			if arena.ball.launched then
+				arena.ball.body:setLinearVelocity(direction*ballV0, 0)
+			end
+		
+		-- Action to end Skill --
+		self.endAction = function()	
+			if side == 0 then
+				arena.leftPlayer.skillActive = false
+			else
+				arena.rightPlayer.skillActive = false
+			end
+		end
+		
+		-- Sets timer to end skill --
+		Timer.delayedCall(self.basetime/10,  function()
+			self:endAction()
+		end)
+	end
+
+
+-------------------------------------------------
+-- MirrorBall: Ball changes movement direction --
+-------------------------------------------------
+	if self.skill == "mirrorball" then
+		sounds.powerup2:play()
+		
+		-- Gets velocity --
+		local ballVx0, ballVy0 = arena.ball.body:getLinearVelocity()
+		
+		-- Only if ball is launched --
+		if arena.ball.launched then
+			arena.ball.body:setLinearVelocity(-ballVx0, ballVy0)
+		end
+		
+		-- Action to end Skill --
+		self.endAction = function()	
+			if side == 0 then
+				arena.leftPlayer.skillActive = false
+			else
+				arena.rightPlayer.skillActive = false
+			end
+		end
+		
+		-- Sets timer to end skill --
+		Timer.delayedCall(self.basetime/10,  function()
+			self:endAction()
+		end)
+	end
 
 end

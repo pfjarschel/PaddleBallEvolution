@@ -15,14 +15,25 @@ ArenaArena.leftClass = "classic"
 ArenaArena.rightClass = "classic"
 ArenaArena.font = nil
 ArenaArena.pausebg = nil
+ArenaArena.name = "arena"
+ArenaArena.controlarrows = nil
+ArenaArena.accelerometer = nil
+
+-- Tilt variables --
+local afx = 0
+local afy = 0
+local afz = 0
+local afx0 = 0
 
 -- Main Match Loop --
 local function onEnterFrame()
 	updatePhysics()
-	arena.leftPlayer:aiMove()
+	if controlMethod == "Tilt" then
+		arena:tilt()
+	end
 	arena.leftPlayer:humanMove()
-	arena.rightPlayer:aiMove()
 	arena.rightPlayer:humanMove()
+	arena:moveAI()
 	arena:checkGoal()
 end
 
@@ -87,9 +98,10 @@ function ArenaArena:openMenu()
 				world:destroyBody(self.bounds)
 				local difficulty = self.difFactor*5
 				local class = self.leftClass
+				local classAI = self.rightClass
 				self = nil
 				arena = nil
-				sceneMan:changeScene("arena", transTime, SceneManager.fade, easing.linear, { userData = {difficulty, class} })
+				sceneMan:changeScene("arena", transTime, SceneManager.fade, easing.linear, { userData = {difficulty, class, classAI} })
 			end
 		end)
 		self.pausebg:addChild(restartBut)
@@ -125,7 +137,7 @@ end
 function ArenaArena:addMenu()
 	-- Adds Menu Button --
 	local menuBut = MenuBut.new(textures.menuBut, 60, 60)
-	menuBut.bitmap:setPosition(WX - menuBut.bitmap:getWidth()/2, WY - menuBut.bitmap:getHeight()/2)
+	menuBut.bitmap:setPosition(WX - menuBut.bitmap:getWidth()/1.5, WY - menuBut.bitmap:getHeight())
 	menuBut:setAlpha(0.4)
 	self:addChild(menuBut)
 	menuBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
@@ -139,7 +151,7 @@ end
 -- Inserts Skill Button (Left Player only) --
 function ArenaArena:addSkillBut()
 	local skillBut = MenuBut.new(textures.skillBut, 60, 60)
-	skillBut.bitmap:setPosition(WX/4, WY - skillBut.bitmap:getHeight()/2)
+	skillBut.bitmap:setPosition(WX/4, WY - skillBut.bitmap:getHeight())
 	skillBut:setAlpha(0.5)
 	self:addChild(skillBut)
 	
@@ -147,12 +159,60 @@ function ArenaArena:addSkillBut()
 		-- Skill needs to be inactive (over) to function, and ball launched --
 		if skillBut:hitTestPoint(event.touch.x, event.touch.y) then
 			event:stopPropagation()
-			if self.leftPlayer.skillActive == false	and self.ball.launched then
+			if self.leftPlayer.skillActive == false	and self.ball.launched and self.mp0 > 0 then
 				self.leftPlayer.char.skill:start(0)
 				self.leftPlayer.skillActive = true
+				self.mp0 = self.mp0 - 1
+				self.combatStats:update(self.score0, self.score1, self.mp0, self.mp1)
 			end
 		end
 	end)
+end
+
+-- Inserts control arrows, handles touch --
+function ArenaArena:addControlArrows()
+	local controlarrows = textures.controlarrows
+	controlarrows:setScale(1, 1)
+	self:addChild(controlarrows)
+	local textureW = controlarrows:getWidth()
+	local textureH = controlarrows:getHeight()
+	controlarrows:setScale(WX*0.1/textureW, WY/textureH)
+	controlarrows:setPosition(3*WX/4 - controlarrows:getWidth()/2, WY/2 - controlarrows:getHeight()/2)
+	controlarrows:setAlpha(0.4)
+	
+	controlarrows:addEventListener(Event.TOUCHES_BEGIN, function(event)
+		if not arena.paused and controlarrows:hitTestPoint(event.touch.x, event.touch.y) then
+			self.leftPlayer.touchY = event.touch.y
+		end
+	end)
+	controlarrows:addEventListener(Event.TOUCHES_MOVE, function(event)
+		if not arena.paused and controlarrows:hitTestPoint(event.touch.x, event.touch.y) then
+			self.leftPlayer.touchY = event.touch.y
+		end
+	end)
+	controlarrows:addEventListener(Event.TOUCHES_END, function(event)
+		
+	end)
+end
+
+-- Initialize Tilt --
+function ArenaArena:tiltInit()
+	self.accelerometer = Accelerometer.new()
+	self.accelerometer:start()
+	afx0 = self.accelerometer:getAcceleration()
+end
+
+-- Handles Tilt --
+function ArenaArena:tilt()
+	if not arena.paused then
+		local x, y, z = self.accelerometer:getAcceleration()
+		local filter = 0.1;
+		afx = x * filter + afx * (1 - filter)
+		afy = y * filter + afy * (1 - filter)
+		afz = z * filter + afz * (1 - filter)
+		
+		self.leftPlayer.touchY = WY/2 - (afx - afx0)*WY *1.5
+	end
 end
 
 -- Handles Keys --
@@ -165,6 +225,34 @@ local function onKeyDown(event)
 		stage:removeChild(arena.pausebg)
 		arena.paused = false
 		arena:addEventListener(Event.ENTER_FRAME, onEnterFrame)
+	end
+	if controlMethod == "Keys" then
+		if event.keyCode == 40 then
+			arena.leftPlayer.touchY = WY
+		end
+		if event.keyCode == 38 then
+			arena.leftPlayer.touchY = 0
+		end
+		if event.keyCode == 89 then
+			if arena.leftPlayer.skillActive == false and arena.ball.launched and arena.mp0 > 0 then
+				arena.leftPlayer.char.skill:start(0)
+				arena.leftPlayer.skillActive = true
+				arena.mp0 = arena.mp0 - 1
+				arena.combatStats:update(arena.score0, arena.score1, arena.mp0, arena.mp1)
+			end
+		end
+	end
+end
+local function onKeyUp(event)
+	if controlMethod == "Keys" then
+		if event.keyCode == 40 then
+			local posx, posy = arena.leftPlayer.paddle.body:getPosition()
+			arena.leftPlayer.touchY = posy
+		end
+		if event.keyCode == 38 then
+			local posx, posy = arena.leftPlayer.paddle.body:getPosition()
+			arena.leftPlayer.touchY = posy
+		end
 	end
 end
 
@@ -202,9 +290,10 @@ function ArenaArena:gameOver()
 			world:destroyBody(self.bounds)
 			local difficulty = self.difFactor*5
 			local class = self.leftClass
+			local classAI = self.rightClass
 			self = nil
 			arena = nil
-			sceneMan:changeScene("arena", transTime, SceneManager.fade, easing.linear, { userData = {difficulty, class} })
+			sceneMan:changeScene("arena", transTime, SceneManager.fade, easing.linear, { userData = {difficulty, class, classAI} })
 		end
 	end)
 	
@@ -249,7 +338,7 @@ function ArenaArena:checkGoal()
 			self.rightPlayer.char.skill:endAction()
 			self:gameOver()
 		else
-			self.combatStats:update(self.score0, self.score1)
+			self.combatStats:update(self.score0, self.score1, self.mp0, self.mp1)
 			self.leftPlayer.skillActive = false
 			self.rightPlayer.skillActive = false
 			Timer.stopAll()
@@ -281,9 +370,11 @@ function ArenaArena:moveAI()
 	
 	-- Randomly activates AI skill --
 	local num = math.random(1,1000) -- Debug mode, frequent calls
-	if num == 1 and self.rightPlayer.skillActive == false then
+	if num == 1 and self.rightPlayer.skillActive == false and self.mp1 > 0 and self.ball.launched then
 		self.rightPlayer.char.skill:start(1)
 		self.rightPlayer.skillActive = true
+		self.mp1 = self.mp1 - 1
+		self.combatStats:update(self.score0, self.score1, self.mp0, self.mp1)
 	end
 end
 
@@ -291,6 +382,7 @@ end
 function ArenaArena:init(dataTable)
 	local difficulty = dataTable[1]
 	local class = dataTable[2]
+	local classAI = dataTable[3]
 	arena = self
 	self.font = fonts.arialroundedBig
 	
@@ -303,8 +395,26 @@ function ArenaArena:init(dataTable)
 	end
 	
 	-- Sets classes --
-	self.leftClass = class
-	self.rightClass = classNames[math.random(1, tablelength(classNames))]
+	if(class == "Random") then
+		self.leftClass = classNames[math.random(1, tablelength(classNames))]
+	else
+		self.leftClass = class
+	end
+	if(classAI == "Random") then
+		self.rightClass = classNames[math.random(1, tablelength(classNames))]
+	else
+		self.rightClass = classAI
+	end
+	
+	local font = fonts.arialroundedSmall
+	local classText = TextField.new(font, self.leftClass)
+	classText:setTextColor(0xffffff)
+	classText:setAlpha(0.25)
+	classText:setPosition(16, 50)
+	local classTextAI = TextField.new(font, self.rightClass)
+	classTextAI:setTextColor(0xffffff)
+	classTextAI:setAlpha(0.25)
+	classTextAI:setPosition(WX - classTextAI:getWidth() - 16, 50)
 	
 	-- Continue as usual --
 	self.bitmap = textures.pongbg
@@ -320,6 +430,13 @@ function ArenaArena:init(dataTable)
 
 	self:addSkillBut()
 	
+	if controlMethod == "Touch" then
+		self:addControlArrows()
+	end
+	
+	self:addChild(classText)
+	self:addChild(classTextAI)
+	
 	self.ball = Ball.new(self.difFactor)
 	self.leftPlayer = Player.new(0, true, self.difFactor, self.leftClass)
 	self.rightPlayer = Player.new(1, false, self.difFactor, self.rightClass)
@@ -327,8 +444,10 @@ function ArenaArena:init(dataTable)
 	self.rightPlayer.paddle.bitmap:setColorTransform(self.rightPlayer.char.atk/30, self.rightPlayer.char.def/30, self.rightPlayer.char.mov/30, 1)
 	self.score0 = self.leftPlayer.char.lifFactor
 	self.score1 = self.rightPlayer.char.lifFactor
+	self.mp0 = self.leftPlayer.char.sklFactor
+	self.mp1 = self.rightPlayer.char.sklFactor
 	self.combatStats = CombatStats.new()
-	self.combatStats:update(self.score0,self.score1)
+	self.combatStats:update(self.score0,self.score1, self.mp0, self.mp1)
 	self.ball:reset()
 	
 	self:addEventListener("enterEnd", function()
@@ -338,5 +457,11 @@ function ArenaArena:init(dataTable)
 	
 	-- Listen to Keys --
 	self:addEventListener(Event.KEY_DOWN, onKeyDown)
+	self:addEventListener(Event.KEY_UP, onKeyUp)
+	
+	-- Initialize tilt --
+	if controlMethod == "Tilt" then
+		self:tiltInit()
+	end
 	
 end

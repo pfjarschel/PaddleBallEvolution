@@ -12,5 +12,6 @@ function FontLoader:init()
 	self.arialroundedBig = TTFont.new("fonts/arial-rounded.ttf", 50)
 	self.arialroundedMed = TTFont.new("fonts/arial-rounded.ttf", 40)
 	self.arialroundedSmall = TTFont.new("fonts/arial-rounded.ttf", 30)
+	self.arialroundedVerySmall = TTFont.new("fonts/arial-rounded.ttf", 15)
 end
 
