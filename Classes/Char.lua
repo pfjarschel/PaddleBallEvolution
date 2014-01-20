@@ -4,7 +4,7 @@
 
 Char = Core.class()
 
--- Declare attributes and skill strng --
+-- Declare attributes and skill string --
 Char.atk = nil
 Char.mov = nil
 Char.lif = nil

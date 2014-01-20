@@ -18,6 +18,7 @@ ArenaArena.pausebg = nil
 ArenaArena.name = "arena"
 ArenaArena.controlarrows = nil
 ArenaArena.accelerometer = nil
+ArenaArena.AI = nil
 
 -- Tilt variables --
 local afx = 0
@@ -32,7 +33,7 @@ local function onEnterFrame()
 		arena:tilt()
 	end
 	arena.leftPlayer:humanMove()
-	arena.rightPlayer:humanMove()
+	--arena.rightPlayer:humanMove()
 	arena:moveAI()
 	arena:checkGoal()
 end
@@ -365,17 +366,11 @@ end
 
 -- Calls AI movement routines --
 function ArenaArena:moveAI()
-	self.leftPlayer:aiMove(self.ball)
+	--self.leftPlayer:aiMove(self.ball)
 	self.rightPlayer:aiMove(self.ball)
 	
-	-- Randomly activates AI skill --
-	local num = math.random(1,1000) -- Debug mode, frequent calls
-	if num == 1 and self.rightPlayer.skillActive == false and self.mp1 > 0 and self.ball.launched then
-		self.rightPlayer.char.skill:start(1)
-		self.rightPlayer.skillActive = true
-		self.mp1 = self.mp1 - 1
-		self.combatStats:update(self.score0, self.score1, self.mp0, self.mp1)
-	end
+	-- Call specific class AI --
+	self.AI:basicCall()
 end
 
 -- Initialization --
@@ -405,6 +400,7 @@ function ArenaArena:init(dataTable)
 	else
 		self.rightClass = classAI
 	end
+	self.AI = ArenaAI.new(self.rightClass)
 	
 	local font = fonts.arialroundedSmall
 	local classText = TextField.new(font, self.leftClass)

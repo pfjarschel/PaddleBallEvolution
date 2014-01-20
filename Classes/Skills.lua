@@ -79,7 +79,7 @@ function Skills:start(side)
 		end
 		
 		-- Sets timer to end skill --
-		Timer.delayedCall(self.basetime/10,  function()
+		Timer.delayedCall(self.basetime/3,  function()
 			self:endAction()
 		end)
 	end
@@ -157,7 +157,7 @@ function Skills:start(side)
 		end
 		
 		-- Adds event listener only if ball is launched --
-		if arena.ball.launched and ballVx0 > 0 then
+		if arena.ball.launched then
 			stage:addEventListener(Event.ENTER_FRAME, curveball)
 		end
 		
@@ -184,9 +184,9 @@ function Skills:start(side)
 	end
 	
 
----------------------------------------------------------
+----------------------------------------------------------
 -- ArrowBall: Ball moves in a straight line to the goal --
----------------------------------------------------------
+----------------------------------------------------------
 	if self.skill == "arrowball" then
 		sounds.powerup2:play()
 		
@@ -251,4 +251,177 @@ function Skills:start(side)
 		end)
 	end
 
+
+-------------------------------------------------
+-- Berserk: Atk, Mov and Def greatly increased --
+-------------------------------------------------
+	if self.skill == "berserk" then
+		sounds.powerup2:play()
+		
+		local incr = 10
+		
+		-- Sets stats + X, calculates factors and update --
+		if side == 0 then
+			local atkFactor = 0.24 + (incr + arena.leftPlayer.char.atk)/16.5 -- 0.3 to 2
+			local movFactor = 0.16 + (incr + arena.leftPlayer.char.mov)/22.5 -- 0.2 to 1.5
+			local defFactor = 0.21 + (incr + arena.leftPlayer.char.def)/11 -- 0.3 to 3
+			
+			arena.leftPlayer.paddle.body.atkFactor = atkFactor
+			arena.leftPlayer.char.movFactor = movFactor
+			arena.leftPlayer.paddle.body.defFactor = defFactor
+			
+			local shape = b2.PolygonShape.new()
+			arena.leftPlayer.paddle.paddleH = arena.leftPlayer.paddle.basepaddleH*defFactor
+			arena.leftPlayer.paddle.body.paddleH = arena.leftPlayer.paddle.paddleH
+			shape:setAsBox(arena.leftPlayer.paddle.paddleW/2, arena.leftPlayer.paddle.paddleH/2, 0, 0, 0)
+			arena.leftPlayer.paddle.body:destroyFixture(arena.leftPlayer.paddle.fixture)
+			arena.leftPlayer.paddle.shape = shape
+			arena.leftPlayer.paddle.fixture = arena.leftPlayer.paddle.body:createFixture{
+				shape = shape, 
+				density = 10000,
+				restitution = 0, 
+				friction = 0,
+				fixedRotation = true,
+			}
+			arena.leftPlayer.paddle.body:setAngle(arena.leftPlayer.paddle.side*math.pi)
+			arena.leftPlayer.paddle.bitmap:setScale(arena.leftPlayer.paddle.paddleW/arena.leftPlayer.paddle.textureW, arena.leftPlayer.paddle.paddleH/arena.leftPlayer.paddle.textureH)
+			arena.leftPlayer.paddle:setRotation(arena.leftPlayer.paddle.side*180)
+		else
+			local atkFactor = 0.24 + (incr + arena.rightPlayer.char.atk)/16.5 -- 0.3 to 2
+			local movFactor = 0.16 + (incr + arena.rightPlayer.char.mov)/22.5 -- 0.2 to 1.5
+			local defFactor = 0.21 + (incr + arena.rightPlayer.char.def)/11 -- 0.3 to 3
+			
+			arena.rightPlayer.paddle.body.atkFactor = atkFactor
+			arena.rightPlayer.char.movFactor = movFactor
+			arena.rightPlayer.paddle.body.defFactor = defFactor
+			
+			local shape = b2.PolygonShape.new()
+			arena.rightPlayer.paddle.paddleH = arena.leftPlayer.paddle.basepaddleH*defFactor
+			arena.rightPlayer.paddle.body.paddleH = arena.leftPlayer.paddle.paddleH
+			shape:setAsBox(arena.rightPlayer.paddle.paddleW/2, arena.rightPlayer.paddle.paddleH/2, 0, 0, 0)
+			arena.rightPlayer.paddle.body:destroyFixture(arena.rightPlayer.paddle.fixture)
+			arena.rightPlayer.paddle.shape = shape
+			arena.rightPlayer.paddle.fixture = arena.rightPlayer.paddle.body:createFixture{
+				shape = shape, 
+				density = 10000,
+				restitution = 0, 
+				friction = 0,
+				fixedRotation = true,
+			}
+			arena.rightPlayer.paddle.body:setAngle(arena.rightPlayer.paddle.side*math.pi)
+			arena.rightPlayer.paddle.bitmap:setScale(arena.rightPlayer.paddle.paddleW/arena.rightPlayer.paddle.textureW, arena.rightPlayer.paddle.paddleH/arena.rightPlayer.paddle.textureH)
+			arena.rightPlayer.paddle:setRotation(arena.rightPlayer.paddle.side*180)
+		end
+		
+		-- Action to end skill --
+		self.endAction = function()
+			if side == 0 then
+				local atkFactor = 0.24 + (arena.leftPlayer.char.atk)/16.5 -- 0.3 to 2
+				local movFactor = 0.16 + (arena.leftPlayer.char.mov)/22.5 -- 0.2 to 1.5
+				local defFactor = 0.21 + (arena.leftPlayer.char.def)/11 -- 0.3 to 3
+				
+				arena.leftPlayer.paddle.body.atkFactor = atkFactor
+				arena.leftPlayer.char.movFactor = movFactor
+				arena.leftPlayer.paddle.body.defFactor = defFactor
+				
+				local shape = b2.PolygonShape.new()
+				arena.leftPlayer.paddle.paddleH = arena.leftPlayer.paddle.basepaddleH*defFactor
+				arena.leftPlayer.paddle.body.paddleH = arena.leftPlayer.paddle.paddleH
+				shape:setAsBox(arena.leftPlayer.paddle.paddleW/2, arena.leftPlayer.paddle.paddleH/2, 0, 0, 0)
+				arena.leftPlayer.paddle.body:destroyFixture(arena.leftPlayer.paddle.fixture)
+				arena.leftPlayer.paddle.shape = shape
+				arena.leftPlayer.paddle.fixture = arena.leftPlayer.paddle.body:createFixture{
+					shape = shape, 
+					density = 10000,
+					restitution = 0, 
+					friction = 0,
+					fixedRotation = true,
+				}
+				arena.leftPlayer.paddle.body:setAngle(arena.leftPlayer.paddle.side*math.pi)
+				arena.leftPlayer.paddle.bitmap:setScale(arena.leftPlayer.paddle.paddleW/arena.leftPlayer.paddle.textureW, arena.leftPlayer.paddle.paddleH/arena.leftPlayer.paddle.textureH)
+				arena.leftPlayer.paddle:setRotation(arena.leftPlayer.paddle.side*180)
+				
+				arena.leftPlayer.skillActive = false
+			else
+				local atkFactor = 0.24 + (arena.rightPlayer.char.atk)/16.5 -- 0.3 to 2
+				local movFactor = 0.16 + (arena.rightPlayer.char.mov)/22.5 -- 0.2 to 1.5
+				local defFactor = 0.21 + (arena.rightPlayer.char.def)/11 -- 0.3 to 3
+				
+				arena.rightPlayer.paddle.body.atkFactor = atkFactor
+				arena.rightPlayer.char.movFactor = movFactor
+				arena.rightPlayer.paddle.body.defFactor = defFactor
+				
+				local shape = b2.PolygonShape.new()
+				arena.rightPlayer.paddle.paddleH = arena.leftPlayer.paddle.basepaddleH*defFactor
+				arena.rightPlayer.paddle.body.paddleH = arena.leftPlayer.paddle.paddleH
+				shape:setAsBox(arena.rightPlayer.paddle.paddleW/2, arena.rightPlayer.paddle.paddleH/2, 0, 0, 0)
+				arena.rightPlayer.paddle.body:destroyFixture(arena.rightPlayer.paddle.fixture)
+				arena.rightPlayer.paddle.shape = shape
+				arena.rightPlayer.paddle.fixture = arena.rightPlayer.paddle.body:createFixture{
+					shape = shape, 
+					density = 10000,
+					restitution = 0, 
+					friction = 0,
+					fixedRotation = true,
+				}
+				arena.rightPlayer.paddle.body:setAngle(arena.rightPlayer.paddle.side*math.pi)
+				arena.rightPlayer.paddle.bitmap:setScale(arena.rightPlayer.paddle.paddleW/arena.rightPlayer.paddle.textureW, arena.rightPlayer.paddle.paddleH/arena.rightPlayer.paddle.textureH)
+				arena.rightPlayer.paddle:setRotation(arena.rightPlayer.paddle.side*180)
+				
+				arena.rightPlayer.skillActive = false
+			end
+		end
+		
+		-- Sets timer to end skill --
+		--Timer.delayedCall(self.basetime,  function()
+		--	self:endAction() 
+		--	sounds.powerup2over:play()
+		--end)
+	end
+	
+	
+----------------------------------------------------
+-- Steal: Steal ball and return with 2x its speed --
+----------------------------------------------------
+	if self.skill == "steal" then
+		sounds.powerup2:play()
+		
+		-- Sets ball velocity towards paddle --
+		local ballX, ballY = arena.ball.body:getPosition()
+		local ballVx, ballVy = arena.ball.body:getLinearVelocity()
+		local ballV0 = math.sqrt(ballVx*ballVx + ballVy*ballVy)
+		local paddleX = 0
+		local paddleY = 0
+		
+		local incomingFactor = ballV0/arena.ball.baseSpeed
+		
+		if side == 0 then
+			paddleX, paddleY = arena.leftPlayer.paddle.body:getPosition()
+			arena.leftPlayer.paddle.body.atkFactor = incomingFactor*2
+		else
+			paddleX, paddleY = arena.rightPlayer.paddle.body:getPosition()
+			arena.rightPlayer.paddle.body.atkFactor = incomingFactor*2
+		end
+		
+		local dX = (paddleX - ballX)/math.sqrt((paddleX - ballX)*(paddleX - ballX) + (paddleY - ballY)*(paddleY - ballY))
+		local dY = (paddleY - ballY)/math.sqrt((paddleX - ballX)*(paddleX - ballX) + (paddleY - ballY)*(paddleY - ballY))
+		
+		arena.ball.body:setLinearVelocity(dX*ballV0, dY*ballV0)
+		
+		-- Action to end skill --
+		self.endAction = function()
+			if side == 0 then
+				arena.leftPlayer.paddle.body.atkFactor = arena.leftPlayer.paddle.atkFactor
+				arena.leftPlayer.skillActive = false
+			else
+				arena.rightPlayer.paddle.body.atkFactor = arena.rightPlayer.paddle.atkFactor
+				arena.rightPlayer.skillActive = false
+			end
+		end
+		
+		-- Sets timer to end skill --
+		Timer.delayedCall(self.basetime/6,  function()
+			self:endAction() 
+		end)
+	end
 end

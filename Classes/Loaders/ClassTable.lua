@@ -70,3 +70,25 @@ classTable["Illusionist"] = {
 	"Mirror Ball",
 	"Ball is reflected to the other direction"
 }
+classTable["Barbarian"] = {
+	20,
+	12,
+	14,
+	10,
+	4,
+	10,
+	"berserk",
+	"Berserk",
+	"Atk, Mov and Def greatly increased"
+}
+classTable["Thief"] = {
+	8,
+	18,
+	8,
+	10,
+	16,
+	10,
+	"steal",
+	"Steal",
+	"Steal ball and return with 2x its speed"
+}

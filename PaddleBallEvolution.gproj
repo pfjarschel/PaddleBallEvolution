@@ -59,6 +59,7 @@
   <file source="fonts/arial-rounded.ttf"/>
  </folder>
  <folder name="classes">
+  <file source="arenaai.lua"/>
   <file source="mainmenu_help.lua"/>
   <file source="splash.lua"/>
   <file source="mainmenu_options.lua"/>

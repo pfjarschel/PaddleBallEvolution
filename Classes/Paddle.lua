@@ -15,6 +15,8 @@ Paddle.textureW = 1
 Paddle.side = 0
 Paddle.atkFactor = 1
 Paddle.defFactor = 1
+Paddle.fixture = nil
+Paddle.shape = nil
 
 -- Create physics stuff --
 function Paddle:createBody()
@@ -34,10 +36,10 @@ function Paddle:createBody()
 	self.body.paddleW = self.paddleW
 	self.body.atkFactor = self.atkFactor
 	
-	local shape = b2.PolygonShape.new()
-	shape:setAsBox(self.paddleW/2, self.paddleH/2, 0, 0, 0)
-	self.body:createFixture{
-		shape = shape, 
+	self.shape = b2.PolygonShape.new()
+	self.shape:setAsBox(self.paddleW/2, self.paddleH/2, 0, 0, 0)
+	self.fixture = self.body:createFixture{
+		shape = self.shape, 
 		density = 10000,
 		restitution = 0, 
 		friction = 0,

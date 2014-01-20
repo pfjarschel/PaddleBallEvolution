@@ -29,10 +29,10 @@ local function onEnterFrame()
 	if controlMethod == "Tilt" then
 		arena:tilt()
 	end
-	arena.leftPlayer:aiMove()
+	--arena.leftPlayer:aiMove()
 	arena.leftPlayer:humanMove()
 	arena.rightPlayer:aiMove()
-	arena.rightPlayer:humanMove()
+	--arena.rightPlayer:humanMove()
 	arena:checkGoal()
 end
 
