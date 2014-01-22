@@ -282,7 +282,7 @@ function ArenaArena:gameOver()
 	againBut:addEventListener(Event.TOUCHES_END, function(event)
 		if againBut:hitTestPoint(event.touch.x, event.touch.y) then
 			stage:removeChild(gameOverTextBox)
-			stage:removeChild(returnBut)
+			stage:removeChild(exitBut)
 			stage:removeChild(againBut)
 			world:destroyBody(self.ball.body)
 			self.ball.body = nil
@@ -306,7 +306,7 @@ function ArenaArena:gameOver()
 			self.leftPlayer.char.skill:endAction()
 			self.rightPlayer.char.skill:endAction()
 			stage:removeChild(gameOverTextBox)
-			stage:removeChild(returnBut)
+			stage:removeChild(exitBut)
 			stage:removeChild(againBut)
 			world:destroyBody(self.ball.body)
 			self.ball.body = nil
@@ -321,7 +321,7 @@ function ArenaArena:gameOver()
 	
 	Timer.delayedCall(transTime/2, function ()
 		stage:addChild(gameOverTextBox)	
-		stage:addChild(returnBut)
+		stage:addChild(exitBut)
 		stage:addChild(againBut)
 	end)
 end
@@ -379,7 +379,7 @@ function ArenaArena:init(dataTable)
 	local class = dataTable[2]
 	local classAI = dataTable[3]
 	arena = self
-	self.font = fonts.arialroundedBig
+	self.font = fonts.anitaBig
 	
 	-- Creates Class Names Table --
 	local classNames = {}
@@ -402,14 +402,14 @@ function ArenaArena:init(dataTable)
 	end
 	self.AI = ArenaAI.new(self.rightClass)
 	
-	local font = fonts.arialroundedSmall
+	local font = fonts.anitaSmall
 	local classText = TextField.new(font, self.leftClass)
 	classText:setTextColor(0xffffff)
-	classText:setAlpha(0.25)
+	classText:setAlpha(0.35)
 	classText:setPosition(16, 50)
 	local classTextAI = TextField.new(font, self.rightClass)
 	classTextAI:setTextColor(0xffffff)
-	classTextAI:setAlpha(0.25)
+	classTextAI:setAlpha(0.35)
 	classTextAI:setPosition(WX - classTextAI:getWidth() - 16, 50)
 	
 	-- Continue as usual --

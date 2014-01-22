@@ -16,7 +16,7 @@ end
 
 -- Initialization --
 function MainMenu_Classic:init()
-	self.font = fonts.arialroundedSmall
+	self.font = fonts.anitaSmall
 	
 	local menubg = Bitmap.new(textures.mainmenubg)
 	menubg:setScale(1, 1)
@@ -33,7 +33,7 @@ function MainMenu_Classic:init()
 	local difficulty = 5
 	local numTextBox = TextField.new(self.font, tostring(difficulty))
 	numTextBox:setTextColor(0xffffff)
-	numTextBox:setPosition(0.5*WX - numTextBox:getWidth()/2, 0.5*WY + 115)
+	numTextBox:setPosition(0.5*WX - numTextBox:getWidth()/2, 0.5*WY + 110)
 	self:addChild(numTextBox)
 	
 	self.decDif = MenuBut.new(40, 40, textures.minusBut, textures.minusBut1)
@@ -46,7 +46,7 @@ function MainMenu_Classic:init()
 			self:removeChild(numTextBox)
 			numTextBox = TextField.new(self.font, tostring(difficulty))
 			numTextBox:setTextColor(0xffffff)
-			numTextBox:setPosition(0.5*WX - numTextBox:getWidth()/2, 0.5*WY + 115)
+			numTextBox:setPosition(0.5*WX - numTextBox:getWidth()/2, 0.5*WY + 110)
 			self:addChild(numTextBox)
 		end
 	end)
@@ -61,7 +61,7 @@ function MainMenu_Classic:init()
 			self:removeChild(numTextBox)
 			numTextBox = TextField.new(self.font, tostring(difficulty))
 			numTextBox:setTextColor(0xffffff)
-			numTextBox:setPosition(0.5*WX - numTextBox:getWidth()/2, 0.5*WY + 115)
+			numTextBox:setPosition(0.5*WX - numTextBox:getWidth()/2, 0.5*WY + 110)
 			self:addChild(numTextBox)
 		end
 	end)

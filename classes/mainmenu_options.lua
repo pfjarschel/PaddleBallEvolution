@@ -16,7 +16,7 @@ end
 
 -- Initialization --
 function MainMenu_Options:init()
-	self.font = fonts.arialroundedSmall
+	self.font = fonts.anitaSmall
 	
 	local menubg = Bitmap.new(textures.mainmenubg)
 	menubg:setScale(1, 1)

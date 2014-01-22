@@ -16,8 +16,8 @@ end
 
 -- Initialization --
 function MainMenu_Arena:init()
-	self.font = fonts.arialroundedSmall
-	self.smallfont = fonts.arialroundedVerySmall
+	self.font = fonts.anitaSmall
+	self.smallfont = fonts.anitaVerySmall
 	
 	local menubg = Bitmap.new(textures.mainmenubg)
 	menubg:setScale(1, 1)
@@ -35,7 +35,7 @@ function MainMenu_Arena:init()
 	local difficulty = 5
 	local numTextBox = TextField.new(self.font, tostring(difficulty))
 	numTextBox:setTextColor(0xffffff)
-	numTextBox:setPosition(0.5*WX - numTextBox:getWidth()/2, 0.5*WY + 145)
+	numTextBox:setPosition(0.5*WX - numTextBox:getWidth()/2, 0.5*WY + 140)
 	self:addChild(numTextBox)
 	
 	self.decDif = MenuBut.new(40, 40, textures.minusBut, textures.minusBut1)
@@ -48,7 +48,7 @@ function MainMenu_Arena:init()
 			self:removeChild(numTextBox)
 			numTextBox = TextField.new(self.font, tostring(difficulty))
 			numTextBox:setTextColor(0xffffff)
-			numTextBox:setPosition(0.5*WX - numTextBox:getWidth()/2, 0.5*WY + 145)
+			numTextBox:setPosition(0.5*WX - numTextBox:getWidth()/2, 0.5*WY + 140)
 			self:addChild(numTextBox)
 		end
 	end)
@@ -63,7 +63,7 @@ function MainMenu_Arena:init()
 			self:removeChild(numTextBox)
 			numTextBox = TextField.new(self.font, tostring(difficulty))
 			numTextBox:setTextColor(0xffffff)
-			numTextBox:setPosition(0.5*WX - numTextBox:getWidth()/2, 0.5*WY + 145)
+			numTextBox:setPosition(0.5*WX - numTextBox:getWidth()/2, 0.5*WY + 140)
 			self:addChild(numTextBox)
 		end
 	end)
@@ -109,12 +109,12 @@ function MainMenu_Arena:init()
 	local class = "Warrior"
 	local selClassTextBox = TextField.new(self.font, class)
 	selClassTextBox:setTextColor(0xffffff)
-	selClassTextBox:setPosition(192 - selClassTextBox:getWidth()/2, 0.5*WY + 15)
+	selClassTextBox:setPosition(192 - selClassTextBox:getWidth()/2, 0.5*WY + 10)
 	self:addChild(selClassTextBox)
 	
-	local selSkillTextBox = TextField.new(self.smallfont, classSkill[classIndex]..": "..classSkillDesc[classIndex])
+	local selSkillTextBox = TextWrap.new(classSkill[classIndex]..": "..classSkillDesc[classIndex], 300, "center", 5, self.smallfont)
 	selSkillTextBox:setTextColor(0xffffff)
-	selSkillTextBox:setPosition(192 - selSkillTextBox:getWidth()/2, 0.5*WY + 40)
+	selSkillTextBox:setPosition(192 - selSkillTextBox:getWidth()/2, 0.5*WY + 45)
 	self:addChild(selSkillTextBox)
 	
 	local stats = "Atk: "..classAtk[1].."\n"..
@@ -124,7 +124,7 @@ function MainMenu_Arena:init()
 					"Def: "..classDef[1].."\n"
 	local statsTextBox = TextWrap.new(stats, 64, "center", 5, self.smallfont)
 	statsTextBox:setTextColor(0xffffff)
-	statsTextBox:setPosition(192 - statsTextBox:getWidth()/2, 0.5*WY + 70)
+	statsTextBox:setPosition(192 - statsTextBox:getWidth()/2, 0.5*WY + 90)
 	self:addChild(statsTextBox)
 	
 	self.prevBut = MenuBut.new(40, 40, textures.backBut, textures.backBut1)
@@ -138,13 +138,13 @@ function MainMenu_Arena:init()
 			class = classNames[classIndex]
 			selClassTextBox = TextField.new(self.font, class)
 			selClassTextBox:setTextColor(0xffffff)
-			selClassTextBox:setPosition(192 - selClassTextBox:getWidth()/2, 0.5*WY + 15)
+			selClassTextBox:setPosition(192 - selClassTextBox:getWidth()/2, 0.5*WY + 10)
 			self:addChild(selClassTextBox)
 			
 			self:removeChild(selSkillTextBox)
-			selSkillTextBox = TextField.new(self.smallfont, classSkill[classIndex]..": "..classSkillDesc[classIndex])
+			selSkillTextBox = TextWrap.new(classSkill[classIndex]..": "..classSkillDesc[classIndex], 300, "center", 5, self.smallfont)
 			selSkillTextBox:setTextColor(0xffffff)
-			selSkillTextBox:setPosition(192 - selSkillTextBox:getWidth()/2, 0.5*WY + 40)
+			selSkillTextBox:setPosition(192 - selSkillTextBox:getWidth()/2, 0.5*WY + 45)
 			self:addChild(selSkillTextBox)
 			
 			self:removeChild(statsTextBox)
@@ -155,7 +155,7 @@ function MainMenu_Arena:init()
 					"Def: "..classDef[classIndex].."\n"
 			statsTextBox = TextWrap.new(stats, 64, "center", 5, self.smallfont)
 			statsTextBox:setTextColor(0xffffff)
-			statsTextBox:setPosition(192 - statsTextBox:getWidth()/2, 0.5*WY + 70)
+			statsTextBox:setPosition(192 - statsTextBox:getWidth()/2, 0.5*WY + 90)
 			self:addChild(statsTextBox)
 		end
 	end)
@@ -171,13 +171,13 @@ function MainMenu_Arena:init()
 			class = classNames[classIndex]
 			selClassTextBox = TextField.new(self.font, class)
 			selClassTextBox:setTextColor(0xffffff)
-			selClassTextBox:setPosition(192 - selClassTextBox:getWidth()/2, 0.5*WY + 15)
+			selClassTextBox:setPosition(192 - selClassTextBox:getWidth()/2, 0.5*WY + 10)
 			self:addChild(selClassTextBox)
 			
 			self:removeChild(selSkillTextBox)
-			selSkillTextBox = TextField.new(self.smallfont, classSkill[classIndex]..": "..classSkillDesc[classIndex])
+			selSkillTextBox = TextWrap.new(classSkill[classIndex]..": "..classSkillDesc[classIndex], 300, "center", 5, self.smallfont)
 			selSkillTextBox:setTextColor(0xffffff)
-			selSkillTextBox:setPosition(192 - selSkillTextBox:getWidth()/2, 0.5*WY + 40)
+			selSkillTextBox:setPosition(192 - selSkillTextBox:getWidth()/2, 0.5*WY + 45)
 			self:addChild(selSkillTextBox)
 			
 			self:removeChild(statsTextBox)
@@ -188,7 +188,7 @@ function MainMenu_Arena:init()
 					"Def: "..classDef[classIndex].."\n"
 			statsTextBox = TextWrap.new(stats, 64, "center", 5, self.smallfont)
 			statsTextBox:setTextColor(0xffffff)
-			statsTextBox:setPosition(192 - statsTextBox:getWidth()/2, 0.5*WY + 70)
+			statsTextBox:setPosition(192 - statsTextBox:getWidth()/2, 0.5*WY + 90)
 			self:addChild(statsTextBox)
 		end
 	end)
@@ -203,12 +203,12 @@ function MainMenu_Arena:init()
 	local classAI = "Warrior"
 	local selClassTextBoxAI = TextField.new(self.font, classAI)
 	selClassTextBoxAI:setTextColor(0xffffff)
-	selClassTextBoxAI:setPosition(WX - 192 - selClassTextBoxAI:getWidth()/2, 0.5*WY + 15)
+	selClassTextBoxAI:setPosition(WX - 192 - selClassTextBoxAI:getWidth()/2, 0.5*WY + 10)
 	self:addChild(selClassTextBoxAI)
 	
-	local selSkillTextBoxAI = TextField.new(self.smallfont, classSkill[classIndexAI]..": "..classSkillDesc[classIndexAI])
+	local selSkillTextBoxAI = TextWrap.new(classSkill[classIndex]..": "..classSkillDesc[classIndex], 300, "center", 5, self.smallfont)
 	selSkillTextBoxAI:setTextColor(0xffffff)
-	selSkillTextBoxAI:setPosition(WX - 192 - selSkillTextBoxAI:getWidth()/2, 0.5*WY + 40)
+	selSkillTextBoxAI:setPosition(WX - 192 - selSkillTextBoxAI:getWidth()/2, 0.5*WY + 45)
 	self:addChild(selSkillTextBoxAI)
 	
 
@@ -219,7 +219,7 @@ function MainMenu_Arena:init()
 			"Def: "..classDef[1].."\n"
 	local statsTextBoxAI = TextWrap.new(statsAI, 64, "center", 5, self.smallfont)
 	statsTextBoxAI:setTextColor(0xffffff)
-	statsTextBoxAI:setPosition(WX - 192 - statsTextBoxAI:getWidth()/2, 0.5*WY + 70)
+	statsTextBoxAI:setPosition(WX - 192 - statsTextBoxAI:getWidth()/2, 0.5*WY + 90)
 	self:addChild(statsTextBoxAI)
 	
 	self.prevButAI = MenuBut.new(40, 40, textures.backBut, textures.backBut1)
@@ -233,13 +233,13 @@ function MainMenu_Arena:init()
 			classAI = classNames[classIndexAI]
 			selClassTextBoxAI = TextField.new(self.font, classAI)
 			selClassTextBoxAI:setTextColor(0xffffff)
-			selClassTextBoxAI:setPosition(WX - 192 - selClassTextBoxAI:getWidth()/2, 0.5*WY + 15)
+			selClassTextBoxAI:setPosition(WX - 192 - selClassTextBoxAI:getWidth()/2, 0.5*WY + 10)
 			self:addChild(selClassTextBoxAI)
 			
 			self:removeChild(selSkillTextBoxAI)
-			selSkillTextBoxAI = TextField.new(self.smallfont, classSkill[classIndexAI]..": "..classSkillDesc[classIndexAI])
+			selSkillTextBoxAI = TextWrap.new(classSkill[classIndex]..": "..classSkillDesc[classIndex], 300, "center", 5, self.smallfont)
 			selSkillTextBoxAI:setTextColor(0xffffff)
-			selSkillTextBoxAI:setPosition(WX - 192 - selSkillTextBoxAI:getWidth()/2, 0.5*WY + 40)
+			selSkillTextBoxAI:setPosition(WX - 192 - selSkillTextBoxAI:getWidth()/2, 0.5*WY + 45)
 			self:addChild(selSkillTextBoxAI)
 			
 			self:removeChild(statsTextBoxAI)
@@ -250,7 +250,7 @@ function MainMenu_Arena:init()
 						"Def: "..classDef[classIndexAI].."\n"
 			statsTextBoxAI = TextWrap.new(statsAI, 64, "center", 5, self.smallfont)
 			statsTextBoxAI:setTextColor(0xffffff)
-			statsTextBoxAI:setPosition(WX - 192 - statsTextBoxAI:getWidth()/2, 0.5*WY + 70)
+			statsTextBoxAI:setPosition(WX - 192 - statsTextBoxAI:getWidth()/2, 0.5*WY + 90)
 			self:addChild(statsTextBoxAI)
 		end
 	end)
@@ -266,13 +266,13 @@ function MainMenu_Arena:init()
 			classAI = classNames[classIndexAI]
 			selClassTextBoxAI = TextField.new(self.font, classAI)
 			selClassTextBoxAI:setTextColor(0xffffff)
-			selClassTextBoxAI:setPosition(WX - 192 - selClassTextBoxAI:getWidth()/2, 0.5*WY + 15)
+			selClassTextBoxAI:setPosition(WX - 192 - selClassTextBoxAI:getWidth()/2, 0.5*WY + 10)
 			self:addChild(selClassTextBoxAI)
 			
 			self:removeChild(selSkillTextBoxAI)
-			selSkillTextBoxAI = TextField.new(self.smallfont, classSkill[classIndexAI]..": "..classSkillDesc[classIndexAI])
+			selSkillTextBoxAI = TextWrap.new(classSkill[classIndex]..": "..classSkillDesc[classIndex], 300, "center", 5, self.smallfont)
 			selSkillTextBoxAI:setTextColor(0xffffff)
-			selSkillTextBoxAI:setPosition(WX - 192 - selSkillTextBoxAI:getWidth()/2, 0.5*WY + 40)
+			selSkillTextBoxAI:setPosition(WX - 192 - selSkillTextBoxAI:getWidth()/2, 0.5*WY + 45)
 			self:addChild(selSkillTextBoxAI)
 			
 			self:removeChild(statsTextBoxAI)
@@ -283,7 +283,7 @@ function MainMenu_Arena:init()
 						"Def: "..classDef[classIndexAI].."\n"
 			statsTextBoxAI = TextWrap.new(statsAI, 64, "center", 5, self.smallfont)
 			statsTextBoxAI:setTextColor(0xffffff)
-			statsTextBoxAI:setPosition(WX - 192 - statsTextBoxAI:getWidth()/2, 0.5*WY + 70)
+			statsTextBoxAI:setPosition(WX - 192 - statsTextBoxAI:getWidth()/2, 0.5*WY + 90)
 			self:addChild(statsTextBoxAI)
 		end
 	end)

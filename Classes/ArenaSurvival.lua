@@ -237,7 +237,7 @@ function ArenaSurvival:gameOver()
 	againBut:addEventListener(Event.TOUCHES_END, function(event)
 		if againBut:hitTestPoint(event.touch.x, event.touch.y) then
 			stage:removeChild(gameOverTextBox)
-			stage:removeChild(returnBut)
+			stage:removeChild(exitBut)
 			stage:removeChild(againBut)
 			world:destroyBody(self.ball.body)
 			self.ball.body = nil
@@ -254,7 +254,7 @@ function ArenaSurvival:gameOver()
 		if exitBut:hitTestPoint(event.touch.x, event.touch.y) then
 			event:stopPropagation()
 			stage:removeChild(gameOverTextBox)
-			stage:removeChild(returnBut)
+			stage:removeChild(exitBut)
 			stage:removeChild(againBut)
 			world:destroyBody(self.ball.body)
 			self.ball.body = nil
@@ -269,7 +269,7 @@ function ArenaSurvival:gameOver()
 	
 	Timer.delayedCall(transTime/2, function ()
 		stage:addChild(gameOverTextBox)	
-		stage:addChild(returnBut)
+		stage:addChild(exitBut)
 		stage:addChild(againBut)
 	end)
 end
@@ -348,7 +348,7 @@ end
 -- Initialization --
 function ArenaSurvival:init(difficulty)
 	arena = self
-	self.font = fonts.arialroundedMed
+	self.font = fonts.anitaMed
 	self.bitmap = Bitmap.new(textures.pongbg)
 	self.bitmap:setScale(1, 1)
 	self.difFactor = difficulty/5

@@ -74,6 +74,7 @@
   <file source="imgs/againBut.png"/>
  </folder>
  <folder name="fonts">
+  <file source="fonts/anita.ttf"/>
   <file source="fonts/tahoma.ttf"/>
   <file source="fonts/arial-rounded.ttf"/>
  </folder>

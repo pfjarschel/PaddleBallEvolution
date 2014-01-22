@@ -237,12 +237,12 @@ function ArenaClassic:gameOver()
 	local againBut = MenuBut.new(150, 40, textures.againBut, textures.againBut1)
 	againBut.bitmap:setPosition(WX/2, WY/2 + 100)
 	local exitBut = MenuBut.new(150, 40, textures.exitBut, textures.exitBut1)
-	exitBut.bitmap:setPosition(returnBut:getWidth()/2 + 10, WY/2 + 210)
+	exitBut.bitmap:setPosition(exitBut:getWidth()/2 + 10, WY/2 + 210)
 	
 	againBut:addEventListener(Event.TOUCHES_END, function(event)
 		if againBut:hitTestPoint(event.touch.x, event.touch.y) then
 			stage:removeChild(gameOverTextBox)
-			stage:removeChild(returnBut)
+			stage:removeChild(exitBut)
 			stage:removeChild(againBut)
 			world:destroyBody(self.ball.body)
 			self.ball.body = nil
@@ -260,7 +260,7 @@ function ArenaClassic:gameOver()
 		if exitBut:hitTestPoint(event.touch.x, event.touch.y) then
 			event:stopPropagation()
 			stage:removeChild(gameOverTextBox)
-			stage:removeChild(returnBut)
+			stage:removeChild(exitBut)
 			stage:removeChild(againBut)
 			world:destroyBody(self.ball.body)
 			self.ball.body = nil
@@ -275,7 +275,7 @@ function ArenaClassic:gameOver()
 	
 	Timer.delayedCall(transTime/2, function ()
 		stage:addChild(gameOverTextBox)	
-		stage:addChild(returnBut)
+		stage:addChild(exitBut)
 		stage:addChild(againBut)
 	end)
 end
@@ -311,7 +311,7 @@ end
 -- Initialization --
 function ArenaClassic:init(difficulty)
 	arena = self
-	self.font = fonts.arialroundedBig
+	self.font = fonts.anitaBig
 	self.bitmap = Bitmap.new(textures.pongbg)
 	self.bitmap:setScale(1, 1)
 	self.difFactor = difficulty/5
