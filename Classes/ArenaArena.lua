@@ -65,12 +65,12 @@ function ArenaArena:openMenu()
 		self:removeEventListener(Event.ENTER_FRAME, onEnterFrame)
 		
 		self.pausebg = Sprite:new()
-		self.pausebg:addChild(textures.pausebg)
+		self.pausebg:addChild(Bitmap.new(textures.pausebg))
 		
 		-- Adds Resume Button --
-		local resumeBut = MenuBut.new(textures.returnBut, 150, 40)
+		local resumeBut = MenuBut.new(150, 40, textures.returnBut, textures.returnBut1)
 		resumeBut.bitmap:setPosition(WX/2, WY/2 - 2*resumeBut:getHeight())
-		resumeBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
+		resumeBut:addEventListener(Event.TOUCHES_END, function(event)
 			if resumeBut:hitTestPoint(event.touch.x, event.touch.y) then
 				event:stopPropagation()
 				Timer:resumeAll()
@@ -82,9 +82,9 @@ function ArenaArena:openMenu()
 		self.pausebg:addChild(resumeBut)
 		
 		-- Adds Restart Button --
-		local restartBut = MenuBut.new(textures.againBut, 150, 40)
+		local restartBut = MenuBut.new(150, 40, textures.restartBut, textures.restartBut1)
 		restartBut.bitmap:setPosition(WX/2, WY/2)
-		restartBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
+		restartBut:addEventListener(Event.TOUCHES_END, function(event)
 			if restartBut:hitTestPoint(event.touch.x, event.touch.y) then
 				event:stopPropagation()
 				Timer.resumeAll()
@@ -108,9 +108,9 @@ function ArenaArena:openMenu()
 		self.pausebg:addChild(restartBut)
 		
 		-- Adds Quit Button --
-		local quitBut = MenuBut.new(textures.exitBut, 150, 40)
+		local quitBut = MenuBut.new(150, 40, textures.exitBut, textures.exitBut1)
 		quitBut.bitmap:setPosition(WX/2, WY/2 + 2*quitBut:getHeight())
-		quitBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
+		quitBut:addEventListener(Event.TOUCHES_END, function(event)
 			if quitBut:hitTestPoint(event.touch.x, event.touch.y) then
 				event:stopPropagation()
 				Timer.resumeAll()
@@ -137,11 +137,11 @@ end
 -- This function creates the in-game menu --
 function ArenaArena:addMenu()
 	-- Adds Menu Button --
-	local menuBut = MenuBut.new(textures.menuBut, 60, 60)
+	local menuBut = MenuBut.new(60, 60, textures.menuBut, textures.menuBut1)
 	menuBut.bitmap:setPosition(WX - menuBut.bitmap:getWidth()/1.5, WY - menuBut.bitmap:getHeight())
 	menuBut:setAlpha(0.4)
 	self:addChild(menuBut)
-	menuBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
+	menuBut:addEventListener(Event.TOUCHES_END, function(event)
 		if menuBut:hitTestPoint(event.touch.x, event.touch.y) then
 			event:stopPropagation()
 			self:openMenu()
@@ -151,12 +151,12 @@ end
 
 -- Inserts Skill Button (Left Player only) --
 function ArenaArena:addSkillBut()
-	local skillBut = MenuBut.new(textures.skillBut, 60, 60)
+	local skillBut = MenuBut.new(60, 60, textures.skillBut, textures.skillBut1)
 	skillBut.bitmap:setPosition(WX/4, WY - skillBut.bitmap:getHeight())
 	skillBut:setAlpha(0.5)
 	self:addChild(skillBut)
 	
-	skillBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
+	skillBut:addEventListener(Event.TOUCHES_END, function(event)
 		-- Skill needs to be inactive (over) to function, and ball launched --
 		if skillBut:hitTestPoint(event.touch.x, event.touch.y) then
 			event:stopPropagation()
@@ -172,7 +172,7 @@ end
 
 -- Inserts control arrows, handles touch --
 function ArenaArena:addControlArrows()
-	local controlarrows = textures.controlarrows
+	local controlarrows = Bitmap.new(textures.controlarrows)
 	controlarrows:setScale(1, 1)
 	self:addChild(controlarrows)
 	local textureW = controlarrows:getWidth()
@@ -274,12 +274,12 @@ function ArenaArena:gameOver()
 	gameOverTextBox:setTextColor(0x3c78a0)
 	gameOverTextBox:setPosition(0.5*WX - gameOverTextBox:getWidth()/2, 0.25*WY + gameOverTextBox:getHeight()/2)
 	
-	local againBut = MenuBut.new(textures.againBut, 150, 40)
+	local againBut = MenuBut.new(150, 40, textures.againBut, textures.againBut1)
 	againBut.bitmap:setPosition(WX/2, WY/2 + 100)
-	local returnBut = MenuBut.new(textures.returnBut, 150, 40)
-	returnBut.bitmap:setPosition(returnBut:getWidth()/2 + 10, WY/2 + 210)
+	local exitBut = MenuBut.new(150, 40, textures.exitBut, textures.exitBut1)
+	exitBut.bitmap:setPosition(exitBut:getWidth()/2 + 10, WY/2 + 210)
 	
-	againBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
+	againBut:addEventListener(Event.TOUCHES_END, function(event)
 		if againBut:hitTestPoint(event.touch.x, event.touch.y) then
 			stage:removeChild(gameOverTextBox)
 			stage:removeChild(returnBut)
@@ -298,8 +298,8 @@ function ArenaArena:gameOver()
 		end
 	end)
 	
-	returnBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
-		if returnBut:hitTestPoint(event.touch.x, event.touch.y) then
+	exitBut:addEventListener(Event.TOUCHES_END, function(event)
+		if exitBut:hitTestPoint(event.touch.x, event.touch.y) then
 			event:stopPropagation()
 			Timer.resumeAll()
 			Timer.stopAll()
@@ -413,7 +413,7 @@ function ArenaArena:init(dataTable)
 	classTextAI:setPosition(WX - classTextAI:getWidth() - 16, 50)
 	
 	-- Continue as usual --
-	self.bitmap = textures.pongbg
+	self.bitmap = Bitmap.new(textures.pongbg)
 	self.bitmap:setScale(1, 1)
 	self.difFactor = difficulty/5
 	self:addChild(self.bitmap)

@@ -19,8 +19,7 @@ function MainMenu_Arena:init()
 	self.font = fonts.arialroundedSmall
 	self.smallfont = fonts.arialroundedVerySmall
 	
-	-- If the same bg as the main menu one is used, weird stuff happens --
-	local menubg = textures.mainmenubg2
+	local menubg = Bitmap.new(textures.mainmenubg)
 	menubg:setScale(1, 1)
 	self:addChild(menubg)
 	local textureW = menubg:getWidth()
@@ -29,39 +28,41 @@ function MainMenu_Arena:init()
 	
 	-- Difficulty Selection --
 	local difTextBox = TextField.new(self.font, "Difficulty:")
-	difTextBox:setTextColor(0x000000)
+	difTextBox:setTextColor(0xffffff)
 	difTextBox:setPosition(0.5*WX - difTextBox:getWidth()/2, 0.5*WY + 90)
 	self:addChild(difTextBox)
 	
 	local difficulty = 5
 	local numTextBox = TextField.new(self.font, tostring(difficulty))
-	numTextBox:setTextColor(0x000000)
+	numTextBox:setTextColor(0xffffff)
 	numTextBox:setPosition(0.5*WX - numTextBox:getWidth()/2, 0.5*WY + 145)
 	self:addChild(numTextBox)
 	
-	self.decDif = MenuBut.new(textures.minusBut, 40, 40)
+	self.decDif = MenuBut.new(40, 40, textures.minusBut, textures.minusBut1)
 	self:addChild(self.decDif)
 	self.decDif.bitmap:setPosition(WX/2 - 60, WY/2 + 130)
-	self.decDif:addEventListener(Event.TOUCHES_BEGIN, function(event)
+	self.decDif:addEventListener(Event.TOUCHES_END, function(event)
 		if self.decDif:hitTestPoint(event.touch.x, event.touch.y) then
 			difficulty = difficulty - 1
 			if difficulty < 1 then difficulty = 1 end
 			self:removeChild(numTextBox)
 			numTextBox = TextField.new(self.font, tostring(difficulty))
+			numTextBox:setTextColor(0xffffff)
 			numTextBox:setPosition(0.5*WX - numTextBox:getWidth()/2, 0.5*WY + 145)
 			self:addChild(numTextBox)
 		end
 	end)
 	
-	self.incDif = MenuBut.new(textures.plusBut, 40, 40)
+	self.incDif = MenuBut.new(40, 40, textures.plusBut, textures.plusBut1)
 	self:addChild(self.incDif)
 	self.incDif.bitmap:setPosition(WX/2 + 60, WY/2 + 130)
-	self.incDif:addEventListener(Event.TOUCHES_BEGIN, function(event)
+	self.incDif:addEventListener(Event.TOUCHES_END, function(event)
 		if self.incDif:hitTestPoint(event.touch.x, event.touch.y) then
 			difficulty = difficulty + 1
 			if difficulty > 10 then difficulty = 10 end
 			self:removeChild(numTextBox)
 			numTextBox = TextField.new(self.font, tostring(difficulty))
+			numTextBox:setTextColor(0xffffff)
 			numTextBox:setPosition(0.5*WX - numTextBox:getWidth()/2, 0.5*WY + 145)
 			self:addChild(numTextBox)
 		end
@@ -100,19 +101,19 @@ function MainMenu_Arena:init()
 	
 	-- Class Selection --
 	local classTextBox = TextField.new(self.font, "Class:")
-	classTextBox:setTextColor(0x000000)
+	classTextBox:setTextColor(0xffffff)
 	classTextBox:setPosition(192 - classTextBox:getWidth()/2, 0.5*WY - 30)
 	self:addChild(classTextBox)
 	
 	local classIndex = 1
 	local class = "Warrior"
 	local selClassTextBox = TextField.new(self.font, class)
-	selClassTextBox:setTextColor(0x000000)
+	selClassTextBox:setTextColor(0xffffff)
 	selClassTextBox:setPosition(192 - selClassTextBox:getWidth()/2, 0.5*WY + 15)
 	self:addChild(selClassTextBox)
 	
 	local selSkillTextBox = TextField.new(self.smallfont, classSkill[classIndex]..": "..classSkillDesc[classIndex])
-	selSkillTextBox:setTextColor(0x000000)
+	selSkillTextBox:setTextColor(0xffffff)
 	selSkillTextBox:setPosition(192 - selSkillTextBox:getWidth()/2, 0.5*WY + 40)
 	self:addChild(selSkillTextBox)
 	
@@ -122,26 +123,27 @@ function MainMenu_Arena:init()
 					"Skl: "..classSkl[1].."\n"..
 					"Def: "..classDef[1].."\n"
 	local statsTextBox = TextWrap.new(stats, 64, "center", 5, self.smallfont)
-	statsTextBox:setTextColor(0x000000)
+	statsTextBox:setTextColor(0xffffff)
 	statsTextBox:setPosition(192 - statsTextBox:getWidth()/2, 0.5*WY + 70)
 	self:addChild(statsTextBox)
 	
-	self.prevBut = MenuBut.new(textures.backBut, 40, 40)
+	self.prevBut = MenuBut.new(40, 40, textures.backBut, textures.backBut1)
 	self:addChild(self.prevBut)
 	self.prevBut.bitmap:setPosition(32, WY/2)
-	self.prevBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
+	self.prevBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.prevBut:hitTestPoint(event.touch.x, event.touch.y) then
 			classIndex = classIndex - 1
 			if classIndex < 1 then classIndex = tablelength(classNames) end
 			self:removeChild(selClassTextBox)
 			class = classNames[classIndex]
 			selClassTextBox = TextField.new(self.font, class)
+			selClassTextBox:setTextColor(0xffffff)
 			selClassTextBox:setPosition(192 - selClassTextBox:getWidth()/2, 0.5*WY + 15)
 			self:addChild(selClassTextBox)
 			
 			self:removeChild(selSkillTextBox)
 			selSkillTextBox = TextField.new(self.smallfont, classSkill[classIndex]..": "..classSkillDesc[classIndex])
-			selSkillTextBox:setTextColor(0x000000)
+			selSkillTextBox:setTextColor(0xffffff)
 			selSkillTextBox:setPosition(192 - selSkillTextBox:getWidth()/2, 0.5*WY + 40)
 			self:addChild(selSkillTextBox)
 			
@@ -152,28 +154,29 @@ function MainMenu_Arena:init()
 					"Skl: "..classSkl[classIndex].."\n"..
 					"Def: "..classDef[classIndex].."\n"
 			statsTextBox = TextWrap.new(stats, 64, "center", 5, self.smallfont)
-			statsTextBox:setTextColor(0x000000)
+			statsTextBox:setTextColor(0xffffff)
 			statsTextBox:setPosition(192 - statsTextBox:getWidth()/2, 0.5*WY + 70)
 			self:addChild(statsTextBox)
 		end
 	end)
 	
-	self.nextBut = MenuBut.new(textures.forwardBut, 40, 40)
+	self.nextBut = MenuBut.new(40, 40, textures.forwardBut, textures.forwardBut1)
 	self:addChild(self.nextBut)
 	self.nextBut.bitmap:setPosition(342, WY/2)
-	self.nextBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
+	self.nextBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.nextBut:hitTestPoint(event.touch.x, event.touch.y) then
 			classIndex = classIndex + 1
 			if classIndex > tablelength(classNames) then classIndex = 1 end
 			self:removeChild(selClassTextBox)
 			class = classNames[classIndex]
 			selClassTextBox = TextField.new(self.font, class)
+			selClassTextBox:setTextColor(0xffffff)
 			selClassTextBox:setPosition(192 - selClassTextBox:getWidth()/2, 0.5*WY + 15)
 			self:addChild(selClassTextBox)
 			
 			self:removeChild(selSkillTextBox)
 			selSkillTextBox = TextField.new(self.smallfont, classSkill[classIndex]..": "..classSkillDesc[classIndex])
-			selSkillTextBox:setTextColor(0x000000)
+			selSkillTextBox:setTextColor(0xffffff)
 			selSkillTextBox:setPosition(192 - selSkillTextBox:getWidth()/2, 0.5*WY + 40)
 			self:addChild(selSkillTextBox)
 			
@@ -184,7 +187,7 @@ function MainMenu_Arena:init()
 					"Skl: "..classSkl[classIndex].."\n"..
 					"Def: "..classDef[classIndex].."\n"
 			statsTextBox = TextWrap.new(stats, 64, "center", 5, self.smallfont)
-			statsTextBox:setTextColor(0x000000)
+			statsTextBox:setTextColor(0xffffff)
 			statsTextBox:setPosition(192 - statsTextBox:getWidth()/2, 0.5*WY + 70)
 			self:addChild(statsTextBox)
 		end
@@ -192,19 +195,19 @@ function MainMenu_Arena:init()
 	
 	
 	local classTextBoxAI = TextField.new(self.font, "Enemy Class:")
-	classTextBoxAI:setTextColor(0x000000)
+	classTextBoxAI:setTextColor(0xffffff)
 	classTextBoxAI:setPosition(WX - 192 - classTextBoxAI:getWidth()/2, 0.5*WY - 30)
 	self:addChild(classTextBoxAI)
 	
 	local classIndexAI = 1
 	local classAI = "Warrior"
 	local selClassTextBoxAI = TextField.new(self.font, classAI)
-	selClassTextBoxAI:setTextColor(0x000000)
+	selClassTextBoxAI:setTextColor(0xffffff)
 	selClassTextBoxAI:setPosition(WX - 192 - selClassTextBoxAI:getWidth()/2, 0.5*WY + 15)
 	self:addChild(selClassTextBoxAI)
 	
 	local selSkillTextBoxAI = TextField.new(self.smallfont, classSkill[classIndexAI]..": "..classSkillDesc[classIndexAI])
-	selSkillTextBoxAI:setTextColor(0x000000)
+	selSkillTextBoxAI:setTextColor(0xffffff)
 	selSkillTextBoxAI:setPosition(WX - 192 - selSkillTextBoxAI:getWidth()/2, 0.5*WY + 40)
 	self:addChild(selSkillTextBoxAI)
 	
@@ -215,26 +218,27 @@ function MainMenu_Arena:init()
 			"Skl: "..classSkl[1].."\n"..
 			"Def: "..classDef[1].."\n"
 	local statsTextBoxAI = TextWrap.new(statsAI, 64, "center", 5, self.smallfont)
-	statsTextBoxAI:setTextColor(0x000000)
+	statsTextBoxAI:setTextColor(0xffffff)
 	statsTextBoxAI:setPosition(WX - 192 - statsTextBoxAI:getWidth()/2, 0.5*WY + 70)
 	self:addChild(statsTextBoxAI)
 	
-	self.prevButAI = MenuBut.new(textures.backBut2, 40, 40)
+	self.prevButAI = MenuBut.new(40, 40, textures.backBut, textures.backBut1)
 	self:addChild(self.prevButAI)
 	self.prevButAI.bitmap:setPosition(WX - 342, WY/2)
-	self.prevButAI:addEventListener(Event.TOUCHES_BEGIN, function(event)
+	self.prevButAI:addEventListener(Event.TOUCHES_END, function(event)
 		if self.prevButAI:hitTestPoint(event.touch.x, event.touch.y) then
 			classIndexAI = classIndexAI - 1
 			if classIndexAI < 1 then classIndexAI = tablelength(classNames) end
 			self:removeChild(selClassTextBoxAI)
 			classAI = classNames[classIndexAI]
 			selClassTextBoxAI = TextField.new(self.font, classAI)
+			selClassTextBoxAI:setTextColor(0xffffff)
 			selClassTextBoxAI:setPosition(WX - 192 - selClassTextBoxAI:getWidth()/2, 0.5*WY + 15)
 			self:addChild(selClassTextBoxAI)
 			
 			self:removeChild(selSkillTextBoxAI)
 			selSkillTextBoxAI = TextField.new(self.smallfont, classSkill[classIndexAI]..": "..classSkillDesc[classIndexAI])
-			selSkillTextBoxAI:setTextColor(0x000000)
+			selSkillTextBoxAI:setTextColor(0xffffff)
 			selSkillTextBoxAI:setPosition(WX - 192 - selSkillTextBoxAI:getWidth()/2, 0.5*WY + 40)
 			self:addChild(selSkillTextBoxAI)
 			
@@ -245,28 +249,29 @@ function MainMenu_Arena:init()
 						"Skl: "..classSkl[classIndexAI].."\n"..
 						"Def: "..classDef[classIndexAI].."\n"
 			statsTextBoxAI = TextWrap.new(statsAI, 64, "center", 5, self.smallfont)
-			statsTextBoxAI:setTextColor(0x000000)
+			statsTextBoxAI:setTextColor(0xffffff)
 			statsTextBoxAI:setPosition(WX - 192 - statsTextBoxAI:getWidth()/2, 0.5*WY + 70)
 			self:addChild(statsTextBoxAI)
 		end
 	end)
 	
-	self.nextButAI = MenuBut.new(textures.forwardBut2, 40, 40)
+	self.nextButAI = MenuBut.new(40, 40, textures.forwardBut, textures.forwardBut1)
 	self:addChild(self.nextButAI)
 	self.nextButAI.bitmap:setPosition(WX - 32, WY/2)
-	self.nextButAI:addEventListener(Event.TOUCHES_BEGIN, function(event)
+	self.nextButAI:addEventListener(Event.TOUCHES_END, function(event)
 		if self.nextButAI:hitTestPoint(event.touch.x, event.touch.y) then
 			classIndexAI = classIndexAI + 1
 			if classIndexAI > tablelength(classNames) then classIndexAI = 1 end
 			self:removeChild(selClassTextBoxAI)
 			classAI = classNames[classIndexAI]
 			selClassTextBoxAI = TextField.new(self.font, classAI)
+			selClassTextBoxAI:setTextColor(0xffffff)
 			selClassTextBoxAI:setPosition(WX - 192 - selClassTextBoxAI:getWidth()/2, 0.5*WY + 15)
 			self:addChild(selClassTextBoxAI)
 			
 			self:removeChild(selSkillTextBoxAI)
 			selSkillTextBoxAI = TextField.new(self.smallfont, classSkill[classIndexAI]..": "..classSkillDesc[classIndexAI])
-			selSkillTextBoxAI:setTextColor(0x000000)
+			selSkillTextBoxAI:setTextColor(0xffffff)
 			selSkillTextBoxAI:setPosition(WX - 192 - selSkillTextBoxAI:getWidth()/2, 0.5*WY + 40)
 			self:addChild(selSkillTextBoxAI)
 			
@@ -277,26 +282,26 @@ function MainMenu_Arena:init()
 						"Skl: "..classSkl[classIndexAI].."\n"..
 						"Def: "..classDef[classIndexAI].."\n"
 			statsTextBoxAI = TextWrap.new(statsAI, 64, "center", 5, self.smallfont)
-			statsTextBoxAI:setTextColor(0x000000)
+			statsTextBoxAI:setTextColor(0xffffff)
 			statsTextBoxAI:setPosition(WX - 192 - statsTextBoxAI:getWidth()/2, 0.5*WY + 70)
 			self:addChild(statsTextBoxAI)
 		end
 	end)
 	
 	-- Go or return --
-	self.goBut = MenuBut.new(textures.goBut, 150, 40)
+	self.goBut = MenuBut.new(150, 40, textures.goBut, textures.goBut1)
 	self:addChild(self.goBut)
 	self.goBut.bitmap:setPosition(WX/2, WY/2 + 190)
-	self.goBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
+	self.goBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.goBut:hitTestPoint(event.touch.x, event.touch.y) then
 			sceneMan:changeScene("arena", transTime, SceneManager.fade, easing.linear, { userData = {difficulty, class, classAI} }) 
 		end
 	end)
 	
-	self.returnBut = MenuBut.new(textures.returnBut, 150, 40)
+	self.returnBut = MenuBut.new(150, 40, textures.returnBut, textures.returnBut1)
 	self:addChild(self.returnBut)
 	self.returnBut.bitmap:setPosition(self.returnBut:getWidth()/2 + 10, WY/2 + 210)
-	self.returnBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
+	self.returnBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.returnBut:hitTestPoint(event.touch.x, event.touch.y) then
 			sceneMan:changeScene("mainMenu", transTime, SceneManager.fade, easing.linear) 
 		end

@@ -25,6 +25,25 @@
   <file source="audio/goal1.wav"/>
  </folder>
  <folder name="imgs">
+  <file source="imgs/help1.png"/>
+  <file source="imgs/arenaBut1.png"/>
+  <file source="imgs/survivalmodeBut1.png"/>
+  <file source="imgs/skillBut1.png"/>
+  <file source="imgs/returnBut1.png"/>
+  <file source="imgs/restartBut1.png"/>
+  <file source="imgs/plusBut1.png"/>
+  <file source="imgs/optionsBut1.png"/>
+  <file source="imgs/minusBut1.png"/>
+  <file source="imgs/menuBut1.png"/>
+  <file source="imgs/goBut1.png"/>
+  <file source="imgs/gear1.png"/>
+  <file source="imgs/forwardBut1.png"/>
+  <file source="imgs/exitBut1.png"/>
+  <file source="imgs/classicmodeBut1.png"/>
+  <file source="imgs/backBut1.png"/>
+  <file source="imgs/againBut1.png"/>
+  <file source="imgs/careermodeBut1.png"/>
+  <file source="imgs/restartBut.png"/>
   <file source="imgs/help_interface.png"/>
   <file source="imgs/black.png"/>
   <file source="imgs/help.png"/>

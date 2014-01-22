@@ -85,7 +85,7 @@ end
 
 -- Initialize --
 function Ball:init(difFactor)
-	self.bitmap = textures.pongball
+	self.bitmap = Bitmap.new(textures.pongball)
 	self.bitmap:setScale(1, 1)
 	self.difFactor = difFactor
 	self.baseSpeed = self.baseSpeed*(0.7 + self.difFactor*0.9)

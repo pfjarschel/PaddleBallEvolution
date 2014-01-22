@@ -9,7 +9,7 @@ function Splash:init()
 	gc()
 	
 	self.font = fonts.arialroundedSmall
-	local bg = textures.splash
+	local bg = Bitmap.new(textures.splash)
 	bg:setScale(1, 1)
 	self:addChild(bg)
 	local textureW = bg:getWidth()

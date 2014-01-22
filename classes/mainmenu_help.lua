@@ -12,16 +12,16 @@ function MainMenu_Help:init()
 	self.biggerfont = fonts.arialroundedMed
 	
 	local bgs = {}
-	bgs[1] = textures.black
+	bgs[1] = Bitmap.new(textures.black)
 	bgs[1]:setScale(1, 1)
 	self:addChild(bgs[1])
 	local textureW = bgs[1]:getWidth()
 	local textureH = bgs[1]:getHeight()
 	bgs[1]:setScale(WX/textureW, WY/textureH)
-	bgs[2] = textures.black
-	bgs[3] = textures.interface
-	bgs[4] = textures.black
-	bgs[5] = textures.black
+	bgs[2] = Bitmap.new(textures.black)
+	bgs[3] = Bitmap.new(textures.interface)
+	bgs[4] = Bitmap.new(textures.black)
+	bgs[5] = Bitmap.new(textures.black)
 	
 	local helptitles = {}
 	local helpstrings = {}
@@ -59,10 +59,10 @@ function MainMenu_Help:init()
 	helptext:setPosition(WX/2 - helptext:getWidth()/2, 32 + 2.5*helptitle:getHeight())
 	self:addChild(helptext)
 	
-	self.prevBut = MenuBut.new(textures.backBut, 40, 40)
+	self.prevBut = MenuBut.new(40, 40, textures.backBut, textures.backBut1)
 	self:addChild(self.prevBut)
 	self.prevBut.bitmap:setPosition(WX - self.prevBut:getWidth()*3, WY/2 + 210)
-	self.prevBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
+	self.prevBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.prevBut:hitTestPoint(event.touch.x, event.touch.y) then
 			self:removeChild(bgs[self.page])
 			self:removeChild(helptitle)
@@ -93,10 +93,10 @@ function MainMenu_Help:init()
 		end
 	end)
 	
-	self.nextBut = MenuBut.new(textures.forwardBut, 40, 40)
+	self.nextBut = MenuBut.new(40, 40, textures.forwardBut, textures.forwardBut1)
 	self:addChild(self.nextBut)
 	self.nextBut.bitmap:setPosition(WX - self.nextBut:getWidth(), WY/2 + 210)
-	self.nextBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
+	self.nextBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.nextBut:hitTestPoint(event.touch.x, event.touch.y) then
 			self:removeChild(bgs[self.page])
 			self:removeChild(helptitle)
@@ -127,10 +127,10 @@ function MainMenu_Help:init()
 		end
 	end)
 	
-	self.returnBut = MenuBut.new(textures.returnBut, 150, 40)
+	self.returnBut = MenuBut.new(150, 40, textures.returnBut, textures.returnBut1)
 	self:addChild(self.returnBut)
 	self.returnBut.bitmap:setPosition(self.returnBut:getWidth()/2 + 10, WY/2 + 210)
-	self.returnBut:addEventListener(Event.TOUCHES_BEGIN, function(event)
+	self.returnBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.returnBut:hitTestPoint(event.touch.x, event.touch.y) then
 			sceneMan:changeScene("mainMenu", transTime, SceneManager.fade, easing.linear) 
 		end

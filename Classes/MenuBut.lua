@@ -10,10 +10,8 @@ MenuBut.width = 40
 MenuBut.height = 40
 
 -- Initialize according to given bitmap --
-function MenuBut:init(texture, width, height)
-	self.bitmap = texture
-	self.width = width
-	self.height = height
+function MenuBut:init(width, height, texture_normal, texture_pressed)
+	self.bitmap = Bitmap.new(texture_normal)
 	
 	-- Texture loader requires this reinitialization transform (because of passing values by reference) --
 	self.bitmap:setScale(1, 1)
@@ -22,5 +20,14 @@ function MenuBut:init(texture, width, height)
 	local textureW = self.bitmap:getWidth()
 	local textureH = self.bitmap:getHeight()
 	self.bitmap:setAnchorPoint(0.5, 0.5)
-	self.bitmap:setScale(self.width/textureW, self.height/textureH)
+	self.bitmap:setScale(width/textureW, height/textureH)
+	
+	self:addEventListener(Event.TOUCHES_BEGIN, function(event)
+		if self:hitTestPoint(event.touch.x, event.touch.y) then
+			self.bitmap:setTexture(texture_pressed)
+		end
+	end)
+	self:addEventListener(Event.TOUCHES_END, function(event)
+		self.bitmap:setTexture(texture_normal)
+	end)
 end

@@ -97,8 +97,7 @@ function Paddle:init(side, atkFactor, defFactor)
 	self.defFactor = defFactor
 	self.paddleH = self.paddleH*defFactor
 	
-	-- Has to load separatedly from other textures (transforms? I don't know =/) --
-	self.bitmap = Bitmap.new(Texture.new("imgs/paddle2.png"))
+	self.bitmap = Bitmap.new(textures.paddle)
 	
 	self.bitmap:setScale(1, 1)
 	self:addChild(self.bitmap)
