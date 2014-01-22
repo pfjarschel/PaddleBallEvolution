@@ -41,6 +41,9 @@ function Player:aiMove()
 		local padX, padY = self.paddle.body:getPosition()
 		local ballDist = math.sqrt(math.pow(padX - ballX, 2) + math.pow(padY - ballY, 2))
 		local ballVx, ballVy = arena.ball.body:getLinearVelocity()
+		local ballVx0 = ballVx
+		local ballVy0 = ballVy
+		local ballV0 = math.sqrt(ballVx*ballVx + ballVy*ballVy)
 		if ballVy == 0 then
 			ballVy = 0.001
 		end
@@ -85,7 +88,7 @@ function Player:aiMove()
 			-- Applies velocity proportional to the difference between paddle Y position and prediction. --
 			-- The random factor starts very big and gets smaller when ball approaches paddle            --
 			-----------------------------------------------------------------------------------------------
-			local deltaY = predictY - padY + (ballDist/250)*self.randomFactor
+			local deltaY = predictY - padY + (ballDist*math.abs(ballVy0/ballV0)/100)*self.randomFactor
 			self.paddle.body:setLinearVelocity(0, self.char.movFactor*(deltaY/maxdelta)*arena.ball.baseSpeed)
 		
 		-- Same thing, to the other side --
@@ -111,7 +114,7 @@ function Player:aiMove()
 				predictY = -self.correctAIY + WY - math.abs(ballVy)*(ballX - padX + self.paddle.paddleW/2 + arena.ball.radius)/math.abs(ballVx)
 			end
 			
-			local deltaY = predictY - padY + (ballDist/250)*self.randomFactor
+			local deltaY = predictY - padY + (ballDist*math.abs(ballVy0/ballV0)/100)*self.randomFactor
 			self.paddle.body:setLinearVelocity(0, self.char.movFactor*(deltaY/maxdelta)*arena.ball.baseSpeed)
 		
 		-- If ball is not moving towards paddle, move paddle to the position opposite to opponent --

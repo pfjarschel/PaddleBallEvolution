@@ -50,9 +50,10 @@ function Ball:createBody()
 		
 		local ballVx, ballVy = self:getLinearVelocity()
 		if ballVx == 0 then ballVx = 0.01 end
-		if math.abs(ballVy)/math.abs(ballVx) > 4 then
-			local setBallVy = 0.97*(math.abs(ballVy)/ballVy)*self.baseSpeed
-			local setBallVx = (math.abs(ballVx)/ballVx)*math.sqrt(self.baseSpeed*self.baseSpeed - setBallVy*setBallVy)
+		local ballV = math.sqrt(ballVx*ballVx + ballVy*ballVy)
+		if math.abs(ballVy/ballV) > 0.97 then
+			local setBallVy = 0.97*(math.abs(ballVy)/ballVy)*ballV
+			local setBallVx = (math.abs(ballVx)/ballVx)*math.sqrt(ballV*ballV - setBallVy*setBallVy)
 			self:setLinearVelocity(setBallVx, setBallVy)
 		end
 	end

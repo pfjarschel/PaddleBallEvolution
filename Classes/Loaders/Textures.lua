@@ -50,8 +50,8 @@ function TextureLoader:init()
 	self.careermodeBut = Texture.new("imgs/careermodeBut.png")
 	self.careermodeBut1 = Texture.new("imgs/careermodeBut1.png")
 	
-	self.arenaBut = Texture.new("imgs/arenaBut.png")
-	self.arenaBut1 = Texture.new("imgs/arenaBut1.png")
+	self.arenaBut = Texture.new("imgs/arenamodeBut.png")
+	self.arenaBut1 = Texture.new("imgs/arenamodeBut1.png")
 	
 	self.optionsBut = Texture.new("imgs/gear.png")
 	self.optionsBut1 = Texture.new("imgs/gear1.png")
@@ -67,7 +67,7 @@ function TextureLoader:init()
 	
 	self.black = Texture.new("imgs/black.png")
 	
-	self.interface = Texture.new("imgs/help_interface.png")
+	self.interface = Texture.new("imgs/interface.png")
 	
 	self.paddle = Texture.new("imgs/paddle2.png")
 	
