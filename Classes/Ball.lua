@@ -72,10 +72,11 @@ end
 -- Launch Ball --
 function Ball:launch()
 	local vx0 = 0
-	while math.abs(vx0) < self.baseSpeed/4 do 
-		vx0 = math.random(-self.baseSpeed*0.8, self.baseSpeed*0.8)
+	local launchSpeed = 2*self.baseSpeed/3
+	while math.abs(vx0) < launchSpeed/4 do 
+		vx0 = math.random(-launchSpeed*0.8, launchSpeed*0.8)
 	end
-	local vy0 = math.sqrt(self.baseSpeed*self.baseSpeed - vx0*vx0)
+	local vy0 = math.sqrt(launchSpeed*launchSpeed - vx0*vx0)
 	local direction = math.pow(-1, math.random(1,10000))
 	local launchTime = math.random(300, 3000)
 	Timer.delayedCall(launchTime, function ()

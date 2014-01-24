@@ -34,7 +34,7 @@ function MainMenu_Arena:init()
 	difTextBox:setPosition(0.5*WX - difTextBox:getWidth()/2, 0.5*WY + 90)
 	self:addChild(difTextBox)
 	
-	local difficulty = 5
+	local difficulty = optionsTable["Difficulty"]
 	local numTextBox = TextField.new(self.font, tostring(difficulty))
 	numTextBox:setTextColor(0xffffff)
 	numTextBox:setPosition(0.5*WX - numTextBox:getWidth()/2, 0.5*WY + 140)
@@ -47,6 +47,7 @@ function MainMenu_Arena:init()
 		if self.decDif:hitTestPoint(event.touch.x, event.touch.y) then
 			difficulty = difficulty - 1
 			if difficulty < 1 then difficulty = 1 end
+			optionsTable["Difficulty"] = difficulty
 			self:removeChild(numTextBox)
 			numTextBox = TextField.new(self.font, tostring(difficulty))
 			numTextBox:setTextColor(0xffffff)
@@ -64,6 +65,7 @@ function MainMenu_Arena:init()
 		if self.incDif:hitTestPoint(event.touch.x, event.touch.y) then
 			difficulty = difficulty + 1
 			if difficulty > 10 then difficulty = 10 end
+			optionsTable["Difficulty"] = difficulty
 			self:removeChild(numTextBox)
 			numTextBox = TextField.new(self.font, tostring(difficulty))
 			numTextBox:setTextColor(0xffffff)
@@ -319,6 +321,10 @@ function MainMenu_Arena:init()
 	self.goBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.goBut:hitTestPoint(event.touch.x, event.touch.y) then
 			if optionsTable["SFX"] == "On" then sounds.sel2:play() end
+			local optionsFile = io.open("|D|options.txt", "w+")
+			for k, v in pairs(optionsTable) do 
+				optionsFile:write(k.."="..v.."\n")
+			end	
 			sceneMan:changeScene("arena", transTime, SceneManager.fade, easing.linear, { userData = {difficulty, class, classAI} }) 
 		end
 	end)
@@ -329,7 +335,10 @@ function MainMenu_Arena:init()
 	self.returnBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.returnBut:hitTestPoint(event.touch.x, event.touch.y) then
 			if optionsTable["SFX"] == "On" then sounds.sel3:play() end
-			
+			local optionsFile = io.open("|D|options.txt", "w+")
+			for k, v in pairs(optionsTable) do 
+				optionsFile:write(k.."="..v.."\n")
+			end	
 			sceneMan:changeScene("mainMenu", transTime, SceneManager.fade, easing.linear) 
 		end
 	end)

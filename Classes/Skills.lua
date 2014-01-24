@@ -586,7 +586,46 @@ function Skills:start(side)
 	end
 	
 	
-	
+--------------------------------------------------------
+-- PowerShot: The next ball return will be VERY fast! --
+--------------------------------------------------------
+	if self.skill == "freeze" then
+		if optionsTable["SFX"] == "On" then sounds.powerup2:play() end
+		
+		if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then
+			arena.skillBut:setAlpha(0.1)
+		end
+		
+		-- Freezes opponent --
+		if side == 0 then
+			arena.rightPlayer.char.movFactor = 0
+		else
+			arena.leftPlayer.char.movFactor = 0
+		end
+		
+		-- Action to end skill --
+		self.endAction = function()
+			if side == 0 then
+				arena.rightPlayer.char:updateAttr()
+				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
+					arena.skillBut:setAlpha(0.4)
+				end
+				arena.leftPlayer.skillActive = false
+			else
+				arena.leftPlayer.char:updateAttr()
+				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
+					arena.skillBut:setAlpha(0.4)
+				end
+				arena.rightPlayer.skillActive = false
+			end
+		end
+		
+		-- Sets timer to end skill --
+		Timer.delayedCall(self.basetime/5,  function()
+			self:endAction() 
+			if optionsTable["SFX"] == "On" then sounds.powerup2over:play() end
+		end)
+	end	
 	
 	
 end

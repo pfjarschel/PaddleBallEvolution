@@ -34,21 +34,21 @@ end
 function Char:init(class)
 	if class == "classic" then
 		self.atk = 10
-		self.mov = 19
+		self.mov = 20
 		self.lif = 10
 		self.int = 10
 		self.skl = 10
 		self.def = 10
 	elseif class == "survivalLeft" then
 		self.atk = 1
-		self.mov = 19
+		self.mov = 20
 		self.lif = 10
 		self.int = 10
 		self.skl = 10
 		self.def = 30
 	elseif class == "survivalRight" then
 		self.atk = 1
-		self.mov = 19
+		self.mov = 20
 		self.lif = 10
 		self.int = 1
 		self.skl = 10

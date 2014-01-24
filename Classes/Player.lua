@@ -27,9 +27,9 @@ Player.AITarget = nil
 ---------------------------------------------------------------------------------------
 function Player:aiRandomFactor()
 	if self.char.defFactor < 1 then
-		self.randomFactor = (3.2 - self.difFactor*1.2)*self.char.intFactor*math.random(-self.paddle.paddleH/2, self.paddle.paddleH/2)/self.char.defFactor
+		self.randomFactor = (3.2 - self.difFactor*1)*self.char.intFactor*math.random(-self.paddle.paddleH/2, self.paddle.paddleH/2)/self.char.defFactor
 	else
-		self.randomFactor = (3.2 - self.difFactor*1.2)*self.char.intFactor*math.random(-self.paddle.paddleH/2, self.paddle.paddleH/2)
+		self.randomFactor = (3.2 - self.difFactor*1)*self.char.intFactor*math.random(-self.paddle.paddleH/2, self.paddle.paddleH/2)
 	end
 end
 
@@ -89,7 +89,7 @@ function Player:aiMove()
 			-- Applies velocity proportional to the difference between paddle Y position and prediction. --
 			-- The random factor starts very big and gets smaller when ball approaches paddle            --
 			-----------------------------------------------------------------------------------------------
-			local deltaY = predictY - padY + (ballDist*math.abs(ballVy0/ballV0)/100)*self.randomFactor
+			local deltaY = predictY - padY + (ballDist*math.abs(ballVy0/ballV0)/120)*self.randomFactor
 			self.paddle.body:setLinearVelocity(0, self.char.movFactor*(deltaY/maxdelta)*self.AITarget.baseSpeed)
 
 		-- Same thing, to the other side --
@@ -115,7 +115,7 @@ function Player:aiMove()
 				predictY = -self.correctAIY + WY - math.abs(ballVy)*(ballX - padX + self.paddle.paddleW/2 + self.AITarget.radius)/math.abs(ballVx)
 			end
 			
-			local deltaY = predictY - padY + (ballDist*math.abs(ballVy0/ballV0)/100)*self.randomFactor
+			local deltaY = predictY - padY + (ballDist*math.abs(ballVy0/ballV0)/120)*self.randomFactor
 			self.paddle.body:setLinearVelocity(0, self.char.movFactor*(deltaY/maxdelta)*self.AITarget.baseSpeed)
 		-- If ball is not moving towards paddle, move paddle to the position opposite to opponent --
 		else

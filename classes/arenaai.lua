@@ -44,6 +44,9 @@ function ArenaAI:basicCall()
 		if self.class == "Illusionist" then
 			self:Illusionist()
 		end
+		if self.class == "Ice Man" then
+			self:IceMan()
+		end
 	end
 end
 function ArenaAI:initSkill()
@@ -209,4 +212,19 @@ function ArenaAI:Illusionist()
 	end
 end
 
+
+-------------
+-- Ice Man --
+-------------
+function ArenaAI:IceMan()
+	-- Activate only when ball is moving away from him --
+	local ballVx, ballVy = arena.ball.body:getLinearVelocity()
+	--local ballX = arena.ball.body:getPosition()
+	if self.side*ballVx < 0 then
+		local num = math.random(1, self.chance/4)
+		if num == 1 then
+			self:initSkill()
+		end
+	end
+end
 

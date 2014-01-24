@@ -104,3 +104,15 @@ classTable["Illusionist"] = {
 	"Multiball",
 	"Creates illusions to confuse the enemy"
 }
+
+classTable["Ice Man"] = {
+	15,
+	7,
+	8,
+	10,
+	12,
+	18,
+	"freeze",
+	"Freeze",
+	"Freezes your opponent for some time"
+}

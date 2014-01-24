@@ -6,3 +6,4 @@ optionsTable["ControlMode"] = "Touch"
 optionsTable["SFX"] = "On"
 optionsTable["Music"] = "On"
 optionsTable["ArenaSide"] = "Left"
+optionsTable["Difficulty"] = 5
