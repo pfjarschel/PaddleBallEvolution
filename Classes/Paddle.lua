@@ -98,7 +98,7 @@ function Paddle:init(side, atkFactor, defFactor)
 	self.defFactor = defFactor
 	self.paddleH = self.paddleH*defFactor
 	
-	self.bitmap = Bitmap.new(textures.paddle)
+	self.bitmap = Bitmap.new(textures.paddle2)
 	
 	self.bitmap:setScale(1, 1)
 	self:addChild(self.bitmap)
@@ -108,7 +108,7 @@ function Paddle:init(side, atkFactor, defFactor)
 	self:setPosition(XShift + 1.5*self.paddleW + side*(WX - self.paddleW*3), 0.5*WY)
 	self.bitmap:setScale(self.paddleW/self.textureW, self.paddleH/self.textureH)
 	self:setRotation(side*180)
-	self.bitmap:setColorTransform(math.random(300, 1000)/1000, math.random(300, 1000)/1000, math.random(300, 1000)/1000, 1)
+	self.bitmap:setColorTransform(math.random(400, 1000)/1000, math.random(400, 1000)/1000, math.random(400, 1000)/1000, 1)
 	self:createBody()
 	arena:addChild(self)
 end

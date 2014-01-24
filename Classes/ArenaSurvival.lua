@@ -168,7 +168,7 @@ function ArenaSurvival:addControlArrows()
 	else
 		controlarrows:setPosition(WX0 - controlarrows:getWidth(), WY/2 - controlarrows:getHeight()/2)
 	end
-	--controlarrows:setAlpha(0.4)
+	--controlarrows:setAlpha(0.75)
 	
 	controlarrows:addEventListener(Event.TOUCHES_BEGIN, function(event)
 		if not arena.paused and controlarrows:hitTestPoint(event.touch.x, event.touch.y) then

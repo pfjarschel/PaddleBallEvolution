@@ -69,7 +69,9 @@ function TextureLoader:init()
 	
 	self.interface = Texture.new("imgs/interface.png")
 	
-	self.paddle = Texture.new("imgs/paddle2.png")
+	self.paddle2 = Texture.new("imgs/paddle2.png")
+	self.paddle0 = Texture.new("imgs/paddle0.png")
+	self.paddle1 = Texture.new("imgs/paddle1.png")
 	
 	self.pongbg = Texture.new("imgs/pongbg.png")
 	

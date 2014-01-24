@@ -98,7 +98,7 @@ function Ball:init(difFactor)
 	self.bitmap:setAnchorPoint(0.5, 0.5)
 	self.bitmap:setScale(self.radius*2/textureW, self.radius*2/textureH)
 	self:setPosition(XShift + 0.5*WX, 0.5*WY)
-	self.bitmap:setColorTransform(math.random(400, 1000)/1000, math.random(400, 1000)/1000, math.random(400, 1000)/1000, 1)
+	self.bitmap:setColorTransform(math.random(500, 1000)/1000, math.random(500, 1000)/1000, math.random(500, 1000)/1000, 1)
 	self:createBody()
 	arena:addChild(self)
 end

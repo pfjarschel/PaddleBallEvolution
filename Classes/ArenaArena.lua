@@ -567,8 +567,8 @@ function ArenaArena:init(dataTable)
 		self.rightPlayer = Player.new(1, true, self.difFactor, self.rightClass)
 	end
 	
-	self.leftPlayer.paddle.bitmap:setColorTransform(self.leftPlayer.char.atk/30, self.leftPlayer.char.def/30, self.leftPlayer.char.mov/30, 1)
-	self.rightPlayer.paddle.bitmap:setColorTransform(self.rightPlayer.char.atk/30, self.rightPlayer.char.def/30, self.rightPlayer.char.mov/30, 1)
+	self.leftPlayer.paddle.bitmap:setColorTransform(0 + 1*self.leftPlayer.char.atk/30, 0 + 1*self.leftPlayer.char.def/30, 0 + 1*self.leftPlayer.char.mov/30, 1)
+	self.rightPlayer.paddle.bitmap:setColorTransform(0 + 1*self.rightPlayer.char.atk/30, 0 + 1*self.rightPlayer.char.def/30, 0 + 1*self.rightPlayer.char.mov/30, 1)
 	self.score0 = self.leftPlayer.char.lifFactor
 	self.score1 = self.rightPlayer.char.lifFactor
 	self.mp0 = self.leftPlayer.char.sklFactor

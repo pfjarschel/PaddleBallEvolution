@@ -1,5 +1,5 @@
 <project>
- <properties autorotation="0" encryptAssets="0" fps="60" scaleMode="5" mouseToTouch="1" iosDevice="0" packageName="com.blackandwhitecat.paddleball" logicalHeight="800" logicalWidth="480" mouseTouchOrder="0" encryptCode="0" retinaDisplay="0" touchToMouse="1" assetsOnly="0" orientation="1" architecture="1">
+ <properties autorotation="0" encryptAssets="0" fps="60" scaleMode="5" mouseToTouch="1" iosDevice="0" packageName="com.blackandwhitecat.paddleballevo" logicalHeight="800" logicalWidth="480" mouseTouchOrder="0" encryptCode="0" retinaDisplay="0" touchToMouse="1" assetsOnly="1" orientation="1" architecture="1">
   <imageScales>
    <scale suffix="@4x" scale="4"/>
    <scale suffix="@3x" scale="3"/>
@@ -9,6 +9,7 @@
    <scale suffix="@0.4x" scale="0.4"/>
   </imageScales>
  </properties>
+ <file source="icon_verybig.png"/>
  <file source="physics.lua"/>
  <file source="main.lua"/>
  <file source="init.lua"/>
