@@ -42,8 +42,8 @@ function ArenaClassic:createBoundaries()
 	
 	self.bounds.name = "bounds"
 	
-	local shapeT = b2.EdgeShape.new(-200, WBounds, WX + 200, WBounds)
-	local shapeB = b2.EdgeShape.new(-200, WY-WBounds, WX + 200, WY-WBounds)
+	local shapeT = b2.EdgeShape.new(-200, WBounds, WX0 + 200, WBounds)
+	local shapeB = b2.EdgeShape.new(-200, WY-WBounds, WX0 + 200, WY-WBounds)
 	
 	self.fixtureT = self.bounds:createFixture{
 		shape = shapeT, 
@@ -74,7 +74,7 @@ function ArenaClassic:openMenu()
 		
 		-- Adds Resume Button --
 		local resumeBut = MenuBut.new(150, 40, textures.returnBut, textures.returnBut1)
-		resumeBut.bitmap:setPosition(WX/2, WY/2 - 2*resumeBut:getHeight())
+		resumeBut.bitmap:setPosition(WX0/2, WY0/2 - 2*resumeBut:getHeight())
 		resumeBut:addEventListener(Event.TOUCHES_END, function(event)
 			if resumeBut:hitTestPoint(event.touch.x, event.touch.y) then
 				event:stopPropagation()
@@ -89,7 +89,7 @@ function ArenaClassic:openMenu()
 		
 		-- Adds Restart Button --
 		local restartBut = MenuBut.new(150, 40, textures.restartBut, textures.restartBut1)
-		restartBut.bitmap:setPosition(WX/2, WY/2)
+		restartBut.bitmap:setPosition(WX0/2, WY0/2)
 		restartBut:addEventListener(Event.TOUCHES_END, function(event)
 			if restartBut:hitTestPoint(event.touch.x, event.touch.y) then
 				event:stopPropagation()
@@ -112,7 +112,7 @@ function ArenaClassic:openMenu()
 		
 		-- Adds Quit Button --
 		local quitBut = MenuBut.new(150, 40, textures.exitBut, textures.exitBut1)
-		quitBut.bitmap:setPosition(WX/2, WY/2 + 2*quitBut:getHeight())
+		quitBut.bitmap:setPosition(WX0/2, WY0/2 + 2*quitBut:getHeight())
 		quitBut:addEventListener(Event.TOUCHES_END, function(event)
 			if quitBut:hitTestPoint(event.touch.x, event.touch.y) then
 				event:stopPropagation()
@@ -141,9 +141,9 @@ function ArenaClassic:addMenu()
 	-- Adds Menu Button --
 	local menuBut = MenuBut.new(60, 60, textures.menuBut, textures.menuBut1)
 	if optionsTable["ArenaSide"] == "Left" then
-		menuBut.bitmap:setPosition(WX - menuBut.bitmap:getWidth()/1.5, WY - menuBut.bitmap:getHeight())
+		menuBut.bitmap:setPosition(XShift + WX - menuBut.bitmap:getWidth()/1.5, WY - menuBut.bitmap:getHeight())
 	else
-		menuBut.bitmap:setPosition(menuBut.bitmap:getWidth()/1.5, WY - menuBut.bitmap:getHeight())
+		menuBut.bitmap:setPosition(XShift + menuBut.bitmap:getWidth()/1.5, WY - menuBut.bitmap:getHeight())
 	end
 	menuBut:setAlpha(0.4)
 	self:addChild(menuBut)
@@ -164,11 +164,12 @@ function ArenaClassic:addControlArrows()
 	local textureH = controlarrows:getHeight()
 	controlarrows:setScale(80/textureW, WY/textureH)
 	if optionsTable["ArenaSide"] == "Left" then
-		controlarrows:setPosition(3*WX/4 - controlarrows:getWidth()/2, WY/2 - controlarrows:getHeight()/2)
+		controlarrows:setPosition(controlarrows:getWidth(), WY/2 - controlarrows:getHeight()/2)
+		controlarrows:setScaleX(-1)
 	else
-		controlarrows:setPosition(WX/4 - controlarrows:getWidth()/2, WY/2 - controlarrows:getHeight()/2)
+		controlarrows:setPosition(WX0 - controlarrows:getWidth(), WY/2 - controlarrows:getHeight()/2)
 	end
-	controlarrows:setAlpha(0.4)
+	--controlarrows:setAlpha(0.4)
 	
 	controlarrows:addEventListener(Event.TOUCHES_BEGIN, function(event)
 		if not arena.paused and controlarrows:hitTestPoint(event.touch.x, event.touch.y) then
@@ -252,10 +253,10 @@ function ArenaClassic:gameOver()
 	end
 	local gameOverTextBox = TextField.new(self.font, gameOverString)
 	gameOverTextBox:setTextColor(0x3c78a0)
-	gameOverTextBox:setPosition(0.5*WX - gameOverTextBox:getWidth()/2, 0.25*WY + gameOverTextBox:getHeight()/2)
+	gameOverTextBox:setPosition(0.5*WX0 - gameOverTextBox:getWidth()/2, 0.25*WY + gameOverTextBox:getHeight()/2)
 	
 	local againBut = MenuBut.new(150, 40, textures.againBut, textures.againBut1)
-	againBut.bitmap:setPosition(WX/2, WY/2 + 100)
+	againBut.bitmap:setPosition(WX0/2, WY/2 + 100)
 	local exitBut = MenuBut.new(150, 40, textures.exitBut, textures.exitBut1)
 	exitBut.bitmap:setPosition(exitBut:getWidth()/2 + 10, WY/2 + 210)
 	
@@ -323,7 +324,7 @@ function ArenaClassic:checkGoal()
 		end
 	end
 	
-	if ballX > WX + 2*self.ball.radius then
+	if ballX > WX + XShift + 2*self.ball.radius then
 		self.score0 = self.score0 + 1
 		if optionsTable["ArenaSide"] == "Left" then
 			if optionsTable["SFX"] == "On" then sounds.goal1:play() end
@@ -331,7 +332,7 @@ function ArenaClassic:checkGoal()
 			if optionsTable["SFX"] == "On" then sounds.goal2:play() end
 		end
 		updateOrReset()
-	elseif ballX <  -2*self.ball.radius then
+	elseif ballX <  -2*self.ball.radius + XShift then
 		self.score1 = self.score1 + 1
 		if optionsTable["ArenaSide"] == "Left" then
 			if optionsTable["SFX"] == "On" then sounds.goal2:play() end
@@ -344,9 +345,16 @@ end
 
 -- Initialization --
 function ArenaClassic:init(difficulty)
-	if optionsTable["ControlMode"] == "disabled" then	
+	if optionsTable["ControlMode"] == "Touch" then	
 		WX = 720
-		Xshift = 80
+		if optionsTable["ArenaSide"] == "Left" then
+			XShift = 80
+		else
+			XShift = 0
+		end
+	else
+		WX = 800
+		XShift = 0
 	end
 	arena = self
 	self.font = fonts.anitaBig

@@ -17,7 +17,8 @@ end
 -- Initialization --
 function MainMenu:init()
 	gc()
-	
+	WX = WX0
+	XShift = 0
 	if optionsTable["Music"] == "On" then
 		if not(currSong == nil) then
 			currSong:stop()

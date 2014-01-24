@@ -65,7 +65,7 @@ end
 function Ball:reset()
 	self.body:setLinearVelocity(0,0)
 	local startY = math.random(WBounds + self.radius + 1, WY - WBounds - self.radius - 1)
-	self.body:setPosition(WX/2, startY)
+	self.body:setPosition(XShift + WX/2, startY)
 	self.launched = false
 end
 
@@ -97,7 +97,7 @@ function Ball:init(difFactor)
 	local textureH = self.bitmap:getHeight()
 	self.bitmap:setAnchorPoint(0.5, 0.5)
 	self.bitmap:setScale(self.radius*2/textureW, self.radius*2/textureH)
-	self:setPosition(0.5*WX, 0.5*WY)
+	self:setPosition(XShift + 0.5*WX, 0.5*WY)
 	self.bitmap:setColorTransform(math.random(400, 1000)/1000, math.random(400, 1000)/1000, math.random(400, 1000)/1000, 1)
 	self:createBody()
 	arena:addChild(self)

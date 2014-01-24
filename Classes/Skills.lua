@@ -73,15 +73,19 @@ function Skills:start(side)
 		
 		-- Gets ball speed and reduces it --
 		local ballVx, ballVy = arena.ball.body:getLinearVelocity()
-		local desVx = ballVx/10
-		local desVy = ballVy/10
+		local ballV0 = math.sqrt(ballVx*ballVx + ballVy*ballVy)
+		local desVx = ballV0*(ballVx/ballV0)/10
+		local desVy = ballV0*(ballVy/ballV0)/10
+		local ballV = math.sqrt(desVx*desVx + desVy*desVy)
 		
 		-- Prevents too many slow-downs, any direction speed must be greater than minimum base speed --
-		if ballVx > arena.ball.baseSpeed*0.3/1.41 or ballVy > arena.ball.baseSpeed*0.3/1.41 or
-		ballVx < -arena.ball.baseSpeed*0.3/1.41 or ballVy < -arena.ball.baseSpeed*0.3/1.41 then
-			if optionsTable["SFX"] == "On" then sounds.powerup2over:play() end
-			arena.ball.body:setLinearVelocity(desVx, desVy)
+		if ballV < arena.ball.baseSpeed/10 then
+			ballV = arena.ball.baseSpeed/10
+			desVx = (ballVx/ballV0)*arena.ball.baseSpeed/10
+			desVy = (ballVy/ballV0)*arena.ball.baseSpeed/10
 		end
+		if optionsTable["SFX"] == "On" then sounds.powerup2over:play() end
+		arena.ball.body:setLinearVelocity(desVx, desVy)
 		
 		-- Action to end skill --
 		self.endAction = function() 

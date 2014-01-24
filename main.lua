@@ -8,6 +8,8 @@
 -- World dimensions --
 WX = 800
 WY = 480
+WX0 = 800
+WY0 = 480
 
 -- Boundaries height --
 WBounds = 13

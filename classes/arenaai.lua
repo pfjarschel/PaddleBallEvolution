@@ -82,7 +82,7 @@ function ArenaAI:Acrobat()
 	-- Activate only when ball is moving away form him, and close to goal --
 	local ballVx = arena.ball.body:getLinearVelocity()
 	local ballX = arena.ball.body:getPosition()
-	if self.side*ballVx < 0 and self.side*(ballX - WX/2) < 0 then
+	if self.side*ballVx < 0 and self.side*(ballX - WX/2 - XShift) < 0 then
 		local num = math.random(1, self.chance/2)
 		if num == 1 then
 			self:initSkill()
@@ -98,7 +98,7 @@ function ArenaAI:Ninja()
 	-- Activate only when ball is moving away from him, before crossing the field --
 	local ballVx = arena.ball.body:getLinearVelocity()
 	local ballX = arena.ball.body:getPosition()
-	if self.side*ballVx < 0 and self.side*(ballX - WX/2) > 0 then
+	if self.side*ballVx < 0 and self.side*(ballX - WX/2 - XShift) > 0 then
 		local num = math.random(1, self.chance/4)
 		if num == 1 then
 			self:initSkill()
@@ -111,11 +111,14 @@ end
 -- Swamp Monster --
 -------------------
 function ArenaAI:SwampMonster()
-	-- Activate only when ball is moving torwards him, after crossing the field. If distance is high, increase chance --
-	local ballVx = arena.ball.body:getLinearVelocity()
+	-- Activate only when ball is moving torwards him, after crossing the field. If distance is high, increase chance. Ball must be fast --
+	local ballVx, ballVy = arena.ball.body:getLinearVelocity()
 	local ballX, ballY = arena.ball.body:getPosition()
 	local paddleX, paddleY = arena.aiPlayer.paddle.body:getPosition()
-	if self.side*ballVx > 0 and self.side*(ballX - WX/2) > 0 then
+	
+	local ballV0 = math.sqrt(ballVx*ballVx + ballVy*ballVy)
+	
+	if self.side*ballVx > 0 and self.side*(ballX - WX/2 - XShift) > 0 and ballV0 > arena.ball.baseSpeed/9 then
 		local num = 0
 		if math.abs(ballY - paddleY) > WY/2 then
 			num = math.random(1, self.chance/5)
@@ -138,7 +141,7 @@ function ArenaAI:Archer()
 	local ballX, ballY = arena.ball.body:getPosition()
 	local epaddleX, epaddleY = arena.humanPlayer.paddle.body:getPosition()
 	local epaddleSize = arena.humanPlayer.paddle.paddleH
-	if self.side*ballVx < 0 and self.side*(ballX - WX/2) < 0 and math.abs(ballY - epaddleY) > epaddleSize/2 then
+	if self.side*ballVx < 0 and self.side*(ballX - WX/2 - XShift) < 0 and math.abs(ballY - epaddleY) > epaddleSize/2 then
 		local num = math.random(1, self.chance/5)
 		if num == 1 then
 			self:initSkill()
@@ -155,7 +158,7 @@ function ArenaAI:Mimic()
 	local ballVx = arena.ball.body:getLinearVelocity()
 	local ballX, ballY = arena.ball.body:getPosition()
 	local paddleX, paddleY = arena.aiPlayer.paddle.body:getPosition()
-	if (self.side*ballVx > 0 and self.side*(ballX - WX/2) < 0) or (self.side*ballVx > 0 and self.side*(ballX - WX/4) > 0 and math.abs(ballY - paddleY) > WY/8) or (self.side*ballX > self.side*paddleX) then
+	if (self.side*ballVx > 0 and self.side*(ballX - WX/2 - XShift) < 0) or (self.side*ballVx > 0 and self.side*(ballX - WX/4 - XShift) > 0 and math.abs(ballY - paddleY) > WY/8) or (self.side*ballX > self.side*paddleX) then
 		local num = math.random(1, self.chance/4)
 		if num == 1 then
 			self:initSkill()
@@ -182,7 +185,7 @@ function ArenaAI:Thief()
 	-- Activate only when ball is moving torwards him --
 	local ballVx = arena.ball.body:getLinearVelocity()
 	local ballX = arena.ball.body:getPosition()
-	if self.side*ballVx > 0 and self.side*(ballX - WX/2) > 0 then
+	if self.side*ballVx > 0 and self.side*(ballX - WX/2 - XShift) > 0 then
 		local num = math.random(1, self.chance/8)
 		if num == 1 then
 			self:initSkill()

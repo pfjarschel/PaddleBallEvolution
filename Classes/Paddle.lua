@@ -86,7 +86,7 @@ function Paddle:reset()
 	arena:removeChild(self)
 	self.body:setLinearVelocity(0,0)
 	arena:addChild(self)
-	self.body:setPosition(1.5*self.paddleW + self.side*(WX - self.paddleW*3), 0.5*WY)
+	self.body:setPosition(XShift + 1.5*self.paddleW + self.side*(WX - self.paddleW*3), 0.5*WY)
 	arena.leftPlayer.touchY = WY/2
 	arena.rightPlayer.touchY = WY/2
 end
@@ -105,7 +105,7 @@ function Paddle:init(side, atkFactor, defFactor)
 	self.textureW = self.bitmap:getWidth()
 	self.textureH = self.bitmap:getHeight()
 	self.bitmap:setAnchorPoint(0.5, 0.5)
-	self:setPosition(1.5*self.paddleW + side*(WX - self.paddleW*3), 0.5*WY)
+	self:setPosition(XShift + 1.5*self.paddleW + side*(WX - self.paddleW*3), 0.5*WY)
 	self.bitmap:setScale(self.paddleW/self.textureW, self.paddleH/self.textureH)
 	self:setRotation(side*180)
 	self.bitmap:setColorTransform(math.random(300, 1000)/1000, math.random(300, 1000)/1000, math.random(300, 1000)/1000, 1)

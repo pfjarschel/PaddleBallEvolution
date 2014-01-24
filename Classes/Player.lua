@@ -53,7 +53,7 @@ function Player:aiMove()
 		local padVx, padVy = self.paddle.body:getLinearVelocity()
 		
 		-- Prediction Initialization, any values --
-		local predictX = WX/2
+		local predictX = XShift + WX/2
 		local predictY = 0
 		local dy = 0
 		local maxdelta = WY - self.paddle.paddleH/2 - WBounds
