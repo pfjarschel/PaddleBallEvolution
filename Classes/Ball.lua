@@ -7,6 +7,7 @@ Ball = Core.class(Sprite)
 -- Declare stuff --
 Ball.bitmap = nil
 Ball.body = nil
+Ball.fixture = nil
 Ball.radius = 10
 Ball.baseSpeed = 20
 Ball.difFactor = 1
@@ -26,12 +27,13 @@ function Ball:createBody()
 	self.body.baseSpeed = self.baseSpeed
 	
 	local shape = b2.CircleShape.new(0, 0, self.radius)
-	self.body:createFixture{
+	self.fixture = self.body:createFixture{
 		shape = shape,
 		density = 1,
 		restitution = 1, 
 		friction = 0,
 	}
+	self.fixture:setFilterData({categoryBits = 1, maskBits = 6, groupIndex = 0})
 	
 	--------------------------------------------------------------------------------
 	-- Collision handler. Play different souds depending on second collision body --
@@ -41,12 +43,12 @@ function Ball:createBody()
 		local body1 = event.fixtureA:getBody()
 		local body2 = event.fixtureB:getBody()
 		if body1.name == "paddle" or body2.name == "paddle" then
-			sounds.hit2:play()
+			if optionsTable["SFX"] == "On" then sounds.hit1:play() end
 		else
-			sounds.hit1:play()
+			if optionsTable["SFX"] == "On" then sounds.hit2:play() end
 		end
-		arena.leftPlayer:aiRandomFactor()
-		arena.rightPlayer:aiRandomFactor()
+
+		arena.aiPlayer:aiRandomFactor()
 		
 		local ballVx, ballVy = self:getLinearVelocity()
 		if ballVx == 0 then ballVx = 0.01 end
@@ -96,7 +98,7 @@ function Ball:init(difFactor)
 	self.bitmap:setAnchorPoint(0.5, 0.5)
 	self.bitmap:setScale(self.radius*2/textureW, self.radius*2/textureH)
 	self:setPosition(0.5*WX, 0.5*WY)
-	self.bitmap:setColorTransform(math.random(300, 1000)/1000, math.random(300, 1000)/1000, math.random(300, 1000)/1000, 1)
+	self.bitmap:setColorTransform(math.random(400, 1000)/1000, math.random(400, 1000)/1000, math.random(400, 1000)/1000, 1)
 	self:createBody()
 	arena:addChild(self)
 end

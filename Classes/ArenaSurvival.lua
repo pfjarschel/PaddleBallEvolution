@@ -16,6 +16,8 @@ ArenaSurvival.pausebg = nil
 ArenaSurvival.name = "survival"
 ArenaSurvival.controlarrows = nil
 ArenaSurvival.accelerometer = nil
+ArenaArena.humanPlayer = nil
+ArenaArena.aiPlayer = nil
 
 -- Tilt variables --
 local afx = 0
@@ -26,35 +28,34 @@ local afx0 = 0
 -- Main Match Loop --
 local function onEnterFrame()
 	updatePhysics()
-	if controlMethod == "Tilt" then
+	if optionsTable["ControlMode"] == "Tilt" then
 		arena:tilt()
 	end
-	--arena.leftPlayer:aiMove()
-	arena.leftPlayer:humanMove()
-	arena.rightPlayer:aiMove()
-	--arena.rightPlayer:humanMove()
+	arena.humanPlayer:humanMove()
+	arena.aiPlayer:aiMove()
 	arena:checkGoal()
 end
 
 -- Create physics stuff (including collision handler) --
 function ArenaSurvival:createBoundaries()
-	
-	-- Default is Static --
-	self.bounds = world:createBody({})
+	self.bounds = world:createBody({}) --Default is Static
 	
 	self.bounds.name = "bounds"
+	
 	local shapeT = b2.EdgeShape.new(-200, WBounds, WX + 200, WBounds)
 	local shapeB = b2.EdgeShape.new(-200, WY-WBounds, WX + 200, WY-WBounds)
-	self.bounds:createFixture{
+	
+	self.fixtureT = self.bounds:createFixture{
 		shape = shapeT, 
 		friction = 0,
 	}
-	self.bounds:createFixture{
+	self.fixtureT:setFilterData({categoryBits = 4, maskBits = 3, groupIndex = 0})
+	self.fixtureB = self.bounds:createFixture{
 		shape = shapeB, 
 		friction = 0,
 	}
+	self.fixtureB:setFilterData({categoryBits = 4, maskBits = 3, groupIndex = 0})
 	
-	-- Collision Handler --
 	function self.bounds:collide(event)
 		--print("bounds")
 	end
@@ -62,6 +63,8 @@ end
 
 function ArenaSurvival:openMenu()
 	if not self.paused then
+		if optionsTable["SFX"] == "On" then sounds.sel2:play() end
+		
 		self.paused = true
 		self:removeEventListener(Event.ENTER_FRAME, onEnterFrame)
 		
@@ -77,6 +80,8 @@ function ArenaSurvival:openMenu()
 				stage:removeChild(self.pausebg)
 				self.paused = false
 				self:addEventListener(Event.ENTER_FRAME, onEnterFrame)
+				
+				if optionsTable["SFX"] == "On" then sounds.sel2:play() end
 			end
 		end)
 		self.pausebg:addChild(resumeBut)
@@ -90,12 +95,15 @@ function ArenaSurvival:openMenu()
 				stage:removeChild(self.pausebg)
 				world:destroyBody(self.ball.body)
 				self.ball.body = nil
-				world:destroyBody(self.leftPlayer.paddle.body)
-				world:destroyBody(self.rightPlayer.paddle.body)
+				world:destroyBody(self.humanPlayer.paddle.body)
+				world:destroyBody(self.aiPlayer.paddle.body)
 				world:destroyBody(self.bounds)
 				local difficulty = self.difFactor*5
 				self = nil
 				arena = nil
+				
+				if optionsTable["SFX"] == "On" then sounds.sel3:play() end
+				
 				sceneMan:changeScene("survival", transTime, SceneManager.fade, easing.linear, { userData = difficulty })
 			end
 		end)
@@ -110,11 +118,14 @@ function ArenaSurvival:openMenu()
 				stage:removeChild(self.pausebg)
 				world:destroyBody(self.ball.body)
 				self.ball.body = nil
-				world:destroyBody(self.leftPlayer.paddle.body)
-				world:destroyBody(self.rightPlayer.paddle.body)
+				world:destroyBody(self.humanPlayer.paddle.body)
+				world:destroyBody(self.aiPlayer.paddle.body)
 				world:destroyBody(self.bounds)
 				self = nil
 				arena = nil
+				
+				if optionsTable["SFX"] == "On" then sounds.sel3:play() end
+				
 				sceneMan:changeScene("mainMenu", transTime, SceneManager.fade, easing.linear)
 			end
 		end)
@@ -128,7 +139,11 @@ end
 function ArenaSurvival:addMenu()
 	-- Adds Menu Button --
 	local menuBut = MenuBut.new(60, 60, textures.menuBut, textures.menuBut1)
-	menuBut.bitmap:setPosition(WX - menuBut.bitmap:getWidth()/1.5, WY - menuBut.bitmap:getHeight())
+	if optionsTable["ArenaSide"] == "Left" then
+		menuBut.bitmap:setPosition(WX - menuBut.bitmap:getWidth()/1.5, WY - menuBut.bitmap:getHeight())
+	else
+		menuBut.bitmap:setPosition(menuBut.bitmap:getWidth()/1.5, WY - menuBut.bitmap:getHeight())
+	end
 	menuBut:setAlpha(0.4)
 	self:addChild(menuBut)
 	menuBut:addEventListener(Event.TOUCHES_END, function(event)
@@ -147,17 +162,21 @@ function ArenaSurvival:addControlArrows()
 	local textureW = controlarrows:getWidth()
 	local textureH = controlarrows:getHeight()
 	controlarrows:setScale(WX*0.1/textureW, WY/textureH)
-	controlarrows:setPosition(3*WX/4 - controlarrows:getWidth()/2, WY/2 - controlarrows:getHeight()/2)
+	if optionsTable["ArenaSide"] == "Left" then
+		controlarrows:setPosition(3*WX/4 - controlarrows:getWidth()/2, WY/2 - controlarrows:getHeight()/2)
+	else
+		controlarrows:setPosition(WX/4 - controlarrows:getWidth()/2, WY/2 - controlarrows:getHeight()/2)
+	end
 	controlarrows:setAlpha(0.4)
 	
 	controlarrows:addEventListener(Event.TOUCHES_BEGIN, function(event)
 		if not arena.paused and controlarrows:hitTestPoint(event.touch.x, event.touch.y) then
-			self.leftPlayer.touchY = event.touch.y
+			self.humanPlayer.touchY = event.touch.y
 		end
 	end)
 	controlarrows:addEventListener(Event.TOUCHES_MOVE, function(event)
 		if not arena.paused and controlarrows:hitTestPoint(event.touch.x, event.touch.y) then
-			self.leftPlayer.touchY = event.touch.y
+			self.humanPlayer.touchY = event.touch.y
 		end
 	end)
 	controlarrows:addEventListener(Event.TOUCHES_END, function(event)
@@ -181,7 +200,7 @@ function ArenaSurvival:tilt()
 		afy = y * filter + afy * (1 - filter)
 		afz = z * filter + afz * (1 - filter)
 		
-		self.leftPlayer.touchY = WY/2 - (afx - afx0)*WY *1.5
+		self.humanPlayer.touchY = WY/2 - (afx - afx0)*WY *1.5
 	end
 end
 
@@ -195,24 +214,24 @@ local function onKeyDown(event)
 		arena.paused = false
 		arena:addEventListener(Event.ENTER_FRAME, onEnterFrame)
 	end
-	if controlMethod == "Keys" then
+	if optionsTable["ControlMode"] == "Keys" then
 		if event.keyCode == 40 then
-			arena.leftPlayer.touchY = WY
+			arena.humanPlayer.touchY = WY
 		end
 		if event.keyCode == 38 then
-			arena.leftPlayer.touchY = 0
+			arena.humanPlayer.touchY = 0
 		end
 	end
 end
 local function onKeyUp(event)
-	if controlMethod == "Keys" then
+	if optionsTable["ControlMode"] == "Keys" then
 		if event.keyCode == 40 then
-			local posx, posy = arena.leftPlayer.paddle.body:getPosition()
-			arena.leftPlayer.touchY = posy
+			local posx, posy = arena.humanPlayer.paddle.body:getPosition()
+			arena.humanPlayer.touchY = posy
 		end
 		if event.keyCode == 38 then
-			local posx, posy = arena.leftPlayer.paddle.body:getPosition()
-			arena.leftPlayer.touchY = posy
+			local posx, posy = arena.humanPlayer.paddle.body:getPosition()
+			arena.humanPlayer.touchY = posy
 		end
 	end
 end
@@ -223,8 +242,14 @@ function ArenaSurvival:gameOver()
 	fadeOut(self)
 	
 	local gameOverString = nil
-	gameOverString = "You managed to survive " .. tostring(self.score0) .. " rounds!"
-	sounds.lose:play()
+	local humanScore = 0
+	if optionsTable["ArenaSide"] == "Left" then
+		humanScore = self.score0
+	else
+		humanScore = self.score1
+	end
+	gameOverString = "You managed to survive " .. tostring(humanScore) .. " rounds!"
+	if optionsTable["SFX"] == "On" then sounds.lose:play() end
 	local gameOverTextBox = TextField.new(self.font, gameOverString)
 	gameOverTextBox:setTextColor(0x3c78a0)
 	gameOverTextBox:setPosition(0.5*WX - gameOverTextBox:getWidth()/2, 0.25*WY + gameOverTextBox:getHeight()/2)
@@ -241,11 +266,14 @@ function ArenaSurvival:gameOver()
 			stage:removeChild(againBut)
 			world:destroyBody(self.ball.body)
 			self.ball.body = nil
-			world:destroyBody(self.leftPlayer.paddle.body)
-			world:destroyBody(self.rightPlayer.paddle.body)
+			world:destroyBody(self.humanPlayer.paddle.body)
+			world:destroyBody(self.aiPlayer.paddle.body)
 			world:destroyBody(self.bounds)
 			self = nil
 			arena = nil
+			
+			if optionsTable["SFX"] == "On" then sounds.sel2:play() end
+			
 			sceneMan:changeScene("survival", transTime, SceneManager.fade, easing.linear, { userData = "5" })
 		end
 	end)
@@ -258,11 +286,14 @@ function ArenaSurvival:gameOver()
 			stage:removeChild(againBut)
 			world:destroyBody(self.ball.body)
 			self.ball.body = nil
-			world:destroyBody(self.leftPlayer.paddle.body)
-			world:destroyBody(self.rightPlayer.paddle.body)
+			world:destroyBody(self.humanPlayer.paddle.body)
+			world:destroyBody(self.aiPlayer.paddle.body)
 			world:destroyBody(self.bounds)
 			self = nil
 			arena = nil
+			
+			if optionsTable["SFX"] == "On" then sounds.sel3:play() end
+			
 			sceneMan:changeScene("mainMenu", transTime, SceneManager.fade, easing.linear)
 		end
 	end)
@@ -281,34 +312,41 @@ function ArenaSurvival:checkGoal()
 	-- Updates match attributes, each 2 goals, and the other normal stuff --
 	local function updateAttrs()
 		self.ball.baseSpeed = self.ball.baseSpeed/self.leftPlayer.char.atkFactor
-		
+                
 		self.combatStats:update(self.score0, self.score1)
 		
-		if self.score0%2 == 0 then
-			if self.leftPlayer.char.atk < 50 then
-				self.leftPlayer.char.atk = self.leftPlayer.char.atk + 1
-				self.rightPlayer.char.atk = self.rightPlayer.char.atk + 1
+		local humanScore = 0
+		if optionsTable["ArenaSide"] == "Left" then
+			humanScore = self.score0
+		else
+			humanScore = self.score1
+		end
+		
+		if humanScore%2 == 0 then
+			if self.humanPlayer.char.atk < 50 then
+				self.humanPlayer.char.atk = self.humanPlayer.char.atk + 1
+				self.aiPlayer.char.atk = self.aiPlayer.char.atk + 1
 			end
 			sounds.powerup1:play()
 		else
 			sounds.goal1:play()
 		end
 		
-		if self.score0%4 == 0 then
-			if self.leftPlayer.char.def > 1 then
-				self.leftPlayer.char.def = self.leftPlayer.char.def - 1
+		if humanScore%4 == 0 then
+			if self.humanPlayer.char.def > 1 then
+				self.humanPlayer.char.def = self.humanPlayer.char.def - 1
 			end
 		end
 		
-		if self.score0%6 == 0 then
-			if self.rightPlayer.char.def < 30 then
-				self.rightPlayer.char.def = self.rightPlayer.char.def + 1
+		if humanScore%6 == 0 then
+			if self.aiPlayer.char.def < 30 then
+				self.aiPlayer.char.def = self.aiPlayer.char.def + 1
 			end
 		end
 		
-		if self.score0%8 == 0 then
-			if self.rightPlayer.char.int < 30 then
-				self.rightPlayer.char.int = self.rightPlayer.char.int + 1
+		if humanScore%8 == 0 then
+			if self.aiPlayer.char.int < 30 then
+				self.aiPlayer.char.int = self.aiPlayer.char.int + 1
 			end
 		end
 		
@@ -336,10 +374,16 @@ function ArenaSurvival:checkGoal()
 		gc()
 	end
 	
-	if ballX > WX + 2*self.ball.radius then
+	if optionsTable["ArenaSide"] == "Left" and ballX > WX + 2*self.ball.radius then
 		self.score0 = self.score0 + 1
 		updateAttrs()
-	elseif ballX <  -2*self.ball.radius then
+	elseif optionsTable["ArenaSide"] == "Right" and ballX < -2*self.ball.radius then
+		self.score1 = self.score1 + 1
+		updateAttrs()
+	elseif optionsTable["ArenaSide"] == "Right" and ballX > WX + 2*self.ball.radius then
+		self.score0 = self.score0 + 1
+		self:gameOver()
+	elseif optionsTable["ArenaSide"] == "Left" and ballX < -2*self.ball.radius then
 		self.score1 = self.score1 + 1
 		self:gameOver()
 	end
@@ -357,23 +401,49 @@ function ArenaSurvival:init(difficulty)
 	local textureH = self.bitmap:getHeight()
 	self.bitmap:setScale(WX/textureW, WY/textureH)
 	
+	-- Stop Current song and load another (bosses not included) --
+	if optionsTable["Music"] == "On" then
+		local function nextSong()
+			local randNum = math.random(1, 6)
+			currSong = musics.fight[randNum]:play()
+			currSong:addEventListener(Event.COMPLETE, nextSong)
+		end
+		
+		currSong:stop()
+		nextSong()
+	end
+	
 	self:addMenu()
 	
-	if controlMethod == "Touch" then
+	if optionsTable["ControlMode"] == "Touch" then
 		self:addControlArrows()
 	end
 	
 	self:createBoundaries()
 	
 	self.ball = Ball.new(self.difFactor)
-	self.leftPlayer = Player.new(0, true, self.difFactor, "survivalLeft")
-	self.rightPlayer = Player.new(1, false, self.difFactor, "survivalRight")
-	self.ball.baseSpeed = self.ball.baseSpeed*self.leftPlayer.char.atkFactor
-	self.leftPlayer.paddle.body.atkFactor = 1
-	self.rightPlayer.paddle.body.atkFactor = 1
+	if optionsTable["ArenaSide"] == "Left" then
+		self.leftPlayer = Player.new(0, true, self.difFactor, "survivalLeft")
+		self.rightPlayer = Player.new(1, false, self.difFactor, "survivalRight")
+	else
+		self.leftPlayer = Player.new(0, false, self.difFactor, "survivalRight")
+		self.rightPlayer = Player.new(1, true, self.difFactor, "survivalLeft")
+	end
+	
 	self.combatStats = CombatStats.new()
 	self.combatStats:update(self.score0, self.score1)
 	self.ball:reset()
+	
+	if optionsTable["ArenaSide"] == "Left" then
+		self.humanPlayer = self.leftPlayer
+		self.aiPlayer = self.rightPlayer
+	else
+		self.humanPlayer = self.rightPlayer
+		self.aiPlayer = self.leftPlayer
+	end
+	self.ball.baseSpeed = self.ball.baseSpeed*self.humanPlayer.char.atkFactor
+	self.humanPlayer.paddle.body.atkFactor = 1
+	self.aiPlayer.paddle.body.atkFactor = 1
 	
 	self:addEventListener("enterEnd", function()
 		self.ball:launch()
@@ -385,7 +455,7 @@ function ArenaSurvival:init(difficulty)
 	self:addEventListener(Event.KEY_UP, onKeyUp)
 	
 	-- Initialize tilt --
-	if controlMethod == "Tilt" then
+	if optionsTable["ControlMode"] == "Tilt" then
 		self:tiltInit()
 	end
 end

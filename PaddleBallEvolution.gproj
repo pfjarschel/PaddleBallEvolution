@@ -1,5 +1,5 @@
 <project>
- <properties autorotation="0" encryptAssets="0" fps="60" scaleMode="5" mouseToTouch="1" iosDevice="0" packageName="com.blackandwhitecat.paddleball" logicalHeight="800" logicalWidth="480" mouseTouchOrder="0" encryptCode="0" retinaDisplay="0" touchToMouse="1" assetsOnly="1" orientation="1" architecture="1">
+ <properties autorotation="0" encryptAssets="0" fps="60" scaleMode="5" mouseToTouch="1" iosDevice="0" packageName="com.blackandwhitecat.paddleball" logicalHeight="800" logicalWidth="480" mouseTouchOrder="0" encryptCode="0" retinaDisplay="0" touchToMouse="1" assetsOnly="0" orientation="1" architecture="1">
   <imageScales>
    <scale suffix="@4x" scale="4"/>
    <scale suffix="@3x" scale="3"/>
@@ -20,6 +20,22 @@
   <file source="include/easing.lua"/>
  </folder>
  <folder name="audio">
+  <file source="audio/sel3.wav"/>
+  <file source="audio/sel2.wav"/>
+  <file source="audio/sel1.wav"/>
+  <file source="audio/bgm_intro.mp3"/>
+  <file source="audio/bgm_fight6.mp3"/>
+  <file source="audio/bgm_fight5.mp3"/>
+  <file source="audio/bgm_fight4.mp3"/>
+  <file source="audio/bgm_fight3.mp3"/>
+  <file source="audio/bgm_fight2.mp3"/>
+  <file source="audio/bgm_fight1.mp3"/>
+  <file source="audio/bgm_champion2.mp3"/>
+  <file source="audio/bgm_champion.mp3"/>
+  <file source="audio/bgm_boss4.mp3"/>
+  <file source="audio/bgm_boss3.mp3"/>
+  <file source="audio/bgm_boss2.mp3"/>
+  <file source="audio/bgm_boss1.mp3"/>
   <file source="audio/win.wav"/>
   <file source="audio/powerup2-over.wav"/>
   <file source="audio/powerup2.wav"/>
@@ -262,7 +278,6 @@
   <file source="imgs/againBut@0.6x.png"/>
   <file source="imgs/againBut@0.4x.png"/>
   <file source="imgs/help1.png"/>
-  <file source="imgs/arenaBut1.png"/>
   <file source="imgs/survivalmodeBut1.png"/>
   <file source="imgs/skillBut1.png"/>
   <file source="imgs/returnBut1.png"/>
@@ -304,7 +319,6 @@
   <file source="imgs/classicmodeBut.png"/>
   <file source="imgs/careermodeBut.png"/>
   <file source="imgs/backBut.png"/>
-  <file source="imgs/arenaBut.png"/>
   <file source="imgs/againBut.png"/>
  </folder>
  <folder name="fonts">
@@ -313,10 +327,10 @@
   <file source="fonts/arial-rounded.ttf"/>
  </folder>
  <folder name="classes">
+  <file source="classes/arenaai.lua"/>
   <file source="classes/splash.lua"/>
   <file source="classes/mainmenu_options.lua"/>
   <file source="classes/mainmenu_help.lua"/>
-  <file source="classes/arenaai.lua"/>
   <file source="classes/skills.lua"/>
   <file source="classes/player.lua"/>
   <file source="classes/paddle.lua"/>
@@ -332,21 +346,23 @@
   <file source="classes/arenaclassic.lua"/>
   <file source="classes/arenaarena.lua"/>
   <folder name="loaders">
+   <file source="classes/loaders/music.lua"/>
+   <file source="classes/loaders/options.lua"/>
    <file source="classes/loaders/textures.lua"/>
    <file source="classes/loaders/sounds.lua"/>
    <file source="classes/loaders/fonts.lua"/>
    <file source="classes/loaders/classtable.lua"/>
   </folder>
  </folder>
+ <dependency from="init.lua" to="include/strict.lua"/>
  <dependency from="init.lua" to="physics.lua"/>
+ <dependency from="init.lua" to="include/TextWrap.lua"/>
+ <dependency from="init.lua" to="include/socket.lua"/>
  <dependency from="init.lua" to="include/scenemanager.lua"/>
  <dependency from="init.lua" to="include/easing.lua"/>
  <dependency from="init.lua" to="classes/loaders/textures.lua"/>
  <dependency from="init.lua" to="classes/loaders/sounds.lua"/>
  <dependency from="init.lua" to="classes/loaders/fonts.lua"/>
- <dependency from="init.lua" to="include/strict.lua"/>
- <dependency from="init.lua" to="include/socket.lua"/>
- <dependency from="init.lua" to="include/TextWrap.lua"/>
  <dependency from="classes/arenaarena.lua" to="classes/player.lua"/>
  <dependency from="classes/arenaarena.lua" to="classes/combatstats.lua"/>
  <dependency from="classes/arenaarena.lua" to="classes/ball.lua"/>
@@ -358,11 +374,11 @@
  <dependency from="classes/arenasurvival.lua" to="classes/ball.lua"/>
  <dependency from="classes/char.lua" to="classes/skills.lua"/>
  <dependency from="classes/char.lua" to="classes/loaders/classtable.lua"/>
+ <dependency from="classes/loaders/classtable.lua" to="include/strict.lua"/>
  <dependency from="classes/loaders/classtable.lua" to="init.lua"/>
+ <dependency from="classes/loaders/classtable.lua" to="include/socket.lua"/>
  <dependency from="classes/loaders/classtable.lua" to="include/scenemanager.lua"/>
  <dependency from="classes/loaders/classtable.lua" to="include/easing.lua"/>
- <dependency from="classes/loaders/classtable.lua" to="include/strict.lua"/>
- <dependency from="classes/loaders/classtable.lua" to="include/socket.lua"/>
  <dependency from="classes/mainmenu.lua" to="classes/menubut.lua"/>
  <dependency from="classes/mainmenu.lua" to="classes/mainmenu_classic.lua"/>
  <dependency from="classes/mainmenu.lua" to="classes/mainmenu_arena.lua"/>
@@ -375,4 +391,6 @@
  <dependency from="classes/player.lua" to="classes/paddle.lua"/>
  <dependency from="classes/player.lua" to="classes/char.lua"/>
  <dependency from="main.lua" to="classes/mainmenu.lua"/>
+ <dependency from="main.lua" to="classes/loaders/options.lua"/>
+ <dependency from="main.lua" to="classes/loaders/music.lua"/>
 </project>

@@ -18,6 +18,7 @@ Player.touchY = 0
 Player.correctAIY = 23
 Player.difFactor = 1
 Player.skillActive = false
+Player.AITarget = nil
 
 ---------------------------------------------------------------------------------------
 -- Sets new random factor to be added to AI ball location prediction. Difficulty and --
@@ -37,10 +38,10 @@ function Player:aiMove()
 	if not self.human then
 	
 		-- Gets positions and velocities --
-		local ballX, ballY = arena.ball.body:getPosition()
+		local ballX, ballY = self.AITarget.body:getPosition()
 		local padX, padY = self.paddle.body:getPosition()
 		local ballDist = math.sqrt(math.pow(padX - ballX, 2) + math.pow(padY - ballY, 2))
-		local ballVx, ballVy = arena.ball.body:getLinearVelocity()
+		local ballVx, ballVy = self.AITarget.body:getLinearVelocity()
 		local ballVx0 = ballVx
 		local ballVy0 = ballVy
 		local ballV0 = math.sqrt(ballVx*ballVx + ballVy*ballVy)
@@ -61,27 +62,27 @@ function Player:aiMove()
 		if self.side == 0 and ballVx < 0  then
 			
 			-- Calculates ball X position when it hits a boundary, until X means it is behind a paddle --
-			while predictX > (padX + self.paddle.paddleW/2 + arena.ball.radius) do
+			while predictX > (padX + self.paddle.paddleW/2 + self.AITarget.radius) do
 				if ballVy > 0 then
-					dy = WY -WBounds - ballY - arena.ball.radius
+					dy = WY - WBounds - ballY - self.AITarget.radius
 					predictX = ballX - math.abs(ballVx)*dy/math.abs(ballVy)
 					ballVy = -ballVy
-					ballY = WY - WBounds - arena.ball.radius
+					ballY = WY - WBounds - self.AITarget.radius
 					ballX = predictX
 				else
-					dy = ballY - WBounds - arena.ball.radius
+					dy = ballY - WBounds - self.AITarget.radius
 					predictX = ballX  - math.abs(ballVx)*dy/math.abs(ballVy)
 					ballVy = -ballVy
-					ballY = WBounds + arena.ball.radius
+					ballY = WBounds + self.AITarget.radius
 					ballX = predictX
 				end
 			end
 			
 			-- After last position is found, calculates the ball Y position when crossing the paddle line --
 			if ballVy > 0 then
-				predictY = self.correctAIY + self.randomFactor + math.abs(ballVy)*(padX + self.paddle.paddleW/2 + arena.ball.radius - ballX)/math.abs(ballVx)
+				predictY = self.correctAIY + math.abs(ballVy)*(padX + self.paddle.paddleW/2 + self.AITarget.radius - ballX)/math.abs(ballVx)
 			else
-				predictY = -self.correctAIY  + self.randomFactor + WY - math.abs(ballVy)*(padX + self.paddle.paddleW/2 + arena.ball.radius - ballX)/math.abs(ballVx)
+				predictY = -self.correctAIY + WY - math.abs(ballVy)*(padX + self.paddle.paddleW/2 + self.AITarget.radius - ballX)/math.abs(ballVx)
 			end
 			
 			-----------------------------------------------------------------------------------------------
@@ -89,34 +90,33 @@ function Player:aiMove()
 			-- The random factor starts very big and gets smaller when ball approaches paddle            --
 			-----------------------------------------------------------------------------------------------
 			local deltaY = predictY - padY + (ballDist*math.abs(ballVy0/ballV0)/100)*self.randomFactor
-			self.paddle.body:setLinearVelocity(0, self.char.movFactor*(deltaY/maxdelta)*arena.ball.baseSpeed)
-		
+			self.paddle.body:setLinearVelocity(0, self.char.movFactor*(deltaY/maxdelta)*self.AITarget.baseSpeed)
+
 		-- Same thing, to the other side --
 		elseif self.side == 1 and ballVx > 0 then
-			while predictX < (padX - self.paddle.paddleW/2 - arena.ball.radius) do
+			while predictX < (padX - self.paddle.paddleW/2 - self.AITarget.radius) do
 				if ballVy > 0 then
-					dy = WY -WBounds - ballY - arena.ball.radius
+					dy = WY - WBounds - ballY - self.AITarget.radius
 					predictX = ballX + math.abs(ballVx)*dy/math.abs(ballVy)
 					ballVy = -ballVy
-					ballY = WY - WBounds - arena.ball.radius
+					ballY = WY - WBounds - self.AITarget.radius
 					ballX = predictX
 				else
-					dy = ballY - WBounds - arena.ball.radius
+					dy = ballY - WBounds - self.AITarget.radius
 					predictX = ballX  + math.abs(ballVx)*dy/math.abs(ballVy)
 					ballVy = -ballVy
-					ballY = WBounds + arena.ball.radius
+					ballY = WBounds + self.AITarget.radius
 					ballX = predictX
 				end
 			end
 			if ballVy > 0 then
-				predictY = self.correctAIY + math.abs(ballVy)*(ballX - padX + self.paddle.paddleW/2 + arena.ball.radius)/math.abs(ballVx)
+				predictY = self.correctAIY + math.abs(ballVy)*(ballX - padX + self.paddle.paddleW/2 + self.AITarget.radius)/math.abs(ballVx)
 			else
-				predictY = -self.correctAIY + WY - math.abs(ballVy)*(ballX - padX + self.paddle.paddleW/2 + arena.ball.radius)/math.abs(ballVx)
+				predictY = -self.correctAIY + WY - math.abs(ballVy)*(ballX - padX + self.paddle.paddleW/2 + self.AITarget.radius)/math.abs(ballVx)
 			end
 			
 			local deltaY = predictY - padY + (ballDist*math.abs(ballVy0/ballV0)/100)*self.randomFactor
-			self.paddle.body:setLinearVelocity(0, self.char.movFactor*(deltaY/maxdelta)*arena.ball.baseSpeed)
-		
+			self.paddle.body:setLinearVelocity(0, self.char.movFactor*(deltaY/maxdelta)*self.AITarget.baseSpeed)
 		-- If ball is not moving towards paddle, move paddle to the position opposite to opponent --
 		else
 			local opponentX, opponentY = nil
@@ -127,7 +127,7 @@ function Player:aiMove()
 			end
 			local opositOp = WY - opponentY
 			local deltaOp = opositOp - padY
-			self.paddle.body:setLinearVelocity(0, (deltaOp/maxdelta)*arena.ball.baseSpeed/2)
+			self.paddle.body:setLinearVelocity(0, (deltaOp/maxdelta)*self.AITarget.baseSpeed/2)
 		end
 	end
 end
@@ -145,9 +145,9 @@ function Player:humanMove()
 		if math.abs(delta) < self.paddle.basepaddleH/8 then 
 			self.paddle.body:setLinearVelocity(0, 0)
 		elseif delta > 0 then
-			self.paddle.body:setLinearVelocity(0, self.char.movFactor*arena.ball.baseSpeed)
+			self.paddle.body:setLinearVelocity(0, self.char.movFactor*self.AITarget.baseSpeed)
 		elseif delta < 0 then
-			self.paddle.body:setLinearVelocity(0, -self.char.movFactor*arena.ball.baseSpeed)
+			self.paddle.body:setLinearVelocity(0, -self.char.movFactor*self.AITarget.baseSpeed)
 		end
 	end
 end
@@ -160,4 +160,5 @@ function Player:init(side, human, difFactor, class)
 	self.difFactor = difFactor
 	self.paddle = Paddle.new(side, self.char.atkFactor, self.char.defFactor)
 	self.touchY = WY/2
+	self.AITarget = arena.ball
 end

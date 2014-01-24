@@ -19,9 +19,8 @@ arena = nil
 
 -- Etc --
 transTime = 1.5
-
--- Defined Options --
-controlMethod = "Touch"
+currSong = nil
+XShift = 0 -- 
 
 ----------------------
 -- Global Functions --
@@ -52,6 +51,22 @@ goPhysics(PhysicsScale)
 sounds = SoundLoader.new()
 textures = TextureLoader.new()
 fonts = FontLoader.new()
+musics = MusicLoader.new()
+
+local optionsFile = io.open("|D|options.txt", "r")
+if not optionsFile then
+	local createFile = io.open("|D|options.txt", "w+")
+	for k, v in pairs(optionsTable) do 
+		createFile:write(k.."="..v.."\n")
+	end
+else
+	local lines = lines_from("|D|options.txt")
+	for i = 1, table.getn(lines), 1 do
+		for k1, v1 in string.gmatch(lines[i], "(%w+)=(%w+)") do
+			optionsTable[k1] = v1
+		end
+	end
+end
 
 -- Create scenes for the Scene Manager --
 sceneMan = SceneManager.new({

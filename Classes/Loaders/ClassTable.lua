@@ -59,13 +59,13 @@ classTable["Archer"] = {
 	"Arrow Ball",
 	"Ball moves in a straight line to the goal"
 }
-classTable["Illusionist"] = {
-	10,
+classTable["Mimic"] = {
+	12,
 	12,
 	10,
 	10,
 	14,
-	14,
+	12,
 	"mirrorball",
 	"Mirror Ball",
 	"Ball is reflected to the other direction"
@@ -91,4 +91,16 @@ classTable["Thief"] = {
 	"steal",
 	"Steal",
 	"Steal ball and return with 2x its speed"
+}
+
+classTable["Illusionist"] = {
+	8,
+	14,
+	12,
+	10,
+	12,
+	14,
+	"multiball",
+	"Multiball",
+	"Creates illusions to confuse the enemy"
 }

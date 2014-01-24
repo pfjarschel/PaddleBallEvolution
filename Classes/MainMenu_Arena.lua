@@ -10,6 +10,8 @@ MainMenu_Arena.font = nil
 -- Handles Keys --
 local function onKeyDown(event)
 	if event.keyCode == 301 then
+		if optionsTable["SFX"] == "On" then sounds.sel3:play() end
+		
 		sceneMan:changeScene("mainMenu", transTime, SceneManager.fade, easing.linear) 
 	end
 end
@@ -50,6 +52,8 @@ function MainMenu_Arena:init()
 			numTextBox:setTextColor(0xffffff)
 			numTextBox:setPosition(0.5*WX - numTextBox:getWidth()/2, 0.5*WY + 140)
 			self:addChild(numTextBox)
+			
+			if optionsTable["SFX"] == "On" then sounds.sel1:play() end
 		end
 	end)
 	
@@ -65,6 +69,8 @@ function MainMenu_Arena:init()
 			numTextBox:setTextColor(0xffffff)
 			numTextBox:setPosition(0.5*WX - numTextBox:getWidth()/2, 0.5*WY + 140)
 			self:addChild(numTextBox)
+			
+			if optionsTable["SFX"] == "On" then sounds.sel1:play() end
 		end
 	end)
 	
@@ -100,7 +106,12 @@ function MainMenu_Arena:init()
 	classDef[i] = "?"
 	
 	-- Class Selection --
-	local classTextBox = TextField.new(self.font, "Class:")
+	local classTextBox = nil
+	if optionsTable["ArenaSide"] == "Left" then
+		classTextBox = TextField.new(self.font, "Class:")
+	else
+		classTextBox = TextField.new(self.font, "Enemy Class:")
+	end
 	classTextBox:setTextColor(0xffffff)
 	classTextBox:setPosition(192 - classTextBox:getWidth()/2, 0.5*WY - 30)
 	self:addChild(classTextBox)
@@ -112,9 +123,9 @@ function MainMenu_Arena:init()
 	selClassTextBox:setPosition(192 - selClassTextBox:getWidth()/2, 0.5*WY + 10)
 	self:addChild(selClassTextBox)
 	
-	local selSkillTextBox = TextWrap.new(classSkill[classIndex]..": "..classSkillDesc[classIndex], 300, "center", 5, self.smallfont)
+	local selSkillTextBox = TextWrap.new(classSkill[classIndex]..": "..classSkillDesc[classIndex], 300, "center", 7, self.smallfont)
 	selSkillTextBox:setTextColor(0xffffff)
-	selSkillTextBox:setPosition(192 - selSkillTextBox:getWidth()/2, 0.5*WY + 45)
+	selSkillTextBox:setPosition(192 - selSkillTextBox:getWidth()/2, 0.5*WY + 50)
 	self:addChild(selSkillTextBox)
 	
 	local stats = "Atk: "..classAtk[1].."\n"..
@@ -122,9 +133,9 @@ function MainMenu_Arena:init()
 					"Lif: "..classLif[1].."\n"..
 					"Skl: "..classSkl[1].."\n"..
 					"Def: "..classDef[1].."\n"
-	local statsTextBox = TextWrap.new(stats, 64, "center", 5, self.smallfont)
+	local statsTextBox = TextWrap.new(stats, 64, "center", 7, self.smallfont)
 	statsTextBox:setTextColor(0xffffff)
-	statsTextBox:setPosition(192 - statsTextBox:getWidth()/2, 0.5*WY + 90)
+	statsTextBox:setPosition(192 - statsTextBox:getWidth()/2, 0.5*WY + 95)
 	self:addChild(statsTextBox)
 	
 	self.prevBut = MenuBut.new(40, 40, textures.backBut, textures.backBut1)
@@ -142,9 +153,9 @@ function MainMenu_Arena:init()
 			self:addChild(selClassTextBox)
 			
 			self:removeChild(selSkillTextBox)
-			selSkillTextBox = TextWrap.new(classSkill[classIndex]..": "..classSkillDesc[classIndex], 300, "center", 5, self.smallfont)
+			selSkillTextBox = TextWrap.new(classSkill[classIndex]..": "..classSkillDesc[classIndex], 300, "center", 7, self.smallfont)
 			selSkillTextBox:setTextColor(0xffffff)
-			selSkillTextBox:setPosition(192 - selSkillTextBox:getWidth()/2, 0.5*WY + 45)
+			selSkillTextBox:setPosition(192 - selSkillTextBox:getWidth()/2, 0.5*WY + 50)
 			self:addChild(selSkillTextBox)
 			
 			self:removeChild(statsTextBox)
@@ -153,10 +164,12 @@ function MainMenu_Arena:init()
 					"Lif: "..classLif[classIndex].."\n"..
 					"Skl: "..classSkl[classIndex].."\n"..
 					"Def: "..classDef[classIndex].."\n"
-			statsTextBox = TextWrap.new(stats, 64, "center", 5, self.smallfont)
+			statsTextBox = TextWrap.new(stats, 64, "center", 7, self.smallfont)
 			statsTextBox:setTextColor(0xffffff)
-			statsTextBox:setPosition(192 - statsTextBox:getWidth()/2, 0.5*WY + 90)
+			statsTextBox:setPosition(192 - statsTextBox:getWidth()/2, 0.5*WY + 95)
 			self:addChild(statsTextBox)
+			
+			if optionsTable["SFX"] == "On" then sounds.sel1:play() end
 		end
 	end)
 	
@@ -175,9 +188,9 @@ function MainMenu_Arena:init()
 			self:addChild(selClassTextBox)
 			
 			self:removeChild(selSkillTextBox)
-			selSkillTextBox = TextWrap.new(classSkill[classIndex]..": "..classSkillDesc[classIndex], 300, "center", 5, self.smallfont)
+			selSkillTextBox = TextWrap.new(classSkill[classIndex]..": "..classSkillDesc[classIndex], 300, "center", 7, self.smallfont)
 			selSkillTextBox:setTextColor(0xffffff)
-			selSkillTextBox:setPosition(192 - selSkillTextBox:getWidth()/2, 0.5*WY + 45)
+			selSkillTextBox:setPosition(192 - selSkillTextBox:getWidth()/2, 0.5*WY + 50)
 			self:addChild(selSkillTextBox)
 			
 			self:removeChild(statsTextBox)
@@ -186,15 +199,22 @@ function MainMenu_Arena:init()
 					"Lif: "..classLif[classIndex].."\n"..
 					"Skl: "..classSkl[classIndex].."\n"..
 					"Def: "..classDef[classIndex].."\n"
-			statsTextBox = TextWrap.new(stats, 64, "center", 5, self.smallfont)
+			statsTextBox = TextWrap.new(stats, 64, "center", 7, self.smallfont)
 			statsTextBox:setTextColor(0xffffff)
-			statsTextBox:setPosition(192 - statsTextBox:getWidth()/2, 0.5*WY + 90)
+			statsTextBox:setPosition(192 - statsTextBox:getWidth()/2, 0.5*WY + 95)
 			self:addChild(statsTextBox)
+			
+			if optionsTable["SFX"] == "On" then sounds.sel1:play() end
 		end
 	end)
 	
 	
-	local classTextBoxAI = TextField.new(self.font, "Enemy Class:")
+	local classTextBoxAI = nil
+	if optionsTable["ArenaSide"] == "Right" then
+		classTextBoxAI = TextField.new(self.font, "Class:")
+	else
+		classTextBoxAI = TextField.new(self.font, "Enemy Class:")
+	end
 	classTextBoxAI:setTextColor(0xffffff)
 	classTextBoxAI:setPosition(WX - 192 - classTextBoxAI:getWidth()/2, 0.5*WY - 30)
 	self:addChild(classTextBoxAI)
@@ -206,9 +226,9 @@ function MainMenu_Arena:init()
 	selClassTextBoxAI:setPosition(WX - 192 - selClassTextBoxAI:getWidth()/2, 0.5*WY + 10)
 	self:addChild(selClassTextBoxAI)
 	
-	local selSkillTextBoxAI = TextWrap.new(classSkill[classIndex]..": "..classSkillDesc[classIndex], 300, "center", 5, self.smallfont)
+	local selSkillTextBoxAI = TextWrap.new(classSkill[classIndex]..": "..classSkillDesc[classIndex], 300, "center", 7, self.smallfont)
 	selSkillTextBoxAI:setTextColor(0xffffff)
-	selSkillTextBoxAI:setPosition(WX - 192 - selSkillTextBoxAI:getWidth()/2, 0.5*WY + 45)
+	selSkillTextBoxAI:setPosition(WX - 192 - selSkillTextBoxAI:getWidth()/2, 0.5*WY + 50)
 	self:addChild(selSkillTextBoxAI)
 	
 
@@ -217,9 +237,9 @@ function MainMenu_Arena:init()
 			"Lif: "..classLif[1].."\n"..
 			"Skl: "..classSkl[1].."\n"..
 			"Def: "..classDef[1].."\n"
-	local statsTextBoxAI = TextWrap.new(statsAI, 64, "center", 5, self.smallfont)
+	local statsTextBoxAI = TextWrap.new(statsAI, 64, "center", 7, self.smallfont)
 	statsTextBoxAI:setTextColor(0xffffff)
-	statsTextBoxAI:setPosition(WX - 192 - statsTextBoxAI:getWidth()/2, 0.5*WY + 90)
+	statsTextBoxAI:setPosition(WX - 192 - statsTextBoxAI:getWidth()/2, 0.5*WY + 95)
 	self:addChild(statsTextBoxAI)
 	
 	self.prevButAI = MenuBut.new(40, 40, textures.backBut, textures.backBut1)
@@ -237,9 +257,9 @@ function MainMenu_Arena:init()
 			self:addChild(selClassTextBoxAI)
 			
 			self:removeChild(selSkillTextBoxAI)
-			selSkillTextBoxAI = TextWrap.new(classSkill[classIndex]..": "..classSkillDesc[classIndex], 300, "center", 5, self.smallfont)
+			selSkillTextBoxAI = TextWrap.new(classSkill[classIndex]..": "..classSkillDesc[classIndex], 300, "center", 7, self.smallfont)
 			selSkillTextBoxAI:setTextColor(0xffffff)
-			selSkillTextBoxAI:setPosition(WX - 192 - selSkillTextBoxAI:getWidth()/2, 0.5*WY + 45)
+			selSkillTextBoxAI:setPosition(WX - 192 - selSkillTextBoxAI:getWidth()/2, 0.5*WY + 50)
 			self:addChild(selSkillTextBoxAI)
 			
 			self:removeChild(statsTextBoxAI)
@@ -248,10 +268,12 @@ function MainMenu_Arena:init()
 						"Lif: "..classLif[classIndexAI].."\n"..
 						"Skl: "..classSkl[classIndexAI].."\n"..
 						"Def: "..classDef[classIndexAI].."\n"
-			statsTextBoxAI = TextWrap.new(statsAI, 64, "center", 5, self.smallfont)
+			statsTextBoxAI = TextWrap.new(statsAI, 64, "center", 7, self.smallfont)
 			statsTextBoxAI:setTextColor(0xffffff)
-			statsTextBoxAI:setPosition(WX - 192 - statsTextBoxAI:getWidth()/2, 0.5*WY + 90)
+			statsTextBoxAI:setPosition(WX - 192 - statsTextBoxAI:getWidth()/2, 0.5*WY + 95)
 			self:addChild(statsTextBoxAI)
+			
+			if optionsTable["SFX"] == "On" then sounds.sel1:play() end
 		end
 	end)
 	
@@ -270,9 +292,9 @@ function MainMenu_Arena:init()
 			self:addChild(selClassTextBoxAI)
 			
 			self:removeChild(selSkillTextBoxAI)
-			selSkillTextBoxAI = TextWrap.new(classSkill[classIndex]..": "..classSkillDesc[classIndex], 300, "center", 5, self.smallfont)
+			selSkillTextBoxAI = TextWrap.new(classSkill[classIndexAI]..": "..classSkillDesc[classIndexAI], 300, "center", 7, self.smallfont)
 			selSkillTextBoxAI:setTextColor(0xffffff)
-			selSkillTextBoxAI:setPosition(WX - 192 - selSkillTextBoxAI:getWidth()/2, 0.5*WY + 45)
+			selSkillTextBoxAI:setPosition(WX - 192 - selSkillTextBoxAI:getWidth()/2, 0.5*WY + 50)
 			self:addChild(selSkillTextBoxAI)
 			
 			self:removeChild(statsTextBoxAI)
@@ -281,10 +303,12 @@ function MainMenu_Arena:init()
 						"Lif: "..classLif[classIndexAI].."\n"..
 						"Skl: "..classSkl[classIndexAI].."\n"..
 						"Def: "..classDef[classIndexAI].."\n"
-			statsTextBoxAI = TextWrap.new(statsAI, 64, "center", 5, self.smallfont)
+			statsTextBoxAI = TextWrap.new(statsAI, 64, "center", 7, self.smallfont)
 			statsTextBoxAI:setTextColor(0xffffff)
-			statsTextBoxAI:setPosition(WX - 192 - statsTextBoxAI:getWidth()/2, 0.5*WY + 90)
+			statsTextBoxAI:setPosition(WX - 192 - statsTextBoxAI:getWidth()/2, 0.5*WY + 95)
 			self:addChild(statsTextBoxAI)
+			
+			if optionsTable["SFX"] == "On" then sounds.sel1:play() end
 		end
 	end)
 	
@@ -294,6 +318,7 @@ function MainMenu_Arena:init()
 	self.goBut.bitmap:setPosition(WX/2, WY/2 + 190)
 	self.goBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.goBut:hitTestPoint(event.touch.x, event.touch.y) then
+			if optionsTable["SFX"] == "On" then sounds.sel2:play() end
 			sceneMan:changeScene("arena", transTime, SceneManager.fade, easing.linear, { userData = {difficulty, class, classAI} }) 
 		end
 	end)
@@ -303,6 +328,8 @@ function MainMenu_Arena:init()
 	self.returnBut.bitmap:setPosition(self.returnBut:getWidth()/2 + 10, WY/2 + 210)
 	self.returnBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.returnBut:hitTestPoint(event.touch.x, event.touch.y) then
+			if optionsTable["SFX"] == "On" then sounds.sel3:play() end
+			
 			sceneMan:changeScene("mainMenu", transTime, SceneManager.fade, easing.linear) 
 		end
 	end)

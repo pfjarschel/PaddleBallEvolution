@@ -90,6 +90,8 @@ function MainMenu_Help:init()
 			self:addChild(self.nextBut)
 			self:addChild(self.prevBut)
 			self:addChild(self.returnBut)
+			
+			if optionsTable["SFX"] == "On" then sounds.sel1:play() end
 		end
 	end)
 	
@@ -124,6 +126,8 @@ function MainMenu_Help:init()
 			self:addChild(self.nextBut)
 			self:addChild(self.prevBut)
 			self:addChild(self.returnBut)
+			
+			if optionsTable["SFX"] == "On" then sounds.sel1:play() end
 		end
 	end)
 	
@@ -132,6 +136,8 @@ function MainMenu_Help:init()
 	self.returnBut.bitmap:setPosition(self.returnBut:getWidth()/2 + 10, WY/2 + 210)
 	self.returnBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.returnBut:hitTestPoint(event.touch.x, event.touch.y) then
+			if optionsTable["SFX"] == "On" then sounds.sel3:play() end
+		
 			sceneMan:changeScene("mainMenu", transTime, SceneManager.fade, easing.linear) 
 		end
 	end)

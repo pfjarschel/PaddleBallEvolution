@@ -6,6 +6,9 @@ SoundLoader = Core.class()
 
 -- Load a bunch of sounds and sets them to variables --
 function SoundLoader:init()
+	self.sel1 = Sound.new("audio/sel1.wav")
+	self.sel2 = Sound.new("audio/sel2.wav")
+	self.sel3 = Sound.new("audio/sel3.wav")
 	self.hit1 = Sound.new("audio/hit1.wav")
 	self.hit2 = Sound.new("audio/hit2.wav")
 	self.goal1 = Sound.new("audio/goal1.wav")

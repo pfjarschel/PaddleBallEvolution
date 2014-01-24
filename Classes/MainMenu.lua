@@ -18,6 +18,13 @@ end
 function MainMenu:init()
 	gc()
 	
+	if optionsTable["Music"] == "On" then
+		if not(currSong == nil) then
+			currSong:stop()
+		end
+		currSong = musics.intro:play(0, true, false)
+	end
+	
 	self.font = fonts.arialroundedSmall
 	local menubg = Bitmap.new(textures.mainmenubg)
 	menubg:setScale(1, 1)
@@ -31,6 +38,8 @@ function MainMenu:init()
 	self.careerBut.bitmap:setPosition(WX/2, WY/2)
 	self.careerBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.careerBut:hitTestPoint(event.touch.x, event.touch.y) then
+			if optionsTable["SFX"] == "On" then sounds.sel2:play() end
+			
 			print("Career Mode to Come!")
 		end
 	end)
@@ -40,6 +49,8 @@ function MainMenu:init()
 	self.arenaBut.bitmap:setPosition(WX/2, WY/2 + 1.2*self.arenaBut.height)
 	self.arenaBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.arenaBut:hitTestPoint(event.touch.x, event.touch.y) then
+			if optionsTable["SFX"] == "On" then sounds.sel2:play() end
+			
 			sceneMan:changeScene("mainMenu_Arena", transTime, SceneManager.fade, easing.linear)
 		end
 	end)
@@ -49,6 +60,8 @@ function MainMenu:init()
 	self.survivalBut.bitmap:setPosition(WX/2, WY/2 + 2.4*self.survivalBut.height)
 	self.survivalBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.survivalBut:hitTestPoint(event.touch.x, event.touch.y) then
+			if optionsTable["SFX"] == "On" then sounds.sel2:play() end
+			
 			sceneMan:changeScene("survival", transTime, SceneManager.fade, easing.linear, { userData = "5" })
 		end
 	end)
@@ -58,6 +71,8 @@ function MainMenu:init()
 	self.classicBut.bitmap:setPosition(WX/2, WY/2 + 3.6*self.classicBut.height)
 	self.classicBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.classicBut:hitTestPoint(event.touch.x, event.touch.y) then
+			if optionsTable["SFX"] == "On" then sounds.sel2:play() end
+			
 			sceneMan:changeScene("mainMenu_Classic", transTime, SceneManager.fade, easing.linear)
 		end
 	end)
@@ -67,6 +82,8 @@ function MainMenu:init()
 	self.optionsBut.bitmap:setPosition(52 + 40 + 16, WY/2 + 5*self.optionsBut.height)
 	self.optionsBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.optionsBut:hitTestPoint(event.touch.x, event.touch.y) then
+			if optionsTable["SFX"] == "On" then sounds.sel2:play() end
+			
 			sceneMan:changeScene("mainMenu_Options", transTime, SceneManager.fade, easing.linear)
 		end
 	end)
@@ -76,6 +93,8 @@ function MainMenu:init()
 	self.helpBut.bitmap:setPosition(52, WY/2 + 5*self.helpBut.height)
 	self.helpBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.helpBut:hitTestPoint(event.touch.x, event.touch.y) then
+			if optionsTable["SFX"] == "On" then sounds.sel2:play() end
+			
 			sceneMan:changeScene("mainMenu_Help", transTime, SceneManager.fade, easing.linear)
 		end
 	end)
@@ -85,6 +104,8 @@ function MainMenu:init()
 	self.exitBut.bitmap:setPosition(WX - 32 - self.exitBut:getWidth()/2, WY/2 + 5*self.exitBut.height)
 	self.exitBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.exitBut:hitTestPoint(event.touch.x, event.touch.y) then
+			if optionsTable["SFX"] == "On" then sounds.sel3:play() end
+			
 			sceneMan:changeScene("blackScreen", transTime/2, SceneManager.fade, easing.linear)
 		end
 	end)

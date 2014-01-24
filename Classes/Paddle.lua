@@ -30,7 +30,7 @@ function Paddle:createBody()
 	}
 	
 	-- Propagate useful variables to body --
-	self.body.name = "paddle" .. tostring(self.side)
+	self.body.name = "paddle" --.. tostring(self.side)
 	self.body.side = self.side
 	self.body.paddleH = self.paddleH
 	self.body.paddleW = self.paddleW
@@ -45,6 +45,7 @@ function Paddle:createBody()
 		friction = 0,
 		fixedRotation = true,
 	}
+	self.fixture:setFilterData({categoryBits = 2, maskBits = 5, groupIndex = 0})
 	self.body:setAngle(self.side*math.pi)
 	
 	-----------------------------------------------------------------------------------

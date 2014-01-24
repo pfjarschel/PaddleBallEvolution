@@ -10,6 +10,8 @@ MainMenu_Classic.font = nil
 -- Handles Keys --
 local function onKeyDown(event)
 	if event.keyCode == 301 then
+		if optionsTable["SFX"] == "On" then sounds.sel3:play() end
+		
 		sceneMan:changeScene("mainMenu", transTime, SceneManager.fade, easing.linear) 
 	end
 end
@@ -48,6 +50,8 @@ function MainMenu_Classic:init()
 			numTextBox:setTextColor(0xffffff)
 			numTextBox:setPosition(0.5*WX - numTextBox:getWidth()/2, 0.5*WY + 110)
 			self:addChild(numTextBox)
+			
+			if optionsTable["SFX"] == "On" then sounds.sel1:play() end
 		end
 	end)
 	
@@ -63,6 +67,8 @@ function MainMenu_Classic:init()
 			numTextBox:setTextColor(0xffffff)
 			numTextBox:setPosition(0.5*WX - numTextBox:getWidth()/2, 0.5*WY + 110)
 			self:addChild(numTextBox)
+			
+			if optionsTable["SFX"] == "On" then sounds.sel1:play() end
 		end
 	end)
 	
@@ -71,6 +77,8 @@ function MainMenu_Classic:init()
 	self.goBut.bitmap:setPosition(WX/2, WY/2 + 160)
 	self.goBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.goBut:hitTestPoint(event.touch.x, event.touch.y) then
+			if optionsTable["SFX"] == "On" then sounds.sel2:play() end
+		
 			sceneMan:changeScene("classic", transTime, SceneManager.fade, easing.linear, { userData = difficulty }) 
 		end
 	end)
@@ -80,6 +88,8 @@ function MainMenu_Classic:init()
 	self.returnBut.bitmap:setPosition(self.returnBut:getWidth()/2 + 10, WY/2 + 210)
 	self.returnBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.returnBut:hitTestPoint(event.touch.x, event.touch.y) then
+			if optionsTable["SFX"] == "On" then sounds.sel3:play() end
+		
 			sceneMan:changeScene("mainMenu", transTime, SceneManager.fade, easing.linear) 
 		end
 	end)
