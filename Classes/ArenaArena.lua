@@ -186,9 +186,9 @@ end
 function ArenaArena:addSkillBut()
 	self.skillBut = MenuBut.new(60, 60, textures.skillBut, textures.skillBut1)
 	if optionsTable["ArenaSide"] == "Left" then
-		self.skillBut.bitmap:setPosition(XShift + WX/4, WY - self.skillBut.bitmap:getHeight())
-	else
 		self.skillBut.bitmap:setPosition(XShift + 3*WX/4, WY - self.skillBut.bitmap:getHeight())
+	else
+		self.skillBut.bitmap:setPosition(XShift + WX/4, WY - self.skillBut.bitmap:getHeight())
 	end
 	self.skillBut:setAlpha(0.4)
 	self:addChild(self.skillBut)

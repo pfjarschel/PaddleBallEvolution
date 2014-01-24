@@ -158,7 +158,7 @@ function ArenaAI:Mimic()
 	local ballVx = arena.ball.body:getLinearVelocity()
 	local ballX, ballY = arena.ball.body:getPosition()
 	local paddleX, paddleY = arena.aiPlayer.paddle.body:getPosition()
-	if (self.side*ballVx > 0 and self.side*(ballX - WX/2 - XShift) < 0) or (self.side*ballVx > 0 and self.side*(ballX - WX/4 - XShift) > 0 and math.abs(ballY - paddleY) > WY/8) or (self.side*ballX > self.side*paddleX) then
+	if (self.side*ballVx > 0 and self.side*(ballX - WX/2 - XShift) < 0) or (self.side*ballVx > 0 and self.side*(ballX - 2*WX/4 - self.side*WX/4 - XShift) > 0 and math.abs(ballY - paddleY) > WY/8) or (self.side*ballX > self.side*paddleX) then
 		local num = math.random(1, self.chance/4)
 		if num == 1 then
 			self:initSkill()
