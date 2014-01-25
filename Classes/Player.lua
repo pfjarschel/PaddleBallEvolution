@@ -127,7 +127,7 @@ function Player:aiMove()
 			end
 			local opositOp = WY - opponentY
 			local deltaOp = opositOp - padY
-			self.paddle.body:setLinearVelocity(0, (deltaOp/maxdelta)*self.AITarget.baseSpeed/2)
+			self.paddle.body:setLinearVelocity(0, self.char.movFactor*(deltaOp/maxdelta)*self.AITarget.baseSpeed/2)
 		end
 	end
 end

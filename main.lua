@@ -40,6 +40,112 @@ function fadeOut(sceneVar)
 	stage:addEventListener(Event.ENTER_FRAME, fadeOutFunc)
 end
 
+-- Fades Bitmap from arena and removes it from parent --
+function fadeBitmapOut(bitmap, totaltime, parent)
+	local currentAlpha = bitmap:getAlpha()
+	local step = 0
+	local interval = 33
+	
+	step = currentAlpha/(totaltime/interval)
+	
+	local function onTimer(timer)
+		currentAlpha = bitmap:getAlpha()
+		currentAlpha = currentAlpha - step
+		bitmap:setAlpha(currentAlpha)
+		if currentAlpha <= 0 then
+			timer:removeEventListener(Event.TIMER, onTimer)
+			timer:stop()
+			for i = parent:getNumChildren(), 1, -1 do
+				if parent:getChildAt(i) == bitmap then
+					parent:removeChild(bitmap)
+				end
+			end
+		end
+	end
+	
+	local timer = Timer.new(interval, 0)
+	timer:addEventListener(Event.TIMER, onTimer, timer)
+	timer:start()
+end
+
+-- Fades Bitmap in --
+function fadeBitmapIn(bitmap, totaltime, targetalpha)
+	local currentAlpha = 0
+	bitmap:setAlpha(0)
+	local step = 0
+	local interval = 33
+	
+	step = (targetalpha - currentAlpha)/(totaltime/interval)
+	
+	local function onTimer(timer)
+		currentAlpha = bitmap:getAlpha()
+		currentAlpha = currentAlpha + step
+		bitmap:setAlpha(currentAlpha)
+		if currentAlpha >= targetalpha then
+			timer:removeEventListener(Event.TIMER, onTimer)
+			timer:stop()
+		end
+	end
+	
+	local timer = Timer.new(interval, 0)
+	timer:addEventListener(Event.TIMER, onTimer, timer)
+	timer:start()
+end
+
+-- Scales Bitmap From X to Y --
+function scaleBitmap(bitmap, totaltime, targetScale, initialScale)
+	bitmap:setScale(initialScale)
+	local currentScale = bitmap:getScale()
+	local step = 0
+	local interval = 33
+	step = (targetScale - initialScale)/(totaltime/interval)
+	
+	local function onTimer(timer)
+		currentScale = bitmap:getScale()
+		currentScale = currentScale + step
+		bitmap:setScale(currentScale)
+		if currentScale <= 1.1*targetScale and currentScale>= 0.9*targetScale then
+			timer:removeEventListener(Event.TIMER, onTimer)
+			timer:stop()
+			bitmap:setScale(targetScale)
+		end
+	end
+	
+	local timer = Timer.new(interval, 0)
+	timer:addEventListener(Event.TIMER, onTimer, timer)
+	timer:start()
+end
+
+-- Scales Bitmap From X to Y, not proportional --
+function scaleBitmapXY(bitmap, totaltime, targetScaleX, targetScaleY, initialScaleX, initialScaleY)
+	bitmap:setScale(initialScaleX, initialScaleY)
+	local currentScaleX, currentScaleY = bitmap:getScale()
+	local stepX = 0
+	local stepY = 0
+	local interval = 33
+	stepX = (targetScaleX - initialScaleX)/(totaltime/interval)
+	stepY = (targetScaleY - initialScaleY)/(totaltime/interval)
+	
+	local function onTimer(timer)
+		currentScaleX, currentScaleY = bitmap:getScale()
+		currentScaleX = currentScaleX + stepX
+		currentScaleY = currentScaleY + stepY
+		bitmap:setScale(currentScaleX, currentScaleY)
+		if (currentScaleX <= 1.1*targetScaleX and currentScaleX>= 0.9*targetScaleX  and targetScaleX > 0) or
+			(currentScaleX >= 1.1*targetScaleX and currentScaleX<= 0.9*targetScaleX  and targetScaleX < 0)
+		then
+			timer:removeEventListener(Event.TIMER, onTimer)
+			timer:stop()
+			bitmap:setScale(targetScaleX, targetScaleY)
+		end
+	end
+	
+	local timer = Timer.new(interval, 0)
+	timer:addEventListener(Event.TIMER, onTimer, timer)
+	timer:start()
+end
+	
+
 
 -------------------------
 -- Main Initialization --
@@ -86,4 +192,4 @@ sceneMan = SceneManager.new({
 
 -- Load Splash Screen and then Main Menu --
 stage:addChild(sceneMan)
-sceneMan:changeScene("splash", transTime, SceneManager.fade, easing.linear)
+sceneMan:changeScene("mainMenu", transTime, SceneManager.fade, easing.linear)

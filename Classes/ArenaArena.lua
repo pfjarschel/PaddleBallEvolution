@@ -73,7 +73,7 @@ function ArenaArena:openMenu()
 	if not self.paused then
 		self.paused = true
 		
-		if optionsTable["SFX"] == "On" then sounds.sel2:play() end
+		if optionsTable["SFX"] == "On" then sounds.sel_pause:play() end
 		
 		self:removeEventListener(Event.ENTER_FRAME, onEnterFrame)
 		
@@ -91,7 +91,7 @@ function ArenaArena:openMenu()
 				self.paused = false
 				self:addEventListener(Event.ENTER_FRAME, onEnterFrame)
 				
-				if optionsTable["SFX"] == "On" then sounds.sel2:play() end
+				if optionsTable["SFX"] == "On" then sounds.sel_pause:play() end
 			end
 		end)
 		self.pausebg:addChild(resumeBut)
@@ -410,6 +410,7 @@ function ArenaArena:checkGoal()
 	local ballX, ballY = self.ball.body:getPosition()
 	
 	local function updateOrReset()
+		Timer.stopAll()
 		if self.score0 <= 0 or self.score1 <= 0 then
 			if self.humanPlayer.skillActive then
 				self.humanPlayer.char.skill:endAction()
@@ -417,7 +418,6 @@ function ArenaArena:checkGoal()
 			if self.aiPlayer.skillActive then
 				self.aiPlayer.char.skill:endAction()
 			end
-			Timer.stopAll()
 			self:gameOver()
 		else
 			self.combatStats:update(self.score0, self.score1, self.mp0, self.mp1)
@@ -427,7 +427,8 @@ function ArenaArena:checkGoal()
 			if self.aiPlayer.skillActive then
 				self.aiPlayer.char.skill:endAction()
 			end
-			Timer.stopAll()
+			self.humanPlayer.char.skill:forceEnd()
+			self.aiPlayer.char.skill:forceEnd()
 			self.ball:reset()
 			self.ball:launch()
 			self.humanPlayer.paddle:reset()
@@ -567,8 +568,8 @@ function ArenaArena:init(dataTable)
 		self.rightPlayer = Player.new(1, true, self.difFactor, self.rightClass)
 	end
 	
-	self.leftPlayer.paddle.bitmap:setColorTransform(0 + 1*self.leftPlayer.char.atk/30, 0 + 1*self.leftPlayer.char.def/30, 0 + 1*self.leftPlayer.char.mov/30, 1)
-	self.rightPlayer.paddle.bitmap:setColorTransform(0 + 1*self.rightPlayer.char.atk/30, 0 + 1*self.rightPlayer.char.def/30, 0 + 1*self.rightPlayer.char.mov/30, 1)
+	self.leftPlayer.paddle.bitmap:setColorTransform(classTable[self.leftClass][10][1], classTable[self.leftClass][10][2], classTable[self.leftClass][10][3])
+	self.rightPlayer.paddle.bitmap:setColorTransform(classTable[self.rightClass][10][1], classTable[self.rightClass][10][2], classTable[self.rightClass][10][3])
 	self.score0 = self.leftPlayer.char.lifFactor
 	self.score1 = self.rightPlayer.char.lifFactor
 	self.mp0 = self.leftPlayer.char.sklFactor

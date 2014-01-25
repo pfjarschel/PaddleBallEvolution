@@ -5,7 +5,7 @@
 ArenaAI = Core.class()
 ArenaAI.class = ""
 ArenaAI.side = nil
-ArenaAI.chance = 500
+ArenaAI.chance = 5000
 
 function ArenaAI:init(class)
 	self.class = class
@@ -69,7 +69,7 @@ end
 function ArenaAI:Warrior()
 	-- Activate only when ball is moving torwards him --
 	local ballVx = arena.ball.body:getLinearVelocity()
-	if self.side*ballVx then
+	if self.side*ballVx > 0 then
 		local num = math.random(1, self.chance)
 		if num == 1 then
 			self:initSkill()

@@ -63,7 +63,7 @@ end
 
 function ArenaSurvival:openMenu()
 	if not self.paused then
-		if optionsTable["SFX"] == "On" then sounds.sel2:play() end
+		if optionsTable["SFX"] == "On" then sounds.sel_pause:play() end
 		
 		self.paused = true
 		self:removeEventListener(Event.ENTER_FRAME, onEnterFrame)
@@ -81,7 +81,7 @@ function ArenaSurvival:openMenu()
 				self.paused = false
 				self:addEventListener(Event.ENTER_FRAME, onEnterFrame)
 				
-				if optionsTable["SFX"] == "On" then sounds.sel2:play() end
+				if optionsTable["SFX"] == "On" then sounds.sel_pause:play() end
 			end
 		end)
 		self.pausebg:addChild(resumeBut)

@@ -65,7 +65,7 @@ function ArenaClassic:openMenu()
 	if not self.paused then
 		self.paused = true
 		
-		if optionsTable["SFX"] == "On" then sounds.sel2:play() end
+		if optionsTable["SFX"] == "On" then sounds.sel_pause:play() end
 		
 		self:removeEventListener(Event.ENTER_FRAME, onEnterFrame)
 		
@@ -82,7 +82,7 @@ function ArenaClassic:openMenu()
 				self.paused = false
 				self:addEventListener(Event.ENTER_FRAME, onEnterFrame)
 				
-				if optionsTable["SFX"] == "On" then sounds.sel2:play() end
+				if optionsTable["SFX"] == "On" then sounds.sel_pause:play() end
 			end
 		end)
 		self.pausebg:addChild(resumeBut)

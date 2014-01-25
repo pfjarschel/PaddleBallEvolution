@@ -2,7 +2,7 @@
 -- Table Containing Class Names and Aliases --
 ----------------------------------------------
 
--- The index is the class name, followed by Atk, Mov, Lif, Int, Skl, Def, Skill internal name, Skill Full Name, Skill Description
+-- The index is the class name, followed by Atk, Mov, Lif, Int, Skl, Def, Skill internal name, Skill Full Name, Skill Description, RGB colors
 
 classTable["Warrior"] = {
 	18,
@@ -13,7 +13,8 @@ classTable["Warrior"] = {
 	14,
 	"powershot",
 	"Power Shot",
-	"The next ball return will be VERY fast"
+	"The next ball return will be VERY fast",
+	{0.6, 0.2, 0.2}
 }
 classTable["Acrobat"] = {
 	10,
@@ -24,7 +25,8 @@ classTable["Acrobat"] = {
 	10,
 	"curveball",
 	"Curve Ball",
-	"Ball makes crazy curves"
+	"Ball makes crazy curves",
+	{0.8, 0.8, 0.2}
 }
 classTable["Ninja"] = { 
 	14,
@@ -35,7 +37,8 @@ classTable["Ninja"] = {
 	8,
 	"invisiball",
 	"Invisiball",
-	"Ball turns invisible, simple like that"
+	"Ball turns invisible, simple like that",
+	{0.05, 0.2, 0.5}
 }
 classTable["Swamp Monster"] = {
 	14,
@@ -46,7 +49,8 @@ classTable["Swamp Monster"] = {
 	16,
 	"viscousfield",
 	"Viscous Field",
-	"Ball slows down a lot"
+	"Ball slows down a lot",
+	{0.6, 0.7, 0.2}
 }
 classTable["Archer"] = {
 	14,
@@ -57,7 +61,8 @@ classTable["Archer"] = {
 	8,
 	"arrowball",
 	"Arrow Ball",
-	"Ball moves in a straight line to the goal"
+	"Ball moves in a straight line to the goal",
+	{0.2, 0.6, 0.2}
 }
 classTable["Mimic"] = {
 	12,
@@ -68,7 +73,8 @@ classTable["Mimic"] = {
 	12,
 	"mirrorball",
 	"Mirror Ball",
-	"Ball is reflected to the other direction"
+	"Ball is reflected to the other direction",
+	{0.8, 0.8, 0.8}
 }
 classTable["Barbarian"] = {
 	20,
@@ -79,7 +85,8 @@ classTable["Barbarian"] = {
 	10,
 	"berserk",
 	"Berserk",
-	"Atk, Mov and Def greatly increased"
+	"Atk, Mov and Def greatly increased",
+	{0.7, 0.4, 0.2}
 }
 classTable["Thief"] = {
 	8,
@@ -90,7 +97,8 @@ classTable["Thief"] = {
 	10,
 	"steal",
 	"Steal",
-	"Steal ball and return with 2x its speed"
+	"Steal ball and return with 2x its speed",
+	{0.4, 0.4, 0.4}
 }
 
 classTable["Illusionist"] = {
@@ -102,7 +110,8 @@ classTable["Illusionist"] = {
 	14,
 	"multiball",
 	"Multiball",
-	"Creates illusions to confuse the enemy"
+	"Creates illusions to confuse the enemy",
+	{0.6, 0.4, 1}
 }
 
 classTable["Ice Man"] = {
@@ -114,5 +123,6 @@ classTable["Ice Man"] = {
 	18,
 	"freeze",
 	"Freeze",
-	"Freezes your opponent for some time"
+	"Freezes your opponent for some time",
+	{0.8, 0.8, 1}
 }

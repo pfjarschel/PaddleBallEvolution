@@ -15,8 +15,10 @@ function Skills:init(skill)
 	self.basetime = 5*1000*WX/(arena.ball.baseSpeed*20)
 end
 
--- Declare this function to later hold skill specific action to end it --
+-- Declare these functions to later hold skill specific action to end it --
 function Skills:endAction()
+end
+function Skills:forceEnd()
 end
 
 function Skills:start(side)
@@ -38,6 +40,13 @@ function Skills:start(side)
 			arena.rightPlayer.paddle.body.atkFactor = arena.rightPlayer.paddle.atkFactor*10
 		end
 		
+		-- GFX --
+		if side == 0 then
+			arena.leftPlayer.paddle.bitmap:setColorTransform(1, 0, 0)
+		else
+			arena.rightPlayer.paddle.bitmap:setColorTransform(1, 0, 0)
+		end
+		
 		-- Action to end skill --
 		self.endAction = function()
 			if side == 0 then
@@ -45,21 +54,28 @@ function Skills:start(side)
 				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
 					arena.skillBut:setAlpha(0.4)
 				end
+				arena.leftPlayer.paddle.bitmap:setColorTransform(classTable[arena.leftClass][10][1], classTable[arena.leftClass][10][2], classTable[arena.leftClass][10][3])
 				arena.leftPlayer.skillActive = false
 			else
 				arena.rightPlayer.paddle.body.atkFactor = arena.rightPlayer.paddle.atkFactor
 				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
 					arena.skillBut:setAlpha(0.4)
 				end
+				arena.rightPlayer.paddle.bitmap:setColorTransform(classTable[arena.rightClass][10][1], classTable[arena.rightClass][10][2], classTable[arena.rightClass][10][3])
 				arena.rightPlayer.skillActive = false
 			end
 		end
 		
 		-- Sets timer to end skill --
-		Timer.delayedCall(self.basetime,  function()
-			self:endAction() 
-			if optionsTable["SFX"] == "On" then sounds.powerup2over:play() end
-		end)
+		--Timer.delayedCall(self.basetime,  function()
+			--self:endAction() 
+			--if optionsTable["SFX"] == "On" then sounds.powerup2over:play() end
+		--end)
+		
+		-- Action to force end --
+		self.forceEnd = function()
+			
+		end
 	end
 
 
@@ -84,11 +100,28 @@ function Skills:start(side)
 			desVx = (ballVx/ballV0)*arena.ball.baseSpeed/10
 			desVy = (ballVy/ballV0)*arena.ball.baseSpeed/10
 		end
-		if optionsTable["SFX"] == "On" then sounds.powerup2over:play() end
+		if optionsTable["SFX"] == "On" then sounds.bubbles:play() end
 		arena.ball.body:setLinearVelocity(desVx, desVy)
 		
+		-- GFX --
+		local viscousfield = Bitmap.new(textures.gfx_viscousfield)
+		viscousfield:setScale(1, 1)
+		viscousfield:setAnchorPoint(0.5, 0.5)
+		arena:addChild(viscousfield)
+		local textureW = viscousfield:getWidth()
+		local textureH = viscousfield:getHeight()
+		viscousfield:setScale(WX/textureW, WY/textureH)
+		viscousfield:setPosition(WX/2 + XShift, WY/2)
+		viscousfield:setAlpha(0)
+		fadeBitmapIn(viscousfield, 1000, 0.3)
+		
 		-- Action to end skill --
-		self.endAction = function() 
+		self.endAction = function()
+			fadeBitmapOut(viscousfield, 1000, arena)
+			
+			ballVx, ballVy = arena.ball.body:getLinearVelocity()
+			ballV0 = math.sqrt(ballVx*ballVx + ballVy*ballVy)
+			arena.ball.body:setLinearVelocity((ballVx/ballV0)*arena.ball.baseSpeed, (ballVy/ballV0)*arena.ball.baseSpeed)
 			if side == 0 then
 				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
 					arena.skillBut:setAlpha(0.4)
@@ -103,9 +136,18 @@ function Skills:start(side)
 		end
 		
 		-- Sets timer to end skill --
-		Timer.delayedCall(self.basetime/3,  function()
+		Timer.delayedCall(self.basetime/2,  function()
 			self:endAction()
 		end)
+		
+		-- Action to force end --
+		self.forceEnd = function()
+			for i = arena:getNumChildren(), 1, -1 do
+				if arena:getChildAt(i) == viscousfield then
+					fadeBitmapOut(viscousfield, 1000, arena)
+				end
+			end
+		end
 	end
 
 
@@ -113,7 +155,7 @@ function Skills:start(side)
 -- Invisiball: Ball is invisible. Simple like that! --
 ------------------------------------------------------
 	if self.skill == "invisiball" then
-		if optionsTable["SFX"] == "On" then sounds.powerup2:play() end
+		if optionsTable["SFX"] == "On" then sounds.puff:play() end
 		
 		if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then
 			arena.skillBut:setAlpha(0.1)
@@ -126,11 +168,45 @@ function Skills:start(side)
 		arena.aiPlayer.char.intFactor = 7
 		arena.aiPlayer:aiRandomFactor()
 		
+		-- GFX --
+		local ballX, ballY = 0
+		ballX, ballY = arena.ball.body:getPosition()
+		local puff = Bitmap.new(textures.gfx_puff)
+		puff:setScale(1, 1)
+		puff:setAnchorPoint(0.5, 0.5)
+		arena:addChild(puff)
+		local textureW = puff:getWidth()
+		local textureH = puff:getHeight()
+		puff:setPosition(ballX, ballY)
+		puff:setAlpha(0.5)
+		
+		scaleBitmap(puff, 100, 60/textureW, 0)		
+		Timer.delayedCall(200, function()
+			fadeBitmapOut(puff, 1000, arena)
+		end)
+		
+		local puff2 = nil
+		
 		-- Action to end skill --
 		self.endAction = function()
 			arena.ball:setAlpha(1)
 			arena.aiPlayer.char:updateAttr()
 			arena.aiPlayer:aiRandomFactor()
+			
+			ballX, ballY = 0
+			ballX, ballY = arena.ball.body:getPosition()
+			puff2 = Bitmap.new(textures.gfx_puff)
+			puff2:setScale(1, 1)
+			puff2:setAnchorPoint(0.5, 0.5)
+			arena:addChild(puff2)
+			local textureW2 = puff2:getWidth()
+			local textureH2 = puff2:getHeight()
+			puff2:setPosition(ballX, ballY)
+			puff2:setAlpha(0.5)
+			scaleBitmap(puff2, 100, 60/textureW2, 0)
+			Timer.delayedCall(200, function()
+				fadeBitmapOut(puff2, 1000, arena)
+			end)
 			
 			if side == 0 then
 				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
@@ -148,8 +224,19 @@ function Skills:start(side)
 		-- Sets timer to end skill --
 		Timer.delayedCall(self.basetime/3, function()
 			self:endAction()
-			if optionsTable["SFX"] == "On" then sounds.powerup2over:play() end
+			if optionsTable["SFX"] == "On" then sounds.puff:play() end
 		end)
+		
+		-- Action to force end --
+		self.forceEnd = function()
+			for i = arena:getNumChildren(), 1, -1 do
+				if arena:getChildAt(i) == puff then
+					fadeBitmapOut(puff, 1000, arena)
+				elseif arena:getChildAt(i) == puff2 then
+					fadeBitmapOut(puff2, 1000, arena)
+				end
+			end
+		end
 	end
 
 
@@ -157,7 +244,7 @@ function Skills:start(side)
 -- CurveBall: Ball makes crazy curves --
 ----------------------------------------
 	if self.skill == "curveball" then
-		if optionsTable["SFX"] == "On" then sounds.powerup2:play() end
+		if optionsTable["SFX"] == "On" then sounds.crazyball:play() end
 		
 		if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then
 			arena.skillBut:setAlpha(0.1)
@@ -179,9 +266,9 @@ function Skills:start(side)
 			local ballX, ballY = arena.ball.body:getPosition()
 			local ballVx, ballVy = arena.ball.body:getLinearVelocity()
 			
-			if ballVy > ballV0 then
+			if ballVy > 7.5*(ballV0^0.49) then
 				direction = direction*-1
-			elseif ballVy < -ballV0 then
+			elseif ballVy < -7.5*(ballV0^0.49) then
 				direction = direction*-1
 			end
 		
@@ -193,10 +280,16 @@ function Skills:start(side)
 			stage:addEventListener(Event.ENTER_FRAME, curveball)
 		end
 		
+		-- GFX --
+		scaleBitmap(arena.ball.bitmap, 250, 2*arena.ball.bitmap:getScale(), arena.ball.bitmap:getScale())
+		Timer.delayedCall(300, function()
+			scaleBitmap(arena.ball.bitmap, 250, arena.ball.bitmap:getScale()/2, arena.ball.bitmap:getScale())
+		end)
+		
 		-- Action to end Skill --
 		self.endAction = function()
 			stage:removeEventListener(Event.ENTER_FRAME, curveball)
-			
+			arena.ball.bitmap:setScale(2*arena.ball.radius/textures.pongball:getWidth())
 			if side == 0 then
 				arena.leftPlayer.skillActive = false
 				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
@@ -213,12 +306,17 @@ function Skills:start(side)
 		-- Sets timer to end skill --
 		Timer.delayedCall(self.basetime/2, function()
 			self:endAction() 
-			if optionsTable["SFX"] == "On" then sounds.powerup2over:play() end
+			if optionsTable["SFX"] == "On" then sounds.crazyball_end:play() end
 			
 			-- Returns ball to previous state --
 			local ballVxRet = arena.ball.body:getLinearVelocity()
 			arena.ball.body:setLinearVelocity(math.abs(ballVxRet*ballVx0)/ballVxRet, ballVy0)
 		end)
+		
+		-- Action to force end --
+		self.forceEnd = function()
+		
+		end
 	end
 	
 
@@ -226,7 +324,7 @@ function Skills:start(side)
 -- ArrowBall: Ball moves in a straight line to the goal --
 ----------------------------------------------------------
 	if self.skill == "arrowball" then
-		if optionsTable["SFX"] == "On" then sounds.powerup2:play() end
+		if optionsTable["SFX"] == "On" then sounds.woosh:play() end
 		
 		if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then
 			arena.skillBut:setAlpha(0.1)
@@ -244,9 +342,21 @@ function Skills:start(side)
 		end
 		
 		-- Only if ball is launched --
-			if arena.ball.launched then
-				arena.ball.body:setLinearVelocity(direction*ballV0, 0)
-			end
+		if arena.ball.launched then
+			arena.ball.body:setLinearVelocity(direction*ballV0, 0)
+		end
+		
+		-- GFX --
+		local arrow = Bitmap.new(textures.gfx_arrow)
+		arrow:setScale(1, 1)
+		arrow:setAnchorPoint(0.5, 0.5)
+		arena.ball:addChild(arrow)
+		local textureW = arrow:getWidth()
+		local textureH = arrow:getHeight()
+		arrow:setColorTransform(arena.ball.bitmap:getColorTransform())
+		arrow:setAlpha(0.5)
+		scaleBitmapXY(arrow, 1000, direction*325/textureW, direction*100/textureH, 0, 0)		
+		fadeBitmapOut(arrow, 1000, arena.ball)
 		
 		-- Action to end Skill --
 		self.endAction = function()	
@@ -267,6 +377,15 @@ function Skills:start(side)
 		Timer.delayedCall(self.basetime/10,  function()
 			self:endAction()
 		end)
+		
+		-- Action to force end --
+		self.forceEnd = function()
+			for i = arena.ball:getNumChildren(), 1, -1 do
+				if arena.ball:getChildAt(i) == arrow then
+					fadeBitmapOut(arrow, 1000, arena.ball)
+				end
+			end
+		end
 	end
 
 
@@ -274,19 +393,34 @@ function Skills:start(side)
 -- MirrorBall: Ball changes movement direction --
 -------------------------------------------------
 	if self.skill == "mirrorball" then
-		if optionsTable["SFX"] == "On" then sounds.powerup2:play() end
+		if optionsTable["SFX"] == "On" then sounds.glass_ping:play() end
 		
 		if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then
 			arena.skillBut:setAlpha(0.1)
 		end
 		
-		-- Gets velocity --
+		-- Gets velocity and position--
 		local ballVx0, ballVy0 = arena.ball.body:getLinearVelocity()
+		local ballX, ballY = arena.ball.body:getPosition()
 		
 		-- Only if ball is launched --
 		if arena.ball.launched then
 			arena.ball.body:setLinearVelocity(-ballVx0, ballVy0)
 		end
+		
+		-- GFX --
+		local mirror = Bitmap.new(textures.gfx_mirror)
+		mirror:setScale(1, 1)
+		mirror:setAnchorPoint(0.5, 0.5)
+		arena:addChild(mirror)
+		local textureW = mirror:getWidth()
+		local textureH = mirror:getHeight()
+		mirror:setScale(15/textureW, 480/textureH)
+		mirror:setPosition(ballX, WY/2)
+		fadeBitmapIn(mirror, 200, 1)
+		Timer.delayedCall(200, function()
+			fadeBitmapOut(mirror, 200, arena)
+		end)
 		
 		-- Action to end Skill --
 		self.endAction = function()	
@@ -307,6 +441,15 @@ function Skills:start(side)
 		Timer.delayedCall(self.basetime/10,  function()
 			self:endAction()
 		end)
+		
+		-- Action to force end --
+		self.forceEnd = function()
+			for i = arena:getNumChildren(), 1, -1 do
+				if arena:getChildAt(i) == mirror then
+					fadeBitmapOut(mirror, 200, arena)
+				end
+			end
+		end
 	end
 
 
@@ -320,9 +463,16 @@ function Skills:start(side)
 			arena.skillBut:setAlpha(0.1)
 		end
 		
-		local incr = 10
+		-- GFX --
+		if side == 0 then
+			arena.leftPlayer.paddle.bitmap:setColorTransform(1, 0, 0)
+		else
+			arena.rightPlayer.paddle.bitmap:setColorTransform(1, 0, 0)
+		end
 		
 		-- Sets stats + X, calculates factors and update --
+		local incr = 10
+		
 		if side == 0 then
 			local atkFactor = 0.24 + (incr + arena.leftPlayer.char.atk)/16.5 -- 0.3 to 2
 			local movFactor = 0.16 + (incr + arena.leftPlayer.char.mov)/22.5 -- 0.2 to 1.5
@@ -405,6 +555,7 @@ function Skills:start(side)
 				arena.leftPlayer.paddle.body:setAngle(arena.leftPlayer.paddle.side*math.pi)
 				arena.leftPlayer.paddle.bitmap:setScale(arena.leftPlayer.paddle.paddleW/arena.leftPlayer.paddle.textureW, arena.leftPlayer.paddle.paddleH/arena.leftPlayer.paddle.textureH)
 				arena.leftPlayer.paddle:setRotation(arena.leftPlayer.paddle.side*180)
+				arena.leftPlayer.paddle.bitmap:setColorTransform(classTable[arena.leftClass][10][1], classTable[arena.leftClass][10][2], classTable[arena.leftClass][10][3])
 				
 				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
 					arena.skillBut:setAlpha(0.4)
@@ -436,6 +587,7 @@ function Skills:start(side)
 				arena.rightPlayer.paddle.body:setAngle(arena.rightPlayer.paddle.side*math.pi)
 				arena.rightPlayer.paddle.bitmap:setScale(arena.rightPlayer.paddle.paddleW/arena.rightPlayer.paddle.textureW, arena.rightPlayer.paddle.paddleH/arena.rightPlayer.paddle.textureH)
 				arena.rightPlayer.paddle:setRotation(arena.rightPlayer.paddle.side*180)
+				arena.rightPlayer.paddle.bitmap:setColorTransform(classTable[arena.rightClass][10][1], classTable[arena.rightClass][10][2], classTable[arena.rightClass][10][3])
 				
 				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
 					arena.skillBut:setAlpha(0.4)
@@ -449,6 +601,11 @@ function Skills:start(side)
 		--	self:endAction() 
 		--	if optionsTable["SFX"] == "On" then sounds.powerup2over:play() end
 		--end)
+		
+		-- Action to force end --
+		self.forceEnd = function()
+			
+		end
 	end
 	
 	
@@ -456,7 +613,7 @@ function Skills:start(side)
 -- Steal: Steal ball and return with 2x its speed --
 ----------------------------------------------------
 	if self.skill == "steal" then
-		if optionsTable["SFX"] == "On" then sounds.powerup2:play() end
+		if optionsTable["SFX"] == "On" then sounds.tractorbeam:play() end
 		
 		if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then
 			arena.skillBut:setAlpha(0.1)
@@ -468,21 +625,52 @@ function Skills:start(side)
 		local ballV0 = math.sqrt(ballVx*ballVx + ballVy*ballVy)
 		local paddleX = 0
 		local paddleY = 0
+		local paddleH, paddleW = 0
 		
 		local incomingFactor = ballV0/arena.ball.baseSpeed
 		
 		if side == 0 then
 			paddleX, paddleY = arena.leftPlayer.paddle.body:getPosition()
 			arena.leftPlayer.paddle.body.atkFactor = incomingFactor*2
+			paddleH = arena.leftPlayer.paddle.paddleH
+			paddleW = arena.leftPlayer.paddle.paddleW
 		else
 			paddleX, paddleY = arena.rightPlayer.paddle.body:getPosition()
 			arena.rightPlayer.paddle.body.atkFactor = incomingFactor*2
+			paddleH = arena.rightPlayer.paddle.paddleH
+			paddleW = arena.rightPlayer.paddle.paddleW
 		end
 		
 		local dX = (paddleX - ballX)/math.sqrt((paddleX - ballX)*(paddleX - ballX) + (paddleY - ballY)*(paddleY - ballY))
 		local dY = (paddleY - ballY)/math.sqrt((paddleX - ballX)*(paddleX - ballX) + (paddleY - ballY)*(paddleY - ballY))
 		
 		arena.ball.body:setLinearVelocity(dX*ballV0, dY*ballV0)
+		
+		-- GFX --
+		local beam = Bitmap.new(textures.gfx_tractorbeam)
+		beam:setScale(1, 1)
+		beam:setAnchorPoint(0.5, 0.5)
+		
+		if side == 0 then
+			arena.leftPlayer.paddle:addChild(beam)
+		else
+			arena.rightPlayer.paddle:addChild(beam)
+		end
+		
+		local textureW = beam:getWidth()
+		local textureH = beam:getHeight()
+		beam:setScale(320*(paddleH/75)/textureW, 320*(paddleH/75)/textureH)
+		beam:setPosition(paddleW/2 + 0.9*beam:getWidth()/2, 0)
+		beam:setRotation(0)
+		
+		fadeBitmapIn(beam, 250, 1)
+		Timer.delayedCall(1000, function()
+			if side == 0 then
+				fadeBitmapOut(beam, 250, arena.leftPlayer.paddle)
+			else
+				fadeBitmapOut(beam, 250, arena.rightPlayer.paddle)
+			end
+		end)
 		
 		-- Action to end skill --
 		self.endAction = function()
@@ -505,6 +693,19 @@ function Skills:start(side)
 		Timer.delayedCall(self.basetime/6,  function()
 			self:endAction() 
 		end)
+		
+		-- Action to force end --
+		self.forceEnd = function()
+			for i = arena.leftPlayer.paddle:getNumChildren(), 1, -1 do
+				if arena.leftPlayer.paddle:getChildAt(i) == beam then
+					if side == 0 then
+						fadeBitmapOut(beam, 250, arena.leftPlayer.paddle)
+					else
+						fadeBitmapOut(beam, 250, arena.righttPlayer.paddle)
+					end
+				end
+			end
+		end
 	end
 	
 
@@ -512,7 +713,7 @@ function Skills:start(side)
 -- Multiball: Creates illusions to confuse the enemy --
 -------------------------------------------------------
 	if self.skill == "multiball" then
-		if optionsTable["SFX"] == "On" then sounds.powerup2:play() end
+		if optionsTable["SFX"] == "On" then sounds.magic:play() end
 		
 		if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then
 			arena.skillBut:setAlpha(0.1)
@@ -553,6 +754,18 @@ function Skills:start(side)
 			arena.aiPlayer.AITarget = ball3
 		end
 		
+		-- GFX --
+		local star = Bitmap.new(textures.gfx_star)
+		star:setScale(1, 1)
+		star:setAnchorPoint(0.5, 0.5)
+		arena:addChild(star)
+		local textureW = star:getWidth()
+		local textureH = star:getHeight()
+		star:setAlpha(0.5)
+		star:setPosition(ballX, ballY)
+		scaleBitmapXY(star, 1000, 2*160/textureW, 2*152/textureH, 0, 0)		
+		fadeBitmapOut(star, 1000, arena)
+		
 		-- Action to end skill --
 		self.endAction = function()
 			arena.ball = ball0
@@ -583,14 +796,23 @@ function Skills:start(side)
 		Timer.delayedCall(self.basetime/3,  function()
 			self:endAction() 
 		end)
+		
+		-- Action to force end --
+		self.forceEnd = function()
+			for i = arena:getNumChildren(), 1, -1 do
+				if arena:getChildAt(i) == star then
+					fadeBitmapOut(star, 1000, arena)
+				end
+			end
+		end
 	end
 	
 	
---------------------------------------------------------
--- PowerShot: The next ball return will be VERY fast! --
---------------------------------------------------------
+-------------------------------------------------
+-- Freeze: Freezes your opponent for some time --
+-------------------------------------------------
 	if self.skill == "freeze" then
-		if optionsTable["SFX"] == "On" then sounds.powerup2:play() end
+		if optionsTable["SFX"] == "On" then sounds.ice:play() end
 		
 		if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then
 			arena.skillBut:setAlpha(0.1)
@@ -603,8 +825,32 @@ function Skills:start(side)
 			arena.leftPlayer.char.movFactor = 0
 		end
 		
+		-- GFX --
+		local paddleX, paddleY = 0
+		local paddleH, paddleW = 0
+		if side == 0 then
+			paddleX, paddleY = arena.rightPlayer.paddle.body:getPosition()
+			paddleH = arena.rightPlayer.paddle.paddleH
+			paddleW = arena.rightPlayer.paddle.paddleW
+		else
+			paddleX, paddleY = arena.leftPlayer.paddle.body:getPosition()
+			paddleH = arena.leftPlayer.paddle.paddleH
+			paddleW = arena.leftPlayer.paddle.paddleW
+		end
+		local ice = Bitmap.new(textures.gfx_freeze)
+		ice:setScale(1, 1)
+		ice:setAnchorPoint(0.5, 0.5)
+		arena:addChild(ice)
+		local textureW = ice:getWidth()
+		local textureH = ice:getHeight()
+		ice:setScale((paddleW*2)/textureW, (paddleH*1.3333333333333)/textureH)
+		ice:setPosition(paddleX, paddleY)
+		fadeBitmapIn(ice, 500, 1)
+		
 		-- Action to end skill --
 		self.endAction = function()
+			fadeBitmapOut(ice, 1000, arena)
+
 			if side == 0 then
 				arena.rightPlayer.char:updateAttr()
 				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
@@ -623,8 +869,17 @@ function Skills:start(side)
 		-- Sets timer to end skill --
 		Timer.delayedCall(self.basetime/5,  function()
 			self:endAction() 
-			if optionsTable["SFX"] == "On" then sounds.powerup2over:play() end
+			if optionsTable["SFX"] == "On" then sounds.ice_break:play() end
 		end)
+		
+		-- Action to force end --
+		self.forceEnd = function()
+			for i = arena:getNumChildren(), 1, -1 do
+				if arena:getChildAt(i) == ice then
+					fadeBitmapOut(ice, 1000, arena)
+				end
+			end
+		end
 	end	
 	
 	
