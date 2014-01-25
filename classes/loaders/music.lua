@@ -17,12 +17,13 @@ function MusicLoader:init()
 	self.fight[4] = Sound.new("audio/bgm/bgm_fight4.mp3")
 	self.fight[5] = Sound.new("audio/bgm/bgm_fight5.mp3")
 	self.fight[6] = Sound.new("audio/bgm/bgm_fight6.mp3")
+	self.fight[7] = Sound.new("audio/bgm/bgm_fight7.mp3")
 	
 	self.boss[1] = Sound.new("audio/bgm/bgm_boss1.mp3")
 	self.boss[2] = Sound.new("audio/bgm/bgm_boss2.mp3")
 	self.boss[3] = Sound.new("audio/bgm/bgm_boss3.mp3")
 	self.boss[4] = Sound.new("audio/bgm/bgm_boss4.mp3")
 	
-	self.champion[1] = Sound.new("audio/bgm/bgm_champion.mp3")
-	self.champion[2] = Sound.new("audio/bgm/bgm_champion2.mp3")
+	self.champion[1] = Sound.new("audio/bgm/bgm_champion1.mp3")
+	self.lost = Sound.new("audio/bgm/bgm_lost.mp3")
 end

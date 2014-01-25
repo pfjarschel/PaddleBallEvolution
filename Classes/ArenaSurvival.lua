@@ -250,7 +250,10 @@ function ArenaSurvival:gameOver()
 		humanScore = self.score1
 	end
 	gameOverString = "You managed to survive " .. tostring(humanScore) .. " rounds!"
-	if optionsTable["SFX"] == "On" then sounds.lose:play() end
+	if optionsTable["Music"] == "On" then
+		currSong:stop()
+		currSong = sounds.win:play()
+	end
 	local gameOverTextBox = TextField.new(self.font, gameOverString)
 	gameOverTextBox:setTextColor(0x3c78a0)
 	gameOverTextBox:setPosition(0.5*WX0 - gameOverTextBox:getWidth()/2, 0.25*WY + gameOverTextBox:getHeight()/2)
@@ -419,7 +422,7 @@ function ArenaSurvival:init(difficulty)
 	-- Stop Current song and load another (bosses not included) --
 	if optionsTable["Music"] == "On" then
 		local function nextSong()
-			local randNum = math.random(1, 6)
+			local randNum = math.random(1, 7)
 			currSong = musics.fight[randNum]:play()
 			currSong:addEventListener(Event.COMPLETE, nextSong)
 		end

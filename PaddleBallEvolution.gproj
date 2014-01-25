@@ -21,18 +21,22 @@
   <file source="include/easing.lua"/>
  </folder>
  <folder name="audio">
+  <file source="audio/win.mp3"/>
+  <file source="audio/lose.mp3"/>
   <file source="audio/sel_pause.mp3"/>
   <file source="audio/sel2.mp3"/>
   <file source="audio/sel3.mp3"/>
   <file source="audio/sel1.mp3"/>
-  <file source="audio/win.wav"/>
   <file source="audio/pick.wav"/>
-  <file source="audio/lose.wav"/>
   <file source="audio/hit2.wav"/>
   <file source="audio/hit1.wav"/>
   <file source="audio/goal2.wav"/>
   <file source="audio/goal1.wav"/>
   <folder name="bgm">
+   <file source="audio/bgm/bgm_lost.mp3"/>
+   <file source="audio/bgm/bgm_fight7.mp3"/>
+   <file source="audio/bgm/bgm_credits.mp3"/>
+   <file source="audio/bgm/bgm_champion1.mp3"/>
    <file source="audio/bgm/bgm_intro.mp3"/>
    <file source="audio/bgm/bgm_fight6.mp3"/>
    <file source="audio/bgm/bgm_fight5.mp3"/>
@@ -40,8 +44,6 @@
    <file source="audio/bgm/bgm_fight3.mp3"/>
    <file source="audio/bgm/bgm_fight2.mp3"/>
    <file source="audio/bgm/bgm_fight1.mp3"/>
-   <file source="audio/bgm/bgm_champion2.mp3"/>
-   <file source="audio/bgm/bgm_champion.mp3"/>
    <file source="audio/bgm/bgm_boss4.mp3"/>
    <file source="audio/bgm/bgm_boss3.mp3"/>
    <file source="audio/bgm/bgm_boss2.mp3"/>

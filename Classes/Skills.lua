@@ -659,11 +659,11 @@ function Skills:start(side)
 		
 		local textureW = beam:getWidth()
 		local textureH = beam:getHeight()
-		beam:setScale(320*(paddleH/75)/textureW, 320*(paddleH/75)/textureH)
+		beam:setScale(320*(paddleH/75)/textureW, 280*(paddleW/15)/textureH)
 		beam:setPosition(paddleW/2 + 0.9*beam:getWidth()/2, 0)
 		beam:setRotation(0)
 		
-		fadeBitmapIn(beam, 250, 1)
+		fadeBitmapIn(beam, 250, 0.5)
 		Timer.delayedCall(1000, function()
 			if side == 0 then
 				fadeBitmapOut(beam, 250, arena.leftPlayer.paddle)
@@ -696,12 +696,16 @@ function Skills:start(side)
 		
 		-- Action to force end --
 		self.forceEnd = function()
-			for i = arena.leftPlayer.paddle:getNumChildren(), 1, -1 do
-				if arena.leftPlayer.paddle:getChildAt(i) == beam then
-					if side == 0 then
+			if side == 0 then
+				for i = arena.leftPlayer.paddle:getNumChildren(), 1, -1 do
+					if arena.leftPlayer.paddle:getChildAt(i) == beam then
 						fadeBitmapOut(beam, 250, arena.leftPlayer.paddle)
-					else
-						fadeBitmapOut(beam, 250, arena.righttPlayer.paddle)
+					end
+				end
+			else
+				for i = arena.rightPlayer.paddle:getNumChildren(), 1, -1 do
+					if arena.rightPlayer.paddle:getChildAt(i) == beam then
+						fadeBitmapOut(beam, 250, arena.rightPlayer.paddle)
 					end
 				end
 			end

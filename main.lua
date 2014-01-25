@@ -192,4 +192,4 @@ sceneMan = SceneManager.new({
 
 -- Load Splash Screen and then Main Menu --
 stage:addChild(sceneMan)
-sceneMan:changeScene("mainMenu", transTime, SceneManager.fade, easing.linear)
+sceneMan:changeScene("splash", transTime, SceneManager.fade, easing.linear)

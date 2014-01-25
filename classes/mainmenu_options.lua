@@ -31,22 +31,24 @@ function MainMenu_Options:init()
 	local textureH = menubg:getHeight()
 	menubg:setScale(WX/textureW, WY/textureH)
 	self:addChild(menubg)
+	
+	local xCenter = WX/4 - 16
 
 	-----------------------
 	-- Control Selection --
 	-----------------------
 	local controlTextBox = TextField.new(self.font, "Control Mode:")
 	controlTextBox:setTextColor(0xffffff)
-	controlTextBox:setPosition(32, 0.5*WY - 10)
+	controlTextBox:setPosition(xCenter + 32, 0.5*WY - 10)
 	self:addChild(controlTextBox)
 	local selcontrolTextBox = TextField.new(self.font, optionsTable["ControlMode"])
 	selcontrolTextBox:setTextColor(0xffffff)
-	selcontrolTextBox:setPosition(32 + controlTextBox:getWidth() + 16, 0.5*WY - 10)
+	selcontrolTextBox:setPosition(xCenter + 32 + controlTextBox:getWidth() + 16, 0.5*WY - 10)
 	self:addChild(selcontrolTextBox)
 	
 	self.incControl = MenuBut.new(40, 40, textures.forwardBut, textures.forwardBut1)
 	self:addChild(self.incControl)
-	self.incControl.bitmap:setPosition(32 + controlTextBox:getWidth() + 16 + selcontrolTextBox:getWidth() + 64, WY/2 - 15)
+	self.incControl.bitmap:setPosition(xCenter + 16 + 32 + controlTextBox:getWidth() + 16 + selcontrolTextBox:getWidth() + 64, WY/2 - 15)
 	self.incControl:addEventListener(Event.TOUCHES_END, function(event)
 		if self.incControl:hitTestPoint(event.touch.x, event.touch.y) then
 			if optionsTable["ControlMode"] == "Touch" then
@@ -59,7 +61,7 @@ function MainMenu_Options:init()
 			self:removeChild(selcontrolTextBox)
 			selcontrolTextBox = TextField.new(self.font, optionsTable["ControlMode"])
 			selcontrolTextBox:setTextColor(0xffffff)
-			selcontrolTextBox:setPosition(32 + controlTextBox:getWidth() + 16, 0.5*WY - 10)
+			selcontrolTextBox:setPosition(xCenter + 32 + controlTextBox:getWidth() + 16, 0.5*WY - 10)
 			self:addChild(selcontrolTextBox)
 			
 			if optionsTable["SFX"] == "On" then sounds.sel1:play() end
@@ -71,16 +73,16 @@ function MainMenu_Options:init()
 	-----------------------
 	local sfxTextBox = TextField.new(self.font, "SFX:")
 	sfxTextBox:setTextColor(0xffffff)
-	sfxTextBox:setPosition(32, 0.5*WY + 45)
+	sfxTextBox:setPosition(xCenter + 32, 0.5*WY + 45)
 	self:addChild(sfxTextBox)
 	local selsfxTextBox = TextField.new(self.font, optionsTable["SFX"])
 	selsfxTextBox:setTextColor(0xffffff)
-	selsfxTextBox:setPosition(32 + controlTextBox:getWidth() + 16, 0.5*WY + 45)
+	selsfxTextBox:setPosition(xCenter + 32 + controlTextBox:getWidth() + 16, 0.5*WY + 45)
 	self:addChild(selsfxTextBox)
 	
 	self.incSFX = MenuBut.new(40, 40, textures.forwardBut, textures.forwardBut1)
 	self:addChild(self.incSFX)
-	self.incSFX.bitmap:setPosition(32 + controlTextBox:getWidth() + 16 + selcontrolTextBox:getWidth() + 64, WY/2 + 35)
+	self.incSFX.bitmap:setPosition(xCenter + 16 + 32 + controlTextBox:getWidth() + 16 + selcontrolTextBox:getWidth() + 64, WY/2 + 35)
 	self.incSFX:addEventListener(Event.TOUCHES_END, function(event)
 		if self.incSFX:hitTestPoint(event.touch.x, event.touch.y) then
 			if optionsTable["SFX"] == "On" then
@@ -92,7 +94,7 @@ function MainMenu_Options:init()
 			self:removeChild(selsfxTextBox)
 			selsfxTextBox = TextField.new(self.font, optionsTable["SFX"])
 			selsfxTextBox:setTextColor(0xffffff)
-			selsfxTextBox:setPosition(32 + controlTextBox:getWidth() + 16, 0.5*WY + 45)
+			selsfxTextBox:setPosition(xCenter + 32 + controlTextBox:getWidth() + 16, 0.5*WY + 45)
 			self:addChild(selsfxTextBox)
 			
 			if optionsTable["SFX"] == "On" then sounds.sel1:play() end
@@ -104,16 +106,16 @@ function MainMenu_Options:init()
 	-----------------------
 	local musicTextBox = TextField.new(self.font, "Music:")
 	musicTextBox:setTextColor(0xffffff)
-	musicTextBox:setPosition(32, 0.5*WY + 95)
+	musicTextBox:setPosition(xCenter + 32, 0.5*WY + 95)
 	self:addChild(musicTextBox)
 	local selmusicTextBox = TextField.new(self.font, optionsTable["Music"])
 	selmusicTextBox:setTextColor(0xffffff)
-	selmusicTextBox:setPosition(32 + controlTextBox:getWidth() + 16, 0.5*WY + 95)
+	selmusicTextBox:setPosition(xCenter + 32 + controlTextBox:getWidth() + 16, 0.5*WY + 95)
 	self:addChild(selmusicTextBox)
 	
 	self.incMusic = MenuBut.new(40, 40, textures.forwardBut, textures.forwardBut1)
 	self:addChild(self.incMusic)
-	self.incMusic.bitmap:setPosition(32 + controlTextBox:getWidth() + 16 + selcontrolTextBox:getWidth() + 64, WY/2 + 85)
+	self.incMusic.bitmap:setPosition(xCenter + 16 + 32 + controlTextBox:getWidth() + 16 + selcontrolTextBox:getWidth() + 64, WY/2 + 85)
 	self.incMusic:addEventListener(Event.TOUCHES_END, function(event)
 		if self.incMusic:hitTestPoint(event.touch.x, event.touch.y) then
 			if optionsTable["Music"] == "On" then
@@ -126,7 +128,7 @@ function MainMenu_Options:init()
 			self:removeChild(selmusicTextBox)
 			selmusicTextBox = TextField.new(self.font, optionsTable["Music"])
 			selmusicTextBox:setTextColor(0xffffff)
-			selmusicTextBox:setPosition(32 + controlTextBox:getWidth() + 16, 0.5*WY + 95)
+			selmusicTextBox:setPosition(xCenter + 32 + controlTextBox:getWidth() + 16, 0.5*WY + 95)
 			self:addChild(selmusicTextBox)
 			
 			if optionsTable["SFX"] == "On" then sounds.sel1:play() end
@@ -138,16 +140,16 @@ function MainMenu_Options:init()
 	--------------------
 	local sideTextBox = TextField.new(self.font, "Arena Side:")
 	sideTextBox:setTextColor(0xffffff)
-	sideTextBox:setPosition(32, 0.5*WY + 145)
+	sideTextBox:setPosition(xCenter + 32, 0.5*WY + 145)
 	self:addChild(sideTextBox)
 	local selsideTextBox = TextField.new(self.font, optionsTable["ArenaSide"])
 	selsideTextBox:setTextColor(0xffffff)
-	selsideTextBox:setPosition(32 + controlTextBox:getWidth() + 16, 0.5*WY + 145)
+	selsideTextBox:setPosition(xCenter + 32 + controlTextBox:getWidth() + 16, 0.5*WY + 145)
 	self:addChild(selsideTextBox)
 	
 	self.incSide = MenuBut.new(40, 40, textures.forwardBut, textures.forwardBut1)
 	self:addChild(self.incSide)
-	self.incSide.bitmap:setPosition(32 + controlTextBox:getWidth() + 16 + selcontrolTextBox:getWidth() + 64, WY/2 + 135)
+	self.incSide.bitmap:setPosition(xCenter + 16 + 32 + controlTextBox:getWidth() + 16 + selcontrolTextBox:getWidth() + 64, WY/2 + 135)
 	self.incSide:addEventListener(Event.TOUCHES_END, function(event)
 		if self.incSide:hitTestPoint(event.touch.x, event.touch.y) then
 			if optionsTable["ArenaSide"] == "Left" then
@@ -158,7 +160,7 @@ function MainMenu_Options:init()
 			self:removeChild(selsideTextBox)
 			selsideTextBox = TextField.new(self.font, optionsTable["ArenaSide"])
 			selsideTextBox:setTextColor(0xffffff)
-			selsideTextBox:setPosition(32 + controlTextBox:getWidth() + 16, 0.5*WY + 145)
+			selsideTextBox:setPosition(xCenter + 32 + controlTextBox:getWidth() + 16, 0.5*WY + 145)
 			self:addChild(selsideTextBox)
 			
 			if optionsTable["SFX"] == "On" then sounds.sel1:play() end

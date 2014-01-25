@@ -325,10 +325,16 @@ function ArenaArena:gameOver()
 	local gameOverString = nil
 	if (self.score0 > self.score1 and optionsTable["ArenaSide"] == "Left") or (self.score0 < self.score1 and optionsTable["ArenaSide"] == "Right") then
 		gameOverString = "Congratulations, you won!"
-		if optionsTable["SFX"] == "On" then sounds.win:play() end
+		if optionsTable["Music"] == "On" then
+			currSong:stop()
+			currSong = sounds.win:play()
+		end
 	else
 		gameOverString = "You lost... :("
-		if optionsTable["SFX"] == "On" then sounds.lose:play() end
+		if optionsTable["Music"] == "On" then
+			currSong:stop()
+			currSong = sounds.lose:play()
+		end
 	end
 	local gameOverTextBox = TextField.new(self.font, gameOverString)
 	gameOverTextBox:setTextColor(0x3c78a0)
@@ -487,11 +493,11 @@ function ArenaArena:init(dataTable)
 	-- Stop Current song and load another (bosses included) --
 	if optionsTable["Music"] == "On" then
 		local function nextSong()
-			local randNum = math.random(1, 10)
-			if randNum < 7 then
+			local randNum = math.random(1, 11)
+			if randNum < 8 then
 				currSong = musics.fight[randNum]:play()
 			else
-				currSong = musics.boss[randNum - 6]:play()
+				currSong = musics.boss[randNum - 7]:play()
 			end
 			currSong:addEventListener(Event.COMPLETE, nextSong)
 		end

@@ -5,10 +5,11 @@
 ArenaAI = Core.class()
 ArenaAI.class = ""
 ArenaAI.side = nil
-ArenaAI.chance = 5000
+ArenaAI.chance = 500
 
 function ArenaAI:init(class)
 	self.class = class
+	self.chance = 500/arena.difFactor
 	if optionsTable["ArenaSide"] == "Left" then
 		self.side = 1
 	else
