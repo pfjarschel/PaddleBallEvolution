@@ -21,16 +21,18 @@
   <file source="include/easing.lua"/>
  </folder>
  <folder name="audio">
-  <file source="audio/hit2.mp3"/>
-  <file source="audio/hit1.mp3"/>
-  <file source="audio/goal2.mp3"/>
-  <file source="audio/goal1.mp3"/>
   <file source="audio/win.mp3"/>
   <file source="audio/lose.mp3"/>
-  <file source="audio/sel_pause.mp3"/>
-  <file source="audio/sel2.mp3"/>
-  <file source="audio/sel3.mp3"/>
-  <file source="audio/sel1.mp3"/>
+  <file source="audio/win.wav"/>
+  <file source="audio/sel3.wav"/>
+  <file source="audio/sel2.wav"/>
+  <file source="audio/sel1.wav"/>
+  <file source="audio/sel_pause.wav"/>
+  <file source="audio/lose.wav"/>
+  <file source="audio/hit2.wav"/>
+  <file source="audio/hit1.wav"/>
+  <file source="audio/goal2.wav"/>
+  <file source="audio/goal1.wav"/>
   <folder name="bgm">
    <file source="audio/bgm/bgm_lost.mp3"/>
    <file source="audio/bgm/bgm_fight7.mp3"/>
@@ -49,19 +51,19 @@
    <file source="audio/bgm/bgm_boss1.mp3"/>
   </folder>
   <folder name="sfx">
-   <file source="audio/sfx/powerup2-over.mp3"/>
-   <file source="audio/sfx/powerup2.mp3"/>
-   <file source="audio/sfx/powerup1.mp3"/>
-   <file source="audio/sfx/tractorbeam.mp3"/>
-   <file source="audio/sfx/magic.mp3"/>
-   <file source="audio/sfx/glass_ping.mp3"/>
-   <file source="audio/sfx/woosh.mp3"/>
-   <file source="audio/sfx/crazyball_end.mp3"/>
-   <file source="audio/sfx/crazyball.mp3"/>
-   <file source="audio/sfx/ice_break.mp3"/>
-   <file source="audio/sfx/ice.mp3"/>
-   <file source="audio/sfx/puff.mp3"/>
-   <file source="audio/sfx/bubbles.mp3"/>
+   <file source="audio/sfx/woosh.wav"/>
+   <file source="audio/sfx/tractorbeam.wav"/>
+   <file source="audio/sfx/puff.wav"/>
+   <file source="audio/sfx/powerup2-over.wav"/>
+   <file source="audio/sfx/powerup2.wav"/>
+   <file source="audio/sfx/powerup1.wav"/>
+   <file source="audio/sfx/magic.wav"/>
+   <file source="audio/sfx/ice_break.wav"/>
+   <file source="audio/sfx/ice.wav"/>
+   <file source="audio/sfx/glass_ping.wav"/>
+   <file source="audio/sfx/crazyball_end.wav"/>
+   <file source="audio/sfx/crazyball.wav"/>
+   <file source="audio/sfx/bubbles.wav"/>
   </folder>
  </folder>
  <folder name="imgs">
