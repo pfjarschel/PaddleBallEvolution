@@ -16,8 +16,9 @@ ArenaSurvival.pausebg = nil
 ArenaSurvival.name = "survival"
 ArenaSurvival.controlarrows = nil
 ArenaSurvival.accelerometer = nil
-ArenaArena.humanPlayer = nil
-ArenaArena.aiPlayer = nil
+ArenaSurvival.humanPlayer = nil
+ArenaSurvival.aiPlayer = nil
+ArenaSurvival.songload = nil
 
 -- Tilt variables --
 local afx = 0
@@ -252,7 +253,10 @@ function ArenaSurvival:gameOver()
 	gameOverString = "You managed to survive " .. tostring(humanScore) .. " rounds!"
 	if optionsTable["Music"] == "On" then
 		currSong:stop()
-		currSong = sounds.win:play()
+		self.songload = nil
+		self.songload = Sound.new(sounds.losestring)
+		currSong = nil
+		currSong = self.songload:play()
 	end
 	local gameOverTextBox = TextField.new(self.font, gameOverString)
 	gameOverTextBox:setTextColor(0x3c78a0)
@@ -395,6 +399,14 @@ end
 
 -- Initialization --
 function ArenaSurvival:init(difficulty)
+	textures = nil
+	textures = TextureLoaderNormalModes.new()
+	sounds = nil
+	sounds = SoundLoaderNormalModes.new()
+	musics = nil
+	musics = MusicLoaderNormalModes.new()
+	gc()
+
 	if optionsTable["ControlMode"] == "Touch" then	
 		WX = 720
 		if optionsTable["ArenaSide"] == "Left" then
@@ -423,8 +435,12 @@ function ArenaSurvival:init(difficulty)
 	if optionsTable["Music"] == "On" then
 		local function nextSong()
 			local randNum = math.random(1, 7)
-			currSong = musics.fight[randNum]:play()
+			self.songload = nil
+			self.songload = Sound.new(musics.fight[randNum])
+			currSong = nil
+			currSong = self.songload:play()
 			currSong:addEventListener(Event.COMPLETE, nextSong)
+			gc()
 		end
 		
 		currSong:stop()

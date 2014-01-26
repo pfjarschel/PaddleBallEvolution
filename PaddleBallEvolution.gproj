@@ -1,5 +1,5 @@
 <project>
- <properties autorotation="0" encryptAssets="0" fps="60" scaleMode="5" mouseToTouch="1" iosDevice="0" packageName="com.blackandwhitecat.paddleballevo" logicalHeight="800" logicalWidth="480" mouseTouchOrder="0" encryptCode="0" retinaDisplay="0" touchToMouse="1" assetsOnly="0" orientation="1" architecture="1">
+ <properties autorotation="0" encryptAssets="0" fps="60" scaleMode="5" mouseToTouch="1" iosDevice="0" packageName="com.blackandwhitecat.paddleballevo" logicalHeight="800" logicalWidth="480" mouseTouchOrder="0" encryptCode="0" retinaDisplay="0" touchToMouse="1" assetsOnly="1" orientation="1" architecture="1">
   <imageScales>
    <scale suffix="@4x" scale="4"/>
    <scale suffix="@3x" scale="3"/>
@@ -368,8 +368,6 @@
  </folder>
  <folder name="fonts">
   <file source="fonts/anita.ttf"/>
-  <file source="fonts/tahoma.ttf"/>
-  <file source="fonts/arial-rounded.ttf"/>
  </folder>
  <folder name="classes">
   <file source="classes/mainmenu_career.lua"/>
@@ -393,22 +391,26 @@
   <file source="classes/arenaclassic.lua"/>
   <file source="classes/arenaarena.lua"/>
   <folder name="loaders">
-   <file source="classes/loaders/music.lua"/>
+   <file source="classes/loaders/music_normalmodes.lua"/>
+   <file source="classes/loaders/music_menu.lua"/>
+   <file source="classes/loaders/music_arenamode.lua"/>
+   <file source="classes/loaders/sounds_normalmodes.lua"/>
+   <file source="classes/loaders/sounds_menu.lua"/>
+   <file source="classes/loaders/sounds_arenamode.lua"/>
+   <file source="classes/loaders/textures_normalmodes.lua"/>
+   <file source="classes/loaders/textures_menu.lua"/>
+   <file source="classes/loaders/textures_arenamode.lua"/>
    <file source="classes/loaders/options.lua"/>
-   <file source="classes/loaders/textures.lua"/>
-   <file source="classes/loaders/sounds.lua"/>
    <file source="classes/loaders/fonts.lua"/>
    <file source="classes/loaders/classtable.lua"/>
   </folder>
  </folder>
- <dependency from="init.lua" to="include/strict.lua"/>
  <dependency from="init.lua" to="physics.lua"/>
  <dependency from="init.lua" to="include/TextWrap.lua"/>
+ <dependency from="init.lua" to="include/strict.lua"/>
  <dependency from="init.lua" to="include/socket.lua"/>
  <dependency from="init.lua" to="include/scenemanager.lua"/>
  <dependency from="init.lua" to="include/easing.lua"/>
- <dependency from="init.lua" to="classes/loaders/textures.lua"/>
- <dependency from="init.lua" to="classes/loaders/sounds.lua"/>
  <dependency from="init.lua" to="classes/loaders/fonts.lua"/>
  <dependency from="classes/arenaarena.lua" to="classes/player.lua"/>
  <dependency from="classes/arenaarena.lua" to="classes/combatstats.lua"/>
@@ -421,8 +423,8 @@
  <dependency from="classes/arenasurvival.lua" to="classes/ball.lua"/>
  <dependency from="classes/char.lua" to="classes/skills.lua"/>
  <dependency from="classes/char.lua" to="classes/loaders/classtable.lua"/>
- <dependency from="classes/loaders/classtable.lua" to="include/strict.lua"/>
  <dependency from="classes/loaders/classtable.lua" to="init.lua"/>
+ <dependency from="classes/loaders/classtable.lua" to="include/strict.lua"/>
  <dependency from="classes/loaders/classtable.lua" to="include/socket.lua"/>
  <dependency from="classes/loaders/classtable.lua" to="include/scenemanager.lua"/>
  <dependency from="classes/loaders/classtable.lua" to="include/easing.lua"/>
@@ -439,5 +441,12 @@
  <dependency from="classes/player.lua" to="classes/char.lua"/>
  <dependency from="main.lua" to="classes/mainmenu.lua"/>
  <dependency from="main.lua" to="classes/loaders/options.lua"/>
- <dependency from="main.lua" to="classes/loaders/music.lua"/>
+ <dependency from="main.lua" to="classes/loaders/fonts.lua"/>
+ <dependency from="main.lua" to="classes/loaders/classtable.lua"/>
+ <dependency from="main.lua" to="classes/loaders/textures_arenamode.lua"/>
+ <dependency from="main.lua" to="classes/loaders/textures_menu.lua"/>
+ <dependency from="main.lua" to="classes/loaders/textures_normalmodes.lua"/>
+ <dependency from="main.lua" to="classes/loaders/sounds_menu.lua"/>
+ <dependency from="main.lua" to="classes/loaders/sounds_arenamode.lua"/>
+ <dependency from="main.lua" to="classes/loaders/sounds_normalmodes.lua"/>
 </project>

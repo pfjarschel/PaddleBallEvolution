@@ -3,6 +3,7 @@
 --------------------------------------------
 
 MainMenu_Options = Core.class(Sprite)
+MainMenu_Options.songload = nil
 
 -- Declarations --
 MainMenu_Options.font = nil
@@ -121,9 +122,12 @@ function MainMenu_Options:init()
 			if optionsTable["Music"] == "On" then
 				optionsTable["Music"] = "Off"
 				currSong:stop()
+				currSong = nil
 			elseif optionsTable["Music"] == "Off" then
 				optionsTable["Music"] = "On"
-				currSong = musics.intro:play(0, true, false)
+				self.songload = Sound.new(musics.intro)
+				currSong = nil
+				currSong = self.songload:play(0, true, false)
 			end
 			self:removeChild(selmusicTextBox)
 			selmusicTextBox = TextField.new(self.font, optionsTable["Music"])

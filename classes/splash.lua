@@ -6,6 +6,8 @@ Splash = Core.class(Sprite)
 
 -- Initialization --
 function Splash:init()
+	textures = nil
+	textures = TextureLoaderMenu.new()
 	gc()
 	
 	self.font = fonts.arialroundedSmall

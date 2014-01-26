@@ -3,6 +3,7 @@
 --------------------------------
 
 MainMenu_About = Core.class(Sprite)
+MainMenu.songload = nil
 
 -- Initialization --
 function MainMenu_About:init()	
@@ -13,7 +14,11 @@ function MainMenu_About:init()
 		if not(currSong == nil) then
 			currSong:stop()
 		end
-		currSong = musics.credits:play(0, true, false)
+		self.songload = nil
+		self.songload = Sound.new(musics.credits)
+		currSong = nil
+		currSong = self.songload:play(0, true, false)
+		gc()
 	end
 	
 	local bg = Bitmap.new(textures.mainmenubg)

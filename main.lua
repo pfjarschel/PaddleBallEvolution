@@ -156,10 +156,10 @@ PhysicsScale = 20
 goPhysics(PhysicsScale)
 
 -- Load stuff --
-sounds = SoundLoader.new()
-textures = TextureLoader.new()
+sounds = nil
+textures = nil
 fonts = FontLoader.new()
-musics = MusicLoader.new()
+musics = nil
 
 local optionsFile = io.open("|D|options.txt", "r")
 if not optionsFile then

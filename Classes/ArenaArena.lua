@@ -24,6 +24,7 @@ ArenaArena.accelerometer = nil
 ArenaArena.AI = nil
 ArenaArena.humanPlayer = nil
 ArenaArena.aiPlayer = nil
+ArenaArena.songload = nil
 
 -- Tilt variables --
 local afx = 0
@@ -327,13 +328,19 @@ function ArenaArena:gameOver()
 		gameOverString = "Congratulations, you won!"
 		if optionsTable["Music"] == "On" then
 			currSong:stop()
-			currSong = sounds.win:play()
+			self.songload = nil
+			self.songload = Sound.new(sounds.winstring)
+			currSong = nil
+			currSong = self.songload:play()
 		end
 	else
 		gameOverString = "You lost... :("
 		if optionsTable["Music"] == "On" then
 			currSong:stop()
-			currSong = sounds.lose:play()
+			self.songload = nil
+			self.songload = Sound.new(sounds.losestring)
+			currSong = nil
+			currSong = self.songload:play()
 		end
 	end
 	local gameOverTextBox = TextField.new(self.font, gameOverString)
@@ -472,6 +479,14 @@ end
 
 -- Initialization --
 function ArenaArena:init(dataTable)
+	textures = nil
+	textures = TextureLoaderArenaMode.new()
+	sounds = nil
+	sounds = SoundLoaderArenaMode.new()
+	musics = nil
+	musics = MusicLoaderArenaMode.new()
+	gc()
+
 	if optionsTable["ControlMode"] == "Touch" then	
 		WX = 720
 		if optionsTable["ArenaSide"] == "Left" then
@@ -494,12 +509,16 @@ function ArenaArena:init(dataTable)
 	if optionsTable["Music"] == "On" then
 		local function nextSong()
 			local randNum = math.random(1, 11)
+			self.songload = nil
 			if randNum < 8 then
-				currSong = musics.fight[randNum]:play()
+				self.songload = Sound.new(musics.fight[randNum])
 			else
-				currSong = musics.boss[randNum - 7]:play()
+				self.songload = Sound.new(musics.boss[randNum - 7])
 			end
+			currSong = nil
+			currSong = self.songload:play()
 			currSong:addEventListener(Event.COMPLETE, nextSong)
+			gc()
 		end
 		
 		currSong:stop()

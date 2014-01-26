@@ -6,6 +6,7 @@ MainMenu = Core.class(Sprite)
 
 -- Declarations --
 MainMenu.font = nil
+MainMenu.songload = nil
 
 -- Handles Keys --
 local function onKeyDown(event)
@@ -16,14 +17,25 @@ end
 
 -- Initialization --
 function MainMenu:init()
+	textures = nil
+	textures = TextureLoaderMenu.new()
+	sounds = nil
+	sounds = SoundLoaderMenu.new()
+	musics = nil
+	musics = MusicLoaderMenu.new()
 	gc()
+	
 	WX = WX0
 	XShift = 0
 	if optionsTable["Music"] == "On" then
 		if not(currSong == nil) then
 			currSong:stop()
 		end
-		currSong = musics.intro:play(0, true, false)
+		self.songload = nil
+		self.songload = Sound.new(musics.intro)
+		currSong = nil
+		currSong = self.songload:play(0, true, false)
+		gc()
 	end
 	
 	self.font = fonts.anitaVerySmall
