@@ -26,4 +26,6 @@ function MusicLoader:init()
 	
 	self.champion[1] = Sound.new("audio/bgm/bgm_champion1.mp3")
 	self.lost = Sound.new("audio/bgm/bgm_lost.mp3")
+	
+	self.credits = Sound.new("audio/bgm/bgm_credits.mp3")
 end

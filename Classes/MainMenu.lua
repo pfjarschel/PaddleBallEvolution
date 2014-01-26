@@ -26,7 +26,7 @@ function MainMenu:init()
 		currSong = musics.intro:play(0, true, false)
 	end
 	
-	self.font = fonts.arialroundedSmall
+	self.font = fonts.anitaVerySmall
 	local menubg = Bitmap.new(textures.mainmenubg)
 	menubg:setScale(1, 1)
 	self:addChild(menubg)
@@ -40,10 +40,15 @@ function MainMenu:init()
 	self.careerBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.careerBut:hitTestPoint(event.touch.x, event.touch.y) then
 			if optionsTable["SFX"] == "On" then sounds.sel2:play() end
-			
-			print("Career Mode to Come!")
+			sceneMan:changeScene("mainMenu_Career", transTime, SceneManager.fade, easing.linear)
 		end
 	end)
+	
+	-- Career Mode to Come Text --
+	local careerTextBox = TextField.new(self.font, "Career mode to come! (Paid)")
+	careerTextBox:setTextColor(0xffffff)
+	careerTextBox:setPosition(0.5*WX + careerTextBox:getWidth()/2 - 32, 0.5*WY + 6)
+	--self:addChild(careerTextBox)
 	
 	self.arenaBut = MenuBut.new(150, 40, textures.arenaBut, textures.arenaBut1)
 	self:addChild(self.arenaBut)
@@ -80,7 +85,7 @@ function MainMenu:init()
 	
 	self.optionsBut = MenuBut.new(40, 40, textures.optionsBut, textures.optionsBut1)
 	self:addChild(self.optionsBut)
-	self.optionsBut.bitmap:setPosition(52 + 40 + 16, WY/2 + 5*self.optionsBut.height)
+	self.optionsBut.bitmap:setPosition(52 + 80 + 32, WY/2 + 5*self.optionsBut.height)
 	self.optionsBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.optionsBut:hitTestPoint(event.touch.x, event.touch.y) then
 			if optionsTable["SFX"] == "On" then sounds.sel2:play() end
@@ -89,9 +94,20 @@ function MainMenu:init()
 		end
 	end)
 	
+	self.aboutBut = MenuBut.new(40, 40, textures.aboutBut, textures.aboutBut1)
+	self:addChild(self.aboutBut)
+	self.aboutBut.bitmap:setPosition(52, WY/2 + 5*self.aboutBut.height)
+	self.aboutBut:addEventListener(Event.TOUCHES_END, function(event)
+		if self.aboutBut:hitTestPoint(event.touch.x, event.touch.y) then
+			if optionsTable["SFX"] == "On" then sounds.sel2:play() end
+			
+			sceneMan:changeScene("mainMenu_About", transTime, SceneManager.fade, easing.linear)
+		end
+	end)
+	
 	self.helpBut = MenuBut.new(40, 40, textures.helpBut, textures.helpBut1)
 	self:addChild(self.helpBut)
-	self.helpBut.bitmap:setPosition(52, WY/2 + 5*self.helpBut.height)
+	self.helpBut.bitmap:setPosition(52 + 40 + 16, WY/2 + 5*self.helpBut.height)
 	self.helpBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.helpBut:hitTestPoint(event.touch.x, event.touch.y) then
 			if optionsTable["SFX"] == "On" then sounds.sel2:play() end

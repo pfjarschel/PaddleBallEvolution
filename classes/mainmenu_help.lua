@@ -56,7 +56,7 @@ function MainMenu_Help:init()
 	
 	local helptext = TextWrap.new(helpstrings[1], WX/1.1, "left", 10, self.font)
 	helptext:setTextColor(0xffffff)
-	helptext:setPosition(WX/2 - helptext:getWidth()/2, 16 + 3*helptitle:getHeight())
+	helptext:setPosition(WX/2 - helptext:getWidth()/2, WY/2 - helptext:getHeight()/2 + 16)
 	self:addChild(helptext)
 	
 	self.prevBut = MenuBut.new(40, 40, textures.backBut, textures.backBut1)
@@ -78,6 +78,7 @@ function MainMenu_Help:init()
 			
 			helptitle:setText(helptitles[self.page])
 			helptext:setText(helpstrings[self.page])
+			helptext:setPosition(WX/2 - helptext:getWidth()/2, WY/2 - helptext:getHeight()/2 + 16)
 			
 			bgs[self.page]:setScale(1, 1)
 			self:addChild(bgs[self.page])
@@ -114,6 +115,7 @@ function MainMenu_Help:init()
 			
 			helptitle:setText(helptitles[self.page])
 			helptext:setText(helpstrings[self.page])
+			helptext:setPosition(WX/2 - helptext:getWidth()/2, WY/2 - helptext:getHeight()/2 + 16)
 			
 			bgs[self.page]:setScale(1, 1)
 			self:addChild(bgs[self.page])

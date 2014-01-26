@@ -182,11 +182,13 @@ sceneMan = SceneManager.new({
 	["mainMenu"] = MainMenu,
 	["mainMenu_Classic"] = MainMenu_Classic,
 	["mainMenu_Arena"] = MainMenu_Arena,
+	["mainMenu_Career"] = MainMenu_Career,
 	["arena"] = ArenaArena,
 	["classic"] = ArenaClassic,
 	["survival"] = ArenaSurvival,
 	["mainMenu_Options"] = MainMenu_Options,
 	["mainMenu_Help"] = MainMenu_Help,
+	["mainMenu_About"] = MainMenu_About,
 	["blackScreen"] = BlackScreen
 })
 

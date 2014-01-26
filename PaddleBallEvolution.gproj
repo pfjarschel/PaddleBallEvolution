@@ -1,5 +1,5 @@
 <project>
- <properties autorotation="0" encryptAssets="0" fps="60" scaleMode="5" mouseToTouch="1" iosDevice="0" packageName="com.blackandwhitecat.paddleballevo" logicalHeight="800" logicalWidth="480" mouseTouchOrder="0" encryptCode="0" retinaDisplay="0" touchToMouse="1" assetsOnly="1" orientation="1" architecture="1">
+ <properties autorotation="0" encryptAssets="0" fps="60" scaleMode="5" mouseToTouch="1" iosDevice="0" packageName="com.blackandwhitecat.paddleballevo" logicalHeight="800" logicalWidth="480" mouseTouchOrder="0" encryptCode="0" retinaDisplay="0" touchToMouse="1" assetsOnly="0" orientation="1" architecture="1">
   <imageScales>
    <scale suffix="@4x" scale="4"/>
    <scale suffix="@3x" scale="3"/>
@@ -21,17 +21,16 @@
   <file source="include/easing.lua"/>
  </folder>
  <folder name="audio">
+  <file source="audio/hit2.mp3"/>
+  <file source="audio/hit1.mp3"/>
+  <file source="audio/goal2.mp3"/>
+  <file source="audio/goal1.mp3"/>
   <file source="audio/win.mp3"/>
   <file source="audio/lose.mp3"/>
   <file source="audio/sel_pause.mp3"/>
   <file source="audio/sel2.mp3"/>
   <file source="audio/sel3.mp3"/>
   <file source="audio/sel1.mp3"/>
-  <file source="audio/pick.wav"/>
-  <file source="audio/hit2.wav"/>
-  <file source="audio/hit1.wav"/>
-  <file source="audio/goal2.wav"/>
-  <file source="audio/goal1.wav"/>
   <folder name="bgm">
    <file source="audio/bgm/bgm_lost.mp3"/>
    <file source="audio/bgm/bgm_fight7.mp3"/>
@@ -50,6 +49,9 @@
    <file source="audio/bgm/bgm_boss1.mp3"/>
   </folder>
   <folder name="sfx">
+   <file source="audio/sfx/powerup2-over.mp3"/>
+   <file source="audio/sfx/powerup2.mp3"/>
+   <file source="audio/sfx/powerup1.mp3"/>
    <file source="audio/sfx/tractorbeam.mp3"/>
    <file source="audio/sfx/magic.mp3"/>
    <file source="audio/sfx/glass_ping.mp3"/>
@@ -59,9 +61,6 @@
    <file source="audio/sfx/ice_break.mp3"/>
    <file source="audio/sfx/ice.mp3"/>
    <file source="audio/sfx/puff.mp3"/>
-   <file source="audio/sfx/powerup2-over.wav"/>
-   <file source="audio/sfx/powerup2.wav"/>
-   <file source="audio/sfx/powerup1.wav"/>
    <file source="audio/sfx/bubbles.mp3"/>
   </folder>
  </folder>
@@ -80,6 +79,20 @@
    <file source="imgs/gfx/puff.png"/>
   </folder>
   <folder name="buttons">
+   <file source="imgs/buttons/about1@4x.png"/>
+   <file source="imgs/buttons/about1@3x.png"/>
+   <file source="imgs/buttons/about1@2x.png"/>
+   <file source="imgs/buttons/about1@1.5x.png"/>
+   <file source="imgs/buttons/about1@0.6x.png"/>
+   <file source="imgs/buttons/about1@0.4x.png"/>
+   <file source="imgs/buttons/about1.png"/>
+   <file source="imgs/buttons/about@4x.png"/>
+   <file source="imgs/buttons/about@3x.png"/>
+   <file source="imgs/buttons/about@2x.png"/>
+   <file source="imgs/buttons/about@1.5x.png"/>
+   <file source="imgs/buttons/about@0.6x.png"/>
+   <file source="imgs/buttons/about@0.4x.png"/>
+   <file source="imgs/buttons/about.png"/>
    <file source="imgs/buttons/survivalmodeBut1@4x.png"/>
    <file source="imgs/buttons/survivalmodeBut1@3x.png"/>
    <file source="imgs/buttons/survivalmodeBut1@2x.png"/>
@@ -357,6 +370,8 @@
   <file source="fonts/arial-rounded.ttf"/>
  </folder>
  <folder name="classes">
+  <file source="classes/mainmenu_career.lua"/>
+  <file source="classes/mainmenu_about.lua"/>
   <file source="classes/arenaai.lua"/>
   <file source="classes/splash.lua"/>
   <file source="classes/mainmenu_options.lua"/>

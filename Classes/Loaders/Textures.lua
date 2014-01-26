@@ -59,6 +59,9 @@ function TextureLoader:init()
 	self.helpBut = Texture.new("imgs/buttons/help.png")
 	self.helpBut1 = Texture.new("imgs/buttons/help1.png")
 	
+	self.aboutBut = Texture.new("imgs/buttons/about.png")
+	self.aboutBut1 = Texture.new("imgs/buttons/about1.png")
+	
 	self.pausebg = Texture.new("imgs/backs/pausebg.png")
 	
 	self.mainmenubg = Texture.new("imgs/backs/mainmenubg.png")
