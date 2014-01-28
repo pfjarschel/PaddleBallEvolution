@@ -12,6 +12,12 @@ function TextureLoaderArenaMode:init()
 	self.skillBut = Texture.new("imgs/buttons/skillBut.png", true)
 	self.skillBut1 = Texture.new("imgs/buttons/skillBut1.png", true)
 	
+	self.plusBut = Texture.new("imgs/buttons/plusBut.png", true)
+	self.plusBut1 = Texture.new("imgs/buttons/plusBut1.png", true)
+	
+	self.minusBut = Texture.new("imgs/buttons/minusBut.png", true)
+	self.minusBut1 = Texture.new("imgs/buttons/minusBut1.png", true)
+	
 	self.controlarrows = Texture.new("imgs/buttons/controlarrows.png", true)
 	
 	self.againBut = Texture.new("imgs/buttons/againBut.png", true)
@@ -34,6 +40,8 @@ function TextureLoaderArenaMode:init()
 	self.paddle2 = Texture.new("imgs/paddle2.png", true)
 	
 	self.pongbg = Texture.new("imgs/backs/pongbg.png", true)
+	
+	self.black = Texture.new("imgs/backs/black.png", true)
 	
 	self.pongball = Texture.new("imgs/pongball.png", true)
 	

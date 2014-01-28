@@ -186,6 +186,7 @@ sceneMan = SceneManager.new({
 	["mainMenu_QuickTour2"] = MainMenu_QuickTour2,
 	["mainMenu_Career"] = MainMenu_Career,
 	["arenaTour"] = ArenaTour,
+	["tourLevelUp"] = TourLevelUp,
 	["arena"] = ArenaArena,
 	["classic"] = ArenaClassic,
 	["survival"] = ArenaSurvival,

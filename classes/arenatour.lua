@@ -363,7 +363,11 @@ function ArenaTour:gameOver()
 					world:destroyBody(self.humanPlayer.paddle.body)
 					world:destroyBody(self.aiPlayer.paddle.body)
 					world:destroyBody(self.bounds)
+					
 					self.stage = self.stage + 1
+					tourTable["QuickTourStage"] = self.stage
+					tourTable["QuickTourPoints"] = tourTable["QuickTourPoints"] + 1
+					
 					local difficulty = self.difFactor*5
 					local class = tourTable["QuickTourClass"]
 					local class2 = tourTable["QuickTourOpponent"]
@@ -373,7 +377,7 @@ function ArenaTour:gameOver()
 					
 					if optionsTable["SFX"] == "On" then sounds.sel2:play() end
 					
-					sceneMan:changeScene("arenaTour", transTime, SceneManager.fade, easing.linear, { userData = {difficulty, class, "Random", stage} })
+					sceneMan:changeScene("tourLevelUp", transTime, SceneManager.fade, easing.linear)
 				end
 			end)
 			
@@ -666,6 +670,7 @@ function ArenaTour:init(dataTable)
 	end	
 	
 	local font = fonts.anitaSmall
+	local font2 = fonts.anitaSmaller
 	local classText = TextField.new(font, self.leftClass)
 	classText:setTextColor(0xffffff)
 	classText:setAlpha(0.35)
@@ -674,6 +679,15 @@ function ArenaTour:init(dataTable)
 	classTextAI:setTextColor(0xffffff)
 	classTextAI:setAlpha(0.35)
 	classTextAI:setPosition(XShift + WX - classTextAI:getWidth() - 16, 50)
+	
+	local stageText = TextField.new(font2, "Tournament: Fight "..self.stage)
+	stageText:setTextColor(0xffffff)
+	stageText:setAlpha(0.35)
+	if optionsTable["ArenaSide"] == "Left" then
+		stageText:setPosition(XShift + 16, WY - 24)
+	else
+		stageText:setPosition(XShift + WX - stageText:getWidth() - 16, WY - 24)
+	end
 	
 	-- Continue as usual --
 	self.bitmap = Bitmap.new(textures.pongbg)
@@ -698,6 +712,7 @@ function ArenaTour:init(dataTable)
 	
 	self:addChild(classText)
 	self:addChild(classTextAI)
+	self:addChild(stageText)
 	
 	self.ball = Ball.new(self.difFactor)
 	if optionsTable["ArenaSide"] == "Left" then

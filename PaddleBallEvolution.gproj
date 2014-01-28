@@ -345,7 +345,8 @@
   <file source="fonts/anita.ttf"/>
  </folder>
  <folder name="classes">
-  <file source="classes/arenaatour.lua"/>
+  <file source="classes/tourLevelUp.lua"/>
+  <file source="classes/arenatour.lua"/>
   <file source="classes/mainmenu_quicktour2.lua"/>
   <file source="classes/mainmenu_quicktour.lua"/>
   <file source="classes/mainmenu_career.lua"/>
@@ -418,13 +419,13 @@
  <dependency from="classes/player.lua" to="classes/paddle.lua"/>
  <dependency from="classes/player.lua" to="classes/char.lua"/>
  <dependency from="main.lua" to="classes/mainmenu.lua"/>
+ <dependency from="main.lua" to="classes/loaders/sounds_normalmodes.lua"/>
+ <dependency from="main.lua" to="classes/loaders/sounds_menu.lua"/>
+ <dependency from="main.lua" to="classes/loaders/sounds_arenamode.lua"/>
+ <dependency from="main.lua" to="classes/loaders/textures_normalmodes.lua"/>
+ <dependency from="main.lua" to="classes/loaders/textures_menu.lua"/>
+ <dependency from="main.lua" to="classes/loaders/textures_arenamode.lua"/>
  <dependency from="main.lua" to="classes/loaders/options.lua"/>
  <dependency from="main.lua" to="classes/loaders/fonts.lua"/>
  <dependency from="main.lua" to="classes/loaders/classtable.lua"/>
- <dependency from="main.lua" to="classes/loaders/textures_arenamode.lua"/>
- <dependency from="main.lua" to="classes/loaders/textures_menu.lua"/>
- <dependency from="main.lua" to="classes/loaders/textures_normalmodes.lua"/>
- <dependency from="main.lua" to="classes/loaders/sounds_menu.lua"/>
- <dependency from="main.lua" to="classes/loaders/sounds_arenamode.lua"/>
- <dependency from="main.lua" to="classes/loaders/sounds_normalmodes.lua"/>
 </project>

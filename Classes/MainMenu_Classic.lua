@@ -12,6 +12,11 @@ local function onKeyDown(event)
 	if event.keyCode == 301 then
 		if optionsTable["SFX"] == "On" then sounds.sel3:play() end
 		
+		local optionsFile = io.open("|D|options.txt", "w+")
+		for k, v in pairs(optionsTable) do 
+			optionsFile:write(k.."="..v.."\n")
+		end	
+		
 		sceneMan:changeScene("mainMenu", transTime, SceneManager.fade, easing.linear) 
 	end
 end
