@@ -1192,6 +1192,26 @@
        y1="2367.0754"
        x2="1316.7289"
        y2="2219.5933" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4916"
+       id="linearGradient4309"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(2.418606,0,0,0.864531,-2524.0979,-1638.2648)"
+       x1="1317.7491"
+       y1="2367.0754"
+       x2="1316.7289"
+       y2="2219.5933" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4214"
+       id="linearGradient4313"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(2.418606,0,0,0.864531,-4463.5398,-477.10502)"
+       x1="1317.7491"
+       y1="2367.0754"
+       x2="1316.7289"
+       y2="2219.5933" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -1200,9 +1220,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.78965211"
-     inkscape:cx="588.00679"
-     inkscape:cy="593.81584"
+     inkscape:zoom="1.5793042"
+     inkscape:cx="694.89823"
+     inkscape:cy="790.07377"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -3199,15 +3219,15 @@
        y="-364.32199"
        rx="34.730518"
        ry="31.439093"
-       inkscape:export-filename="C:\Users\pfjarschel\Desktop\quicktourBut@4x.png"
-       inkscape:export-xdpi="360"
-       inkscape:export-ydpi="360"
+       inkscape:export-filename="C:\Users\pfjarschel\Desktop\quicktourBut.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
        transform="matrix(0.33456532,0,0,0.2707476,381.16086,359.62779)" />
     <text
-       inkscape:export-ydpi="360"
-       inkscape:export-xdpi="360"
-       inkscape:export-filename="C:\Users\pfjarschel\Desktop\quicktourBut@4x.png"
-       transform="matrix(0.11216637,0,0,0.30509627,681.43655,196.69859)"
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="C:\Users\pfjarschel\Desktop\quicktourBut.png"
+       transform="matrix(0.0968372,0,0,0.30509627,693.68148,198.71789)"
        sodipodi:linespacing="125%"
        id="text4136-7"
        y="304.68625"
@@ -3218,7 +3238,7 @@
          y="304.68625"
          x="703.62836"
          id="tspan4138-6"
-         sodipodi:role="line">Quick Tour</tspan></text>
+         sodipodi:role="line">Tournament</tspan></text>
     <rect
        transform="matrix(0.33456532,0,0,0.27075073,1254.1794,0.95413695)"
        style="fill:url(#linearGradient3422);fill-opacity:1;stroke:none;filter:url(#filter5006)"
@@ -3229,27 +3249,11 @@
        y="1441.366"
        rx="34.730518"
        ry="31.439093"
-       inkscape:export-filename="C:\Users\pfjarschel\Desktop\quicktourBut1@4x.png"
-       inkscape:export-xdpi="360"
-       inkscape:export-ydpi="360" />
-    <text
-       inkscape:export-ydpi="360"
-       inkscape:export-xdpi="360"
-       inkscape:export-filename="C:\Users\pfjarschel\Desktop\quicktourBut1@4x.png"
-       transform="matrix(0.11221546,0,0,0.30618395,680.85952,326.62335)"
-       sodipodi:linespacing="125%"
-       id="text4136-7-6"
-       y="304.68625"
-       x="703.62836"
-       style="font-size:66.43237305px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#cbecfd;fill-opacity:1;stroke:none;filter:url(#filter4100-1-1);font-family:Sans"
-       xml:space="preserve"><tspan
-         style="font-size:142.35510254px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#cbecfd;fill-opacity:1;font-family:Space Age;-inkscape-font-specification:Space Age"
-         y="304.68625"
-         x="703.62836"
-         id="tspan4138-6-8"
-         sodipodi:role="line">Quick Tour</tspan></text>
+       inkscape:export-filename="C:\Users\pfjarschel\Desktop\quicktourBut1.png"
+       inkscape:export-xdpi="89.999313"
+       inkscape:export-ydpi="89.999313" />
     <rect
-       transform="matrix(0.33441899,0,0,0.26978893,603.70621,77.036119)"
+       transform="matrix(0.33457511,0,0,0.27086363,603.63979,76.585706)"
        style="fill:url(#linearGradient4269);fill-opacity:1;stroke:none;filter:url(#filter5006)"
        id="rect4263"
        width="420.22366"
@@ -3258,14 +3262,14 @@
        y="280.20615"
        rx="34.730518"
        ry="31.439093"
-       inkscape:export-filename="C:\Users\pfjarschel\Desktop\goBut@0.6x.png"
-       inkscape:export-xdpi="54"
-       inkscape:export-ydpi="54" />
+       inkscape:export-filename="C:\Users\pfjarschel\Desktop\loadBut.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <text
-       inkscape:export-ydpi="54"
-       inkscape:export-xdpi="54"
-       inkscape:export-filename="C:\Users\pfjarschel\Desktop\goBut@0.6x.png"
-       transform="matrix(0.23413983,0,0,0.32245142,597.3864,85.755433)"
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="C:\Users\pfjarschel\Desktop\loadBut.png"
+       transform="matrix(0.23424914,0,0,0.3237359,597.31703,85.339753)"
        sodipodi:linespacing="125%"
        id="text4265"
        y="304.68625"
@@ -3278,7 +3282,7 @@
          id="tspan4267"
          sodipodi:role="line">LOAD</tspan></text>
     <rect
-       transform="matrix(0.33441899,0,0,0.26978893,601.01981,-9.369417)"
+       transform="matrix(0.33457511,0,0,0.27086363,600.95339,-9.8198303)"
        style="fill:url(#linearGradient4277);fill-opacity:1;stroke:none;filter:url(#filter5006)"
        id="rect4271"
        width="420.22366"
@@ -3287,14 +3291,14 @@
        y="280.20615"
        rx="34.730518"
        ry="31.439093"
-       inkscape:export-filename="C:\Users\pfjarschel\Desktop\goBut@0.6x.png"
-       inkscape:export-xdpi="54"
-       inkscape:export-ydpi="54" />
+       inkscape:export-filename="C:\Users\pfjarschel\Desktop\newBut@4x.png"
+       inkscape:export-xdpi="359.8298"
+       inkscape:export-ydpi="359.8298" />
     <text
-       inkscape:export-ydpi="54"
-       inkscape:export-xdpi="54"
-       inkscape:export-filename="C:\Users\pfjarschel\Desktop\goBut@0.6x.png"
-       transform="matrix(0.25595466,0,0,0.35249424,587.26273,-9.0179757)"
+       inkscape:export-ydpi="359.8298"
+       inkscape:export-xdpi="359.8298"
+       inkscape:export-filename="C:\Users\pfjarschel\Desktop\newBut@4x.png"
+       transform="matrix(0.25607415,0,0,0.3538984,587.18989,-9.4669891)"
        sodipodi:linespacing="125%"
        id="text4273"
        y="304.68625"
@@ -3307,10 +3311,10 @@
          id="tspan4275"
          sodipodi:role="line">NEW</tspan></text>
     <rect
-       transform="matrix(0.33441899,0,0,0.26978893,1113.8262,435.80102)"
-       inkscape:export-ydpi="54"
-       inkscape:export-xdpi="54"
-       inkscape:export-filename="C:\Users\pfjarschel\Desktop\goBut1@0.6x.png"
+       transform="matrix(0.33457511,0,0,0.27086363,1113.9964,435.38375)"
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="C:\Users\pfjarschel\Desktop\loadBut1.png"
        ry="31.439093"
        rx="34.730518"
        y="249.36594"
@@ -3328,42 +3332,42 @@
        y="249.36594"
        rx="34.730518"
        ry="31.439093"
-       inkscape:export-filename="C:\Users\pfjarschel\Desktop\goBut1@0.6x.png"
-       inkscape:export-xdpi="54"
-       inkscape:export-ydpi="54"
-       transform="matrix(0.33441899,0,0,0.26978893,1113.8262,521.91489)" />
+       inkscape:export-filename="C:\Users\pfjarschel\Desktop\newBut1.png"
+       inkscape:export-xdpi="90.005081"
+       inkscape:export-ydpi="90.005081"
+       transform="matrix(0.33457511,0,0,0.27073544,1113.9964,521.54739)" />
     <text
        xml:space="preserve"
-       style="font-size:66.43237304999999500px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#cbecfd;fill-opacity:1;stroke:none;filter:url(#filter4100);font-family:Sans"
+       style="font-size:66.43237305px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#cbecfd;fill-opacity:1;stroke:none;filter:url(#filter4100);font-family:Sans"
        x="703.62836"
        y="304.68625"
        id="text4287"
        sodipodi:linespacing="125%"
-       transform="matrix(0.23413983,0,0,0.32245142,600.71388,436.19999)"
-       inkscape:export-filename="C:\Users\pfjarschel\Desktop\goBut@0.6x.png"
-       inkscape:export-xdpi="54"
-       inkscape:export-ydpi="54"><tspan
+       transform="matrix(0.23424914,0,0,0.3237359,600.64451,435.78431)"
+       inkscape:export-filename="C:\Users\pfjarschel\Desktop\loadBut1.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
          id="tspan4289"
          x="703.62836"
          y="304.68625"
-         style="font-size:142.35510253999999000px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Space Age;-inkscape-font-specification:Space Age;fill:#cbecfd;fill-opacity:1">LOAD</tspan></text>
+         style="font-size:142.35510254px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#cbecfd;fill-opacity:1;font-family:Space Age;-inkscape-font-specification:Space Age">LOAD</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:66.43237304999999500px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#cbecfd;fill-opacity:1;stroke:none;filter:url(#filter4100);font-family:Sans"
+       style="font-size:66.43237305px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#cbecfd;fill-opacity:1;stroke:none;filter:url(#filter4100);font-family:Sans"
        x="703.62836"
        y="304.68625"
        id="text4291"
        sodipodi:linespacing="125%"
-       transform="matrix(0.25595466,0,0,0.35249424,593.27659,513.94598)"
-       inkscape:export-filename="C:\Users\pfjarschel\Desktop\goBut@0.6x.png"
-       inkscape:export-xdpi="54"
-       inkscape:export-ydpi="54"><tspan
+       transform="matrix(0.25607415,0,0,0.35373092,593.20375,513.55053)"
+       inkscape:export-filename="C:\Users\pfjarschel\Desktop\newBut1.png"
+       inkscape:export-xdpi="90.005081"
+       inkscape:export-ydpi="90.005081"><tspan
          sodipodi:role="line"
          id="tspan4293"
          x="703.62836"
          y="304.68625"
-         style="font-size:142.35510253999999000px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Space Age;-inkscape-font-specification:Space Age;fill:#cbecfd;fill-opacity:1">NEW</tspan></text>
+         style="font-size:142.35510254px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#cbecfd;fill-opacity:1;font-family:Space Age;-inkscape-font-specification:Space Age">NEW</tspan></text>
     <rect
        style="fill:url(#linearGradient4301);fill-opacity:1;stroke:none;filter:url(#filter5006)"
        id="rect4295"
@@ -3373,15 +3377,15 @@
        y="249.36594"
        rx="34.730518"
        ry="31.439093"
-       inkscape:export-filename="C:\Users\pfjarschel\Desktop\goBut1@0.6x.png"
-       inkscape:export-xdpi="54"
-       inkscape:export-ydpi="54"
-       transform="matrix(0.33441899,0,0,0.26978893,1297.9485,394.69335)" />
+       inkscape:export-filename="C:\Users\pfjarschel\Desktop\loadBut0@4x.png"
+       inkscape:export-xdpi="360"
+       inkscape:export-ydpi="360"
+       transform="matrix(0.33457511,0,0,0.27086363,1298.1187,394.27608)" />
     <text
-       inkscape:export-ydpi="54"
-       inkscape:export-xdpi="54"
-       inkscape:export-filename="C:\Users\pfjarschel\Desktop\goBut@0.6x.png"
-       transform="matrix(0.23413983,0,0,0.32245142,784.83615,395.09232)"
+       inkscape:export-ydpi="360"
+       inkscape:export-xdpi="360"
+       inkscape:export-filename="C:\Users\pfjarschel\Desktop\loadBut0@4x.png"
+       transform="matrix(0.23424914,0,0,0.3237359,784.76678,394.67664)"
        sodipodi:linespacing="125%"
        id="text4297"
        y="304.68625"
@@ -3393,5 +3397,79 @@
          x="703.62836"
          id="tspan4299"
          sodipodi:role="line">LOAD</tspan></text>
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="C:\Users\pfjarschel\Desktop\newBut.png"
+       ry="31.439093"
+       rx="34.730518"
+       y="280.20615"
+       x="439.45599"
+       height="130.12292"
+       width="420.22366"
+       id="rect4303"
+       style="fill:url(#linearGradient4309);fill-opacity:1;stroke:none;filter:url(#filter5006)"
+       transform="matrix(0.33457511,0,0,0.27086363,793.44322,-13.618972)" />
+    <text
+       xml:space="preserve"
+       style="font-size:66.43237305px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#485764;fill-opacity:1;stroke:none;filter:url(#filter4100);font-family:Sans"
+       x="703.62836"
+       y="304.68625"
+       id="text4305"
+       sodipodi:linespacing="125%"
+       transform="matrix(0.21957705,0,0,0.33892563,800.48347,-9.3243876)"
+       inkscape:export-filename="C:\Users\pfjarschel\Desktop\newBut.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan4307"
+         x="703.62836"
+         y="304.68625"
+         style="font-size:142.35510254px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Space Age;-inkscape-font-specification:Space Age">Next</tspan></text>
+    <rect
+       transform="matrix(0.33441899,0,0,0.26978893,1431.8842,-1.9582988)"
+       style="fill:url(#linearGradient4313);fill-opacity:1;stroke:none;filter:url(#filter5006)"
+       id="rect4311"
+       width="420.22366"
+       height="130.12292"
+       x="-1499.9858"
+       y="1441.366"
+       rx="34.730518"
+       ry="31.439093"
+       inkscape:export-filename="C:\Users\pfjarschel\Desktop\nextBut1.png"
+       inkscape:export-xdpi="90.358475"
+       inkscape:export-ydpi="90.358475" />
+    <text
+       inkscape:export-ydpi="90.358475"
+       inkscape:export-xdpi="90.358475"
+       inkscape:export-filename="C:\Users\pfjarschel\Desktop\nextBut1.png"
+       transform="matrix(0.21957705,0,0,0.33892563,790.23686,315.23329)"
+       sodipodi:linespacing="125%"
+       id="text4315"
+       y="304.68625"
+       x="703.62836"
+       style="font-size:66.43237304999999500px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#cbecfd;fill-opacity:1;stroke:none;filter:url(#filter4100);font-family:Sans"
+       xml:space="preserve"><tspan
+         style="font-size:142.35510253999999000px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Space Age;-inkscape-font-specification:Space Age;fill:#cbecfd;fill-opacity:1"
+         y="304.68625"
+         x="703.62836"
+         id="tspan4317"
+         sodipodi:role="line">Next</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:66.43237304999999500px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#cbecfd;fill-opacity:1;stroke:none;filter:url(#filter4100-1);font-family:Sans"
+       x="703.62836"
+       y="304.68625"
+       id="text4319"
+       sodipodi:linespacing="125%"
+       transform="matrix(0.0968372,0,0,0.30509627,693.16647,328.93464)"
+       inkscape:export-filename="C:\Users\pfjarschel\Desktop\quicktourBut1.png"
+       inkscape:export-xdpi="89.999313"
+       inkscape:export-ydpi="89.999313"><tspan
+         sodipodi:role="line"
+         id="tspan4321"
+         x="703.62836"
+         y="304.68625"
+         style="font-size:142.35510253999999000px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Space Age;-inkscape-font-specification:Space Age;fill:#cbecfd;fill-opacity:1">Tournament</tspan></text>
   </g>
 </svg>

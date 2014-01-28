@@ -12,6 +12,7 @@ Char.int = nil
 Char.skl = nil
 Char.def = nil
 Char.skill = "none"
+Char.Stage = 5
 
 Char.atkFactor = nil
 Char.dexFactor = nil
@@ -31,7 +32,8 @@ function Char:updateAttr()
 end
 
 -- Initialization, load from charTable if not standard char --
-function Char:init(class)
+function Char:init(class, stage)
+	self.stage = stage
 	if class == "classic" then
 		self.atk = 10
 		self.mov = 20
@@ -57,9 +59,45 @@ function Char:init(class)
 		self.atk = classTable[class][1]
 		self.mov = classTable[class][2]
 		self.lif = classTable[class][3]
-		self.int = classTable[class][4]
+		self.int = classTable[class][4] + self.stage
 		self.skl = classTable[class][5]
 		self.def = classTable[class][6]
+
+		local points = self.stage
+		if points ~= 0 and points ~= -1 then
+			for i = 1, points, 1 do
+				local randNum = math.random(1,5)
+				if randNum == 1 then
+					self.atk = self.atk + 1
+				elseif randNum == 2 then
+					self.mov = self.mov + 1
+				elseif randNum == 3 then
+					self.lif = self.lif + 1
+				elseif randNum == 4 then
+					self.skl = self.skl + 1
+				else
+					self.def = self.def + 1
+				end
+			end
+		end
+		
+		if points == -1 then
+			self.atk = self.atk + tourTable["QuickTourAtk"]
+			self.mov = self.mov + tourTable["QuickTourMov"]
+			self.lif = self.lif + tourTable["QuickTourLif"]
+			self.int = self.int + 1
+			self.skl = self.skl + tourTable["QuickTourSkl"]
+			self.def = self.def + tourTable["QuickTourDef"]
+		end
+
+		--print(self.atk)
+		--print(self.mov)
+		--print(self.lif)
+		--print(self.int)
+		--print(self.skl)
+		--print(self.def)
+		--print("--")
+		
 		if classTable[class][7] ~= nil then
 			self.skill = Skills.new(classTable[class][7])
 		end

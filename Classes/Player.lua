@@ -153,10 +153,11 @@ function Player:humanMove()
 end
 
 -- Initialize objects --
-function Player:init(side, human, difFactor, class)
+function Player:init(side, human, difFactor, class, stage)
+	if stage == nil then stage = 0 end
 	self.side = side
 	self.human = human
-	self.char = Char.new(class)
+	self.char = Char.new(class, stage)
 	self.difFactor = difFactor
 	self.paddle = Paddle.new(side, self.char.atkFactor, self.char.defFactor)
 	self.touchY = WY/2

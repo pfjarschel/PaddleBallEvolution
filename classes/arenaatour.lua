@@ -26,7 +26,6 @@ ArenaTour.humanPlayer = nil
 ArenaTour.aiPlayer = nil
 ArenaTour.songload = nil
 ArenaTour.stage = 1
-ArenaTour.savedData = {}
 
 -- Tilt variables --
 local afx = 0
@@ -120,8 +119,8 @@ function ArenaTour:openMenu()
 				world:destroyBody(self.aiPlayer.paddle.body)
 				world:destroyBody(self.bounds)
 				local difficulty = self.difFactor*5
-				local class = self.savedData["QuickTourClass"]
-				local class2 = self.savedData["QuickTourOpponent"]
+				local class = tourTable["QuickTourClass"]
+				local class2 = tourTable["QuickTourOpponent"]
 				local stage = self.stage
 				self = nil
 				arena = nil
@@ -366,8 +365,8 @@ function ArenaTour:gameOver()
 					world:destroyBody(self.bounds)
 					self.stage = self.stage + 1
 					local difficulty = self.difFactor*5
-					local class = self.savedData["QuickTourClass"]
-					local class2 = self.savedData["QuickTourOpponent"]
+					local class = tourTable["QuickTourClass"]
+					local class2 = tourTable["QuickTourOpponent"]
 					local stage = self.stage
 					self = nil
 					arena = nil
@@ -390,7 +389,12 @@ function ArenaTour:gameOver()
 				currSong = nil
 				currSong = self.songload:play()
 				
-				self.savedData["QuickTourStage"] = 0
+				tourTable["QuickTourStage"] = 0
+				tourTable["QuickTourAtk"] = 0
+				tourTable["QuickTourMov"] = 0
+				tourTable["QuickTourLif"] = 0
+				tourTable["QuickTourSkl"] = 0
+				tourTable["QuickTourDef"] = 0
 			end
 		end
 	else
@@ -425,8 +429,8 @@ function ArenaTour:gameOver()
 				world:destroyBody(self.aiPlayer.paddle.body)
 				world:destroyBody(self.bounds)
 				local difficulty = self.difFactor*5
-				local class = self.savedData["QuickTourClass"]
-				local class2 = self.savedData["QuickTourOpponent"]
+				local class = tourTable["QuickTourClass"]
+				local class2 = tourTable["QuickTourOpponent"]
 				local stage = self.stage
 				self = nil
 				arena = nil
@@ -475,7 +479,7 @@ function ArenaTour:gameOver()
 			world:destroyBody(self.bounds)
 			
 			local quicktourFile = io.open("|D|quicktour.txt", "w+")
-			for k, v in pairs(self.savedData) do 
+			for k, v in pairs(tourTable) do 
 				quicktourFile:write(k.."="..v.."\n")
 			end	
 			
@@ -639,17 +643,25 @@ function ArenaTour:init(dataTable)
 		self.AI = ArenaAI.new(self.leftClass)
 	end
 	
-	self.savedData["QuickTourDif"] = difficulty
-	self.savedData["QuickTourClass"] = class
-	self.savedData["QuickTourStage"] = self.stage
+	tourTable["QuickTourDif"] = difficulty
+	tourTable["QuickTourClass"] = class
+	tourTable["QuickTourStage"] = self.stage
 	if optionsTable["ArenaSide"] == "Left" then
-		self.savedData["QuickTourOpponent"] = self.rightClass
+		tourTable["QuickTourOpponent"] = self.rightClass
 	else
-		self.savedData["QuickTourOpponent"] = self.leftClass
+		tourTable["QuickTourOpponent"] = self.leftClass
+	end
+	if self.stage == 1 then
+		tourTable["QuickTourAtk"] = 0
+		tourTable["QuickTourMov"] = 0
+		tourTable["QuickTourLif"] = 0
+		tourTable["QuickTourSkl"] = 0
+		tourTable["QuickTourDef"] = 0
+		tourTable["QuickTourPoints"] = 0
 	end
 	
 	local quicktourFile = io.open("|D|quicktour.txt", "w+")
-	for k, v in pairs(self.savedData) do 
+	for k, v in pairs(tourTable) do 
 		quicktourFile:write(k.."="..v.."\n")
 	end	
 	
@@ -689,11 +701,11 @@ function ArenaTour:init(dataTable)
 	
 	self.ball = Ball.new(self.difFactor)
 	if optionsTable["ArenaSide"] == "Left" then
-		self.leftPlayer = Player.new(0, true, self.difFactor, self.leftClass)
-		self.rightPlayer = Player.new(1, false, self.difFactor, self.rightClass)
+		self.leftPlayer = Player.new(0, true, self.difFactor, self.leftClass, -1)
+		self.rightPlayer = Player.new(1, false, self.difFactor, self.rightClass, self.stage)
 	else
-		self.leftPlayer = Player.new(0, false, self.difFactor, self.leftClass)
-		self.rightPlayer = Player.new(1, true, self.difFactor, self.rightClass)
+		self.leftPlayer = Player.new(0, false, self.difFactor, self.leftClass, self.stage)
+		self.rightPlayer = Player.new(1, true, self.difFactor, self.rightClass, -1)
 	end
 	
 	self.leftPlayer.paddle.bitmap:setColorTransform(classTable[self.leftClass][10][1], classTable[self.leftClass][10][2], classTable[self.leftClass][10][3])

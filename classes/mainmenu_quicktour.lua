@@ -6,8 +6,6 @@ MainMenu_QuickTour = Core.class(Sprite)
 
 -- Declarations --
 MainMenu_QuickTour.font = nil
-MainMenu_QuickTour.savedData = {}
-
 
 -- Handles Keys --
 local function onKeyDown(event)
@@ -37,19 +35,20 @@ function MainMenu_QuickTour:init()
 		createFile:write("QuickTourStage=0\n")
 		createFile:write("QuickTourDif=5\n")
 		createFile:write("QuickTourClass=Warrior\n")
-		
-		self.savedData["QuickTourStage"] = 0
-		self.savedData["QuickTourDif"] = 5
-		self.savedData["QuickTourClass"] = "Warrior"
-		
-	else
-		local lines = lines_from("|D|quicktour.txt")
-		for i = 1, table.getn(lines), 1 do
-			for k1, v1 in string.gmatch(lines[i], "(%w+)=(%w+)") do
-				self.savedData[k1] = v1
-			end
+		createFile:write("QuickTourOpponent=Warrior\n")
+		createFile:write("QuickTourAtk=0\n")
+		createFile:write("QuickTourMov=0\n")
+		createFile:write("QuickTourLif=0\n")
+		createFile:write("QuickTourSkl=0\n")
+		createFile:write("QuickTourDef=0\n")
+		createFile:write("QuickTourPoints=0\n")
+	end
+	local lines = lines_from("|D|quicktour.txt")
+	for i = 1, table.getn(lines), 1 do
+		for k1, v1 in string.gmatch(lines[i], "(%w+)=(%w+)") do
+			tourTable[k1] = v1
 		end
-	end	
+	end
 	
 	-- New, Load, or return --
 	self.newBut = MenuBut.new(150, 40, textures.newBut, textures.newBut1)
@@ -65,7 +64,7 @@ function MainMenu_QuickTour:init()
 			sceneMan:changeScene("mainMenu_QuickTour2", transTime, SceneManager.fade, easing.linear) 
 		end
 	end)
-	if tonumber(self.savedData["QuickTourStage"]) > 0 then
+	if tonumber(tourTable["QuickTourStage"]) > 0 then
 		self.loadBut = MenuBut.new(150, 40, textures.loadBut, textures.loadBut1)
 		self:addChild(self.loadBut)
 		self.loadBut.bitmap:setPosition(WX/2, 0.5*WY + 96)
@@ -76,7 +75,7 @@ function MainMenu_QuickTour:init()
 				for k, v in pairs(optionsTable) do 
 					optionsFile:write(k.."="..v.."\n")
 				end	
-				sceneMan:changeScene("arenaTour", transTime, SceneManager.fade, easing.linear, { userData = {tonumber(self.savedData["QuickTourDif"]), self.savedData["QuickTourClass"], self.savedData["QuickTourOpponent"], tonumber(self.savedData["QuickTourStage"])} }) 
+				sceneMan:changeScene("arenaTour", transTime, SceneManager.fade, easing.linear, { userData = {tonumber(tourTable["QuickTourDif"]), tourTable["QuickTourClass"], tourTable["QuickTourOpponent"], tonumber(tourTable["QuickTourStage"])} }) 
 			end
 		end)
 	else

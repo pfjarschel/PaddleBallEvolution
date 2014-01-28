@@ -48,9 +48,12 @@ function MainMenu_Help:init()
 	self:addChild(helptitle)
 	
 	helpstrings[1] = "Classic: This is the classic Ping Pong arcade game! Simply defend your goal and try to send the ball to the opponent's side, can't get much simpler than this.\n \n \n \n"..
-					"Career: Start low and join tournaments around the whole universe to become the ultimate PaddleBall Player! (Only in Full Version)\n"
-	helpstrings[2] = "Survival: Very easy in the beggining, but how many rounds can you survive with increasing difficulty?\n \n \n \n"..
-					"Arena: Select one from many different classes, each with its own attributes and special skill! (More classes in the Full Version)\n"
+						"Survival: Very easy in the beggining, but how many rounds can you survive with increasing difficulty?\n"
+					
+	helpstrings[2] = "Career: Start low and join tournaments around the whole universe to become the ultimate PaddleBall Player! (Only in Full Version)\n \n \n \n"..
+					"Arena: Select one from many different classes, each with its own attributes and special skill! (More classes in the Full Version)\n \n \n \n"..
+					"Tournament: Like Arena mode, but with a small character progression.\n"
+					
 	helpstrings[3] = ""
 	helpstrings[4] = "You can use the touch conrol area to move your paddle up and down, if you prefer touch controls. "..
 					"Alternatively, you can set in the options page two other control methods:\n \n \n \n"..

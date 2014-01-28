@@ -43,3 +43,4 @@ print("Init-ing...")
 application:setBackgroundColor(0x000000)
 classTable = {}
 optionsTable = {}
+tourTable = {}

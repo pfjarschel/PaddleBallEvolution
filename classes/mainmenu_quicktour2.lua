@@ -30,27 +30,6 @@ function MainMenu_QuickTour2:init()
 	local textureH = menubg:getHeight()
 	menubg:setScale(WX/textureW, WY/textureH)
 	
-	-- Check if there is a saved tour --
-	local quicktourFile = io.open("|D|quicktour.txt", "r")
-	if not quicktourFile then
-		local createFile = io.open("|D|quicktour.txt", "w+")
-		createFile:write("QuickTourStage=0\n")
-		createFile:write("QuickTourDif=5\n")
-		createFile:write("QuickTourClass=Warrior\n")
-		
-		self.savedData["QuickTourStage"] = 0
-		self.savedData["QuickTourDif"] = 5
-		self.savedData["QuickTourClass"] = "Warrior"
-		
-	else
-		local lines = lines_from("|D|quicktour.txt")
-		for i = 1, table.getn(lines), 1 do
-			for k1, v1 in string.gmatch(lines[i], "(%w+)=(%w+)") do
-				self.savedData[k1] = v1
-			end
-		end
-	end
-	
 	-- Difficulty Selection --
 	local difTextBox = TextField.new(self.font, "Difficulty:")
 	difTextBox:setTextColor(0xffffff)
