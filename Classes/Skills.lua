@@ -384,7 +384,7 @@ function Skills:start(side)
 		self.forceEnd = function()
 			for i = arena.ball:getNumChildren(), 1, -1 do
 				if arena.ball:getChildAt(i) == arrow then
-					fadeBitmapOut(arrow, 100, arena.ball)
+					fadeBitmapOut(arrow, 250, arena.ball)
 				end
 			end
 		end

@@ -4,7 +4,7 @@
 
 TextureLoaderMenu = Core.class()
 
--- Load a bunch of textures and sets them to variables --
+-- Load a bunch of textures and sets them to variables. For buttons, 1 means pressed, 0 means disabled. --
 function TextureLoaderMenu:init()
 	
 	self.returnBut = Texture.new("imgs/buttons/returnBut.png", true)
@@ -12,6 +12,13 @@ function TextureLoaderMenu:init()
 	
 	self.goBut = Texture.new("imgs/buttons/goBut.png", true)
 	self.goBut1 = Texture.new("imgs/buttons/goBut1.png", true)
+	
+	self.newBut = Texture.new("imgs/buttons/newBut.png", true)
+	self.newBut1 = Texture.new("imgs/buttons/newBut1.png", true)
+	
+	self.loadBut = Texture.new("imgs/buttons/loadBut.png", true)
+	self.loadBut1 = Texture.new("imgs/buttons/loadBut1.png", true)
+	self.loadBut0 = Texture.new("imgs/buttons/loadBut0.png", true)
 	
 	self.backBut = Texture.new("imgs/buttons/backBut.png", true)
 	self.backBut1 = Texture.new("imgs/buttons/backBut1.png", true)
@@ -39,6 +46,9 @@ function TextureLoaderMenu:init()
 	
 	self.arenaBut = Texture.new("imgs/buttons/arenamodeBut.png", true)
 	self.arenaBut1 = Texture.new("imgs/buttons/arenamodeBut1.png", true)
+	
+	self.quicktourBut = Texture.new("imgs/buttons/quicktourBut.png", true)
+	self.quicktourBut1 = Texture.new("imgs/buttons/quicktourBut1.png", true)
 	
 	self.optionsBut = Texture.new("imgs/buttons/gear.png", true)
 	self.optionsBut1 = Texture.new("imgs/buttons/gear1.png", true)

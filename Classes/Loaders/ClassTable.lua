@@ -40,7 +40,7 @@ classTable["Ninja"] = {
 	"Ball turns invisible",
 	{0.05, 0.2, 0.5}
 }
-classTable["Swamp Monster"] = {
+classTable["SwampMonster"] = {
 	14,
 	6,
 	16,
@@ -64,7 +64,7 @@ classTable["Archer"] = {
 	"Ball moves in a straight line to the goal",
 	{0.2, 0.6, 0.2}
 }
-classTable["Mimic"] = {
+classTable["Mesmer"] = {
 	12,
 	12,
 	10,
@@ -114,7 +114,7 @@ classTable["Illusionist"] = {
 	{0.6, 0.4, 1}
 }
 
-classTable["Ice Man"] = {
+classTable["IceMan"] = {
 	15,
 	7,
 	8,

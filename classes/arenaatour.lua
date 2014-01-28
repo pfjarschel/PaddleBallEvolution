@@ -2,29 +2,31 @@
 -- Class for the Arena (or simply background?) --
 -------------------------------------------------
 
-ArenaArena = Core.class(Sprite)
+ArenaTour = Core.class(Sprite)
 
 -- Declare stuff --
-ArenaArena.bitmap = nil
-ArenaArena.bounds = nil
-ArenaArena.fixtureT = nil
-ArenaArena.fixtureB = nil
-ArenaArena.score0 = 0
-ArenaArena.score1 = 0
-ArenaArena.difFactor = 5/5 -- 1/5 to 10/5
-ArenaArena.paused = false
-ArenaArena.leftClass = "classic"
-ArenaArena.rightClass = "classic"
-ArenaArena.font = nil
-ArenaArena.pausebg = nil
-ArenaArena.name = "arena"
-ArenaArena.skillBut = nil
-ArenaArena.controlarrows = nil
-ArenaArena.accelerometer = nil
-ArenaArena.AI = nil
-ArenaArena.humanPlayer = nil
-ArenaArena.aiPlayer = nil
-ArenaArena.songload = nil
+ArenaTour.bitmap = nil
+ArenaTour.bounds = nil
+ArenaTour.fixtureT = nil
+ArenaTour.fixtureB = nil
+ArenaTour.score0 = 0
+ArenaTour.score1 = 0
+ArenaTour.difFactor = 5/5 -- 1/5 to 10/5
+ArenaTour.paused = false
+ArenaTour.leftClass = "classic"
+ArenaTour.rightClass = "classic"
+ArenaTour.font = nil
+ArenaTour.pausebg = nil
+ArenaTour.name = "arena"
+ArenaTour.skillBut = nil
+ArenaTour.controlarrows = nil
+ArenaTour.accelerometer = nil
+ArenaTour.AI = nil
+ArenaTour.humanPlayer = nil
+ArenaTour.aiPlayer = nil
+ArenaTour.songload = nil
+ArenaTour.stage = 1
+ArenaTour.savedData = {}
 
 -- Tilt variables --
 local afx = 0
@@ -44,7 +46,7 @@ local function onEnterFrame()
 end
 
 -- Create physics stuff (including collision handler)
-function ArenaArena:createBoundaries()
+function ArenaTour:createBoundaries()
 	self.bounds = world:createBody({}) --Default is Static
 	
 	self.bounds.name = "bounds"
@@ -69,7 +71,7 @@ function ArenaArena:createBoundaries()
 end
 
 -- This is the actual menu --
-function ArenaArena:openMenu()
+function ArenaTour:openMenu()
 	Timer:pauseAll()
 	if not self.paused then
 		self.paused = true
@@ -118,14 +120,15 @@ function ArenaArena:openMenu()
 				world:destroyBody(self.aiPlayer.paddle.body)
 				world:destroyBody(self.bounds)
 				local difficulty = self.difFactor*5
-				local class = self.leftClass
-				local classAI = self.rightClass
+				local class = self.savedData["QuickTourClass"]
+				local class2 = self.savedData["QuickTourOpponent"]
+				local stage = self.stage
 				self = nil
 				arena = nil
 				
 				if optionsTable["SFX"] == "On" then sounds.sel3:play() end
 				
-				sceneMan:changeScene("arena", transTime, SceneManager.fade, easing.linear, { userData = {difficulty, class, classAI} })
+				sceneMan:changeScene("arenaTour", transTime, SceneManager.fade, easing.linear, { userData = {difficulty, class, class2, stage} })
 			end
 		end)
 		self.pausebg:addChild(restartBut)
@@ -165,7 +168,7 @@ function ArenaArena:openMenu()
 end
 
 -- This function creates the in-game menu --
-function ArenaArena:addMenu()
+function ArenaTour:addMenu()
 	-- Adds Menu Button --
 	local menuBut = MenuBut.new(60, 60, textures.menuBut, textures.menuBut1)
 	if optionsTable["ArenaSide"] == "Left" then
@@ -184,7 +187,7 @@ function ArenaArena:addMenu()
 end
 
 -- Inserts Skill Button (Human Player only) --
-function ArenaArena:addSkillBut()
+function ArenaTour:addSkillBut()
 	self.skillBut = MenuBut.new(60, 60, textures.skillBut, textures.skillBut1)
 	if optionsTable["ArenaSide"] == "Left" then
 		self.skillBut.bitmap:setPosition(XShift + 3*WX/4, WY - self.skillBut.bitmap:getHeight())
@@ -218,7 +221,7 @@ function ArenaArena:addSkillBut()
 end
 
 -- Inserts control arrows, handles touch --
-function ArenaArena:addControlArrows()
+function ArenaTour:addControlArrows()
 	local controlarrows = Bitmap.new(textures.controlarrows)
 	controlarrows:setScale(1, 1)
 	self:addChild(controlarrows)
@@ -249,14 +252,14 @@ function ArenaArena:addControlArrows()
 end
 
 -- Initialize Tilt --
-function ArenaArena:tiltInit()
+function ArenaTour:tiltInit()
 	self.accelerometer = Accelerometer.new()
 	self.accelerometer:start()
 	afx0 = self.accelerometer:getAcceleration()
 end
 
 -- Handles Tilt --
-function ArenaArena:tilt()
+function ArenaTour:tilt()
 	if not arena.paused then
 		local x, y, z = self.accelerometer:getAcceleration()
 		local filter = 0.1;
@@ -319,69 +322,131 @@ local function onKeyUp(event)
 end
 
 -- Handles the end of the match --
-function ArenaArena:gameOver()
+function ArenaTour:gameOver()
 	self:removeEventListener(Event.ENTER_FRAME, onEnterFrame)
 	fadeOut(self)
 	
 	local gameOverString = nil
+	local gameOverTextBox = nil
+	local exitBut = MenuBut.new(150, 40, textures.exitBut, textures.exitBut1)
+	local againBut = MenuBut.new(150, 40, textures.restartBut, textures.restartBut1)
+	local nextBut = MenuBut.new(150, 40, textures.nextBut, textures.nextBut1)
+	
 	if (self.score0 > self.score1 and optionsTable["ArenaSide"] == "Left") or (self.score0 < self.score1 and optionsTable["ArenaSide"] == "Right") then
-		gameOverString = "Congratulations, you won!"
-		if optionsTable["Music"] == "On" then
-			currSong:stop()
-			self.songload = nil
-			self.songload = Sound.new(sounds.winstring)
-			currSong = nil
-			currSong = self.songload:play()
+		if self.stage < 10 then
+			gameOverString = "You won this match!"
+			if optionsTable["Music"] == "On" then
+				currSong:stop()
+				self.songload = nil
+				self.songload = Sound.new(sounds.winstring)
+				currSong = nil
+				currSong = self.songload:play()
+			end
+			
+			nextBut.bitmap:setPosition(WX0/2, WY/2 + 100)
+			
+			nextBut:addEventListener(Event.TOUCHES_END, function(event)
+				if nextBut:hitTestPoint(event.touch.x, event.touch.y) then
+					event:stopPropagation()
+					Timer.resumeAll()
+					Timer.stopAll()
+					if self.humanPlayer.skillActive then
+						self.humanPlayer.char.skill:endAction()
+					end
+					if self.aiPlayer.skillActive then
+						self.aiPlayer.char.skill:endAction()
+					end
+					stage:removeChild(gameOverTextBox)
+					stage:removeChild(exitBut)
+					stage:removeChild(nextBut)
+					world:destroyBody(self.ball.body)
+					self.ball.body = nil
+					world:destroyBody(self.humanPlayer.paddle.body)
+					world:destroyBody(self.aiPlayer.paddle.body)
+					world:destroyBody(self.bounds)
+					self.stage = self.stage + 1
+					local difficulty = self.difFactor*5
+					local class = self.savedData["QuickTourClass"]
+					local class2 = self.savedData["QuickTourOpponent"]
+					local stage = self.stage
+					self = nil
+					arena = nil
+					
+					if optionsTable["SFX"] == "On" then sounds.sel2:play() end
+					
+					sceneMan:changeScene("arenaTour", transTime, SceneManager.fade, easing.linear, { userData = {difficulty, class, "Random", stage} })
+				end
+			end)
+			
+			Timer.delayedCall(transTime/2, function ()
+				stage:addChild(nextBut)
+			end)
+		else
+			gameOverString = "You won the Tournament!"
+			if optionsTable["Music"] == "On" then
+				currSong:stop()
+				self.songload = nil
+				self.songload = Sound.new(musics.champion[1])
+				currSong = nil
+				currSong = self.songload:play()
+				
+				self.savedData["QuickTourStage"] = 0
+			end
 		end
 	else
-		gameOverString = "You lost... :("
+		gameOverString = "You lost this match... :("
 		if optionsTable["Music"] == "On" then
 			currSong:stop()
 			self.songload = nil
-			self.songload = Sound.new(sounds.losestring)
+			self.songload = Sound.new(musics.lost)
 			currSong = nil
 			currSong = self.songload:play()
 		end
+			
+		againBut.bitmap:setPosition(WX0/2, WY/2 + 100)
+		
+		againBut:addEventListener(Event.TOUCHES_END, function(event)
+			if againBut:hitTestPoint(event.touch.x, event.touch.y) then
+				event:stopPropagation()
+				Timer.resumeAll()
+				Timer.stopAll()
+				if self.humanPlayer.skillActive then
+					self.humanPlayer.char.skill:endAction()
+				end
+				if self.aiPlayer.skillActive then
+					self.aiPlayer.char.skill:endAction()
+				end
+				stage:removeChild(gameOverTextBox)
+				stage:removeChild(exitBut)
+				stage:removeChild(againBut)
+				world:destroyBody(self.ball.body)
+				self.ball.body = nil
+				world:destroyBody(self.humanPlayer.paddle.body)
+				world:destroyBody(self.aiPlayer.paddle.body)
+				world:destroyBody(self.bounds)
+				local difficulty = self.difFactor*5
+				local class = self.savedData["QuickTourClass"]
+				local class2 = self.savedData["QuickTourOpponent"]
+				local stage = self.stage
+				self = nil
+				arena = nil
+				
+				if optionsTable["SFX"] == "On" then sounds.sel2:play() end
+				
+				sceneMan:changeScene("arenaTour", transTime, SceneManager.fade, easing.linear, { userData = {difficulty, class, class2, stage} })
+			end
+		end)
+			
+		Timer.delayedCall(transTime/2, function ()
+			stage:addChild(againBut)
+		end)
 	end
-	local gameOverTextBox = TextField.new(self.font, gameOverString)
+	
+	gameOverTextBox = TextField.new(self.font, gameOverString)
 	gameOverTextBox:setTextColor(0x3c78a0)
 	gameOverTextBox:setPosition(0.5*WX0 - gameOverTextBox:getWidth()/2, 0.25*WY + gameOverTextBox:getHeight()/2)
 	
-	local againBut = MenuBut.new(150, 40, textures.againBut, textures.againBut1)
-	againBut.bitmap:setPosition(WX0/2, WY/2 + 100)
-	local exitBut = MenuBut.new(150, 40, textures.exitBut, textures.exitBut1)
 	exitBut.bitmap:setPosition(exitBut:getWidth()/2 + 10, WY/2 + 210)
-	
-	againBut:addEventListener(Event.TOUCHES_END, function(event)
-		if againBut:hitTestPoint(event.touch.x, event.touch.y) then
-			event:stopPropagation()
-			Timer.resumeAll()
-			Timer.stopAll()
-			if self.humanPlayer.skillActive then
-				self.humanPlayer.char.skill:endAction()
-			end
-			if self.aiPlayer.skillActive then
-				self.aiPlayer.char.skill:endAction()
-			end
-			stage:removeChild(gameOverTextBox)
-			stage:removeChild(exitBut)
-			stage:removeChild(againBut)
-			world:destroyBody(self.ball.body)
-			self.ball.body = nil
-			world:destroyBody(self.humanPlayer.paddle.body)
-			world:destroyBody(self.aiPlayer.paddle.body)
-			world:destroyBody(self.bounds)
-			local difficulty = self.difFactor*5
-			local class = self.leftClass
-			local class2 = self.rightClass
-			self = nil
-			arena = nil
-			
-			if optionsTable["SFX"] == "On" then sounds.sel2:play() end
-			
-			sceneMan:changeScene("arena", transTime, SceneManager.fade, easing.linear, { userData = {difficulty, class, class2} })
-		end
-	end)
 	
 	exitBut:addEventListener(Event.TOUCHES_END, function(event)
 		if exitBut:hitTestPoint(event.touch.x, event.touch.y) then
@@ -396,17 +461,29 @@ function ArenaArena:gameOver()
 			end
 			stage:removeChild(gameOverTextBox)
 			stage:removeChild(exitBut)
-			stage:removeChild(againBut)
+			for i = stage:getNumChildren(), 1, -1 do
+				if stage:getChildAt(i) == againBut then
+					stage:removeChild(againBut)
+				elseif stage:getChildAt(i) == nextBut then
+					stage:removeChild(nextBut)
+				end
+			end
 			world:destroyBody(self.ball.body)
 			self.ball.body = nil
 			world:destroyBody(self.humanPlayer.paddle.body)
 			world:destroyBody(self.aiPlayer.paddle.body)
 			world:destroyBody(self.bounds)
+			
+			local quicktourFile = io.open("|D|quicktour.txt", "w+")
+			for k, v in pairs(self.savedData) do 
+				quicktourFile:write(k.."="..v.."\n")
+			end	
+			
 			self = nil
 			arena = nil
 			
 			if optionsTable["SFX"] == "On" then sounds.sel3:play() end
-			
+					
 			sceneMan:changeScene("mainMenu", transTime, SceneManager.fade, easing.linear)
 		end
 	end)
@@ -414,12 +491,11 @@ function ArenaArena:gameOver()
 	Timer.delayedCall(transTime/2, function ()
 		stage:addChild(gameOverTextBox)	
 		stage:addChild(exitBut)
-		stage:addChild(againBut)
 	end)
 end
 
 -- Function to handle goals
-function ArenaArena:checkGoal()
+function ArenaTour:checkGoal()
 	local ballX, ballY = self.ball.body:getPosition()
 	
 	local function updateOrReset()
@@ -470,7 +546,7 @@ function ArenaArena:checkGoal()
 end
 
 -- Calls AI movement routines --
-function ArenaArena:moveAI()
+function ArenaTour:moveAI()
 	self.aiPlayer:aiMove()
 	
 	-- Call specific class AI --
@@ -478,7 +554,7 @@ function ArenaArena:moveAI()
 end
 
 -- Initialization --
-function ArenaArena:init(dataTable)
+function ArenaTour:init(dataTable)
 	textures = nil
 	textures = TextureLoaderArenaMode.new()
 	sounds = nil
@@ -502,18 +578,21 @@ function ArenaArena:init(dataTable)
 	local difficulty = dataTable[1]
 	local class = dataTable[2]
 	local class2 = dataTable[3]
+	self.stage = dataTable[4]
 	arena = self
 	self.font = fonts.anitaBig
 	
-	-- Stop Current song and load another (bosses included) --
+	-- Stop Current song and load another (bosses if stage == 10) --
 	if optionsTable["Music"] == "On" then
 		local function nextSong()
-			local randNum = math.random(1, 11)
-			self.songload = nil
-			if randNum < 8 then
+			if self.stage < 10 then
+				local randNum = math.random(1, 7)
+				self.songload = nil
 				self.songload = Sound.new(musics.fight[randNum])
 			else
-				self.songload = Sound.new(musics.boss[randNum - 7])
+				local randNum = math.random(1, 4)
+				self.songload = nil
+				self.songload = Sound.new(musics.boss[randNum])
 			end
 			currSong = nil
 			currSong = self.songload:play()
@@ -534,21 +613,45 @@ function ArenaArena:init(dataTable)
 	end
 	
 	-- Sets classes --
-	if(class == "Random") then
-		self.leftClass = classNames[math.random(1, tablelength(classNames))]
-	else
-		self.leftClass = class
-	end
-	if(class2 == "Random") then
-		self.rightClass = classNames[math.random(1, tablelength(classNames))]
-	else
-		self.rightClass = class2
-	end
 	if optionsTable["ArenaSide"] == "Left" then
+		if(class == "Random") then
+			self.leftClass = classNames[math.random(1, tablelength(classNames))]
+		else
+			self.leftClass = class
+		end
+		if(class2 == "Random") then
+			self.rightClass = classNames[math.random(1, tablelength(classNames))]
+		else
+			self.rightClass = class2
+		end
 		self.AI = ArenaAI.new(self.rightClass)
 	else
+		if(class == "Random") then
+			self.rightClass = classNames[math.random(1, tablelength(classNames))]
+		else
+			self.rightClass = class
+		end
+		if(class2 == "Random") then
+			self.leftClass = classNames[math.random(1, tablelength(classNames))]
+		else
+			self.leftClass = class2
+		end
 		self.AI = ArenaAI.new(self.leftClass)
 	end
+	
+	self.savedData["QuickTourDif"] = difficulty
+	self.savedData["QuickTourClass"] = class
+	self.savedData["QuickTourStage"] = self.stage
+	if optionsTable["ArenaSide"] == "Left" then
+		self.savedData["QuickTourOpponent"] = self.rightClass
+	else
+		self.savedData["QuickTourOpponent"] = self.leftClass
+	end
+	
+	local quicktourFile = io.open("|D|quicktour.txt", "w+")
+	for k, v in pairs(self.savedData) do 
+		quicktourFile:write(k.."="..v.."\n")
+	end	
 	
 	local font = fonts.anitaSmall
 	local classText = TextField.new(font, self.leftClass)

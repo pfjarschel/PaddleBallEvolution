@@ -27,14 +27,14 @@ function ArenaAI:basicCall()
 		if self.class == "Ninja" then
 			self:Ninja()
 		end
-		if self.class == "Swamp Monster" then
+		if self.class == "SwampMonster" then
 			self:SwampMonster()
 		end
 		if self.class == "Archer" then
 			self:Archer()
 		end
-		if self.class == "Mimic" then
-			self:Mimic()
+		if self.class == "Mesmer" then
+			self:Mesmer()
 		end
 		if self.class == "Barbarian" then
 			self:Barbarian()
@@ -45,7 +45,7 @@ function ArenaAI:basicCall()
 		if self.class == "Illusionist" then
 			self:Illusionist()
 		end
-		if self.class == "Ice Man" then
+		if self.class == "IceMan" then
 			self:IceMan()
 		end
 	end
@@ -155,9 +155,9 @@ end
 
 
 -----------
--- Mimic --
+-- Mesmer --
 -----------
-function ArenaAI:Mimic()
+function ArenaAI:Mesmer()
 	-- Activate only when ball is returned, before crossing, or if he is about to take a goal --
 	local ballVx = arena.ball.body:getLinearVelocity()
 	local ballX, ballY = arena.ball.body:getPosition()

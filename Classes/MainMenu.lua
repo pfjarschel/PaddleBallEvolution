@@ -48,7 +48,7 @@ function MainMenu:init()
 	
 	self.careerBut = MenuBut.new(150, 40, textures.careermodeBut, textures.careermodeBut1)
 	self:addChild(self.careerBut)
-	self.careerBut.bitmap:setPosition(WX/2, WY/2)
+	self.careerBut.bitmap:setPosition(WX/2, WY/2 -0.4*self.careerBut.height)
 	self.careerBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.careerBut:hitTestPoint(event.touch.x, event.touch.y) then
 			if optionsTable["SFX"] == "On" then sounds.sel2:play() end
@@ -56,15 +56,19 @@ function MainMenu:init()
 		end
 	end)
 	
-	-- Career Mode to Come Text --
-	local careerTextBox = TextField.new(self.font, "Career mode to come! (Paid)")
-	careerTextBox:setTextColor(0xffffff)
-	careerTextBox:setPosition(0.5*WX + careerTextBox:getWidth()/2 - 32, 0.5*WY + 6)
-	--self:addChild(careerTextBox)
+	self.quicktourBut = MenuBut.new(150, 40, textures.quicktourBut, textures.quicktourBut1)
+	self:addChild(self.quicktourBut)
+	self.quicktourBut.bitmap:setPosition(WX/2, WY/2 +0.8*self.quicktourBut.height)
+	self.quicktourBut:addEventListener(Event.TOUCHES_END, function(event)
+		if self.quicktourBut:hitTestPoint(event.touch.x, event.touch.y) then
+			if optionsTable["SFX"] == "On" then sounds.sel2:play() end
+			sceneMan:changeScene("mainMenu_QuickTour", transTime, SceneManager.fade, easing.linear)
+		end
+	end)
 	
 	self.arenaBut = MenuBut.new(150, 40, textures.arenaBut, textures.arenaBut1)
 	self:addChild(self.arenaBut)
-	self.arenaBut.bitmap:setPosition(WX/2, WY/2 + 1.2*self.arenaBut.height)
+	self.arenaBut.bitmap:setPosition(WX/2, WY/2 + 2*self.arenaBut.height)
 	self.arenaBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.arenaBut:hitTestPoint(event.touch.x, event.touch.y) then
 			if optionsTable["SFX"] == "On" then sounds.sel2:play() end
@@ -75,7 +79,7 @@ function MainMenu:init()
 	
 	self.survivalBut = MenuBut.new(150, 40, textures.survivalmodeBut, textures.survivalmodeBut1)
 	self:addChild(self.survivalBut)
-	self.survivalBut.bitmap:setPosition(WX/2, WY/2 + 2.4*self.survivalBut.height)
+	self.survivalBut.bitmap:setPosition(WX/2, WY/2 + 3.2*self.survivalBut.height)
 	self.survivalBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.survivalBut:hitTestPoint(event.touch.x, event.touch.y) then
 			if optionsTable["SFX"] == "On" then sounds.sel2:play() end
@@ -86,7 +90,7 @@ function MainMenu:init()
 	
 	self.classicBut = MenuBut.new(150, 40, textures.classicmodeBut, textures.classicmodeBut1)
 	self:addChild(self.classicBut)
-	self.classicBut.bitmap:setPosition(WX/2, WY/2 + 3.6*self.classicBut.height)
+	self.classicBut.bitmap:setPosition(WX/2, WY/2 + 4.4*self.classicBut.height)
 	self.classicBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.classicBut:hitTestPoint(event.touch.x, event.touch.y) then
 			if optionsTable["SFX"] == "On" then sounds.sel2:play() end

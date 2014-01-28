@@ -26,6 +26,9 @@ function TextureLoaderArenaMode:init()
 	self.exitBut = Texture.new("imgs/buttons/exitBut.png", true)
 	self.exitBut1 = Texture.new("imgs/buttons/exitBut1.png", true)
 	
+	self.nextBut = Texture.new("imgs/buttons/nextBut.png", true)
+	self.nextBut1 = Texture.new("imgs/buttons/nextBut1.png", true)
+	
 	self.pausebg = Texture.new("imgs/backs/pausebg.png", true)
 	
 	self.paddle2 = Texture.new("imgs/paddle2.png", true)
