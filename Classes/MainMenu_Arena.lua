@@ -135,7 +135,7 @@ function MainMenu_Arena:init()
 					"Lif: "..classLif[1].."\n"..
 					"Skl: "..classSkl[1].."\n"..
 					"Def: "..classDef[1].."\n"
-	local statsTextBox = TextWrap.new(stats, 64, "center", 7, self.smallfont)
+	local statsTextBox = TextWrap.new(stats, 80, "center", 7, self.smallfont)
 	statsTextBox:setTextColor(0xffffff)
 	statsTextBox:setPosition(192 - statsTextBox:getWidth()/2, 0.5*WY + 95)
 	self:addChild(statsTextBox)
@@ -166,7 +166,7 @@ function MainMenu_Arena:init()
 					"Lif: "..classLif[classIndex].."\n"..
 					"Skl: "..classSkl[classIndex].."\n"..
 					"Def: "..classDef[classIndex].."\n"
-			statsTextBox = TextWrap.new(stats, 64, "center", 7, self.smallfont)
+			statsTextBox = TextWrap.new(stats, 80, "center", 7, self.smallfont)
 			statsTextBox:setTextColor(0xffffff)
 			statsTextBox:setPosition(192 - statsTextBox:getWidth()/2, 0.5*WY + 95)
 			self:addChild(statsTextBox)
@@ -201,7 +201,7 @@ function MainMenu_Arena:init()
 					"Lif: "..classLif[classIndex].."\n"..
 					"Skl: "..classSkl[classIndex].."\n"..
 					"Def: "..classDef[classIndex].."\n"
-			statsTextBox = TextWrap.new(stats, 64, "center", 7, self.smallfont)
+			statsTextBox = TextWrap.new(stats, 80, "center", 7, self.smallfont)
 			statsTextBox:setTextColor(0xffffff)
 			statsTextBox:setPosition(192 - statsTextBox:getWidth()/2, 0.5*WY + 95)
 			self:addChild(statsTextBox)
@@ -239,7 +239,7 @@ function MainMenu_Arena:init()
 			"Lif: "..classLif[1].."\n"..
 			"Skl: "..classSkl[1].."\n"..
 			"Def: "..classDef[1].."\n"
-	local statsTextBoxAI = TextWrap.new(statsAI, 64, "center", 7, self.smallfont)
+	local statsTextBoxAI = TextWrap.new(statsAI, 80, "center", 7, self.smallfont)
 	statsTextBoxAI:setTextColor(0xffffff)
 	statsTextBoxAI:setPosition(WX - 192 - statsTextBoxAI:getWidth()/2, 0.5*WY + 95)
 	self:addChild(statsTextBoxAI)
@@ -270,7 +270,7 @@ function MainMenu_Arena:init()
 						"Lif: "..classLif[classIndexAI].."\n"..
 						"Skl: "..classSkl[classIndexAI].."\n"..
 						"Def: "..classDef[classIndexAI].."\n"
-			statsTextBoxAI = TextWrap.new(statsAI, 64, "center", 7, self.smallfont)
+			statsTextBoxAI = TextWrap.new(statsAI, 80, "center", 7, self.smallfont)
 			statsTextBoxAI:setTextColor(0xffffff)
 			statsTextBoxAI:setPosition(WX - 192 - statsTextBoxAI:getWidth()/2, 0.5*WY + 95)
 			self:addChild(statsTextBoxAI)
@@ -305,7 +305,7 @@ function MainMenu_Arena:init()
 						"Lif: "..classLif[classIndexAI].."\n"..
 						"Skl: "..classSkl[classIndexAI].."\n"..
 						"Def: "..classDef[classIndexAI].."\n"
-			statsTextBoxAI = TextWrap.new(statsAI, 64, "center", 7, self.smallfont)
+			statsTextBoxAI = TextWrap.new(statsAI, 80, "center", 7, self.smallfont)
 			statsTextBoxAI:setTextColor(0xffffff)
 			statsTextBoxAI:setPosition(WX - 192 - statsTextBoxAI:getWidth()/2, 0.5*WY + 95)
 			self:addChild(statsTextBoxAI)

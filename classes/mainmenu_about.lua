@@ -5,9 +5,19 @@
 MainMenu_About = Core.class(Sprite)
 MainMenu.songload = nil
 
+-- Handles Keys --
+local function onKeyDown(event)
+	if event.keyCode == 301 then
+		if optionsTable["SFX"] == "On" then sounds.sel3:play() end
+		
+		sceneMan:changeScene("mainMenu", transTime, SceneManager.fade, easing.linear) 
+	end
+end
+
+
 -- Initialization --
 function MainMenu_About:init()	
-	self.font = fonts.anitaSmaller
+	self.font = fonts.anitaVerySmall
 	self.biggerfont = fonts.anitaMed
 	
 	if optionsTable["Music"] == "On" then
@@ -34,9 +44,9 @@ function MainMenu_About:init()
 	abouttitle:setPosition(WX/4, WY/2 - 24)
 	self:addChild(abouttitle)
 	
-	local aboutstring = "Made using the great Gideros Studio: www.giderosmobile.com\n"..
+	local aboutstring = "Made using the great Gideros Studio: www.giderosmobile.com\n \n"..
 					"Graphics, some SFX and Programming: Paulo F. Jarschel\n"..
-					"Music and SFX: http://freesfx.co.uk/ (Thank you so much!)\n"..
+					"Music and SFX: http://freesfx.co.uk/ (Thank you so much!)\n \n"..
 					"Special thanks to awesome open-source software: Inkscape, Gimp and Audacity!\n"
 	
 	local abouttext = TextWrap.new(aboutstring, WX/1.1, "justify", 15, self.font)
@@ -62,4 +72,7 @@ function MainMenu_About:init()
 			sceneMan:changeScene("mainMenu", transTime, SceneManager.fade, easing.linear) 
 		end
 	end)
+	
+	-- Listen to Keys --
+	self:addEventListener(Event.KEY_DOWN, onKeyDown)
 end

@@ -4,6 +4,16 @@
 
 MainMenu_Career = Core.class(Sprite)
 
+-- Handles Keys --
+local function onKeyDown(event)
+	if event.keyCode == 301 then
+		if optionsTable["SFX"] == "On" then sounds.sel3:play() end
+		
+		sceneMan:changeScene("mainMenu", transTime, SceneManager.fade, easing.linear) 
+	end
+end
+
+
 -- Initialization --
 function MainMenu_Career:init()	
 	self.font = fonts.anitaVerySmall
@@ -24,12 +34,12 @@ function MainMenu_Career:init()
 	
 	local careerstring = "Don't Worry, Career Mode will be available in the coming months!\n \n"..
 					"In this mode, you will start with a basic character, and progress through various tournaments in different locations, while "..
-					"improving your stats by leveling up and acquiring special skills from defeated enemies.\n \n"..
+					"improving your stats by leveling up and acquiring special skills from defeated enemies.\n"..
 					"It will be available in the paid version only, which has not yet been released. When it does, you will receive the information in the update to follow.\n"
 	
 	local careertext = TextWrap.new(careerstring, WX/1.1, "justify", 10, self.font)
 	careertext:setTextColor(0xffffff)
-	careertext:setPosition(WX/2 - careertext:getWidth()/2, WY/2 + 1.5*careertitle:getHeight() - 16)
+	careertext:setPosition(WX/2 - careertext:getWidth()/2, WY/2 + 1.5*careertitle:getHeight() - 24)
 	self:addChild(careertext)
 	
 	self.returnBut = MenuBut.new(150, 40, textures.returnBut, textures.returnBut1)
@@ -42,4 +52,7 @@ function MainMenu_Career:init()
 			sceneMan:changeScene("mainMenu", transTime, SceneManager.fade, easing.linear) 
 		end
 	end)
+	
+	-- Listen to Keys --
+	self:addEventListener(Event.KEY_DOWN, onKeyDown)
 end

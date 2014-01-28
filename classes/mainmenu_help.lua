@@ -6,6 +6,16 @@ MainMenu_Help = Core.class(Sprite)
 MainMenu_Help.page = 1;
 local pages = 5
 
+-- Handles Keys --
+local function onKeyDown(event)
+	if event.keyCode == 301 then
+		if optionsTable["SFX"] == "On" then sounds.sel3:play() end
+		
+		sceneMan:changeScene("mainMenu", transTime, SceneManager.fade, easing.linear) 
+	end
+end
+
+
 -- Initialization --
 function MainMenu_Help:init()	
 	self.font = fonts.anitaSmall
@@ -143,4 +153,7 @@ function MainMenu_Help:init()
 			sceneMan:changeScene("mainMenu", transTime, SceneManager.fade, easing.linear) 
 		end
 	end)
+	
+	-- Listen to Keys --
+	self:addEventListener(Event.KEY_DOWN, onKeyDown)
 end

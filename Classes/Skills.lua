@@ -178,7 +178,8 @@ function Skills:start(side)
 		local textureW = puff:getWidth()
 		local textureH = puff:getHeight()
 		puff:setPosition(ballX, ballY)
-		puff:setAlpha(0.5)
+		puff:setAlpha(0.4)
+		puff:setRotation(math.random(1,360))
 		
 		scaleBitmap(puff, 100, 60/textureW, 0)		
 		Timer.delayedCall(200, function()
@@ -202,7 +203,8 @@ function Skills:start(side)
 			local textureW2 = puff2:getWidth()
 			local textureH2 = puff2:getHeight()
 			puff2:setPosition(ballX, ballY)
-			puff2:setAlpha(0.5)
+			puff2:setAlpha(0.4)
+			puff2:setRotation(math.random(1,360))
 			scaleBitmap(puff2, 100, 60/textureW2, 0)
 			Timer.delayedCall(200, function()
 				fadeBitmapOut(puff2, 1000, arena)
@@ -663,7 +665,7 @@ function Skills:start(side)
 		beam:setPosition(paddleW/2 + 0.9*beam:getWidth()/2, 0)
 		beam:setRotation(0)
 		
-		fadeBitmapIn(beam, 250, 0.5)
+		fadeBitmapIn(beam, 250, 0.3)
 		Timer.delayedCall(1000, function()
 			if side == 0 then
 				fadeBitmapOut(beam, 250, arena.leftPlayer.paddle)
@@ -849,7 +851,7 @@ function Skills:start(side)
 		local textureH = ice:getHeight()
 		ice:setScale((paddleW*2)/textureW, (paddleH*1.3333333333333)/textureH)
 		ice:setPosition(paddleX, paddleY)
-		fadeBitmapIn(ice, 500, 1)
+		fadeBitmapIn(ice, 500, 0.75)
 		
 		-- Action to end skill --
 		self.endAction = function()
@@ -871,7 +873,7 @@ function Skills:start(side)
 		end
 		
 		-- Sets timer to end skill --
-		Timer.delayedCall(self.basetime/5,  function()
+		Timer.delayedCall(self.basetime/2,  function()
 			self:endAction() 
 			if optionsTable["SFX"] == "On" then sounds.ice_break:play() end
 		end)

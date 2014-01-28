@@ -37,7 +37,7 @@ classTable["Ninja"] = {
 	8,
 	"invisiball",
 	"Invisiball",
-	"Ball turns invisible, simple like that",
+	"Ball turns invisible",
 	{0.05, 0.2, 0.5}
 }
 classTable["Swamp Monster"] = {
