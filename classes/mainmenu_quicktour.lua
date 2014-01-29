@@ -32,24 +32,19 @@ function MainMenu_QuickTour:init()
 	local quicktourFile = io.open("|D|quicktour.txt", "r")
 	if not quicktourFile then
 		local createFile = io.open("|D|quicktour.txt", "w+")
-		createFile:write("QuickTourStage=0\n")
-		createFile:write("QuickTourDif=5\n")
-		createFile:write("QuickTourClass=Warrior\n")
-		createFile:write("QuickTourOpponent=Warrior\n")
-		createFile:write("QuickTourAtk=0\n")
-		createFile:write("QuickTourMov=0\n")
-		createFile:write("QuickTourLif=0\n")
-		createFile:write("QuickTourSkl=0\n")
-		createFile:write("QuickTourDef=0\n")
-		createFile:write("QuickTourPoints=0\n")
-	end
-	local lines = lines_from("|D|quicktour.txt")
-	for i = 1, table.getn(lines), 1 do
-		for k1, v1 in string.gmatch(lines[i], "(%w+)=(%w+)") do
-			tourTable[k1] = v1
+		for k, v in pairs(tourTable) do 
+			createFile:write(k.."="..v.."\n")
+		end
+		createFile:close()
+	else
+		local lines = lines_from("|D|quicktour.txt")
+		for i = 1, table.getn(lines), 1 do
+			for k1, v1 in string.gmatch(lines[i], "(%w+)=(%w+)") do
+				tourTable[k1] = v1
+			end
 		end
 	end
-	
+
 	-- New, Load, or return --
 	self.newBut = MenuBut.new(150, 40, textures.newBut, textures.newBut1)
 	self:addChild(self.newBut)

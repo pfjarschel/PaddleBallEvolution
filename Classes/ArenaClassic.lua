@@ -244,6 +244,13 @@ function ArenaClassic:gameOver()
 	self:removeEventListener(Event.ENTER_FRAME, onEnterFrame)
 	fadeOut(self)
 	
+	local bg = Bitmap.new(textures.black)
+	bg:setScale(1, 1)
+	stage:addChild(bg)
+	local textureW = bg:getWidth()
+	local textureH = bg:getHeight()
+	bg:setScale(WX0/textureW, WY/textureH)
+	
 	local gameOverString = nil
 	local backdrawing = nil
 	if (self.score0 > self.score1 and optionsTable["ArenaSide"] == "Left") or (self.score0 < self.score1 and optionsTable["ArenaSide"] == "Right") then
@@ -302,6 +309,7 @@ function ArenaClassic:gameOver()
 			stage:removeChild(exitBut)
 			stage:removeChild(againBut)
 			stage:removeChild(backdrawing)
+			stage:removeChild(bg)
 			world:destroyBody(self.ball.body)
 			self.ball.body = nil
 			world:destroyBody(self.humanPlayer.paddle.body)
@@ -324,6 +332,7 @@ function ArenaClassic:gameOver()
 			stage:removeChild(exitBut)
 			stage:removeChild(againBut)
 			stage:removeChild(backdrawing)
+			stage:removeChild(bg)
 			world:destroyBody(self.ball.body)
 			self.ball.body = nil
 			world:destroyBody(self.humanPlayer.paddle.body)
@@ -339,10 +348,11 @@ function ArenaClassic:gameOver()
 	end)
 	
 	Timer.delayedCall(transTime/2, function ()
+		stage:addChild(bg)
+		stage:addChild(backdrawing)
 		stage:addChild(gameOverTextBox)	
 		stage:addChild(exitBut)
 		stage:addChild(againBut)
-		stage:addChild(backdrawing)
 	end)
 end
 

@@ -41,9 +41,9 @@ function TextureLoaderArenaMode:init()
 	
 	self.pongbg = Texture.new("imgs/backs/pongbg.png", true)
 	
-	--self.black = Texture.new("imgs/backs/black.png", true)
+	self.black = Texture.new("imgs/backs/black.png", true)
 	
-	self.bluesmoke = Texture.new("imgs/backs/bluesmoke.jpg", true)
+	self.bluesmoke = Texture.new("imgs/backs/bluesmoke.png", true)
 	
 	self.pongball = Texture.new("imgs/pongball.png", true)
 	

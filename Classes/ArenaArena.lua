@@ -325,6 +325,14 @@ function ArenaArena:gameOver()
 	
 	local backdrawing = nil
 	local gameOverString = nil
+	
+	local bg = Bitmap.new(textures.black)
+	bg:setScale(1, 1)
+	stage:addChild(bg)
+	local textureW = bg:getWidth()
+	local textureH = bg:getHeight()
+	bg:setScale(WX0/textureW, WY/textureH)
+	
 	if (self.score0 > self.score1 and optionsTable["ArenaSide"] == "Left") or (self.score0 < self.score1 and optionsTable["ArenaSide"] == "Right") then
 		gameOverString = "Congratulations, you won!"
 		
@@ -390,6 +398,7 @@ function ArenaArena:gameOver()
 			stage:removeChild(exitBut)
 			stage:removeChild(againBut)
 			stage:removeChild(backdrawing)
+			stage:removeChild(bg)
 			world:destroyBody(self.ball.body)
 			self.ball.body = nil
 			world:destroyBody(self.humanPlayer.paddle.body)
@@ -422,6 +431,7 @@ function ArenaArena:gameOver()
 			stage:removeChild(exitBut)
 			stage:removeChild(againBut)
 			stage:removeChild(backdrawing)
+			stage:removeChild(bg)
 			world:destroyBody(self.ball.body)
 			self.ball.body = nil
 			world:destroyBody(self.humanPlayer.paddle.body)
@@ -437,6 +447,8 @@ function ArenaArena:gameOver()
 	end)
 	
 	Timer.delayedCall(transTime/2, function ()
+		stage:addChild(bg)
+		stage:addChild(backdrawing)
 		stage:addChild(gameOverTextBox)	
 		stage:addChild(exitBut)
 		stage:addChild(againBut)

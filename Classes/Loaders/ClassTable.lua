@@ -64,7 +64,7 @@ classTable["Archer"] = {
 	"Ball moves in a straight line to the goal",
 	{0.2, 0.6, 0.2}
 }
-classTable["Mesmer"] = {
+classTable["Illusionist"] = {
 	12,
 	12,
 	10,
@@ -101,7 +101,7 @@ classTable["Thief"] = {
 	{0.4, 0.4, 0.4}
 }
 
-classTable["Illusionist"] = {
+classTable["Mesmer"] = {
 	8,
 	14,
 	12,

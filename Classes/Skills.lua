@@ -799,7 +799,7 @@ function Skills:start(side)
 		end
 		
 		-- Sets timer to end skill --
-		Timer.delayedCall(self.basetime/3,  function()
+		Timer.delayedCall(self.basetime/2,  function()
 			self:endAction() 
 		end)
 		

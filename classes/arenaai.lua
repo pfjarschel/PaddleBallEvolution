@@ -71,7 +71,7 @@ function ArenaAI:Warrior()
 	-- Activate only when ball is moving torwards him --
 	local ballVx = arena.ball.body:getLinearVelocity()
 	if self.side*ballVx > 0 then
-		local num = math.random(1, self.chance)
+		local num = math.random(1, self.chance/2)
 		if num == 1 then
 			self:initSkill()
 		end
@@ -125,9 +125,9 @@ function ArenaAI:SwampMonster()
 	if self.side*ballVx > 0 and self.side*(ballX - WX/2 - XShift) > 0 and ballV0 > arena.ball.baseSpeed/9 then
 		local num = 0
 		if math.abs(ballY - paddleY) > WY/2 then
-			num = math.random(1, self.chance/5)
+			num = math.random(1, self.chance/3)
 		else
-			num = math.random(1, self.chance/2)
+			num = math.random(1, self.chance)
 		end
 		if num == 1 then
 			self:initSkill()
@@ -154,10 +154,10 @@ function ArenaAI:Archer()
 end
 
 
------------
--- Mesmer --
------------
-function ArenaAI:Mesmer()
+-----------------
+-- Illusionist --
+-----------------
+function ArenaAI:Illusionist()
 	-- Activate only when ball is returned, before crossing, or if he is about to take a goal --
 	local ballVx = arena.ball.body:getLinearVelocity()
 	local ballX, ballY = arena.ball.body:getPosition()
@@ -198,10 +198,10 @@ function ArenaAI:Thief()
 end
 
 
------------------
--- Illusionist --
------------------
-function ArenaAI:Illusionist()
+------------
+-- Mesmer --
+------------
+function ArenaAI:Mesmer()
 	-- Activate only when ball is moving away from him --
 	local ballVx, ballVy = arena.ball.body:getLinearVelocity()
 	--local ballX = arena.ball.body:getPosition()

@@ -325,6 +325,13 @@ function ArenaTour:gameOver()
 	self:removeEventListener(Event.ENTER_FRAME, onEnterFrame)
 	fadeOut(self)
 	
+	local bg = Bitmap.new(textures.black)
+	bg:setScale(1, 1)
+	stage:addChild(bg)
+	local textureW = bg:getWidth()
+	local textureH = bg:getHeight()
+	bg:setScale(WX0/textureW, WY/textureH)
+	
 	local gameOverString = nil
 	local gameOverTextBox = nil
 	local backdrawing = nil
@@ -338,7 +345,6 @@ function ArenaTour:gameOver()
 			
 			backdrawing = Bitmap.new(textures.medal)
 			backdrawing:setScale(1, 1)
-
 			local textureW = backdrawing:getWidth()
 			local textureH = backdrawing:getHeight()
 			backdrawing:setAnchorPoint(0.5, 0.5)
@@ -371,6 +377,7 @@ function ArenaTour:gameOver()
 					stage:removeChild(exitBut)
 					stage:removeChild(nextBut)
 					stage:removeChild(backdrawing)
+					stage:removeChild(bg)
 					world:destroyBody(self.ball.body)
 					self.ball.body = nil
 					world:destroyBody(self.humanPlayer.paddle.body)
@@ -395,6 +402,7 @@ function ArenaTour:gameOver()
 			end)
 			
 			Timer.delayedCall(transTime/2, function ()
+				stage:addChild(bg)
 				stage:addChild(backdrawing)
 				stage:addChild(nextBut)
 			end)
@@ -431,6 +439,7 @@ function ArenaTour:gameOver()
 			end	
 			
 			Timer.delayedCall(transTime/2, function ()
+				stage:addChild(bg)
 				stage:addChild(backdrawing)
 			end)
 		end
@@ -471,6 +480,7 @@ function ArenaTour:gameOver()
 				stage:removeChild(exitBut)
 				stage:removeChild(againBut)
 				stage:removeChild(backdrawing)
+				stage:removeChild(bg)
 				world:destroyBody(self.ball.body)
 				self.ball.body = nil
 				world:destroyBody(self.humanPlayer.paddle.body)
@@ -490,6 +500,7 @@ function ArenaTour:gameOver()
 		end)
 			
 		Timer.delayedCall(transTime/2, function ()
+			stage:addChild(bg)
 			stage:addChild(backdrawing)
 			stage:addChild(againBut)
 		end)
@@ -521,6 +532,7 @@ function ArenaTour:gameOver()
 					stage:removeChild(nextBut)
 				end
 			end
+			stage:removeChild(bg)
 			stage:removeChild(backdrawing)
 			world:destroyBody(self.ball.body)
 			self.ball.body = nil
@@ -531,7 +543,8 @@ function ArenaTour:gameOver()
 			local quicktourFile = io.open("|D|quicktour.txt", "w+")
 			for k, v in pairs(tourTable) do 
 				quicktourFile:write(k.."="..v.."\n")
-			end	
+			end
+			quicktourFile:close()
 			
 			self = nil
 			arena = nil
@@ -666,7 +679,7 @@ function ArenaTour:init(dataTable)
 		i = i + 1
 	end
 	
-	-- Sets classes --
+	-- Sets classes, different from previous --
 	if optionsTable["ArenaSide"] == "Left" then
 		if(class == "Random") then
 			self.leftClass = classNames[math.random(1, tablelength(classNames))]
@@ -674,7 +687,16 @@ function ArenaTour:init(dataTable)
 			self.leftClass = class
 		end
 		if(class2 == "Random") then
-			self.rightClass = classNames[math.random(1, tablelength(classNames))]
+			local classok = false
+			while not(classok) do
+				classok = true
+				self.rightClass = classNames[math.random(1, tablelength(classNames))]
+				for i = 1, self.stage - 1, 1 do
+					if self.rightClass == tourTable["QuickTourStage"..tostring(i)] then
+						classok = false
+					end
+				end
+			end
 		else
 			self.rightClass = class2
 		end
@@ -686,7 +708,16 @@ function ArenaTour:init(dataTable)
 			self.rightClass = class
 		end
 		if(class2 == "Random") then
-			self.leftClass = classNames[math.random(1, tablelength(classNames))]
+			local classok = false
+			while not(classok) do
+				classok = true
+				self.leftClass = classNames[math.random(1, tablelength(classNames))]
+				for i = 1, self.stage - 1, 1 do
+					if self.leftClass == tourTable["QuickTourStage"..tostring(i)] then
+						classok = false
+					end
+				end
+			end
 		else
 			self.leftClass = class2
 		end
@@ -694,12 +725,15 @@ function ArenaTour:init(dataTable)
 	end
 	
 	tourTable["QuickTourDif"] = difficulty
-	tourTable["QuickTourClass"] = class
 	tourTable["QuickTourStage"] = self.stage
 	if optionsTable["ArenaSide"] == "Left" then
+		tourTable["QuickTourClass"] = self.leftClass
 		tourTable["QuickTourOpponent"] = self.rightClass
+		tourTable["QuickTourStage"..tostring(self.stage)] = self.rightClass
 	else
+		tourTable["QuickTourClass"] = self.rightClass
 		tourTable["QuickTourOpponent"] = self.leftClass
+		tourTable["QuickTourStage"..tostring(self.stage)] = self.leftClass
 	end
 	if self.stage == 1 then
 		tourTable["QuickTourAtk"] = 0
@@ -709,11 +743,12 @@ function ArenaTour:init(dataTable)
 		tourTable["QuickTourDef"] = 0
 		tourTable["QuickTourPoints"] = 0
 	end
-	
+
 	local quicktourFile = io.open("|D|quicktour.txt", "w+")
 	for k, v in pairs(tourTable) do 
 		quicktourFile:write(k.."="..v.."\n")
 	end	
+	quicktourFile:close()
 	
 	local font = fonts.anitaSmall
 	local font2 = fonts.anitaSmaller

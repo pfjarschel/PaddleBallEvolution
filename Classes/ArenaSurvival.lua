@@ -243,6 +243,13 @@ function ArenaSurvival:gameOver()
 	self:removeEventListener(Event.ENTER_FRAME, onEnterFrame)
 	fadeOut(self)
 	
+	local bg = Bitmap.new(textures.black)
+	bg:setScale(1, 1)
+	stage:addChild(bg)
+	local textureW = bg:getWidth()
+	local textureH = bg:getHeight()
+	bg:setScale(WX0/textureW, WY/textureH)
+	
 	local gameOverString = nil
 	local humanScore = 0
 	if optionsTable["ArenaSide"] == "Left" then
@@ -285,6 +292,7 @@ function ArenaSurvival:gameOver()
 			stage:removeChild(exitBut)
 			stage:removeChild(againBut)
 			stage:removeChild(backdrawing)
+			stage:removeChild(bg)
 			world:destroyBody(self.ball.body)
 			self.ball.body = nil
 			world:destroyBody(self.humanPlayer.paddle.body)
@@ -306,6 +314,7 @@ function ArenaSurvival:gameOver()
 			stage:removeChild(exitBut)
 			stage:removeChild(againBut)
 			stage:removeChild(backdrawing)
+			stage:removeChild(bg)
 			world:destroyBody(self.ball.body)
 			self.ball.body = nil
 			world:destroyBody(self.humanPlayer.paddle.body)
@@ -321,6 +330,7 @@ function ArenaSurvival:gameOver()
 	end)
 	
 	Timer.delayedCall(transTime/2, function ()
+		stage:addChild(bg)
 		stage:addChild(backdrawing)
 		stage:addChild(gameOverTextBox)	
 		stage:addChild(exitBut)

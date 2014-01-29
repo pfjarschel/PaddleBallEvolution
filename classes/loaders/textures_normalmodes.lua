@@ -34,6 +34,8 @@ function TextureLoaderNormalModes:init()
 	self.medal = Texture.new("imgs/misc/medal.png", true)
 	
 	self.blackmedal = Texture.new("imgs/misc/blackmedal.png", true)
+	
+	self.black = Texture.new("imgs/backs/black.png", true)
 
 end
 

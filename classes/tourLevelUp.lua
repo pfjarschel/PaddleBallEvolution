@@ -37,8 +37,27 @@ function TourLevelUp:init()
 	local textureW = menubg:getWidth()
 	local textureH = menubg:getHeight()
 	menubg:setScale(WX/textureW, WY/textureH)
-	menubg:setAlpha(0.25)
+	--menubg:setAlpha(0.25)
 	self:addChild(menubg)
+	
+	local classNames = {}
+	local i = 1
+	for k, v in pairs(classTable) do
+		classNames[i] = k
+		i = i + 1
+	end
+	local classok = false
+	local nextclass = nil
+	while not(classok) do
+		classok = true
+		nextclass = classNames[math.random(1, tablelength(classNames))]
+		for i = 1, tourTable["QuickTourStage"] - 1, 1 do
+			if nextclass == tourTable["QuickTourStage"..tostring(i)] then
+				classok = false
+			end
+		end
+	end
+	tourTable["QuickTourOpponent"] = nextclass
 
 	-- Attributes Improvement --
 	local points = tourTable["QuickTourPoints"]
@@ -620,8 +639,9 @@ function TourLevelUp:init()
 			for k, v in pairs(tourTable) do 
 				tourFile:write(k.."="..v.."\n")
 			end	
+			tourFile:close()
 			
-			sceneMan:changeScene("arenaTour", transTime, SceneManager.fade, easing.linear, { userData = {tourTable["QuickTourDif"], tourTable["QuickTourClass"], "Random", tourTable["QuickTourStage"]} })
+			sceneMan:changeScene("arenaTour", transTime, SceneManager.fade, easing.linear, { userData = {tourTable["QuickTourDif"], tourTable["QuickTourClass"], tourTable["QuickTourOpponent"], tourTable["QuickTourStage"]} })
 		end
 	end)
 	
@@ -642,6 +662,7 @@ function TourLevelUp:init()
 			for k, v in pairs(tourTable) do 
 				tourFile:write(k.."="..v.."\n")
 			end	
+			tourFile:close()
 			
 			sceneMan:changeScene("mainMenu", transTime, SceneManager.fade, easing.linear) 
 		end
