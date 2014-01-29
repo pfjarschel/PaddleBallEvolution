@@ -30,6 +30,10 @@ function TextureLoaderNormalModes:init()
 	self.pongbg = Texture.new("imgs/backs/pongbg.png", true)
 	
 	self.pongball = Texture.new("imgs/pongball.png", true)
+	
+	self.medal = Texture.new("imgs/misc/medal.png", true)
+	
+	self.blackmedal = Texture.new("imgs/misc/blackmedal.png", true)
 
 end
 

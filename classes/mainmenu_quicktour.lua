@@ -78,6 +78,25 @@ function MainMenu_QuickTour:init()
 				sceneMan:changeScene("arenaTour", transTime, SceneManager.fade, easing.linear, { userData = {tonumber(tourTable["QuickTourDif"]), tourTable["QuickTourClass"], tourTable["QuickTourOpponent"], tonumber(tourTable["QuickTourStage"])} }) 
 			end
 		end)
+		
+		local stagename = ", Stage "..tourTable["QuickTourStage"]
+		if stagename == ", Stage 10" then
+			stagename = ", Boss Stage!"
+		end
+		
+		local stats = "Saved game Info:\n \n"..
+					tourTable["QuickTourClass"]..stagename.."\n"..
+					"Next opponent: "..tourTable["QuickTourOpponent"].."\n"..
+					"Difficulty: "..tourTable["QuickTourDif"].."\n \n"..
+					"Atk: "..(classTable[tourTable["QuickTourClass"]][1] + tourTable["QuickTourAtk"]).."\n"..
+					"Mov: "..(classTable[tourTable["QuickTourClass"]][2] + tourTable["QuickTourMov"]).."\n"..
+					"Lif: "..(classTable[tourTable["QuickTourClass"]][3] + tourTable["QuickTourLif"]).."\n"..
+					"Skl: "..(classTable[tourTable["QuickTourClass"]][5] + tourTable["QuickTourSkl"]).."\n"..
+					"Def: "..(classTable[tourTable["QuickTourClass"]][6] + tourTable["QuickTourDef"]).."\n"
+		local statsTextBox = TextWrap.new(stats, 256, "center", 7, self.smallfont)
+		statsTextBox:setTextColor(0xffffff)
+		statsTextBox:setPosition(WX0/2 + statsTextBox:getWidth()/2, WY/2)
+		self:addChild(statsTextBox)
 	else
 		self.loadBut = MenuBut.new(150, 40, textures.loadBut, textures.loadBut1, textures.loadBut0)
 		self:addChild(self.loadBut)

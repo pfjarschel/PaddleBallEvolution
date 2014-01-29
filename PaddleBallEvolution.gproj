@@ -65,6 +65,14 @@
   </folder>
  </folder>
  <folder name="imgs">
+  <folder name="misc">
+   <file source="imgs/misc/blackmedal@2x.png"/>
+   <file source="imgs/misc/blackmedal.png"/>
+   <file source="imgs/misc/trophy@2x.png"/>
+   <file source="imgs/misc/trophy.png"/>
+   <file source="imgs/misc/medal@2x.png"/>
+   <file source="imgs/misc/medal.png"/>
+  </folder>
   <file source="imgs/paddle2@4x.png"/>
   <file source="imgs/paddle2@3x.png"/>
   <file source="imgs/paddle2@2x.png"/>
@@ -321,6 +329,7 @@
    <file source="imgs/buttons/againBut.png"/>
   </folder>
   <folder name="backs">
+   <file source="imgs/backs/bluesmoke.jpg"/>
    <file source="imgs/backs/mainmenubg.png"/>
    <file source="imgs/backs/splash@4x.png"/>
    <file source="imgs/backs/splash@3x.png"/>

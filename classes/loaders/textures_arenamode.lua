@@ -41,9 +41,17 @@ function TextureLoaderArenaMode:init()
 	
 	self.pongbg = Texture.new("imgs/backs/pongbg.png", true)
 	
-	self.black = Texture.new("imgs/backs/black.png", true)
+	--self.black = Texture.new("imgs/backs/black.png", true)
+	
+	self.bluesmoke = Texture.new("imgs/backs/bluesmoke.jpg", true)
 	
 	self.pongball = Texture.new("imgs/pongball.png", true)
+	
+	self.medal = Texture.new("imgs/misc/medal.png", true)
+	
+	self.blackmedal = Texture.new("imgs/misc/blackmedal.png", true)
+	
+	self.trophy= Texture.new("imgs/misc/trophy.png", true)
 	
 	self.gfx_freeze = Texture.new("imgs/gfx/freeze.png", true)
 	self.gfx_viscousfield = Texture.new("imgs/gfx/viscousfield.png", true)

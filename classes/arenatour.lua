@@ -327,13 +327,25 @@ function ArenaTour:gameOver()
 	
 	local gameOverString = nil
 	local gameOverTextBox = nil
+	local backdrawing = nil
 	local exitBut = MenuBut.new(150, 40, textures.exitBut, textures.exitBut1)
 	local againBut = MenuBut.new(150, 40, textures.restartBut, textures.restartBut1)
 	local nextBut = MenuBut.new(150, 40, textures.nextBut, textures.nextBut1)
 	
 	if (self.score0 > self.score1 and optionsTable["ArenaSide"] == "Left") or (self.score0 < self.score1 and optionsTable["ArenaSide"] == "Right") then
 		if self.stage < 10 then
-			gameOverString = "You won this match!"
+			gameOverString = "You won this match!\n".."Now continue to the next stage!\n"
+			
+			backdrawing = Bitmap.new(textures.medal)
+			backdrawing:setScale(1, 1)
+
+			local textureW = backdrawing:getWidth()
+			local textureH = backdrawing:getHeight()
+			backdrawing:setAnchorPoint(0.5, 0.5)
+			backdrawing:setScale(WY*0.9/textureH)
+			backdrawing:setPosition(WX0/2, WY/2)
+			backdrawing:setAlpha(0.3)
+			
 			if optionsTable["Music"] == "On" then
 				currSong:stop()
 				self.songload = nil
@@ -358,6 +370,7 @@ function ArenaTour:gameOver()
 					stage:removeChild(gameOverTextBox)
 					stage:removeChild(exitBut)
 					stage:removeChild(nextBut)
+					stage:removeChild(backdrawing)
 					world:destroyBody(self.ball.body)
 					self.ball.body = nil
 					world:destroyBody(self.humanPlayer.paddle.body)
@@ -382,27 +395,47 @@ function ArenaTour:gameOver()
 			end)
 			
 			Timer.delayedCall(transTime/2, function ()
+				stage:addChild(backdrawing)
 				stage:addChild(nextBut)
 			end)
 		else
-			gameOverString = "You won the Tournament!"
+			gameOverString = "You won the Tournament, impressive!\n".."Congratulations, you deserve it!\n"
 			if optionsTable["Music"] == "On" then
 				currSong:stop()
 				self.songload = nil
 				self.songload = Sound.new(musics.champion[1])
 				currSong = nil
 				currSong = self.songload:play()
-				
-				tourTable["QuickTourStage"] = 0
-				tourTable["QuickTourAtk"] = 0
-				tourTable["QuickTourMov"] = 0
-				tourTable["QuickTourLif"] = 0
-				tourTable["QuickTourSkl"] = 0
-				tourTable["QuickTourDef"] = 0
 			end
+			
+			backdrawing = Bitmap.new(textures.trophy)
+			backdrawing:setScale(1, 1)
+
+			local textureW = backdrawing:getWidth()
+			local textureH = backdrawing:getHeight()
+			backdrawing:setAnchorPoint(0.5, 0.5)
+			backdrawing:setScale(WY*1.2/textureH)
+			backdrawing:setPosition(WX0/2, WY/2)
+			backdrawing:setAlpha(0.4)
+			
+			tourTable["QuickTourStage"] = 0
+			tourTable["QuickTourAtk"] = 0
+			tourTable["QuickTourMov"] = 0
+			tourTable["QuickTourLif"] = 0
+			tourTable["QuickTourSkl"] = 0
+			tourTable["QuickTourDef"] = 0
+			
+			local tourFile = io.open("|D|quicktour.txt", "w+")
+			for k, v in pairs(tourTable) do 
+				tourFile:write(k.."="..v.."\n")
+			end	
+			
+			Timer.delayedCall(transTime/2, function ()
+				stage:addChild(backdrawing)
+			end)
 		end
 	else
-		gameOverString = "You lost this match... :("
+		gameOverString = "You lost this match... :(\n".."But you can always try again!\n"
 		if optionsTable["Music"] == "On" then
 			currSong:stop()
 			self.songload = nil
@@ -410,6 +443,16 @@ function ArenaTour:gameOver()
 			currSong = nil
 			currSong = self.songload:play()
 		end
+		
+		backdrawing = Bitmap.new(textures.blackmedal)
+		backdrawing:setScale(1, 1)
+
+		local textureW = backdrawing:getWidth()
+		local textureH = backdrawing:getHeight()
+		backdrawing:setAnchorPoint(0.5, 0.5)
+		backdrawing:setScale(WY*0.9/textureH)
+		backdrawing:setPosition(WX0/2, WY/2)
+		backdrawing:setAlpha(0.5)
 			
 		againBut.bitmap:setPosition(WX0/2, WY/2 + 100)
 		
@@ -427,6 +470,7 @@ function ArenaTour:gameOver()
 				stage:removeChild(gameOverTextBox)
 				stage:removeChild(exitBut)
 				stage:removeChild(againBut)
+				stage:removeChild(backdrawing)
 				world:destroyBody(self.ball.body)
 				self.ball.body = nil
 				world:destroyBody(self.humanPlayer.paddle.body)
@@ -446,13 +490,14 @@ function ArenaTour:gameOver()
 		end)
 			
 		Timer.delayedCall(transTime/2, function ()
+			stage:addChild(backdrawing)
 			stage:addChild(againBut)
 		end)
 	end
 	
-	gameOverTextBox = TextField.new(self.font, gameOverString)
-	gameOverTextBox:setTextColor(0x3c78a0)
-	gameOverTextBox:setPosition(0.5*WX0 - gameOverTextBox:getWidth()/2, 0.25*WY + gameOverTextBox:getHeight()/2)
+	gameOverTextBox = TextWrap.new(gameOverString, WX0, "center", 32, self.font)
+	gameOverTextBox:setTextColor(0x419bd7)
+	gameOverTextBox:setPosition(0.5*WX0 - gameOverTextBox:getWidth()/2, 0*WY + gameOverTextBox:getHeight()/2)
 	
 	exitBut.bitmap:setPosition(exitBut:getWidth()/2 + 10, WY/2 + 210)
 	
@@ -476,6 +521,7 @@ function ArenaTour:gameOver()
 					stage:removeChild(nextBut)
 				end
 			end
+			stage:removeChild(backdrawing)
 			world:destroyBody(self.ball.body)
 			self.ball.body = nil
 			world:destroyBody(self.humanPlayer.paddle.body)
@@ -680,7 +726,11 @@ function ArenaTour:init(dataTable)
 	classTextAI:setAlpha(0.35)
 	classTextAI:setPosition(XShift + WX - classTextAI:getWidth() - 16, 50)
 	
-	local stageText = TextField.new(font2, "Tournament: Fight "..self.stage)
+	local stagename = "Fight "..self.stage
+	if stagename == "Fight 10" then
+		stagename = "Boss Fight!"
+	end
+	local stageText = TextField.new(font2, "Tournament: "..stagename)
 	stageText:setTextColor(0xffffff)
 	stageText:setAlpha(0.35)
 	if optionsTable["ArenaSide"] == "Left" then

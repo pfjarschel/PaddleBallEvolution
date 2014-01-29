@@ -258,8 +258,20 @@ function ArenaSurvival:gameOver()
 		currSong = nil
 		currSong = self.songload:play()
 	end
+	
+	local backdrawing = nil
+	backdrawing = Bitmap.new(textures.medal)
+	backdrawing:setScale(1, 1)
+
+	local textureW = backdrawing:getWidth()
+	local textureH = backdrawing:getHeight()
+	backdrawing:setAnchorPoint(0.5, 0.5)
+	backdrawing:setScale(WY*0.9/textureH)
+	backdrawing:setPosition(WX0/2, WY/2)
+	backdrawing:setAlpha(0.3)
+	
 	local gameOverTextBox = TextField.new(self.font, gameOverString)
-	gameOverTextBox:setTextColor(0x3c78a0)
+	gameOverTextBox:setTextColor(0x419bd7)
 	gameOverTextBox:setPosition(0.5*WX0 - gameOverTextBox:getWidth()/2, 0.25*WY + gameOverTextBox:getHeight()/2)
 	
 	local againBut = MenuBut.new(150, 40, textures.againBut, textures.againBut1)
@@ -272,6 +284,7 @@ function ArenaSurvival:gameOver()
 			stage:removeChild(gameOverTextBox)
 			stage:removeChild(exitBut)
 			stage:removeChild(againBut)
+			stage:removeChild(backdrawing)
 			world:destroyBody(self.ball.body)
 			self.ball.body = nil
 			world:destroyBody(self.humanPlayer.paddle.body)
@@ -292,6 +305,7 @@ function ArenaSurvival:gameOver()
 			stage:removeChild(gameOverTextBox)
 			stage:removeChild(exitBut)
 			stage:removeChild(againBut)
+			stage:removeChild(backdrawing)
 			world:destroyBody(self.ball.body)
 			self.ball.body = nil
 			world:destroyBody(self.humanPlayer.paddle.body)
@@ -307,6 +321,7 @@ function ArenaSurvival:gameOver()
 	end)
 	
 	Timer.delayedCall(transTime/2, function ()
+		stage:addChild(backdrawing)
 		stage:addChild(gameOverTextBox)	
 		stage:addChild(exitBut)
 		stage:addChild(againBut)

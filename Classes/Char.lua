@@ -64,6 +64,9 @@ function Char:init(class, stage)
 		self.def = classTable[class][6]
 
 		local points = self.stage
+		if self.stage == 10 then
+			points = points*2
+		end
 		if points ~= 0 and points ~= -1 then
 			for i = 1, points, 1 do
 				local randNum = math.random(1,5)

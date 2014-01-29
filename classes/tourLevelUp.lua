@@ -12,7 +12,16 @@ local function onKeyDown(event)
 	if event.keyCode == 301 then
 		if optionsTable["SFX"] == "On" then sounds.sel3:play() end
 		
-		
+		tourTable["QuickTourAtk"] = addAtk
+		tourTable["QuickTourMov"] = addMov
+		tourTable["QuickTourLif"] = addLif
+		tourTable["QuickTourSkl"] = addSkl
+		tourTable["QuickTourDef"] = addDef
+		tourTable["QuickTourPoints"] = points
+		local tourFile = io.open("|D|quicktour.txt", "w+")
+		for k, v in pairs(tourTable) do 
+			tourFile:write(k.."="..v.."\n")
+		end	
 		
 		sceneMan:changeScene("mainMenu", transTime, SceneManager.fade, easing.linear) 
 	end
@@ -23,11 +32,12 @@ function TourLevelUp:init()
 	self.smallfont = fonts.anitaSmall
 	self.medfont = fonts.anitaMed
 	
-	local menubg = Bitmap.new(textures.black)
+	local menubg = Bitmap.new(textures.bluesmoke)
 	menubg:setScale(1, 1)
 	local textureW = menubg:getWidth()
 	local textureH = menubg:getHeight()
 	menubg:setScale(WX/textureW, WY/textureH)
+	menubg:setAlpha(0.25)
 	self:addChild(menubg)
 
 	-- Attributes Improvement --

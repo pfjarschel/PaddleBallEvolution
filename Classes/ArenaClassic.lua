@@ -245,8 +245,20 @@ function ArenaClassic:gameOver()
 	fadeOut(self)
 	
 	local gameOverString = nil
+	local backdrawing = nil
 	if (self.score0 > self.score1 and optionsTable["ArenaSide"] == "Left") or (self.score0 < self.score1 and optionsTable["ArenaSide"] == "Right") then
 		gameOverString = "Congratulations, you won!"
+		
+		backdrawing = Bitmap.new(textures.medal)
+		backdrawing:setScale(1, 1)
+
+		local textureW = backdrawing:getWidth()
+		local textureH = backdrawing:getHeight()
+		backdrawing:setAnchorPoint(0.5, 0.5)
+		backdrawing:setScale(WY*0.9/textureH)
+		backdrawing:setPosition(WX0/2, WY/2)
+		backdrawing:setAlpha(0.3)
+		
 		if optionsTable["Music"] == "On" then
 			currSong:stop()
 			self.songload = nil
@@ -256,6 +268,17 @@ function ArenaClassic:gameOver()
 		end
 	else
 		gameOverString = "You lost... :("
+		
+		backdrawing = Bitmap.new(textures.blackmedal)
+		backdrawing:setScale(1, 1)
+
+		local textureW = backdrawing:getWidth()
+		local textureH = backdrawing:getHeight()
+		backdrawing:setAnchorPoint(0.5, 0.5)
+		backdrawing:setScale(WY*0.9/textureH)
+		backdrawing:setPosition(WX0/2, WY/2)
+		backdrawing:setAlpha(0.5)
+		
 		if optionsTable["Music"] == "On" then
 			currSong:stop()
 			self.songload = nil
@@ -265,7 +288,7 @@ function ArenaClassic:gameOver()
 		end
 	end
 	local gameOverTextBox = TextField.new(self.font, gameOverString)
-	gameOverTextBox:setTextColor(0x3c78a0)
+	gameOverTextBox:setTextColor(0x419bd7)
 	gameOverTextBox:setPosition(0.5*WX0 - gameOverTextBox:getWidth()/2, 0.25*WY + gameOverTextBox:getHeight()/2)
 	
 	local againBut = MenuBut.new(150, 40, textures.againBut, textures.againBut1)
@@ -278,6 +301,7 @@ function ArenaClassic:gameOver()
 			stage:removeChild(gameOverTextBox)
 			stage:removeChild(exitBut)
 			stage:removeChild(againBut)
+			stage:removeChild(backdrawing)
 			world:destroyBody(self.ball.body)
 			self.ball.body = nil
 			world:destroyBody(self.humanPlayer.paddle.body)
@@ -299,6 +323,7 @@ function ArenaClassic:gameOver()
 			stage:removeChild(gameOverTextBox)
 			stage:removeChild(exitBut)
 			stage:removeChild(againBut)
+			stage:removeChild(backdrawing)
 			world:destroyBody(self.ball.body)
 			self.ball.body = nil
 			world:destroyBody(self.humanPlayer.paddle.body)
@@ -317,6 +342,7 @@ function ArenaClassic:gameOver()
 		stage:addChild(gameOverTextBox)	
 		stage:addChild(exitBut)
 		stage:addChild(againBut)
+		stage:addChild(backdrawing)
 	end)
 end
 
