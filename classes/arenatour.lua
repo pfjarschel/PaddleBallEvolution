@@ -26,6 +26,9 @@ ArenaTour.humanPlayer = nil
 ArenaTour.aiPlayer = nil
 ArenaTour.songload = nil
 ArenaTour.stage = 1
+ArenaTour.arenatype = nil
+function ArenaTour:initArena() end
+function ArenaTour:endArena() end
 
 -- Tilt variables --
 local afx = 0
@@ -110,6 +113,7 @@ function ArenaTour:openMenu()
 				if self.aiPlayer.skillActive then
 					self.aiPlayer.char.skill:endAction()
 				end
+				self:endArena()
 				Timer.resumeAll()
 				Timer.stopAll()
 				stage:removeChild(self.pausebg)
@@ -122,12 +126,13 @@ function ArenaTour:openMenu()
 				local class = tourTable["QuickTourClass"]
 				local class2 = tourTable["QuickTourOpponent"]
 				local stage = self.stage
+				local arenatype = self.arenatype
 				self = nil
 				arena = nil
 				
 				if optionsTable["SFX"] == "On" then sounds.sel3:play() end
 				
-				sceneMan:changeScene("arenaTour", transTime, SceneManager.fade, easing.linear, { userData = {difficulty, class, class2, stage} })
+				sceneMan:changeScene("arenaTour", transTime, SceneManager.fade, easing.linear, { userData = {difficulty, class, class2, stage, arenatype} })
 			end
 		end)
 		self.pausebg:addChild(restartBut)
@@ -144,6 +149,7 @@ function ArenaTour:openMenu()
 				if self.aiPlayer.skillActive then
 					self.aiPlayer.char.skill:endAction()
 				end
+				self:endArena()
 				Timer.resumeAll()
 				Timer.stopAll()
 				stage:removeChild(self.pausebg)
@@ -373,6 +379,7 @@ function ArenaTour:gameOver()
 					if self.aiPlayer.skillActive then
 						self.aiPlayer.char.skill:endAction()
 					end
+					self:endArena()
 					stage:removeChild(gameOverTextBox)
 					stage:removeChild(exitBut)
 					stage:removeChild(nextBut)
@@ -476,6 +483,7 @@ function ArenaTour:gameOver()
 				if self.aiPlayer.skillActive then
 					self.aiPlayer.char.skill:endAction()
 				end
+				self:endArena()
 				stage:removeChild(gameOverTextBox)
 				stage:removeChild(exitBut)
 				stage:removeChild(againBut)
@@ -490,12 +498,13 @@ function ArenaTour:gameOver()
 				local class = tourTable["QuickTourClass"]
 				local class2 = tourTable["QuickTourOpponent"]
 				local stage = self.stage
+				local arenatype = self.arenatype
 				self = nil
 				arena = nil
 				
 				if optionsTable["SFX"] == "On" then sounds.sel2:play() end
 				
-				sceneMan:changeScene("arenaTour", transTime, SceneManager.fade, easing.linear, { userData = {difficulty, class, class2, stage} })
+				sceneMan:changeScene("arenaTour", transTime, SceneManager.fade, easing.linear, { userData = {difficulty, class, class2, stage, arenatype} })
 			end
 		end)
 			
@@ -523,6 +532,7 @@ function ArenaTour:gameOver()
 			if self.aiPlayer.skillActive then
 				self.aiPlayer.char.skill:endAction()
 			end
+			self:endArena()
 			stage:removeChild(gameOverTextBox)
 			stage:removeChild(exitBut)
 			for i = stage:getNumChildren(), 1, -1 do
@@ -585,10 +595,12 @@ function ArenaTour:checkGoal()
 			end
 			self.humanPlayer.char.skill:forceEnd()
 			self.aiPlayer.char.skill:forceEnd()
+			self:endArena()
 			self.ball:reset()
 			self.ball:launch()
 			self.humanPlayer.paddle:reset()
 			self.aiPlayer.paddle:reset()
+			self:initArena()
 			gc()
 		end
 	end
@@ -646,6 +658,7 @@ function ArenaTour:init(dataTable)
 	local class = dataTable[2]
 	local class2 = dataTable[3]
 	self.stage = dataTable[4]
+	self.arenatype = dataTable[5]
 	arena = self
 	self.font = fonts.anitaBig
 	
@@ -786,6 +799,20 @@ function ArenaTour:init(dataTable)
 		self.bitmap:setPosition(XShift, 0)
 	end
 	self:createBoundaries()
+	
+	-- Arena BG --
+	if self.arenatype ~= "Normal" then
+		self.arenabg = Bitmap.new(Texture.new(arenasTable[self.arenatype]["Image"]))
+		self.arenabg:setScale(1, 1)
+		self:addChild(self.arenabg)
+		local textureWbg = self.arenabg:getWidth()
+		local textureHbg = self.arenabg:getHeight()
+		self.arenabg:setScale(WX0/textureWbg, WY/textureHbg)
+		
+		self.initArena = arenasTable[self.arenatype]["Init"]
+		self.endArena = arenasTable[self.arenatype]["End"]
+	end
+	self:initArena()
 	
 	self:addMenu()
 

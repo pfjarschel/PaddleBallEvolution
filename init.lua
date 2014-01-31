@@ -46,3 +46,4 @@ skillTable = {}
 optionsTable = {}
 tourTable = {}
 customClass = {}
+arenasTable = {}

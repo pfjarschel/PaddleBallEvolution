@@ -412,7 +412,7 @@ function MainMenu_Arena:init()
 			for k, v in pairs(optionsTable) do 
 				optionsFile:write(k.."="..v.."\n")
 			end	
-			sceneMan:changeScene("arena", transTime, SceneManager.fade, easing.linear, { userData = {difficulty, class, classAI} }) 
+			sceneMan:changeScene("mainMenu_Arena2", transTime, SceneManager.fade, easing.linear, { userData = {difficulty, class, classAI} }) 
 		end
 	end)
 	

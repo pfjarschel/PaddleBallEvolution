@@ -32,12 +32,12 @@ function CombatStats:update(hp1, hp2, mp1, mp2)
 		arena:removeChild(self.mp2Text)
 		
 		self.mp1Text = TextField.new(self.smallFont, tostring(mp1))
-		self.mp1Text:setTextColor(0xaa00ff)
+		self.mp1Text:setTextColor(0xaa99ff)
 		self.mp1Text:setPosition(XShift + 0.5*WX - 16 - self.mp1Text:getWidth(), 3*self.hp1Text:getHeight())
 		
 		self.mp2Text = TextField.new(self.smallFont, tostring(mp2))
-		self.mp2Text:setTextColor(0xaa00ff)
-		self.mp2Text:setPosition(XShift + 0.5*WX + 16, 3*self.hp2Text:getHeight())
+		self.mp2Text:setTextColor(0xaa99ff)
+		self.mp2Text:setPosition(XShift + 0.5*WX + 16, 3*self.hp1Text:getHeight())
 		
 		arena:addChild(self.mp1Text)
 		arena:addChild(self.mp2Text)
@@ -64,12 +64,12 @@ function CombatStats:init()
 	
 	if arena.name == "arena" then
 		self.mp1Text = TextField.new(self.smallFont, initStr)
-		self.mp1Text:setTextColor(0xaa00ff)
+		self.mp1Text:setTextColor(0xaa99ff)
 		self.mp1Text:setPosition(XShift + 0.5*WX - 16 - self.mp1Text:getWidth(), 3*self.hp1Text:getHeight())
 		
 		self.mp2Text = TextField.new(self.smallFont, initStr)
-		self.mp2Text:setTextColor(0xaa00ff)
-		self.mp2Text:setPosition(XShift + 0.5*WX + 16, 3*self.hp2Text:getHeight())
+		self.mp2Text:setTextColor(0xaa99ff)
+		self.mp2Text:setPosition(XShift + 0.5*WX + 16, 3*self.hp1Text:getHeight())
 		
 		arena:addChild(self.mp1Text)
 		arena:addChild(self.mp2Text)

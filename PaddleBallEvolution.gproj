@@ -184,6 +184,12 @@
    <file source="imgs/buttons/about.png"/>
   </folder>
   <folder name="backs">
+   <folder name="arenas">
+    <file source="imgs/backs/arenas/ice.png"/>
+    <file source="imgs/backs/arenas/lava.png"/>
+   </folder>
+   <file source="imgs/backs/pongbg@2x.png"/>
+   <file source="imgs/backs/pausebg@2x.png"/>
    <file source="imgs/backs/bluesmoke@2x.png"/>
    <file source="imgs/backs/bluesmoke.png"/>
    <file source="imgs/backs/black@2x.png"/>
@@ -203,6 +209,7 @@
   <file source="fonts/anita.ttf"/>
  </folder>
  <folder name="classes">
+  <file source="classes/mainmenu_arena2.lua"/>
   <file source="classes/editcustom.lua"/>
   <file source="classes/tourLevelUp.lua"/>
   <file source="classes/arenatour.lua"/>
@@ -229,6 +236,7 @@
   <file source="classes/arenaclassic.lua"/>
   <file source="classes/arenaarena.lua"/>
   <folder name="loaders">
+   <file source="classes/loaders/arenas.lua"/>
    <file source="classes/loaders/skillTable.lua"/>
    <file source="classes/loaders/customclass.lua"/>
    <file source="classes/loaders/quickTourData.lua"/>
@@ -297,4 +305,5 @@
  <dependency from="main.lua" to="classes/loaders/fonts.lua"/>
  <dependency from="main.lua" to="classes/loaders/classtable.lua"/>
  <dependency from="main.lua" to="classes/loaders/skillTable.lua"/>
+ <dependency from="main.lua" to="classes/loaders/arenas.lua"/>
 </project>

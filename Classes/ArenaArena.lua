@@ -25,6 +25,9 @@ ArenaArena.AI = nil
 ArenaArena.humanPlayer = nil
 ArenaArena.aiPlayer = nil
 ArenaArena.songload = nil
+ArenaArena.arenatype = nil
+function ArenaArena:initArena() end
+function ArenaArena:endArena() end
 
 -- Tilt variables --
 local afx = 0
@@ -111,6 +114,7 @@ function ArenaArena:openMenu()
 				end
 				Timer.resumeAll()
 				Timer.stopAll()
+				self:endArena()
 				stage:removeChild(self.pausebg)
 				world:destroyBody(self.ball.body)
 				self.ball.body = nil
@@ -120,12 +124,13 @@ function ArenaArena:openMenu()
 				local difficulty = self.difFactor*5
 				local class = self.leftClass
 				local classAI = self.rightClass
+				local arenatype = self.arenatype
 				self = nil
 				arena = nil
 				
 				if optionsTable["SFX"] == "On" then sounds.sel3:play() end
 				
-				sceneMan:changeScene("arena", transTime, SceneManager.fade, easing.linear, { userData = {difficulty, class, classAI} })
+				sceneMan:changeScene("arena", transTime, SceneManager.fade, easing.linear, { userData = {difficulty, class, classAI, arenatype} })
 			end
 		end)
 		self.pausebg:addChild(restartBut)
@@ -144,6 +149,7 @@ function ArenaArena:openMenu()
 				end
 				Timer.resumeAll()
 				Timer.stopAll()
+				self:endArena()
 				stage:removeChild(self.pausebg)
 				world:destroyBody(self.ball.body)
 				self.ball.body = nil
@@ -394,6 +400,7 @@ function ArenaArena:gameOver()
 			if self.aiPlayer.skillActive then
 				self.aiPlayer.char.skill:endAction()
 			end
+			self:endArena()
 			stage:removeChild(gameOverTextBox)
 			stage:removeChild(exitBut)
 			stage:removeChild(againBut)
@@ -407,12 +414,13 @@ function ArenaArena:gameOver()
 			local difficulty = self.difFactor*5
 			local class = self.leftClass
 			local class2 = self.rightClass
+			local arenatype = self.arenatype
 			self = nil
 			arena = nil
 			
 			if optionsTable["SFX"] == "On" then sounds.sel2:play() end
 			
-			sceneMan:changeScene("arena", transTime, SceneManager.fade, easing.linear, { userData = {difficulty, class, class2} })
+			sceneMan:changeScene("arena", transTime, SceneManager.fade, easing.linear, { userData = {difficulty, class, class2, arenatype} })
 		end
 	end)
 	
@@ -427,6 +435,7 @@ function ArenaArena:gameOver()
 			if self.aiPlayer.skillActive then
 				self.aiPlayer.char.skill:endAction()
 			end
+			self:endArena()
 			stage:removeChild(gameOverTextBox)
 			stage:removeChild(exitBut)
 			stage:removeChild(againBut)
@@ -479,10 +488,12 @@ function ArenaArena:checkGoal()
 			end
 			self.humanPlayer.char.skill:forceEnd()
 			self.aiPlayer.char.skill:forceEnd()
+			self.endArena()
 			self.ball:reset()
 			self.ball:launch()
 			self.humanPlayer.paddle:reset()
 			self.aiPlayer.paddle:reset()
+			self.initArena()
 			gc()
 		end
 	end
@@ -539,6 +550,7 @@ function ArenaArena:init(dataTable)
 	local difficulty = dataTable[1]
 	local class = dataTable[2]
 	local class2 = dataTable[3]
+	self.arenatype = dataTable[4]
 	arena = self
 	self.font = fonts.anitaBig
 	
@@ -598,6 +610,21 @@ function ArenaArena:init(dataTable)
 	classTextAI:setPosition(XShift + WX - classTextAI:getWidth() - 16, 50)
 	
 	-- Continue as usual --
+	
+	-- Arena BG --
+	if self.arenatype ~= "Normal" then
+		self.arenabg = Bitmap.new(Texture.new(arenasTable[self.arenatype]["Image"]))
+		self.arenabg:setScale(1, 1)
+		self:addChild(self.arenabg)
+		local textureWbg = self.arenabg:getWidth()
+		local textureHbg = self.arenabg:getHeight()
+		self.arenabg:setScale(WX0/textureWbg, WY/textureHbg)
+		
+		self.initArena = arenasTable[self.arenatype]["Init"]
+		self.endArena = arenasTable[self.arenatype]["End"]
+	end
+	self:initArena()
+	
 	self.bitmap = Bitmap.new(textures.pongbg)
 	self.bitmap:setScale(1, 1)
 	self.difFactor = difficulty/5
