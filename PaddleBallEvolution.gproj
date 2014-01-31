@@ -61,6 +61,7 @@
  </folder>
  <folder name="imgs">
   <folder name="misc">
+   <file source="imgs/misc/copyr.png"/>
    <file source="imgs/misc/blackmedal@2x.png"/>
    <file source="imgs/misc/blackmedal.png"/>
    <file source="imgs/misc/trophy@2x.png"/>
@@ -69,6 +70,7 @@
    <file source="imgs/misc/medal.png"/>
   </folder>
   <file source="imgs/paddle2@2x.png"/>
+  <file source="imgs/pongball@2x.png"/>
   <file source="imgs/pongball.png"/>
   <file source="imgs/paddle2.png"/>
   <folder name="gfx">
@@ -196,6 +198,7 @@
   <file source="fonts/anita.ttf"/>
  </folder>
  <folder name="classes">
+  <file source="classes/editcustom.lua"/>
   <file source="classes/tourLevelUp.lua"/>
   <file source="classes/arenatour.lua"/>
   <file source="classes/mainmenu_quicktour2.lua"/>
@@ -221,6 +224,8 @@
   <file source="classes/arenaclassic.lua"/>
   <file source="classes/arenaarena.lua"/>
   <folder name="loaders">
+   <file source="classes/loaders/skillTable.lua"/>
+   <file source="classes/loaders/customclass.lua"/>
    <file source="classes/loaders/quickTourData.lua"/>
    <file source="classes/loaders/music_normalmodes.lua"/>
    <file source="classes/loaders/music_menu.lua"/>
@@ -270,7 +275,9 @@
  <dependency from="classes/mainmenu_classic.lua" to="classes/arenaclassic.lua"/>
  <dependency from="classes/player.lua" to="classes/paddle.lua"/>
  <dependency from="classes/player.lua" to="classes/char.lua"/>
+ <dependency from="main.lua" to="classes/loaders/customclass.lua"/>
  <dependency from="main.lua" to="classes/mainmenu.lua"/>
+ <dependency from="main.lua" to="classes/loaders/quickTourData.lua"/>
  <dependency from="main.lua" to="classes/loaders/music_normalmodes.lua"/>
  <dependency from="main.lua" to="classes/loaders/music_menu.lua"/>
  <dependency from="main.lua" to="classes/loaders/music_arenamode.lua"/>
@@ -283,5 +290,5 @@
  <dependency from="main.lua" to="classes/loaders/options.lua"/>
  <dependency from="main.lua" to="classes/loaders/fonts.lua"/>
  <dependency from="main.lua" to="classes/loaders/classtable.lua"/>
- <dependency from="main.lua" to="classes/loaders/quickTourData.lua"/>
+ <dependency from="main.lua" to="classes/loaders/skillTable.lua"/>
 </project>

@@ -54,13 +54,22 @@ function MainMenu_About:init()
 	abouttext:setPosition(WX/2 - abouttext:getWidth()/2, WY/2 + 1.5*abouttitle:getHeight() - 16)
 	self:addChild(abouttext)
 	
-	local copystring = "Black & White Cat Studio, 2014\n"..
+	local copystring = "2014, Black & White Cat Studio\n"..
 						"http://blackandwhitecat.net"
 	
 	local copytext = TextWrap.new(copystring, WX/2, "right", 10, self.font)
 	copytext:setTextColor(0xffffff)
 	copytext:setPosition(WX - copytext:getWidth() - 16, WY - copytext:getHeight())
 	self:addChild(copytext)
+	
+	local copyr = Bitmap.new(textures.copyr)
+	local textureW = copyr:getWidth()
+	local textureH = copyr:getHeight()
+	copyr:setScale(1,1)
+	copyr:setAnchorPoint(0.5, 0.5)
+	copyr:setScale(15/textureW, 15/textureH)
+	copyr:setPosition(WX - copytext:getWidth()/2 - 108 - copyr:getWidth()/2, WY - copyr:getHeight() - 28)
+	self:addChild(copyr)
 	
 	self.returnBut = MenuBut.new(150, 40, textures.returnBut, textures.returnBut1)
 	self:addChild(self.returnBut)

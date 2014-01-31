@@ -11,7 +11,7 @@ Char.lif = nil
 Char.int = nil
 Char.skl = nil
 Char.def = nil
-Char.skill = "none"
+Char.skill = nil
 Char.Stage = 5
 
 Char.atkFactor = nil

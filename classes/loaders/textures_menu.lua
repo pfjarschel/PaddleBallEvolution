@@ -67,5 +67,9 @@ function TextureLoaderMenu:init()
 	
 	self.interface = Texture.new("imgs/backs/interface.png", true)
 	
+	self.copyr = Texture.new("imgs/misc/copyr.png", true)
+	
+	self.bluesmoke = Texture.new("imgs/backs/bluesmoke.png", true)
+	
 end
 

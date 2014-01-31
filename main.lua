@@ -23,6 +23,9 @@ arena = nil
 transTime = 1.5
 currSong = nil
 XShift = 0 -- 
+classIndexL = 1
+classIndexR = 1
+classIndexT = 1
 
 ----------------------
 -- Global Functions --
@@ -176,6 +179,39 @@ else
 	end
 end
 
+local customclassFile = io.open("|D|customclass.txt", "r")
+if not customclassFile then
+	local createFile = io.open("|D|customclass.txt", "w+")
+	for k, v in pairs(customClass) do 
+		createFile:write(k.."="..v.."\n")
+	end
+else
+	local lines = lines_from("|D|customclass.txt")
+	for i = 1, table.getn(lines), 1 do
+		for k1, v1 in string.gmatch(lines[i], "(%w+)=(%w+)") do
+			customClass[k1] = v1
+		end
+		local skillName = skillTable[customClass["skill"]]["Name"]
+		local skillDesc = skillTable[customClass["skill"]]["Desc"]
+		customClass["skillName"] = skillName
+		customClass["skillDesc"] = skillDesc
+
+		classTable["Custom"] = {
+			tonumber(customClass["Atk"]),
+			tonumber(customClass["Mov"]),
+			tonumber(customClass["Lif"]),
+			tonumber(customClass["Int"]),
+			tonumber(customClass["Skl"]),
+			tonumber(customClass["Def"]),
+			customClass["skill"],
+			skillName,
+			skillDesc,
+			{tonumber(customClass["ColorR"])/10, tonumber(customClass["ColorG"])/10, tonumber(customClass["ColorB"])/10},
+			customClass["Name"]
+		}
+	end
+end
+
 -- Create scenes for the Scene Manager --
 sceneMan = SceneManager.new({
 	["splash"] = Splash,
@@ -187,6 +223,7 @@ sceneMan = SceneManager.new({
 	["mainMenu_Career"] = MainMenu_Career,
 	["arenaTour"] = ArenaTour,
 	["tourLevelUp"] = TourLevelUp,
+	["editCustom"] = EditCustomClass,
 	["arena"] = ArenaArena,
 	["classic"] = ArenaClassic,
 	["survival"] = ArenaSurvival,

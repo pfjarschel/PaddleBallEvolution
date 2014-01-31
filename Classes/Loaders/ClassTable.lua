@@ -2,8 +2,21 @@
 -- Table Containing Class Names and Aliases --
 ----------------------------------------------
 
--- The index is the class name, followed by Atk, Mov, Lif, Int, Skl, Def, Skill internal name, Skill Full Name, Skill Description, RGB colors
+-- The index is the class name, followed by Atk, Mov, Lif, Int, Skl, Def, Skill internal name, Skill Full Name, Skill Description, RGB colors, Full Name
 
+classTable["Custom"] = {
+	10,
+	10,
+	10,
+	10,
+	10,
+	10,
+	"none",
+	"None",
+	"Touch 'Edit' to select",
+	{0.5, 0.5, 0.5},
+	"Your Class"
+}
 classTable["Warrior"] = {
 	18,
 	8,
@@ -14,7 +27,8 @@ classTable["Warrior"] = {
 	"powershot",
 	"Power Shot",
 	"The next ball return will be VERY fast",
-	{0.6, 0.2, 0.2}
+	{0.6, 0.2, 0.2},
+	"Warrior"
 }
 classTable["Acrobat"] = {
 	10,
@@ -26,7 +40,8 @@ classTable["Acrobat"] = {
 	"curveball",
 	"Curve Ball",
 	"Ball makes crazy curves",
-	{0.8, 0.8, 0.2}
+	{0.8, 0.8, 0.2},
+	"Acrobat"
 }
 classTable["Ninja"] = { 
 	14,
@@ -38,7 +53,8 @@ classTable["Ninja"] = {
 	"invisiball",
 	"Invisiball",
 	"Ball turns invisible",
-	{0.05, 0.2, 0.5}
+	{0.05, 0.2, 0.5},
+	"Ninja"
 }
 classTable["SwampMonster"] = {
 	14,
@@ -50,7 +66,8 @@ classTable["SwampMonster"] = {
 	"viscousfield",
 	"Viscous Field",
 	"Ball slows down a lot",
-	{0.6, 0.7, 0.2}
+	{0.6, 0.7, 0.2},
+	"Swamp Monster"
 }
 classTable["Archer"] = {
 	14,
@@ -62,7 +79,8 @@ classTable["Archer"] = {
 	"arrowball",
 	"Arrow Ball",
 	"Ball moves in a straight line to the goal",
-	{0.2, 0.6, 0.2}
+	{0.2, 0.6, 0.2},
+	"Archer"
 }
 classTable["Illusionist"] = {
 	12,
@@ -74,7 +92,8 @@ classTable["Illusionist"] = {
 	"mirrorball",
 	"Mirror Ball",
 	"Ball is reflected to the other direction",
-	{0.8, 0.8, 0.8}
+	{0.8, 0.8, 0.8},
+	"Illusionist"
 }
 classTable["Barbarian"] = {
 	20,
@@ -86,7 +105,8 @@ classTable["Barbarian"] = {
 	"berserk",
 	"Berserk",
 	"Atk, Mov and Def greatly increased",
-	{0.7, 0.4, 0.2}
+	{0.7, 0.4, 0.2},
+	"Barbarian"
 }
 classTable["Thief"] = {
 	8,
@@ -98,7 +118,8 @@ classTable["Thief"] = {
 	"steal",
 	"Steal",
 	"Steal ball and return with 2x its speed",
-	{0.4, 0.4, 0.4}
+	{0.4, 0.4, 0.4},
+	"Thief"
 }
 
 classTable["Mesmer"] = {
@@ -111,7 +132,8 @@ classTable["Mesmer"] = {
 	"multiball",
 	"Multiball",
 	"Creates illusions to confuse the enemy",
-	{0.6, 0.4, 1}
+	{0.6, 0.4, 1},
+	"Mesmer"
 }
 
 classTable["IceMan"] = {
@@ -124,5 +146,6 @@ classTable["IceMan"] = {
 	"freeze",
 	"Freeze",
 	"Freezes your opponent for some time",
-	{0.8, 0.8, 1}
+	{0.8, 0.8, 1},
+	"Ice Man"
 }

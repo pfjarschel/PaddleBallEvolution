@@ -123,14 +123,14 @@ function MainMenu_Arena:init()
 	classTextBox:setPosition(192 - classTextBox:getWidth()/2, 0.5*WY - 30)
 	self:addChild(classTextBox)
 	
-	local classIndex = 1
-	local class = "Warrior"
+	local class = classNames[classIndexL]
+	
 	local selClassTextBox = TextField.new(self.font, class)
 	selClassTextBox:setTextColor(0xffffff)
 	selClassTextBox:setPosition(192 - selClassTextBox:getWidth()/2, 0.5*WY + 10)
 	self:addChild(selClassTextBox)
 	
-	local selSkillTextBox = TextWrap.new(classSkill[classIndex]..": "..classSkillDesc[classIndex], 300, "center", 7, self.smallfont)
+	local selSkillTextBox = TextWrap.new(classSkill[classIndexL]..": "..classSkillDesc[classIndexL], 300, "center", 7, self.smallfont)
 	selSkillTextBox:setTextColor(0xffffff)
 	selSkillTextBox:setPosition(192 - selSkillTextBox:getWidth()/2, 0.5*WY + 50)
 	self:addChild(selSkillTextBox)
@@ -145,36 +145,74 @@ function MainMenu_Arena:init()
 	statsTextBox:setPosition(192 - statsTextBox:getWidth()/2, 0.5*WY + 95)
 	self:addChild(statsTextBox)
 	
+	self.gearBut1 = MenuBut.new(40, 40, textures.optionsBut, textures.optionsBut1)
+	self.gearBut1.bitmap:setPosition(112, WY/2 + 126)
+	self.gearBut1:addEventListener(Event.TOUCHES_END, function(event)
+		if self.gearBut1:hitTestPoint(event.touch.x, event.touch.y) then
+			if optionsTable["SFX"] == "On" then sounds.sel2:play() end
+			sceneMan:changeScene("editCustom", transTime, SceneManager.fade, easing.linear, {userData = "mainMenu_Arena"}) 
+		end
+	end)
+	if classNames[classIndexL] == "Custom" then
+		self:addChild(self.gearBut1)
+	end
+	self.gearBut2 = MenuBut.new(40, 40, textures.optionsBut, textures.optionsBut1)
+	self.gearBut2.bitmap:setPosition(WX0 - 112, WY/2 + 126)
+	self.gearBut2:addEventListener(Event.TOUCHES_END, function(event)
+		if self.gearBut2:hitTestPoint(event.touch.x, event.touch.y) then
+			if optionsTable["SFX"] == "On" then sounds.sel2:play() end
+			sceneMan:changeScene("editCustom", transTime, SceneManager.fade, easing.linear, {userData = "mainMenu_Arena"}) 
+		end
+	end)
+	if classNames[classIndexR] == "Custom" then
+		self:addChild(self.gearBut2)
+	end
+	
 	self.prevBut = MenuBut.new(40, 40, textures.backBut, textures.backBut1)
 	self:addChild(self.prevBut)
 	self.prevBut.bitmap:setPosition(32, WY/2)
 	self.prevBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.prevBut:hitTestPoint(event.touch.x, event.touch.y) then
-			classIndex = classIndex - 1
-			if classIndex < 1 then classIndex = tablelength(classNames) end
+			classIndexL = classIndexL - 1
+			if classIndexL < 1 then classIndexL = tablelength(classNames) end
 			self:removeChild(selClassTextBox)
-			class = classNames[classIndex]
+			class = classNames[classIndexL]
 			selClassTextBox = TextField.new(self.font, class)
 			selClassTextBox:setTextColor(0xffffff)
 			selClassTextBox:setPosition(192 - selClassTextBox:getWidth()/2, 0.5*WY + 10)
 			self:addChild(selClassTextBox)
 			
 			self:removeChild(selSkillTextBox)
-			selSkillTextBox = TextWrap.new(classSkill[classIndex]..": "..classSkillDesc[classIndex], 300, "center", 7, self.smallfont)
+			selSkillTextBox = TextWrap.new(classSkill[classIndexL]..": "..classSkillDesc[classIndexL], 300, "center", 7, self.smallfont)
 			selSkillTextBox:setTextColor(0xffffff)
 			selSkillTextBox:setPosition(192 - selSkillTextBox:getWidth()/2, 0.5*WY + 50)
 			self:addChild(selSkillTextBox)
 			
 			self:removeChild(statsTextBox)
-			stats = "Atk: "..classAtk[classIndex].."\n"..
-					"Mov: "..classMov[classIndex].."\n"..
-					"Lif: "..classLif[classIndex].."\n"..
-					"Skl: "..classSkl[classIndex].."\n"..
-					"Def: "..classDef[classIndex].."\n"
+			stats = "Atk: "..classAtk[classIndexL].."\n"..
+					"Mov: "..classMov[classIndexL].."\n"..
+					"Lif: "..classLif[classIndexL].."\n"..
+					"Skl: "..classSkl[classIndexL].."\n"..
+					"Def: "..classDef[classIndexL].."\n"
 			statsTextBox = TextWrap.new(stats, 80, "center", 7, self.smallfont)
 			statsTextBox:setTextColor(0xffffff)
 			statsTextBox:setPosition(192 - statsTextBox:getWidth()/2, 0.5*WY + 95)
 			self:addChild(statsTextBox)
+			
+			if class == "Custom" then
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.gearBut1 then
+						self:removeChild(self.gearBut1)
+					end
+				end
+				self:addChild(self.gearBut1)
+			else
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.gearBut1 then
+						self:removeChild(self.gearBut1)
+					end
+				end
+			end
 			
 			if optionsTable["SFX"] == "On" then sounds.sel1:play() end
 		end
@@ -185,31 +223,46 @@ function MainMenu_Arena:init()
 	self.nextBut.bitmap:setPosition(342, WY/2)
 	self.nextBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.nextBut:hitTestPoint(event.touch.x, event.touch.y) then
-			classIndex = classIndex + 1
-			if classIndex > tablelength(classNames) then classIndex = 1 end
+			classIndexL = classIndexL + 1
+			if classIndexL > tablelength(classNames) then classIndexL = 1 end
 			self:removeChild(selClassTextBox)
-			class = classNames[classIndex]
+			class = classNames[classIndexL]
 			selClassTextBox = TextField.new(self.font, class)
 			selClassTextBox:setTextColor(0xffffff)
 			selClassTextBox:setPosition(192 - selClassTextBox:getWidth()/2, 0.5*WY + 10)
 			self:addChild(selClassTextBox)
 			
 			self:removeChild(selSkillTextBox)
-			selSkillTextBox = TextWrap.new(classSkill[classIndex]..": "..classSkillDesc[classIndex], 300, "center", 7, self.smallfont)
+			selSkillTextBox = TextWrap.new(classSkill[classIndexL]..": "..classSkillDesc[classIndexL], 300, "center", 7, self.smallfont)
 			selSkillTextBox:setTextColor(0xffffff)
 			selSkillTextBox:setPosition(192 - selSkillTextBox:getWidth()/2, 0.5*WY + 50)
 			self:addChild(selSkillTextBox)
 			
 			self:removeChild(statsTextBox)
-			stats = "Atk: "..classAtk[classIndex].."\n"..
-					"Mov: "..classMov[classIndex].."\n"..
-					"Lif: "..classLif[classIndex].."\n"..
-					"Skl: "..classSkl[classIndex].."\n"..
-					"Def: "..classDef[classIndex].."\n"
+			stats = "Atk: "..classAtk[classIndexL].."\n"..
+					"Mov: "..classMov[classIndexL].."\n"..
+					"Lif: "..classLif[classIndexL].."\n"..
+					"Skl: "..classSkl[classIndexL].."\n"..
+					"Def: "..classDef[classIndexL].."\n"
 			statsTextBox = TextWrap.new(stats, 80, "center", 7, self.smallfont)
 			statsTextBox:setTextColor(0xffffff)
 			statsTextBox:setPosition(192 - statsTextBox:getWidth()/2, 0.5*WY + 95)
 			self:addChild(statsTextBox)
+			
+			if class == "Custom" then
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.gearBut1 then
+						self:removeChild(self.gearBut1)
+					end
+				end
+				self:addChild(self.gearBut1)
+			else
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.gearBut1 then
+						self:removeChild(self.gearBut1)
+					end
+				end
+			end
 			
 			if optionsTable["SFX"] == "On" then sounds.sel1:play() end
 		end
@@ -226,14 +279,13 @@ function MainMenu_Arena:init()
 	classTextBoxAI:setPosition(WX - 192 - classTextBoxAI:getWidth()/2, 0.5*WY - 30)
 	self:addChild(classTextBoxAI)
 	
-	local classIndexAI = 1
-	local classAI = "Warrior"
+	local classAI = classNames[classIndexR]
 	local selClassTextBoxAI = TextField.new(self.font, classAI)
 	selClassTextBoxAI:setTextColor(0xffffff)
 	selClassTextBoxAI:setPosition(WX - 192 - selClassTextBoxAI:getWidth()/2, 0.5*WY + 10)
 	self:addChild(selClassTextBoxAI)
 	
-	local selSkillTextBoxAI = TextWrap.new(classSkill[classIndex]..": "..classSkillDesc[classIndex], 300, "center", 7, self.smallfont)
+	local selSkillTextBoxAI = TextWrap.new(classSkill[classIndexL]..": "..classSkillDesc[classIndexL], 300, "center", 7, self.smallfont)
 	selSkillTextBoxAI:setTextColor(0xffffff)
 	selSkillTextBoxAI:setPosition(WX - 192 - selSkillTextBoxAI:getWidth()/2, 0.5*WY + 50)
 	self:addChild(selSkillTextBoxAI)
@@ -254,31 +306,46 @@ function MainMenu_Arena:init()
 	self.prevButAI.bitmap:setPosition(WX - 342, WY/2)
 	self.prevButAI:addEventListener(Event.TOUCHES_END, function(event)
 		if self.prevButAI:hitTestPoint(event.touch.x, event.touch.y) then
-			classIndexAI = classIndexAI - 1
-			if classIndexAI < 1 then classIndexAI = tablelength(classNames) end
+			classIndexR = classIndexR - 1
+			if classIndexR < 1 then classIndexR = tablelength(classNames) end
 			self:removeChild(selClassTextBoxAI)
-			classAI = classNames[classIndexAI]
+			classAI = classNames[classIndexR]
 			selClassTextBoxAI = TextField.new(self.font, classAI)
 			selClassTextBoxAI:setTextColor(0xffffff)
 			selClassTextBoxAI:setPosition(WX - 192 - selClassTextBoxAI:getWidth()/2, 0.5*WY + 10)
 			self:addChild(selClassTextBoxAI)
 			
 			self:removeChild(selSkillTextBoxAI)
-			selSkillTextBoxAI = TextWrap.new(classSkill[classIndex]..": "..classSkillDesc[classIndex], 300, "center", 7, self.smallfont)
+			selSkillTextBoxAI = TextWrap.new(classSkill[classIndexL]..": "..classSkillDesc[classIndexL], 300, "center", 7, self.smallfont)
 			selSkillTextBoxAI:setTextColor(0xffffff)
 			selSkillTextBoxAI:setPosition(WX - 192 - selSkillTextBoxAI:getWidth()/2, 0.5*WY + 50)
 			self:addChild(selSkillTextBoxAI)
 			
 			self:removeChild(statsTextBoxAI)
-			statsAI = "Atk: "..classAtk[classIndexAI].."\n"..
-						"Mov: "..classMov[classIndexAI].."\n"..
-						"Lif: "..classLif[classIndexAI].."\n"..
-						"Skl: "..classSkl[classIndexAI].."\n"..
-						"Def: "..classDef[classIndexAI].."\n"
+			statsAI = "Atk: "..classAtk[classIndexR].."\n"..
+						"Mov: "..classMov[classIndexR].."\n"..
+						"Lif: "..classLif[classIndexR].."\n"..
+						"Skl: "..classSkl[classIndexR].."\n"..
+						"Def: "..classDef[classIndexR].."\n"
 			statsTextBoxAI = TextWrap.new(statsAI, 80, "center", 7, self.smallfont)
 			statsTextBoxAI:setTextColor(0xffffff)
 			statsTextBoxAI:setPosition(WX - 192 - statsTextBoxAI:getWidth()/2, 0.5*WY + 95)
 			self:addChild(statsTextBoxAI)
+			
+			if classAI == "Custom" then
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.gearBut2 then
+						self:removeChild(self.gearBut2)
+					end
+				end
+				self:addChild(self.gearBut2)
+			else
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.gearBut2 then
+						self:removeChild(self.gearBut2)
+					end
+				end
+			end
 			
 			if optionsTable["SFX"] == "On" then sounds.sel1:play() end
 		end
@@ -289,31 +356,46 @@ function MainMenu_Arena:init()
 	self.nextButAI.bitmap:setPosition(WX - 32, WY/2)
 	self.nextButAI:addEventListener(Event.TOUCHES_END, function(event)
 		if self.nextButAI:hitTestPoint(event.touch.x, event.touch.y) then
-			classIndexAI = classIndexAI + 1
-			if classIndexAI > tablelength(classNames) then classIndexAI = 1 end
+			classIndexR = classIndexR + 1
+			if classIndexR > tablelength(classNames) then classIndexR = 1 end
 			self:removeChild(selClassTextBoxAI)
-			classAI = classNames[classIndexAI]
+			classAI = classNames[classIndexR]
 			selClassTextBoxAI = TextField.new(self.font, classAI)
 			selClassTextBoxAI:setTextColor(0xffffff)
 			selClassTextBoxAI:setPosition(WX - 192 - selClassTextBoxAI:getWidth()/2, 0.5*WY + 10)
 			self:addChild(selClassTextBoxAI)
 			
 			self:removeChild(selSkillTextBoxAI)
-			selSkillTextBoxAI = TextWrap.new(classSkill[classIndexAI]..": "..classSkillDesc[classIndexAI], 300, "center", 7, self.smallfont)
+			selSkillTextBoxAI = TextWrap.new(classSkill[classIndexR]..": "..classSkillDesc[classIndexR], 300, "center", 7, self.smallfont)
 			selSkillTextBoxAI:setTextColor(0xffffff)
 			selSkillTextBoxAI:setPosition(WX - 192 - selSkillTextBoxAI:getWidth()/2, 0.5*WY + 50)
 			self:addChild(selSkillTextBoxAI)
 			
 			self:removeChild(statsTextBoxAI)
-			statsAI = "Atk: "..classAtk[classIndexAI].."\n"..
-						"Mov: "..classMov[classIndexAI].."\n"..
-						"Lif: "..classLif[classIndexAI].."\n"..
-						"Skl: "..classSkl[classIndexAI].."\n"..
-						"Def: "..classDef[classIndexAI].."\n"
+			statsAI = "Atk: "..classAtk[classIndexR].."\n"..
+						"Mov: "..classMov[classIndexR].."\n"..
+						"Lif: "..classLif[classIndexR].."\n"..
+						"Skl: "..classSkl[classIndexR].."\n"..
+						"Def: "..classDef[classIndexR].."\n"
 			statsTextBoxAI = TextWrap.new(statsAI, 80, "center", 7, self.smallfont)
 			statsTextBoxAI:setTextColor(0xffffff)
 			statsTextBoxAI:setPosition(WX - 192 - statsTextBoxAI:getWidth()/2, 0.5*WY + 95)
 			self:addChild(statsTextBoxAI)
+			
+			if classAI == "Custom" then
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.gearBut2 then
+						self:removeChild(self.gearBut2)
+					end
+				end
+				self:addChild(self.gearBut2)
+			else
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.gearBut2 then
+						self:removeChild(self.gearBut2)
+					end
+				end
+			end
 			
 			if optionsTable["SFX"] == "On" then sounds.sel1:play() end
 		end
