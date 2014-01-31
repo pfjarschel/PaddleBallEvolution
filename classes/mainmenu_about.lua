@@ -47,29 +47,20 @@ function MainMenu_About:init()
 	local aboutstring = "Made using the great Gideros Studio: www.giderosmobile.com\n \n"..
 					"Graphics, some SFX and Programming: Paulo F. Jarschel\n"..
 					"Music and SFX: http://freesfx.co.uk/ (Thank you so much!)\n \n"..
-					"Special thanks to awesome open-source software: Inkscape, Gimp and Audacity!\n"
+					"Special thanks to the Gideros community and awesome open-source software: Inkscape, Gimp and Audacity!\n"
 	
 	local abouttext = TextWrap.new(aboutstring, WX/1.1, "justify", 15, self.font)
 	abouttext:setTextColor(0xffffff)
-	abouttext:setPosition(WX/2 - abouttext:getWidth()/2, WY/2 + 1.5*abouttitle:getHeight() - 16)
+	abouttext:setPosition(WX/2 - abouttext:getWidth()/2, WY/2 + 1.5*abouttitle:getHeight() - 24)
 	self:addChild(abouttext)
 	
-	local copystring = "2014, Black & White Cat Studio\n"..
+	local copystring = "@ 2014, Black & White Cat Studio\n"..
 						"http://blackandwhitecat.net"
 	
 	local copytext = TextWrap.new(copystring, WX/2, "right", 10, self.font)
 	copytext:setTextColor(0xffffff)
 	copytext:setPosition(WX - copytext:getWidth() - 16, WY - copytext:getHeight())
 	self:addChild(copytext)
-	
-	local copyr = Bitmap.new(textures.copyr)
-	local textureW = copyr:getWidth()
-	local textureH = copyr:getHeight()
-	copyr:setScale(1,1)
-	copyr:setAnchorPoint(0.5, 0.5)
-	copyr:setScale(15/textureW, 15/textureH)
-	copyr:setPosition(WX - copytext:getWidth()/2 - 108 - copyr:getWidth()/2, WY - copyr:getHeight() - 28)
-	self:addChild(copyr)
 	
 	self.returnBut = MenuBut.new(150, 40, textures.returnBut, textures.returnBut1)
 	self:addChild(self.returnBut)

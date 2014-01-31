@@ -32,6 +32,14 @@ function TourLevelUp:init()
 	self.smallfont = fonts.anitaSmall
 	self.medfont = fonts.anitaMed
 	
+	local devW = application:getDeviceWidth()
+	local devH = application:getDeviceHeight()
+	local resFix = 1
+	if devH < 500 and devH/devW > 1.2 and devH/devW < 1.4 then resFix = 1.05 end
+	if devH < 500 and devH/devW > 1.4 and devH/devW < 1.6 then resFix = 1.025 end
+	if devH > 500 and devH/devW > 1.4 and devH/devW < 1.6 then resFix = 1.0125 end
+	if devH < 500 and devH/devW > 1.2 and devH/devW < 1.4 then resFix = 1.025 end
+	
 	local menubg = Bitmap.new(textures.bluesmoke)
 	menubg:setScale(1, 1)
 	local textureW = menubg:getWidth()
@@ -204,7 +212,7 @@ function TourLevelUp:init()
 	
 	self.decMov = MenuBut.new(30, 30, textures.minusBut, textures.minusBut1)
 	--self:addChild(self.decMov)
-	self.decMov.bitmap:setPosition(3*WX0/4, 131 + 1*54)
+	self.decMov.bitmap:setPosition(3*WX0/4, 131 + 1*56*resFix)
 	self.decMov:addEventListener(Event.TOUCHES_END, function(event)
 		if self.decMov:hitTestPoint(event.touch.x, event.touch.y) then
 			if tonumber(tourTable["QuickTourMov"]) < addMov then
@@ -266,7 +274,7 @@ function TourLevelUp:init()
 	end)	
 	self.incMov = MenuBut.new(30, 30, textures.plusBut, textures.plusBut1)
 	self:addChild(self.incMov)
-	self.incMov.bitmap:setPosition(WX0 - 64, 131 + 1*54)
+	self.incMov.bitmap:setPosition(WX0 - 64, 131 + 1*56*resFix)
 	self.incMov:addEventListener(Event.TOUCHES_END, function(event)
 		if self.incMov:hitTestPoint(event.touch.x, event.touch.y) then
 			if points > 0 then
@@ -309,7 +317,7 @@ function TourLevelUp:init()
 	
 	self.decLif = MenuBut.new(30, 30, textures.minusBut, textures.minusBut1)
 	--self:addChild(self.decLif)
-	self.decLif.bitmap:setPosition(3*WX0/4, 131 + 2*54)
+	self.decLif.bitmap:setPosition(3*WX0/4, 131 + 2*56*resFix)
 	self.decLif:addEventListener(Event.TOUCHES_END, function(event)
 		if self.decLif:hitTestPoint(event.touch.x, event.touch.y) then
 			if tonumber(tourTable["QuickTourLif"]) < addLif then
@@ -371,7 +379,7 @@ function TourLevelUp:init()
 	end)	
 	self.incLif = MenuBut.new(30, 30, textures.plusBut, textures.plusBut1)
 	self:addChild(self.incLif)
-	self.incLif.bitmap:setPosition(WX0 - 64, 131 + 2*54)
+	self.incLif.bitmap:setPosition(WX0 - 64, 131 + 2*56*resFix)
 	self.incLif:addEventListener(Event.TOUCHES_END, function(event)
 		if self.incLif:hitTestPoint(event.touch.x, event.touch.y) then
 			if points > 0 then
@@ -414,7 +422,7 @@ function TourLevelUp:init()
 	
 	self.decSkl = MenuBut.new(30, 30, textures.minusBut, textures.minusBut1)
 	--self:addChild(self.decSkl)
-	self.decSkl.bitmap:setPosition(3*WX0/4, 131 + 3*54)
+	self.decSkl.bitmap:setPosition(3*WX0/4, 131 + 3*56*resFix)
 	self.decSkl:addEventListener(Event.TOUCHES_END, function(event)
 		if self.decSkl:hitTestPoint(event.touch.x, event.touch.y) then
 			if tonumber(tourTable["QuickTourSkl"]) < addSkl then
@@ -476,7 +484,7 @@ function TourLevelUp:init()
 	end)	
 	self.incSkl = MenuBut.new(30, 30, textures.plusBut, textures.plusBut1)
 	self:addChild(self.incSkl)
-	self.incSkl.bitmap:setPosition(WX0 - 64, 131 + 3*54)
+	self.incSkl.bitmap:setPosition(WX0 - 64, 131 + 3*56*resFix)
 	self.incSkl:addEventListener(Event.TOUCHES_END, function(event)
 		if self.incSkl:hitTestPoint(event.touch.x, event.touch.y) then
 			if points > 0 then
@@ -519,7 +527,7 @@ function TourLevelUp:init()
 	
 	self.decDef = MenuBut.new(30, 30, textures.minusBut, textures.minusBut1)
 	--self:addChild(self.decDef)
-	self.decDef.bitmap:setPosition(3*WX0/4, 131 + 4*54)
+	self.decDef.bitmap:setPosition(3*WX0/4, 131 + 4*56*resFix)
 	self.decDef:addEventListener(Event.TOUCHES_END, function(event)
 		if self.decDef:hitTestPoint(event.touch.x, event.touch.y) then
 			if tonumber(tourTable["QuickTourDef"]) < addDef then
@@ -581,7 +589,7 @@ function TourLevelUp:init()
 	end)	
 	self.incDef = MenuBut.new(30, 30, textures.plusBut, textures.plusBut1)
 	self:addChild(self.incDef)
-	self.incDef.bitmap:setPosition(WX0 - 64, 131 + 4*54)
+	self.incDef.bitmap:setPosition(WX0 - 64, 131 + 4*56*resFix)
 	self.incDef:addEventListener(Event.TOUCHES_END, function(event)
 		if self.incDef:hitTestPoint(event.touch.x, event.touch.y) then
 			if points > 0 then

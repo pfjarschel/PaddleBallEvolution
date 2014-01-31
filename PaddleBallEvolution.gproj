@@ -67,7 +67,6 @@
  </folder>
  <folder name="imgs">
   <folder name="misc">
-   <file source="imgs/misc/copyr.png"/>
    <file source="imgs/misc/blackmedal@2x.png"/>
    <file source="imgs/misc/blackmedal.png"/>
    <file source="imgs/misc/trophy@2x.png"/>
