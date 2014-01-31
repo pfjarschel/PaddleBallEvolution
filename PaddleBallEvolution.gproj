@@ -9,6 +9,12 @@
  <file source="main.lua"/>
  <file source="init.lua"/>
  <folder name="include">
+  <folder name="colorPick">
+   <file source="include/colorPick/slidecolorpicker.lua"/>
+   <file source="include/colorPick/hue.png"/>
+   <file source="include/colorPick/brightness.png"/>
+   <file source="include/colorPick/arrows.png"/>
+  </folder>
   <file source="include/TextWrap.lua"/>
   <file source="include/strict.lua"/>
   <file source="include/socket.lua"/>
@@ -248,6 +254,7 @@
  <dependency from="init.lua" to="include/scenemanager.lua"/>
  <dependency from="init.lua" to="include/easing.lua"/>
  <dependency from="init.lua" to="classes/loaders/fonts.lua"/>
+ <dependency from="init.lua" to="include/colorPick/slidecolorpicker.lua"/>
  <dependency from="classes/arenaarena.lua" to="classes/player.lua"/>
  <dependency from="classes/arenaarena.lua" to="classes/combatstats.lua"/>
  <dependency from="classes/arenaarena.lua" to="classes/ball.lua"/>

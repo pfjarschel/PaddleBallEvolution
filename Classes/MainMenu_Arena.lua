@@ -135,11 +135,11 @@ function MainMenu_Arena:init()
 	selSkillTextBox:setPosition(192 - selSkillTextBox:getWidth()/2, 0.5*WY + 50)
 	self:addChild(selSkillTextBox)
 	
-	local stats = "Atk: "..classAtk[1].."\n"..
-					"Mov: "..classMov[1].."\n"..
-					"Lif: "..classLif[1].."\n"..
-					"Skl: "..classSkl[1].."\n"..
-					"Def: "..classDef[1].."\n"
+	local stats = "Atk: "..classAtk[classIndexL].."\n"..
+					"Mov: "..classMov[classIndexL].."\n"..
+					"Lif: "..classLif[classIndexL].."\n"..
+					"Skl: "..classSkl[classIndexL].."\n"..
+					"Def: "..classDef[classIndexL].."\n"
 	local statsTextBox = TextWrap.new(stats, 80, "center", 7, self.smallfont)
 	statsTextBox:setTextColor(0xffffff)
 	statsTextBox:setPosition(192 - statsTextBox:getWidth()/2, 0.5*WY + 95)
@@ -291,11 +291,11 @@ function MainMenu_Arena:init()
 	self:addChild(selSkillTextBoxAI)
 	
 
-	local statsAI = "Atk: "..classAtk[1].."\n"..
-			"Mov: "..classMov[1].."\n"..
-			"Lif: "..classLif[1].."\n"..
-			"Skl: "..classSkl[1].."\n"..
-			"Def: "..classDef[1].."\n"
+	local statsAI = "Atk: "..classAtk[classIndexR].."\n"..
+			"Mov: "..classMov[classIndexR].."\n"..
+			"Lif: "..classLif[classIndexR].."\n"..
+			"Skl: "..classSkl[classIndexR].."\n"..
+			"Def: "..classDef[classIndexR].."\n"
 	local statsTextBoxAI = TextWrap.new(statsAI, 80, "center", 7, self.smallfont)
 	statsTextBoxAI:setTextColor(0xffffff)
 	statsTextBoxAI:setPosition(WX - 192 - statsTextBoxAI:getWidth()/2, 0.5*WY + 95)

@@ -735,6 +735,32 @@ function EditCustomClass:init(menuplace)
 		end
 	end)
 	
+	-- Color Pick! --
+	local samplePaddle = Bitmap.new(textures.paddle2)
+	samplePaddle:setScale(1, 1)
+	self:addChild(samplePaddle)
+	local textureWp = samplePaddle:getWidth()
+	local textureHp = samplePaddle:getHeight()
+	samplePaddle:setAnchorPoint(0.5, 0.5)
+	samplePaddle:setScale(15/textureWp,75/textureHp)
+	samplePaddle:setRotation(-90)
+	samplePaddle:setPosition(WX0 - 128, WY - 56)
+	
+	local slideColorPicker = SlideColorPicker.new()
+	local function onColorChanged(e)
+		samplePaddle:setColorTransform(e.r/255, e.g/255, e.b/255)
+		customClass["ColorR"] = e.r/25.5
+		customClass["ColorG"] = e.g/25.5
+		customClass["ColorB"] = e.b/25.5
+	end
+	slideColorPicker:addEventListener("COLOR_CHANGED", onColorChanged)
+	self:addChild(slideColorPicker)
+	slideColorPicker:setScale(0.75, 0.5)
+	slideColorPicker:setPosition(WX/2 - slideColorPicker:getWidth()/2, WY - slideColorPicker:getHeight() - 32)
+	Timer.delayedCall(100, function()
+		samplePaddle:setColorTransform(classTable["Custom"][10][1], classTable["Custom"][10][2], classTable["Custom"][10][3])
+	end)
+	
 	self.returnBut = MenuBut.new(150, 40, textures.returnBut, textures.returnBut1)
 	self:addChild(self.returnBut)
 	self.returnBut.bitmap:setPosition(self.returnBut:getWidth()/2 + 16, WY0/2 + 210)

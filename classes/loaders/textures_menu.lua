@@ -71,5 +71,6 @@ function TextureLoaderMenu:init()
 	
 	self.bluesmoke = Texture.new("imgs/backs/bluesmoke.png", true)
 	
+	self.paddle2 = Texture.new("imgs/paddle2.png", true)
 end
 

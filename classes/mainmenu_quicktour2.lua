@@ -127,11 +127,11 @@ function MainMenu_QuickTour2:init()
 	selSkillTextBox:setPosition(WX - 192 - selSkillTextBox:getWidth()/2, 0.5*WY + 50)
 	self:addChild(selSkillTextBox)
 	
-	local stats = "Atk: "..classAtk[1].."\n"..
-					"Mov: "..classMov[1].."\n"..
-					"Lif: "..classLif[1].."\n"..
-					"Skl: "..classSkl[1].."\n"..
-					"Def: "..classDef[1].."\n"
+	local stats = "Atk: "..classAtk[classIndexT].."\n"..
+					"Mov: "..classMov[classIndexT].."\n"..
+					"Lif: "..classLif[classIndexT].."\n"..
+					"Skl: "..classSkl[classIndexT].."\n"..
+					"Def: "..classDef[classIndexT].."\n"
 	local statsTextBox = TextWrap.new(stats, 80, "center", 7, self.smallfont)
 	statsTextBox:setTextColor(0xffffff)
 	statsTextBox:setPosition(WX - 192 - statsTextBox:getWidth()/2, 0.5*WY + 95)
