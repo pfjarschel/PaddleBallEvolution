@@ -260,8 +260,16 @@ function MainMenu_QuickTour2:init()
 			local optionsFile = io.open("|D|options.txt", "w+")
 			for k, v in pairs(optionsTable) do 
 				optionsFile:write(k.."="..v.."\n")
-			end	
-			sceneMan:changeScene("arenaTour", transTime, SceneManager.fade, easing.linear, { userData = {difficulty, class, "Random", 1} }) 
+			end
+			local arenaNames = {}			
+			local i = 1
+			for k, v in pairs(arenasTable) do
+				arenaNames[i] = k
+				i = i + 1
+			end
+			local arenatype = arenaNames[math.random(1, tablelength(arenaNames))]
+			tourTable["QuickTourArena"] = arenatype
+			sceneMan:changeScene("arenaTour", transTime, SceneManager.fade, easing.linear, { userData = {difficulty, class, "Random", 1, arenatype} }) 
 		end
 	end)
 	

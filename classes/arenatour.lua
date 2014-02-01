@@ -502,8 +502,6 @@ function ArenaTour:gameOver()
 				self = nil
 				arena = nil
 				
-				if optionsTable["SFX"] == "On" then sounds.sel2:play() end
-				
 				sceneMan:changeScene("arenaTour", transTime, SceneManager.fade, easing.linear, { userData = {difficulty, class, class2, stage, arenatype} })
 			end
 		end)
@@ -788,6 +786,21 @@ function ArenaTour:init(dataTable)
 	end
 	
 	-- Continue as usual --
+	
+	-- Arena BG --
+	if self.arenatype ~= "Normal" then
+		print(self.arenatype)
+		self.arenabg = Bitmap.new(Texture.new(arenasTable[self.arenatype]["Image"]))
+		self.arenabg:setScale(1, 1)
+		self:addChild(self.arenabg)
+		local textureWbg = self.arenabg:getWidth()
+		local textureHbg = self.arenabg:getHeight()
+		self.arenabg:setScale(WX0/textureWbg, WY/textureHbg)
+		
+		self.initArena = arenasTable[self.arenatype]["Init"]
+		self.endArena = arenasTable[self.arenatype]["End"]
+	end
+	
 	self.bitmap = Bitmap.new(textures.pongbg)
 	self.bitmap:setScale(1, 1)
 	self.difFactor = difficulty/5
@@ -799,19 +812,6 @@ function ArenaTour:init(dataTable)
 		self.bitmap:setPosition(XShift, 0)
 	end
 	self:createBoundaries()
-	
-	-- Arena BG --
-	if self.arenatype ~= "Normal" then
-		self.arenabg = Bitmap.new(Texture.new(arenasTable[self.arenatype]["Image"]))
-		self.arenabg:setScale(1, 1)
-		self:addChild(self.arenabg)
-		local textureWbg = self.arenabg:getWidth()
-		local textureHbg = self.arenabg:getHeight()
-		self.arenabg:setScale(WX0/textureWbg, WY/textureHbg)
-		
-		self.initArena = arenasTable[self.arenatype]["Init"]
-		self.endArena = arenasTable[self.arenatype]["End"]
-	end
 	
 	self:addMenu()
 

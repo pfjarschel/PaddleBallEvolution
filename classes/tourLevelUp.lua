@@ -48,6 +48,15 @@ function TourLevelUp:init()
 	--menubg:setAlpha(0.25)
 	self:addChild(menubg)
 	
+	local ia = 1
+	local arenaNames = {}
+	for k, v in pairs(arenasTable) do
+		arenaNames[ia] = k
+		ia = ia + 1
+	end
+	local arenatype = arenaNames[math.random(1, tablelength(arenaNames))]
+	tourTable["QuickTourArena"] = arenatype
+	
 	local classNames = {}
 	local i = 1
 	for k, v in pairs(classTable) do
@@ -648,8 +657,10 @@ function TourLevelUp:init()
 				tourFile:write(k.."="..v.."\n")
 			end	
 			tourFile:close()
+							
+			if optionsTable["SFX"] == "On" then sounds.sel2:play() end
 			
-			sceneMan:changeScene("arenaTour", transTime, SceneManager.fade, easing.linear, { userData = {tourTable["QuickTourDif"], tourTable["QuickTourClass"], tourTable["QuickTourOpponent"], tourTable["QuickTourStage"]} })
+			sceneMan:changeScene("arenaTour", transTime, SceneManager.fade, easing.linear, { userData = {tourTable["QuickTourDif"], tourTable["QuickTourClass"], tourTable["QuickTourOpponent"], tourTable["QuickTourStage"], arenatype} })
 		end
 	end)
 	

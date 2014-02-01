@@ -70,7 +70,7 @@ function MainMenu_QuickTour:init()
 				for k, v in pairs(optionsTable) do 
 					optionsFile:write(k.."="..v.."\n")
 				end	
-				sceneMan:changeScene("arenaTour", transTime, SceneManager.fade, easing.linear, { userData = {tonumber(tourTable["QuickTourDif"]), tourTable["QuickTourClass"], tourTable["QuickTourOpponent"], tonumber(tourTable["QuickTourStage"])} }) 
+				sceneMan:changeScene("arenaTour", transTime, SceneManager.fade, easing.linear, { userData = {tonumber(tourTable["QuickTourDif"]), tourTable["QuickTourClass"], tourTable["QuickTourOpponent"], tonumber(tourTable["QuickTourStage"]), tourTable["QuickTourArena"]} }) 
 			end
 		end)
 		
@@ -82,6 +82,7 @@ function MainMenu_QuickTour:init()
 		local stats = "Saved game Info:\n \n"..
 					tourTable["QuickTourClass"]..stagename.."\n"..
 					"Next opponent: "..tourTable["QuickTourOpponent"].."\n"..
+					"Next Arena: "..tourTable["QuickTourArena"].."\n"..
 					"Difficulty: "..tourTable["QuickTourDif"].."\n \n"..
 					"Atk: "..(classTable[tourTable["QuickTourClass"]][1] + tourTable["QuickTourAtk"]).."\n"..
 					"Mov: "..(classTable[tourTable["QuickTourClass"]][2] + tourTable["QuickTourMov"]).."\n"..
@@ -90,7 +91,7 @@ function MainMenu_QuickTour:init()
 					"Def: "..(classTable[tourTable["QuickTourClass"]][6] + tourTable["QuickTourDef"]).."\n"
 		local statsTextBox = TextWrap.new(stats, 256, "center", 7, self.smallfont)
 		statsTextBox:setTextColor(0xffffff)
-		statsTextBox:setPosition(WX0/2 + statsTextBox:getWidth()/2, WY/2)
+		statsTextBox:setPosition(WX0/2 + statsTextBox:getWidth()/2, WY/2 - 8)
 		self:addChild(statsTextBox)
 	else
 		self.loadBut = MenuBut.new(150, 40, textures.loadBut, textures.loadBut1, textures.loadBut0)
