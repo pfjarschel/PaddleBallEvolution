@@ -60,5 +60,6 @@ function TextureLoaderArenaMode:init()
 	self.gfx_mirror = Texture.new("imgs/gfx/mirror.png", true)
 	self.gfx_star = Texture.new("imgs/gfx/star.png", true)
 	self.gfx_tractorbeam = Texture.new("imgs/gfx/tractorbeam.png", true)
+	self.gfx_flame = Texture.new("imgs/gfx/flame.png", true)
 end
 

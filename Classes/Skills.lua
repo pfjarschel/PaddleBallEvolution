@@ -573,8 +573,8 @@ function Skills:start(side)
 				arena.rightPlayer.paddle.body.defFactor = defFactor
 				
 				local shape = b2.PolygonShape.new()
-				arena.rightPlayer.paddle.paddleH = arena.leftPlayer.paddle.basepaddleH*defFactor
-				arena.rightPlayer.paddle.body.paddleH = arena.leftPlayer.paddle.paddleH
+				arena.rightPlayer.paddle.paddleH = arena.rightPlayer.paddle.basepaddleH*defFactor
+				arena.rightPlayer.paddle.body.paddleH = arena.rightPlayer.paddle.paddleH
 				shape:setAsBox(arena.rightPlayer.paddle.paddleW/2, arena.rightPlayer.paddle.paddleH/2, 0, 0, 0)
 				arena.rightPlayer.paddle.body:destroyFixture(arena.rightPlayer.paddle.fixture)
 				arena.rightPlayer.paddle.shape = shape

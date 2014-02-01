@@ -812,7 +812,6 @@ function ArenaTour:init(dataTable)
 		self.initArena = arenasTable[self.arenatype]["Init"]
 		self.endArena = arenasTable[self.arenatype]["End"]
 	end
-	self:initArena()
 	
 	self:addMenu()
 
@@ -857,6 +856,8 @@ function ArenaTour:init(dataTable)
 		self.ball:launch()
 	end)
 	self:addEventListener(Event.ENTER_FRAME, onEnterFrame)
+	
+	self:initArena()
 	
 	-- Listen to Keys --
 	self:addEventListener(Event.KEY_DOWN, onKeyDown)

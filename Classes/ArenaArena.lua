@@ -623,7 +623,6 @@ function ArenaArena:init(dataTable)
 		self.initArena = arenasTable[self.arenatype]["Init"]
 		self.endArena = arenasTable[self.arenatype]["End"]
 	end
-	self:initArena()
 	
 	self.bitmap = Bitmap.new(textures.pongbg)
 	self.bitmap:setScale(1, 1)
@@ -679,6 +678,8 @@ function ArenaArena:init(dataTable)
 		self.ball:launch()
 	end)
 	self:addEventListener(Event.ENTER_FRAME, onEnterFrame)
+	
+	self:initArena()
 	
 	-- Listen to Keys --
 	self:addEventListener(Event.KEY_DOWN, onKeyDown)

@@ -30,5 +30,6 @@ function SoundLoaderArenaMode:init()
 	self.glass_ping = Sound.new("audio/sfx/glass_ping.wav")
 	self.magic = Sound.new("audio/sfx/magic.wav")
 	self.tractorbeam = Sound.new("audio/sfx/tractorbeam.wav")
+	self.fire = Sound.new("audio/sfx/fire.wav")
 end
 

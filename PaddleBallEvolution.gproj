@@ -50,6 +50,7 @@
    <file source="audio/bgm/bgm_boss1.mp3"/>
   </folder>
   <folder name="sfx">
+   <file source="audio/sfx/fire.wav"/>
    <file source="audio/sfx/woosh.wav"/>
    <file source="audio/sfx/tractorbeam.wav"/>
    <file source="audio/sfx/puff.wav"/>
@@ -79,6 +80,8 @@
   <file source="imgs/pongball.png"/>
   <file source="imgs/paddle2.png"/>
   <folder name="gfx">
+   <file source="imgs/gfx/flame@2x.png"/>
+   <file source="imgs/gfx/flame.png"/>
    <file source="imgs/gfx/tractorbeam@2x.png"/>
    <file source="imgs/gfx/freeze@2x.png"/>
    <file source="imgs/gfx/tractorbeam.png"/>
