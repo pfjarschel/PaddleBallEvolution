@@ -6,6 +6,10 @@ skillTable["none"] = {}
 skillTable["none"]["Name"] = "None"
 skillTable["none"]["Desc"] = "Touch the gear to select"
 
+skillTable["noskill"] = {}
+skillTable["noskill"]["Name"] = "No Skill"
+skillTable["noskill"]["Desc"] = "+10 Attribute Points"
+
 skillTable["powershot"] = {}
 skillTable["powershot"]["Name"] = "Powershot"
 skillTable["powershot"]["Desc"] = "The next ball return will be VERY fast"
@@ -45,3 +49,7 @@ skillTable["multiball"]["Desc"] = "Creates illusions to confuse the enemy"
 skillTable["freeze"] = {}
 skillTable["freeze"]["Name"] = "Freeze"
 skillTable["freeze"]["Desc"] = "Freezes your opponent for some time"
+
+skillTable["predict"] = {}
+skillTable["predict"]["Name"] = "Predict"
+skillTable["predict"]["Desc"] = "Predicts ball trajectory"

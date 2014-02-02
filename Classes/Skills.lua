@@ -23,6 +23,23 @@ end
 
 function Skills:start(side)
 
+
+------------------------------------
+-- No Skill: +10 attribute points --
+------------------------------------
+	if self.skill == "noskill" then
+		
+		self.endAction = function()
+			
+		end
+		
+		-- Action to force end --
+		self.forceEnd = function()
+			
+		end
+	end	
+
+
 --------------------------------------------------------
 -- PowerShot: The next ball return will be VERY fast! --
 --------------------------------------------------------
@@ -886,7 +903,147 @@ function Skills:start(side)
 				end
 			end
 		end
+	end
+
+
+---------------------------------------
+-- Predict: Predicts ball trajectory --
+---------------------------------------
+	if self.skill == "predict" then
+		if optionsTable["SFX"] == "On" then sounds.alarm:play() end
+		
+		-- Gets positions and velocities --
+		local ballX, ballY = arena.ball.body:getPosition()
+		local padX, padY = 0
+		local paddleH, paddleW = 0
+		local correctAIY = 0
+		
+		local ballVx, ballVy = arena.ball.body:getLinearVelocity()
+		if ballVx < 0 then
+			padX, padY = arena.leftPlayer.paddle.body:getPosition()
+			paddleH = arena.leftPlayer.paddle.paddleH
+			paddleW = arena.leftPlayer.paddle.paddleW
+			correctAIY = arena.leftPlayer.correctAIY
+		else
+			padX, padY = arena.rightPlayer.paddle.body:getPosition()
+			paddleH = arena.rightPlayer.paddle.paddleH
+			paddleW = arena.rightPlayer.paddle.paddleW
+			correctAIY = arena.rightPlayer.correctAIY
+		end
+		
+		local ballDist = math.sqrt(math.pow(padX - ballX, 2) + math.pow(padY - ballY, 2))
+		local ballVx0 = ballVx
+		local ballVy0 = ballVy
+		local ballV0 = math.sqrt(ballVx*ballVx + ballVy*ballVy)
+		if ballVy == 0 then
+			ballVy = 0.001
+		end
+		ballVx = ballVx*PhysicsScale
+		ballVy = ballVy*PhysicsScale
+		
+		-- Prediction Initialization, any values --
+		local predictX = XShift + WX/2
+		local predictY = 0
+		local dy = 0
+		local maxdelta = WY - paddleH/2 - WBounds
+		
+		-- Predict Y coordinate of ball when it pass over the paddle line, if ball is moving towards paddle --
+		if ballVx < 0  then
+			
+			-- Calculates ball X position when it hits a boundary, until X means it is behind a paddle --
+			while predictX > (padX + paddleW/2 + arena.ball.radius) do
+				if ballVy > 0 then
+					dy = WY - WBounds - ballY - arena.ball.radius
+					predictX = ballX - math.abs(ballVx)*dy/math.abs(ballVy)
+					ballVy = -ballVy
+					ballY = WY - WBounds - arena.ball.radius
+					ballX = predictX
+				else
+					dy = ballY - WBounds - arena.ball.radius
+					predictX = ballX  - math.abs(ballVx)*dy/math.abs(ballVy)
+					ballVy = -ballVy
+					ballY = WBounds + arena.ball.radius
+					ballX = predictX
+				end
+			end
+			
+			-- After last position is found, calculates the ball Y position when crossing the paddle line --
+			if ballVy > 0 then
+				predictY = correctAIY + math.abs(ballVy)*(padX + paddleW/2 + arena.ball.radius - ballX)/math.abs(ballVx)
+			else
+				predictY = -correctAIY + WY - math.abs(ballVy)*(padX + paddleW/2 + arena.ball.radius - ballX)/math.abs(ballVx)
+			end
+
+		-- Same thing, to the other side --
+		else
+			while predictX < (padX - paddleW/2 - arena.ball.radius) do
+				if ballVy > 0 then
+					dy = WY - WBounds - ballY - arena.ball.radius
+					predictX = ballX + math.abs(ballVx)*dy/math.abs(ballVy)
+					ballVy = -ballVy
+					ballY = WY - WBounds - arena.ball.radius
+					ballX = predictX
+				else
+					dy = ballY - WBounds - arena.ball.radius
+					predictX = ballX  + math.abs(ballVx)*dy/math.abs(ballVy)
+					ballVy = -ballVy
+					ballY = WBounds + arena.ball.radius
+					ballX = predictX
+				end
+			end
+			if ballVy > 0 then
+				predictY = correctAIY + math.abs(ballVy)*(ballX - padX + paddleW/2 + arena.ball.radius)/math.abs(ballVx)
+			else
+				predictY = -correctAIY + WY - math.abs(ballVy)*(ballX - padX + paddleW/2 + arena.ball.radius)/math.abs(ballVx)
+			end
+		end
+		
+		-- GFX --
+		local target = Bitmap.new(textures.gfx_target)
+		target:setScale(1, 1)
+		target:setAnchorPoint(0.5, 0.5)
+		arena:addChild(target)
+		local textureW = target:getWidth()
+		local textureH = target:getHeight()
+		target:setScale(124/textureW, 124/textureH)
+		target:setPosition(padX, predictY)
+		fadeBitmapIn(target, 1000, 0.75)
+		
+		-- Sets AI Intelligent --
+		arena.aiPlayer.char.intFactor = 0
+		arena.aiPlayer:aiRandomFactor()
+		
+		-- Sets timer to end skill --
+		Timer.delayedCall(self.basetime/5,  function()
+			self:endAction() 
+		end)
+		
+		self.endAction = function()
+			fadeBitmapOut(target, 500, arena)
+			arena.aiPlayer.char:updateAttr()
+			if side == 0 then
+				arena.rightPlayer.char:updateAttr()
+				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
+					arena.skillBut:setAlpha(0.4)
+				end
+				arena.leftPlayer.skillActive = false
+			else
+				arena.leftPlayer.char:updateAttr()
+				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
+					arena.skillBut:setAlpha(0.4)
+				end
+				arena.rightPlayer.skillActive = false
+			end
+		end
+		
+		-- Action to force end --
+		self.forceEnd = function()
+			for i = arena:getNumChildren(), 1, -1 do
+				if arena:getChildAt(i) == target then
+					fadeBitmapOut(target, 100, arena)
+				end
+			end
+		end
 	end	
-	
 	
 end

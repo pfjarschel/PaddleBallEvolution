@@ -19,7 +19,7 @@ arenasTable["Lava"]["Desc"] = "Paddles can randomly melt (get smaller)"
 arenasTable["Lava"]["Image"] = "imgs/backs/arenas/lava.png"
 arenasTable["Lava"]["timer"] = Timer.new(1000, 0)
 arenasTable["Lava"]["onTimer"] = function()
-	local chance = 15
+	local chance = 12
 	local randNum = math.random(1, chance)
 	if randNum == 1 and arena.ball.launched then
 		if optionsTable["SFX"] == "On" then sounds.fire:play() end
@@ -74,27 +74,33 @@ arenasTable["Lava"]["onTimer"] = function()
 		-- GFX --
 		local paddleX, paddleY = 0
 		local paddleH, paddleW = 0
+		arenasTable["Lava"].flame = Bitmap.new(textures.gfx_flame)
+		arenasTable["Lava"].flame:setScale(1, 1)
+		arenasTable["Lava"].flame:setAnchorPoint(0.5, 0.5)
+		local textureW = arenasTable["Lava"].flame:getWidth()
+		local textureH = arenasTable["Lava"].flame:getHeight()
+		--arenasTable["Lava"].flame:setPosition(paddleX, paddleY)
 		if randSide == 2 then
 			paddleX, paddleY = arena.rightPlayer.paddle.body:getPosition()
 			paddleH = arena.rightPlayer.paddle.paddleH
 			paddleW = arena.rightPlayer.paddle.paddleW
+			arenasTable["Lava"].flame:setScale((paddleW*3)/textureW, (paddleH*1.5)/textureH)
+			arena.rightPlayer.paddle:addChild(arenasTable["Lava"].flame)
+			fadeBitmapIn(arenasTable["Lava"].flame, 500, 0.5)
+			Timer.delayedCall(500, function()
+				fadeBitmapOut(arenasTable["Lava"].flame, 500, arena.rightPlayer.paddle)
+			end)
 		else
 			paddleX, paddleY = arena.leftPlayer.paddle.body:getPosition()
 			paddleH = arena.leftPlayer.paddle.paddleH
 			paddleW = arena.leftPlayer.paddle.paddleW
+			arenasTable["Lava"].flame:setScale((paddleW*3)/textureW, (paddleH*1.5)/textureH)
+			arena.leftPlayer.paddle:addChild(arenasTable["Lava"].flame)
+			fadeBitmapIn(arenasTable["Lava"].flame, 500, 0.5)
+			Timer.delayedCall(500, function()
+				fadeBitmapOut(arenasTable["Lava"].flame, 500, arena.leftPlayer.paddle)
+			end)
 		end
-		arenasTable["Lava"].flame = Bitmap.new(textures.gfx_flame)
-		arenasTable["Lava"].flame:setScale(1, 1)
-		arenasTable["Lava"].flame:setAnchorPoint(0.5, 0.5)
-		arena:addChild(arenasTable["Lava"].flame)
-		local textureW = arenasTable["Lava"].flame:getWidth()
-		local textureH = arenasTable["Lava"].flame:getHeight()
-		arenasTable["Lava"].flame:setScale((paddleW*3)/textureW, (paddleH*1.5)/textureH)
-		arenasTable["Lava"].flame:setPosition(paddleX, paddleY)
-		fadeBitmapIn(arenasTable["Lava"].flame, 500, 0.5)
-		Timer.delayedCall(500, function()
-			fadeBitmapOut(arenasTable["Lava"].flame, 500, arena)
-		end)
 	end
 end
 arenasTable["Lava"]["Init"] = function()
@@ -148,9 +154,14 @@ arenasTable["Lava"]["End"] = function()
 	arena.rightPlayer.paddle.bitmap:setScale(arena.rightPlayer.paddle.paddleW/arena.rightPlayer.paddle.textureW, arena.rightPlayer.paddle.paddleH/arena.rightPlayer.paddle.textureH)
 	arena.rightPlayer.paddle:setRotation(arena.rightPlayer.paddle.side*180)
 	
-	for i = arena:getNumChildren(), 1, -1 do
-		if arena:getChildAt(i) == arenasTable["Lava"].flame then
-			fadeBitmapOut(arenasTable["Lava"].flame, 100, arena)
+	for i = arena.leftPlayer.paddle:getNumChildren(), 1, -1 do
+		if arena.leftPlayer.paddle:getChildAt(i) == arenasTable["Lava"].flame then
+			fadeBitmapOut(arenasTable["Lava"].flame, 100, arena.leftPlayer.paddle)
+		end
+	end
+	for i = arena.rightPlayer.paddle:getNumChildren(), 1, -1 do
+		if arena.rightPlayer.paddle:getChildAt(i) == arenasTable["Lava"].flame then
+			fadeBitmapOut(arenasTable["Lava"].flame, 100, arena.rightPlayer.paddle)
 		end
 	end
 end
@@ -162,7 +173,7 @@ arenasTable["Ice"]["Desc"] = "Paddles can randomly freeze"
 arenasTable["Ice"]["Image"] = "imgs/backs/arenas/ice.png"
 arenasTable["Ice"]["timer"] = Timer.new(2000, 0)
 arenasTable["Ice"]["onTimer"] = function()
-	local chance = 8
+	local chance = 5
 	local randNum = math.random(1, chance)
 	if randNum == 1 and arena.ball.launched then
 		if optionsTable["SFX"] == "On" then sounds.ice:play() end
@@ -300,7 +311,7 @@ arenasTable["Wind"]["Desc"] = "Strong Winds change ball direction"
 arenasTable["Wind"]["Image"] = "imgs/backs/arenas/wind.png"
 arenasTable["Wind"]["timer"] = Timer.new(1000, 0)
 arenasTable["Wind"]["onTimer"] = function()
-	local chance = 10
+	local chance = 8
 	local randNum = math.random(1, chance)
 	if randNum == 1 and arena.ball.launched then
 		if optionsTable["SFX"] == "On" then sounds.woosh:play() end

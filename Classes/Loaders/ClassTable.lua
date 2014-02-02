@@ -149,3 +149,31 @@ classTable["IceMan"] = {
 	{0.8, 0.8, 1},
 	"Ice Man"
 }
+
+classTable["CaveMan"] = {
+	16,
+	10,
+	18,
+	10,
+	0,
+	16,
+	"noskill",
+	"No Skill",
+	"+10 Attribute Points",
+	{0.47, 0.33, 0.08},
+	"Cave Man"
+}
+
+classTable["Scientist"] = {
+	8,
+	12,
+	8,
+	10,
+	20,
+	12,
+	"predict",
+	"Predict",
+	"Predicts ball trajectory",
+	{0.53, 0.75, 0.86},
+	"Scientist"
+}

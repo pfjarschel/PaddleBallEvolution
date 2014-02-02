@@ -101,85 +101,6 @@ function EditCustomClass:init(menuplace)
 	skillDTextBox:setPosition(0.5*WX0 - skillDTextBox:getWidth()/2, 50)
 	self:addChild(skillDTextBox)
 	
-	self.prevBut = MenuBut.new(30, 30, textures.backBut, textures.backBut1)
-	self:addChild(self.prevBut)
-	self.prevBut.bitmap:setPosition(0.5*WX0 - 256, 30)
-	self.prevBut:addEventListener(Event.TOUCHES_END, function(event)
-		if self.prevBut:hitTestPoint(event.touch.x, event.touch.y) then
-			j = j - 1
-			if j < 1 then j = tablelength(skillNames) end
-			
-			self:removeChild(skillTextBox)
-			self:removeChild(skillDTextBox)
-			
-			skill = skillNames[j]
-			if skill == "none" then
-				j = j - 1
-				if j < 1 then j = tablelength(skillNames) end
-			end
-			
-			skill = skillNames[j]
-			skillName = skillFullNames[j]
-			skillDesc = skillDescs[j]
-			
-			skillTextBox = TextField.new(self.smallfont, "Skill: "..skillName)
-			skillTextBox:setTextColor(0xffffff)
-			skillTextBox:setPosition(0.5*WX0 - skillTextBox:getWidth()/2, 30)
-			self:addChild(skillTextBox)
-			
-			skillDTextBox = TextField.new(self.xsmallfont, skillDesc)
-			skillDTextBox:setTextColor(0xffffff)
-			skillDTextBox:setPosition(0.5*WX0 - skillDTextBox:getWidth()/2, 50)
-			self:addChild(skillDTextBox)
-			
-			customClass["skill"] = skill
-			customClass["skillName"] = skillName
-			customClass["skillDesc"] = skillDesc
-			
-			if optionsTable["SFX"] == "On" then sounds.sel1:play() end
-		end
-	end)
-	
-	self.nextBut = MenuBut.new(30, 30, textures.forwardBut, textures.forwardBut1)
-	self:addChild(self.nextBut)
-	self.nextBut.bitmap:setPosition(0.5*WX0 + 256, 30)
-	self.nextBut:addEventListener(Event.TOUCHES_END, function(event)
-		if self.nextBut:hitTestPoint(event.touch.x, event.touch.y) then
-			j = j + 1
-			if j > tablelength(skillNames) then j = 1 end
-			
-			self:removeChild(skillTextBox)
-			self:removeChild(skillDTextBox)
-			
-			skill = skillNames[j]
-			if skill == "none" then
-				j = j + 1
-				if j > tablelength(skillNames) then j = 1 end
-			end
-			
-			skill = skillNames[j]
-			skillName = skillFullNames[j]
-			skillDesc = skillDescs[j]
-			
-			skillTextBox = TextField.new(self.smallfont, "Skill: "..skillName)
-			skillTextBox:setTextColor(0xffffff)
-			skillTextBox:setPosition(0.5*WX0 - skillTextBox:getWidth()/2, 30)
-			self:addChild(skillTextBox)
-			
-			skillDTextBox = TextField.new(self.xsmallfont, skillDesc)
-			skillDTextBox:setTextColor(0xffffff)
-			skillDTextBox:setPosition(0.5*WX0 - skillDTextBox:getWidth()/2, 50)
-			self:addChild(skillDTextBox)
-			
-			customClass["skill"] = skill
-			customClass["skillName"] = skillName
-			customClass["skillDesc"] = skillDesc
-			
-			if optionsTable["SFX"] == "On" then sounds.sel1:play() end
-		end
-	end)
-	
-
 	-- Attributes Improvement --
 	local addAtk = customClass["Atk"] - 10
 	local addMov = customClass["Mov"] - 10
@@ -264,7 +185,7 @@ function EditCustomClass:init(menuplace)
 							self:removeChild(self.incSkl)
 						end
 					end
-					self:addChild(self.incSkl)
+					if skill ~= "noskill" then self:addChild(self.incSkl) end
 					for i = self:getNumChildren(), 1, -1 do
 						if self:getChildAt(i) == self.incDef then
 							self:removeChild(self.incDef)
@@ -369,7 +290,7 @@ function EditCustomClass:init(menuplace)
 							self:removeChild(self.incSkl)
 						end
 					end
-					self:addChild(self.incSkl)
+					if skill ~= "noskill" then self:addChild(self.incSkl) end
 					for i = self:getNumChildren(), 1, -1 do
 						if self:getChildAt(i) == self.incDef then
 							self:removeChild(self.incDef)
@@ -474,7 +395,7 @@ function EditCustomClass:init(menuplace)
 							self:removeChild(self.incSkl)
 						end
 					end
-					self:addChild(self.incSkl)
+					if skill ~= "noskill" then self:addChild(self.incSkl) end
 					for i = self:getNumChildren(), 1, -1 do
 						if self:getChildAt(i) == self.incDef then
 							self:removeChild(self.incDef)
@@ -579,7 +500,7 @@ function EditCustomClass:init(menuplace)
 							self:removeChild(self.incSkl)
 						end
 					end
-					self:addChild(self.incSkl)
+					if skill ~= "noskill" then self:addChild(self.incSkl) end
 					for i = self:getNumChildren(), 1, -1 do
 						if self:getChildAt(i) == self.incDef then
 							self:removeChild(self.incDef)
@@ -684,7 +605,7 @@ function EditCustomClass:init(menuplace)
 							self:removeChild(self.incSkl)
 						end
 					end
-					self:addChild(self.incSkl)
+					if skill ~= "noskill" then self:addChild(self.incSkl) end
 					for i = self:getNumChildren(), 1, -1 do
 						if self:getChildAt(i) == self.incDef then
 							self:removeChild(self.incDef)
@@ -736,6 +657,361 @@ function EditCustomClass:init(menuplace)
 					self:removeChild(self.incLif)
 					self:removeChild(self.incSkl)
 					self:removeChild(self.incDef)
+				end
+			end
+			
+			if optionsTable["SFX"] == "On" then sounds.sel1:play() end
+		end
+	end)
+	
+	-- Skill Selection --
+	self.prevBut = MenuBut.new(30, 30, textures.backBut, textures.backBut1)
+	self:addChild(self.prevBut)
+	self.prevBut.bitmap:setPosition(0.5*WX0 - 256, 30)
+	self.prevBut:addEventListener(Event.TOUCHES_END, function(event)
+		if self.prevBut:hitTestPoint(event.touch.x, event.touch.y) then
+			if skill == "noskill" then
+				addAtk = 0
+				addMov = 0
+				addLif = 0
+				addSkl = 0
+				addDef = 0
+				
+				points = 10
+				
+				self:removeChild(attrTextBox)
+				local attrvalString = tostring((baseAtk + addAtk)).."\n"..
+						tostring((baseMov + addMov)).."\n"..
+						tostring((baseLif + addLif)).."\n"..
+						tostring((baseSkl + addSkl)).."\n"..
+						tostring((baseDef + addDef)).."\n"
+				attrvalTextBox:setText(attrvalString)
+				self:addChild(attrTextBox)
+				
+				self:removeChild(pointsTextBox)
+				pointsTextBox:setText("Available Attribute Points: "..points)
+				self:addChild(pointsTextBox)
+				
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.incAtk then
+						self:removeChild(self.incAtk)
+					end
+				end
+				self:addChild(self.incAtk)
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.incMov then
+						self:removeChild(self.incMov)
+					end
+				end
+				self:addChild(self.incMov)
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.incLif then
+						self:removeChild(self.incLif)
+					end
+				end
+				self:addChild(self.incLif)
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.incSkl then
+						self:removeChild(self.incSkl)
+					end
+				end
+				self:addChild(self.incSkl)
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.incDef then
+						self:removeChild(self.incDef)
+					end
+				end
+				self:addChild(self.incDef)
+				
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.decAtk then
+						self:removeChild(self.decAtk)
+					end
+				end
+				self:addChild(self.decAtk)
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.decMov then
+						self:removeChild(self.decMov)
+					end
+				end
+				self:addChild(self.decMov)
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.decLif then
+						self:removeChild(self.decLif)
+					end
+				end
+				self:addChild(self.decLif)
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.decSkl then
+						self:removeChild(self.decSkl)
+					end
+				end
+				self:addChild(self.decSkl)
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.decDef then
+						self:removeChild(self.decDef)
+					end
+				end
+				self:addChild(self.decDef)
+			end
+			
+			j = j - 1
+			if j < 1 then j = tablelength(skillNames) end
+			
+			self:removeChild(skillTextBox)
+			self:removeChild(skillDTextBox)
+			
+			skill = skillNames[j]
+			if skill == "none" then
+				j = j - 1
+				if j < 1 then j = tablelength(skillNames) end
+			end
+			
+			skill = skillNames[j]
+			skillName = skillFullNames[j]
+			skillDesc = skillDescs[j]
+			
+			skillTextBox = TextField.new(self.smallfont, "Skill: "..skillName)
+			skillTextBox:setTextColor(0xffffff)
+			skillTextBox:setPosition(0.5*WX0 - skillTextBox:getWidth()/2, 30)
+			self:addChild(skillTextBox)
+			
+			skillDTextBox = TextField.new(self.xsmallfont, skillDesc)
+			skillDTextBox:setTextColor(0xffffff)
+			skillDTextBox:setPosition(0.5*WX0 - skillDTextBox:getWidth()/2, 50)
+			self:addChild(skillDTextBox)
+			
+			customClass["skill"] = skill
+			customClass["skillName"] = skillName
+			customClass["skillDesc"] = skillDesc
+			
+			if skill == "noskill" then
+				points = points + 10
+				addSkl = -10
+				self:removeChild(attrTextBox)
+				local attrvalString = tostring((baseAtk + addAtk)).."\n"..
+						tostring((baseMov + addMov)).."\n"..
+						tostring((baseLif + addLif)).."\n"..
+						tostring((baseSkl + addSkl)).."\n"..
+						tostring((baseDef + addDef)).."\n"
+				attrvalTextBox:setText(attrvalString)
+				self:addChild(attrTextBox)
+				
+				self:removeChild(pointsTextBox)
+				pointsTextBox:setText("Available Attribute Points: "..points)
+				self:addChild(pointsTextBox)
+				
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.incAtk then
+						self:removeChild(self.incAtk)
+					end
+				end
+				self:addChild(self.incAtk)
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.incMov then
+						self:removeChild(self.incMov)
+					end
+				end
+				self:addChild(self.incMov)
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.incLif then
+						self:removeChild(self.incLif)
+					end
+				end
+				self:addChild(self.incLif)
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.incSkl then
+						self:removeChild(self.incSkl)
+					end
+				end
+				--self:addChild(self.incSkl)
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.incDef then
+						self:removeChild(self.incDef)
+					end
+				end
+				self:addChild(self.incDef)
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.decSkl then
+						self:removeChild(self.decSkl)
+					end
+				end
+			end
+			
+			if optionsTable["SFX"] == "On" then sounds.sel1:play() end
+		end
+	end)
+	
+	self.nextBut = MenuBut.new(30, 30, textures.forwardBut, textures.forwardBut1)
+	self:addChild(self.nextBut)
+	self.nextBut.bitmap:setPosition(0.5*WX0 + 256, 30)
+	self.nextBut:addEventListener(Event.TOUCHES_END, function(event)
+		if self.nextBut:hitTestPoint(event.touch.x, event.touch.y) then
+			if skill == "noskill" then
+				addAtk = 0
+				addMov = 0
+				addLif = 0
+				addSkl = 0
+				addDef = 0
+				
+				points = 10
+				
+				self:removeChild(attrTextBox)
+				local attrvalString = tostring((baseAtk + addAtk)).."\n"..
+						tostring((baseMov + addMov)).."\n"..
+						tostring((baseLif + addLif)).."\n"..
+						tostring((baseSkl + addSkl)).."\n"..
+						tostring((baseDef + addDef)).."\n"
+				attrvalTextBox:setText(attrvalString)
+				self:addChild(attrTextBox)
+				
+				self:removeChild(pointsTextBox)
+				pointsTextBox:setText("Available Attribute Points: "..points)
+				self:addChild(pointsTextBox)
+				
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.incAtk then
+						self:removeChild(self.incAtk)
+					end
+				end
+				self:addChild(self.incAtk)
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.incMov then
+						self:removeChild(self.incMov)
+					end
+				end
+				self:addChild(self.incMov)
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.incLif then
+						self:removeChild(self.incLif)
+					end
+				end
+				self:addChild(self.incLif)
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.incSkl then
+						self:removeChild(self.incSkl)
+					end
+				end
+				self:addChild(self.incSkl)
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.incDef then
+						self:removeChild(self.incDef)
+					end
+				end
+				self:addChild(self.incDef)
+				
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.decAtk then
+						self:removeChild(self.decAtk)
+					end
+				end
+				self:addChild(self.decAtk)
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.decMov then
+						self:removeChild(self.decMov)
+					end
+				end
+				self:addChild(self.decMov)
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.decLif then
+						self:removeChild(self.decLif)
+					end
+				end
+				self:addChild(self.decLif)
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.decSkl then
+						self:removeChild(self.decSkl)
+					end
+				end
+				self:addChild(self.decSkl)
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.decDef then
+						self:removeChild(self.decDef)
+					end
+				end
+				self:addChild(self.decDef)
+			end
+			
+			j = j + 1
+			if j > tablelength(skillNames) then j = 1 end
+			
+			self:removeChild(skillTextBox)
+			self:removeChild(skillDTextBox)
+			
+			skill = skillNames[j]
+			if skill == "none" then
+				j = j + 1
+				if j > tablelength(skillNames) then j = 1 end
+			end
+			
+			skill = skillNames[j]
+			skillName = skillFullNames[j]
+			skillDesc = skillDescs[j]
+			
+			skillTextBox = TextField.new(self.smallfont, "Skill: "..skillName)
+			skillTextBox:setTextColor(0xffffff)
+			skillTextBox:setPosition(0.5*WX0 - skillTextBox:getWidth()/2, 30)
+			self:addChild(skillTextBox)
+			
+			skillDTextBox = TextField.new(self.xsmallfont, skillDesc)
+			skillDTextBox:setTextColor(0xffffff)
+			skillDTextBox:setPosition(0.5*WX0 - skillDTextBox:getWidth()/2, 50)
+			self:addChild(skillDTextBox)
+			
+			customClass["skill"] = skill
+			customClass["skillName"] = skillName
+			customClass["skillDesc"] = skillDesc
+			
+			if skill == "noskill" then
+				points = points + 10
+				addSkl = -10
+				self:removeChild(attrTextBox)
+				local attrvalString = tostring((baseAtk + addAtk)).."\n"..
+						tostring((baseMov + addMov)).."\n"..
+						tostring((baseLif + addLif)).."\n"..
+						tostring((baseSkl + addSkl)).."\n"..
+						tostring((baseDef + addDef)).."\n"
+				attrvalTextBox:setText(attrvalString)
+				self:addChild(attrTextBox)
+				
+				self:removeChild(pointsTextBox)
+				pointsTextBox:setText("Available Attribute Points: "..points)
+				self:addChild(pointsTextBox)
+				
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.incAtk then
+						self:removeChild(self.incAtk)
+					end
+				end
+				self:addChild(self.incAtk)
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.incMov then
+						self:removeChild(self.incMov)
+					end
+				end
+				self:addChild(self.incMov)
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.incLif then
+						self:removeChild(self.incLif)
+					end
+				end
+				self:addChild(self.incLif)
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.incSkl then
+						self:removeChild(self.incSkl)
+					end
+				end
+				--self:addChild(self.incSkl)
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.incDef then
+						self:removeChild(self.incDef)
+					end
+				end
+				self:addChild(self.incDef)
+				for i = self:getNumChildren(), 1, -1 do
+					if self:getChildAt(i) == self.decSkl then
+						self:removeChild(self.decSkl)
+					end
 				end
 			end
 			

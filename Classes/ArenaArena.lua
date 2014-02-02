@@ -594,9 +594,9 @@ function ArenaArena:init(dataTable)
 		self.rightClass = class2
 	end
 	if optionsTable["ArenaSide"] == "Left" then
-		self.AI = ArenaAI.new(self.rightClass)
+		self.AI = ArenaAI.new(classTable[self.rightClass][7])
 	else
-		self.AI = ArenaAI.new(self.leftClass)
+		self.AI = ArenaAI.new(classTable[self.leftClass][7])
 	end
 	
 	local font = fonts.anitaSmall
@@ -618,7 +618,10 @@ function ArenaArena:init(dataTable)
 		self:addChild(self.arenabg)
 		local textureWbg = self.arenabg:getWidth()
 		local textureHbg = self.arenabg:getHeight()
-		self.arenabg:setScale(WX0/textureWbg, WY/textureHbg)
+		self.arenabg:setScale(WX/textureWbg, WY/textureHbg)
+		if optionsTable["ArenaSide"] == "Left" and optionsTable["ControlMode"] == "Touch" then
+			self.arenabg:setPosition(XShift, 0)
+		end
 		
 		self.initArena = arenasTable[self.arenatype]["Init"]
 		self.endArena = arenasTable[self.arenatype]["End"]

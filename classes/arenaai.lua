@@ -3,12 +3,12 @@
 --------------------------------------
 
 ArenaAI = Core.class()
-ArenaAI.class = ""
+ArenaAI.skill = ""
 ArenaAI.side = nil
 ArenaAI.chance = 500
 
-function ArenaAI:init(class)
-	self.class = class
+function ArenaAI:init(skill)
+	self.skill = skill
 	self.chance = 500/arena.difFactor
 	if optionsTable["ArenaSide"] == "Left" then
 		self.side = 1
@@ -18,35 +18,41 @@ function ArenaAI:init(class)
 end
 function ArenaAI:basicCall()
 	if ((self.side == 1 and arena.mp1 > 0) or (self.side == -1 and arena.mp0 > 0)) and arena.aiPlayer.skillActive == false and arena.ball.launched then
-		if self.class == "Warrior" then
-			self:Warrior()
+		if self.skill == "noskill" then
+			self:noskill()
 		end
-		if self.class == "Acrobat" then
-			self:Acrobat()
+		if self.skill == "powershot" then
+			self:powershot()
 		end
-		if self.class == "Ninja" then
-			self:Ninja()
+		if self.skill == "curveball" then
+			self:curveball()
 		end
-		if self.class == "SwampMonster" then
-			self:SwampMonster()
+		if self.skill == "invisiball" then
+			self:invisiball()
 		end
-		if self.class == "Archer" then
-			self:Archer()
+		if self.skill == "viscousfield" then
+			self:viscousfield()
 		end
-		if self.class == "Mesmer" then
-			self:Mesmer()
+		if self.skill == "arrowball" then
+			self:arrowball()
 		end
-		if self.class == "Barbarian" then
-			self:Barbarian()
+		if self.skill == "multiball" then
+			self:multiball()
 		end
-		if self.class == "Thief" then
-			self:Thief()
+		if self.skill == "berserk" then
+			self:berserk()
 		end
-		if self.class == "Illusionist" then
-			self:Illusionist()
+		if self.skill == "steal" then
+			self:steal()
 		end
-		if self.class == "IceMan" then
-			self:IceMan()
+		if self.skill == "mirrorball" then
+			self:mirrorball()
+		end
+		if self.skill == "freeze" then
+			self:freeze()
+		end
+		if self.skill == "predict" then
+			self:predict()
 		end
 	end
 end
@@ -64,10 +70,18 @@ function ArenaAI:initSkill()
 end
 
 
--------------
--- Warrior --
--------------
-function ArenaAI:Warrior()
+--------------
+-- No Skill --
+--------------
+function ArenaAI:noskill()
+	
+end
+
+
+----------------
+-- Power Shot --
+----------------
+function ArenaAI:powershot()
 	-- Activate only when ball is moving torwards him --
 	local ballVx = arena.ball.body:getLinearVelocity()
 	if self.side*ballVx > 0 then
@@ -79,10 +93,10 @@ function ArenaAI:Warrior()
 end
 
 
--------------
--- Acrobat --
--------------
-function ArenaAI:Acrobat()
+----------------
+-- Curve Ball --
+----------------
+function ArenaAI:curveball()
 	-- Activate only when ball is moving away form him, and close to goal --
 	local ballVx = arena.ball.body:getLinearVelocity()
 	local ballX = arena.ball.body:getPosition()
@@ -95,10 +109,10 @@ function ArenaAI:Acrobat()
 end
 
 
------------
--- Ninja --
------------
-function ArenaAI:Ninja()
+----------------
+-- Invisiball --
+----------------
+function ArenaAI:invisiball()
 	-- Activate only when ball is moving away from him, before crossing the field --
 	local ballVx = arena.ball.body:getLinearVelocity()
 	local ballX = arena.ball.body:getPosition()
@@ -112,9 +126,9 @@ end
 
 
 -------------------
--- Swamp Monster --
+-- Viscous Field --
 -------------------
-function ArenaAI:SwampMonster()
+function ArenaAI:viscousfield()
 	-- Activate only when ball is moving torwards him, after crossing the field. If distance is high, increase chance. Ball must be fast --
 	local ballVx, ballVy = arena.ball.body:getLinearVelocity()
 	local ballX, ballY = arena.ball.body:getPosition()
@@ -136,10 +150,10 @@ function ArenaAI:SwampMonster()
 end
 
 
-------------
--- Archer --
-------------
-function ArenaAI:Archer()
+----------------
+-- Arrow Ball --
+----------------
+function ArenaAI:arrowball()
 	-- Activate only when ball is moving away form him, close to the goal, and the path is clear --
 	local ballVx = arena.ball.body:getLinearVelocity()
 	local ballX, ballY = arena.ball.body:getPosition()
@@ -155,9 +169,9 @@ end
 
 
 -----------------
--- Illusionist --
+-- Mirror Ball --
 -----------------
-function ArenaAI:Illusionist()
+function ArenaAI:mirrorball()
 	-- Activate only when ball is returned, before crossing, or if he is about to take a goal --
 	local ballVx = arena.ball.body:getLinearVelocity()
 	local ballX, ballY = arena.ball.body:getPosition()
@@ -171,10 +185,10 @@ function ArenaAI:Illusionist()
 end
 
 
----------------
--- Barbarian --
----------------
-function ArenaAI:Barbarian()
+-------------
+-- Berserk --
+-------------
+function ArenaAI:berserk()
 	-- Activate any time --
 	local num = math.random(1, self.chance)
 	if num == 1 then
@@ -183,9 +197,9 @@ function ArenaAI:Barbarian()
 end
 
 -----------
--- Thief --
+-- Steal --
 -----------
-function ArenaAI:Thief()
+function ArenaAI:steal()
 	-- Activate only when ball is moving torwards him --
 	local ballVx = arena.ball.body:getLinearVelocity()
 	local ballX = arena.ball.body:getPosition()
@@ -198,10 +212,26 @@ function ArenaAI:Thief()
 end
 
 
+---------------
+-- Multiball --
+---------------
+function ArenaAI:multiball()
+	-- Activate only when ball is moving away from him --
+	local ballVx, ballVy = arena.ball.body:getLinearVelocity()
+	--local ballX = arena.ball.body:getPosition()
+	if self.side*ballVx < 0 then
+		local num = math.random(1, self.chance/4)
+		if num == 1 then
+			self:initSkill()
+		end
+	end
+end
+
+
 ------------
--- Mesmer --
+-- Freeze --
 ------------
-function ArenaAI:Mesmer()
+function ArenaAI:freeze()
 	-- Activate only when ball is moving away from him --
 	local ballVx, ballVy = arena.ball.body:getLinearVelocity()
 	--local ballX = arena.ball.body:getPosition()
@@ -215,17 +245,16 @@ end
 
 
 -------------
--- Ice Man --
+-- Predict --
 -------------
-function ArenaAI:IceMan()
-	-- Activate only when ball is moving away from him --
-	local ballVx, ballVy = arena.ball.body:getLinearVelocity()
-	--local ballX = arena.ball.body:getPosition()
-	if self.side*ballVx < 0 then
+function ArenaAI:predict()
+	-- Activate only when ball is moving torwards him, before crossing --
+	local ballVx = arena.ball.body:getLinearVelocity()
+	local ballX = arena.ball.body:getPosition()
+	if self.side*ballVx > 0 and self.side*(ballX - WX/2 - XShift) < 0 then
 		local num = math.random(1, self.chance/4)
 		if num == 1 then
 			self:initSkill()
 		end
 	end
 end
-
