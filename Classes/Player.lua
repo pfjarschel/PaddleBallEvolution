@@ -90,7 +90,7 @@ function Player:aiMove()
 			-- The random factor starts very big and gets smaller when ball approaches paddle            --
 			-----------------------------------------------------------------------------------------------
 			local deltaY = predictY - padY + (ballDist*math.abs(ballVy0/ballV0)/120)*self.randomFactor
-			self.paddle.body:setLinearVelocity(0, self.char.movFactor*(deltaY/maxdelta)*self.AITarget.baseSpeed)
+			self.paddle.body:setLinearVelocity(0, self.char.movFactor*(deltaY/maxdelta)*self.AITarget.baseSpeedMov)
 
 		-- Same thing, to the other side --
 		elseif self.side == 1 and ballVx > 0 then
@@ -116,7 +116,7 @@ function Player:aiMove()
 			end
 			
 			local deltaY = predictY - padY + (ballDist*math.abs(ballVy0/ballV0)/120)*self.randomFactor
-			self.paddle.body:setLinearVelocity(0, self.char.movFactor*(deltaY/maxdelta)*self.AITarget.baseSpeed)
+			self.paddle.body:setLinearVelocity(0, self.char.movFactor*(deltaY/maxdelta)*self.AITarget.baseSpeedMov)
 		-- If ball is not moving towards paddle, move paddle to the position opposite to opponent --
 		else
 			local opponentX, opponentY = nil
@@ -127,7 +127,7 @@ function Player:aiMove()
 			end
 			local opositOp = WY - opponentY
 			local deltaOp = opositOp - padY
-			self.paddle.body:setLinearVelocity(0, self.char.movFactor*(deltaOp/maxdelta)*self.AITarget.baseSpeed/2)
+			self.paddle.body:setLinearVelocity(0, self.char.movFactor*(deltaOp/maxdelta)*self.AITarget.baseSpeedMov/2)
 		end
 	end
 end
@@ -145,9 +145,9 @@ function Player:humanMove()
 		if math.abs(delta) < self.paddle.basepaddleH/8 then 
 			self.paddle.body:setLinearVelocity(0, 0)
 		elseif delta > 0 then
-			self.paddle.body:setLinearVelocity(0, self.char.movFactor*self.AITarget.baseSpeed)
+			self.paddle.body:setLinearVelocity(0, self.char.movFactor*self.AITarget.baseSpeedMov)
 		elseif delta < 0 then
-			self.paddle.body:setLinearVelocity(0, -self.char.movFactor*self.AITarget.baseSpeed)
+			self.paddle.body:setLinearVelocity(0, -self.char.movFactor*self.AITarget.baseSpeedMov)
 		end
 	end
 end

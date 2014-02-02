@@ -10,6 +10,8 @@ Ball.body = nil
 Ball.fixture = nil
 Ball.radius = 10
 Ball.baseSpeed = 20
+Ball.baseSpeed0 = 20
+Ball.baseSpeedMov = 20
 Ball.difFactor = 1
 Ball.launched = false
 
@@ -101,5 +103,7 @@ function Ball:init(difFactor)
 	self:setPosition(XShift + 0.5*WX, 0.5*WY)
 	self.bitmap:setColorTransform(math.random(500, 1000)/1000, math.random(500, 1000)/1000, math.random(500, 1000)/1000, 1)
 	self:createBody()
+	self.baseSpeed0 = self.baseSpeed
+	self.baseSpeedMov = self.baseSpeed
 	arena:addChild(self)
 end

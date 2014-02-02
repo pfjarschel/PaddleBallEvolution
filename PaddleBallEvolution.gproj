@@ -188,6 +188,16 @@
   </folder>
   <folder name="backs">
    <folder name="arenas">
+    <file source="imgs/backs/arenas/vacuum.png"/>
+    <file source="imgs/backs/arenas/whitehole.png"/>
+    <file source="imgs/backs/arenas/blackhole.png"/>
+    <file source="imgs/backs/arenas/wind.png"/>
+    <file source="imgs/backs/arenas/viscous.png"/>
+    <file source="imgs/backs/arenas/black.png"/>
+    <file source="imgs/backs/arenas/suddendeath.png"/>
+    <file source="imgs/backs/arenas/normal.png"/>
+    <file source="imgs/backs/arenas/nullmagic.png"/>
+    <file source="imgs/backs/arenas/magicfield.png"/>
     <file source="imgs/backs/arenas/ice.png"/>
     <file source="imgs/backs/arenas/lava.png"/>
    </folder>

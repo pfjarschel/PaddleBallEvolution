@@ -6,7 +6,7 @@
 -- Normal --
 arenasTable["Normal"] = {}
 arenasTable["Normal"]["Desc"] = "The normal PaddleBall Arena. No Special Effects"
-arenasTable["Normal"]["Image"] = "none"
+arenasTable["Normal"]["Image"] = "imgs/backs/arenas/normal.png"
 arenasTable["Normal"]["Init"] = function()
 end
 arenasTable["Normal"]["End"] = function()
@@ -155,6 +155,7 @@ arenasTable["Lava"]["End"] = function()
 	end
 end
 
+
 -- Ice --
 arenasTable["Ice"] = {}
 arenasTable["Ice"]["Desc"] = "Paddles can randomly freeze"
@@ -213,8 +214,8 @@ arenasTable["Ice"]["Init"] = function()
 	arenasTable["Ice"]["timer"]:start()
 end
 arenasTable["Ice"]["End"] = function()
-	arenasTable["Lava"]["timer"]:removeEventListener(Event.TIMER, arenasTable["Lava"]["onTimer"])
-	arenasTable["Lava"]["timer"]:stop()
+	arenasTable["Ice"]["timer"]:removeEventListener(Event.TIMER, arenasTable["Ice"]["onTimer"])
+	arenasTable["Ice"]["timer"]:stop()
 	
 	arena.rightPlayer.char:updateAttr()
 	arena.leftPlayer.char:updateAttr()
@@ -224,4 +225,152 @@ arenasTable["Ice"]["End"] = function()
 			fadeBitmapOut(arenasTable["Ice"].freeze, 100, arena)
 		end
 	end
+end
+
+
+-- Magic Field --
+arenasTable["MagicField"] = {}
+arenasTable["MagicField"]["Desc"] = "Both players gain lots of Skill Points"
+arenasTable["MagicField"]["Image"] = "imgs/backs/arenas/magicfield.png"
+arenasTable["MagicField"]["Init"] = function()
+	arena.mp0 = 99
+	arena.mp1 = 99
+	arena.combatStats:update(arena.score0, arena.score1, arena.mp0, arena.mp1)
+end
+arenasTable["MagicField"]["End"] = function()
+	
+end
+
+
+-- Null Magic Field --
+arenasTable["NullMagicField"] = {}
+arenasTable["NullMagicField"]["Desc"] = "Both players have no Skill Points"
+arenasTable["NullMagicField"]["Image"] = "imgs/backs/arenas/nullmagic.png"
+arenasTable["NullMagicField"]["Init"] = function()
+	arena.mp0 = 0
+	arena.mp1 = 0
+	arena.combatStats:update(arena.score0, arena.score1, arena.mp0, arena.mp1)
+end
+arenasTable["NullMagicField"]["End"] = function()
+	
+end
+
+
+-- Sudden Death --
+arenasTable["SuddenDeath"] = {}
+arenasTable["SuddenDeath"]["Desc"] = "Both players start with only 1 HP"
+arenasTable["SuddenDeath"]["Image"] = "imgs/backs/arenas/suddendeath.png"
+arenasTable["SuddenDeath"]["Init"] = function()
+	arena.score0 = 1
+	arena.score1 = 1
+	arena.combatStats:update(arena.score0, arena.score1, arena.mp0, arena.mp1)
+end
+arenasTable["SuddenDeath"]["End"] = function()
+	
+end
+
+
+-- Vacuum --
+arenasTable["Vacuum"] = {}
+arenasTable["Vacuum"]["Desc"] = "Ball base speed is increased"
+arenasTable["Vacuum"]["Image"] = "imgs/backs/arenas/vacuum.png"
+arenasTable["Vacuum"]["Init"] = function()
+	arena.ball.baseSpeed = arena.ball.baseSpeed0*1.5
+end
+arenasTable["Vacuum"]["End"] = function()
+	
+end
+
+
+-- Viscous --
+arenasTable["Viscous"] = {}
+arenasTable["Viscous"]["Desc"] = "Ball base speed is decreased"
+arenasTable["Viscous"]["Image"] = "imgs/backs/arenas/viscous.png"
+arenasTable["Viscous"]["Init"] = function()
+	arena.ball.baseSpeed = arena.ball.baseSpeed0*0.75
+end
+arenasTable["Viscous"]["End"] = function()
+	
+end
+
+
+-- Wind --
+arenasTable["Wind"] = {}
+arenasTable["Wind"]["Desc"] = "Strong Winds change ball direction"
+arenasTable["Wind"]["Image"] = "imgs/backs/arenas/wind.png"
+arenasTable["Wind"]["timer"] = Timer.new(1000, 0)
+arenasTable["Wind"]["onTimer"] = function()
+	local chance = 10
+	local randNum = math.random(1, chance)
+	if randNum == 1 and arena.ball.launched then
+		if optionsTable["SFX"] == "On" then sounds.woosh:play() end
+		
+		-- Applies random force on ball --
+		local ballX, ballY = arena.ball.body:getPosition()
+		local force = arena.ball.baseSpeed*30
+		local randForceX = math.random(-force, force)
+		local randForceY = math.random(-force, force)
+		arena.ball.body:applyForce(randForceX, randForceY, ballX, ballY)
+	end
+end
+arenasTable["Wind"]["Init"] = function()
+	arenasTable["Wind"]["timer"]:addEventListener(Event.TIMER, arenasTable["Wind"]["onTimer"], arenasTable["Wind"]["timer"])
+	arenasTable["Wind"]["timer"]:start()
+end
+arenasTable["Wind"]["End"] = function()
+	arenasTable["Wind"]["timer"]:removeEventListener(Event.TIMER, arenasTable["Wind"]["onTimer"])
+	arenasTable["Wind"]["timer"]:stop()
+end
+
+
+-- Black Hole --
+arenasTable["BlackHole"] = {}
+arenasTable["BlackHole"]["Desc"] = "Ball is attracted to center of the arena"
+arenasTable["BlackHole"]["Image"] = "imgs/backs/arenas/blackhole.png"
+arenasTable["BlackHole"]["timer"] = Timer.new(33, 0)
+arenasTable["BlackHole"]["onTimer"] = function()
+	-- Applies force pointing to the center of the arena --
+	if arena.ball.launched then
+		local ballX, ballY = arena.ball.body:getPosition()
+		local dX = (XShift + WX)/2 - ballX
+		local dY = WY/2 - ballY
+		local force = arena.ball.baseSpeed*6000/(dX^2 + dY^2)
+		local forceX = force*dX/math.sqrt(dX^2 + dY^2)
+		local forceY = force*dY/math.sqrt(dX^2 + dY^2)
+		arena.ball.body:applyForce(forceX, forceY, ballX, ballY)
+	end
+end
+arenasTable["BlackHole"]["Init"] = function()
+	arenasTable["BlackHole"]["timer"]:addEventListener(Event.TIMER, arenasTable["BlackHole"]["onTimer"], arenasTable["BlackHole"]["timer"])
+	arenasTable["BlackHole"]["timer"]:start()
+end
+arenasTable["BlackHole"]["End"] = function()
+	arenasTable["BlackHole"]["timer"]:removeEventListener(Event.TIMER, arenasTable["BlackHole"]["onTimer"])
+	arenasTable["BlackHole"]["timer"]:stop()
+end
+
+-- White Hole --
+arenasTable["WhiteHole"] = {}
+arenasTable["WhiteHole"]["Desc"] = "Ball is repelled by the center of the arena"
+arenasTable["WhiteHole"]["Image"] = "imgs/backs/arenas/whitehole.png"
+arenasTable["WhiteHole"]["timer"] = Timer.new(33, 0)
+arenasTable["WhiteHole"]["onTimer"] = function()
+	-- Applies force pointing to the center of the arena --
+	if arena.ball.launched then
+		local ballX, ballY = arena.ball.body:getPosition()
+		local dX = (XShift + WX)/2 - ballX
+		local dY = WY/2 - ballY
+		local force = arena.ball.baseSpeed*20000/(dX^2 + dY^2)
+		local forceX = force*dX/math.sqrt(dX^2 + dY^2)
+		local forceY = force*dY/math.sqrt(dX^2 + dY^2)
+		arena.ball.body:applyForce(-forceX, -forceY, ballX, ballY)
+	end
+end
+arenasTable["WhiteHole"]["Init"] = function()
+	arenasTable["WhiteHole"]["timer"]:addEventListener(Event.TIMER, arenasTable["WhiteHole"]["onTimer"], arenasTable["WhiteHole"]["timer"])
+	arenasTable["WhiteHole"]["timer"]:start()
+end
+arenasTable["WhiteHole"]["End"] = function()
+	arenasTable["WhiteHole"]["timer"]:removeEventListener(Event.TIMER, arenasTable["WhiteHole"]["onTimer"])
+	arenasTable["WhiteHole"]["timer"]:stop()
 end

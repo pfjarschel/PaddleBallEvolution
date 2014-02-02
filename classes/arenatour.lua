@@ -790,7 +790,7 @@ function ArenaTour:init(dataTable)
 	-- Arena BG --
 	if self.arenatype ~= "Normal" then
 		print(self.arenatype)
-		self.arenabg = Bitmap.new(Texture.new(arenasTable[self.arenatype]["Image"]))
+		self.arenabg = Bitmap.new(Texture.new(arenasTable[self.arenatype]["Image"], true))
 		self.arenabg:setScale(1, 1)
 		self:addChild(self.arenabg)
 		local textureWbg = self.arenabg:getWidth()
