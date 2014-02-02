@@ -30,7 +30,7 @@ function Paddle:createBody()
 	}
 	
 	-- Propagate useful variables to body --
-	self.body.name = "paddle" --.. tostring(self.side)
+	self.body.name = "paddle"..tostring(self.side)
 	self.body.side = self.side
 	self.body.paddleH = self.paddleH
 	self.body.paddleW = self.paddleW

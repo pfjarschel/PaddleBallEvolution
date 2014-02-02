@@ -61,6 +61,8 @@ function TextureLoaderArenaMode:init()
 	self.gfx_star = Texture.new("imgs/gfx/star.png", true)
 	self.gfx_tractorbeam = Texture.new("imgs/gfx/tractorbeam.png", true)
 	self.gfx_flame = Texture.new("imgs/gfx/flame.png", true)
+	self.gfx_fireball = Texture.new("imgs/gfx/fireball.png", true)
 	self.gfx_target = Texture.new("imgs/gfx/target.png", true)
+	self.gfx_bite = Texture.new("imgs/gfx/bite.png", true)
 end
 

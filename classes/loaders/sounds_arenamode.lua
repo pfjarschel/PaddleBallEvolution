@@ -31,6 +31,9 @@ function SoundLoaderArenaMode:init()
 	self.magic = Sound.new("audio/sfx/magic.wav")
 	self.tractorbeam = Sound.new("audio/sfx/tractorbeam.wav")
 	self.fire = Sound.new("audio/sfx/fire.wav")
+	self.fireout = Sound.new("audio/sfx/fireout.wav")
+	self.explosion = Sound.new("audio/sfx/explosion.wav")
 	self.alarm = Sound.new("audio/sfx/alarm.wav")
+	self.bite = Sound.new("audio/sfx/bite.wav")
 end
 

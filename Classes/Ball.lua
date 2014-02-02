@@ -44,7 +44,7 @@ function Ball:createBody()
 	function self.body:collide(event)
 		local body1 = event.fixtureA:getBody()
 		local body2 = event.fixtureB:getBody()
-		if body1.name == "paddle" or body2.name == "paddle" then
+		if body1.name == "paddle0" or body1.name == "paddle1" or body2.name == "paddle0" or body2.name == "paddle1"then
 			if optionsTable["SFX"] == "On" then sounds.hit1:play() end
 		else
 			if optionsTable["SFX"] == "On" then sounds.hit2:play() end

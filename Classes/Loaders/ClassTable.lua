@@ -177,3 +177,31 @@ classTable["Scientist"] = {
 	{0.53, 0.75, 0.86},
 	"Scientist"
 }
+
+classTable["Pyromancer"] = {
+	16,
+	16,
+	10,
+	10,
+	6,
+	12,
+	"fireball",
+	"Fireball",
+	"Hurls a fireball that does 1 damage",
+	{1, 0.2, 0},
+	"Pyromancer"
+}
+
+classTable["Vampire"] = {
+	14,
+	15,
+	10,
+	10,
+	10,
+	11,
+	"bite",
+	"Bite",
+	"Next enemy skill gives you 1 HP",
+	{0.21, 0.21, 0.43},
+	"Vampire"
+}

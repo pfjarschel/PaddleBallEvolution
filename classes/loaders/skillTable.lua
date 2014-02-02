@@ -53,3 +53,11 @@ skillTable["freeze"]["Desc"] = "Freezes your opponent for some time"
 skillTable["predict"] = {}
 skillTable["predict"]["Name"] = "Predict"
 skillTable["predict"]["Desc"] = "Predicts ball trajectory"
+
+skillTable["fireball"] = {}
+skillTable["fireball"]["Name"] = "Fireball"
+skillTable["fireball"]["Desc"] = "Hurls a fireball that does 1 damage"
+
+skillTable["bite"] = {}
+skillTable["bite"]["Name"] = "Bite"
+skillTable["bite"]["Desc"] = "Next enemy skill gives you 1 HP"

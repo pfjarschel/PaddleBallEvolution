@@ -912,6 +912,10 @@ function Skills:start(side)
 	if self.skill == "predict" then
 		if optionsTable["SFX"] == "On" then sounds.alarm:play() end
 		
+		if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then
+			arena.skillBut:setAlpha(0.1)
+		end
+		
 		-- Gets positions and velocities --
 		local ballX, ballY = arena.ball.body:getPosition()
 		local padX, padY = 0
@@ -1046,4 +1050,247 @@ function Skills:start(side)
 		end
 	end	
 	
+
+---------------------------------------------------
+-- Fireball: Hurls a fireball that does 1 damage --
+---------------------------------------------------
+	if self.skill == "fireball" then
+		if optionsTable["SFX"] == "On" then sounds.fire:play() end
+		
+		if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then
+			arena.skillBut:setAlpha(0.1)
+		end
+		
+		-- Get Values --
+		local padX, padY = 0
+		if side == 0 then
+			padX, padY = arena.leftPlayer.paddle.body:getPosition()
+		else
+			padX, padY = arena.rightPlayer.paddle.body:getPosition()
+		end
+		
+		-- GFX, Body --
+		local fireball = Bitmap.new(textures.gfx_fireball)
+		fireball:setScale(1, 1)
+		fireball:setAnchorPoint(0.5, 0.5)
+		local textureW = fireball:getWidth()
+		local textureH = fireball:getHeight()
+		fireball:setScale(70/textureW, 30/textureH)
+		fireball:setPosition(padX, padY)
+		fadeBitmapIn(fireball, 500, 0.75)
+		
+		fireball.body = world:createBody{
+			type = b2.DYNAMIC_BODY,
+			position = {x = padX + 20, y = padY},
+			bullet = true
+		}
+		fireball.body.name = "fireball"
+		fireball.body.del = false
+		local shape = b2.CircleShape.new(20, 0, 15)
+		fireball.fixture = fireball.body:createFixture{
+			shape = shape,
+			density = 1,
+			restitution = 1, 
+			friction = 0,
+		}
+		fireball.fixture:setFilterData({categoryBits = 1, maskBits = 7, groupIndex = 0})
+		
+		fireball.body:setLinearVelocity(arena.ball.baseSpeed0 - 2*side*arena.ball.baseSpeed0, 0)
+		fireball.body:setAngle(math.pi*side)
+		
+		arena:addChild(fireball)
+		
+		-- Sets timer to check if passed goal line --
+			local function onTimer(timer)
+				local ballX = fireball.body:getPosition()
+				if side == 0 and ballX > WX + XShift + 2*arena.ball.radius then
+					if optionsTable["SFX"] == "On" then sounds.explosion:play() end
+					arena.score1 = arena.score1 - 1
+					arena.combatStats:update(arena.score0, arena.score1, arena.mp0, arena.mp1)
+					timer:removeEventListener(Event.TIMER, onTimer)
+					timer:stop()
+					arena.leftPlayer.char.skill:endAction()
+				elseif side == 1 and ballX <  -2*arena.ball.radius + XShift then
+					if optionsTable["SFX"] == "On" then sounds.explosion:play() end
+					arena.score0 = arena.score0 - 1
+					arena.combatStats:update(arena.score0, arena.score1, arena.mp0, arena.mp1)
+					timer:removeEventListener(Event.TIMER, onTimer)
+					timer:stop()
+					arena.rightPlayer.char.skill:endAction()
+				end
+			end
+			local timer = Timer.new(33, 0)
+			timer:addEventListener(Event.TIMER, onTimer, timer)
+			timer:start()
+		
+		-- Action to end Skill --
+		self.endAction = function()
+			timer:removeEventListener(Event.TIMER, onTimer)
+			timer:stop()
+			fadeBitmapOut(fireball, 500, fireball)
+			if fireball.body ~= nil then
+				fireball.body.del = true
+			end
+			if side == 0 then
+				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
+					arena.skillBut:setAlpha(0.4)
+				end
+				arena.leftPlayer.skillActive = false
+			else
+				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
+					arena.skillBut:setAlpha(0.4)
+				end
+				arena.rightPlayer.skillActive = false
+			end
+		end
+		
+		-- Collision handler, if collide, remove fireball --
+		function fireball.body:collide(event)
+			local body1 = event.fixtureA:getBody()
+			local body2 = event.fixtureB:getBody()
+			if body1.name ~= "paddle"..side and body2.name ~= "paddle"..side then
+				if optionsTable["SFX"] == "On" then sounds.fireout:play() end
+				Timer.delayedCall(0, function()
+					fireball.body:setLinearVelocity(0,0)
+					timer:removeEventListener(Event.TIMER, onTimer)
+					timer:stop()
+					if side == 0 then
+						arena.leftPlayer.char.skill:endAction()
+					else
+						arena.rightPlayer.char.skill:endAction()
+					end
+				end)
+			end
+		end
+		
+		-- Sets timer to end skill --
+		Timer.delayedCall(self.basetime,  function()
+			--self:endAction() 
+		end)
+		
+		-- Action to force end --
+		self.forceEnd = function()
+			for i = arena:getNumChildren(), 1, -1 do
+				timer:removeEventListener(Event.TIMER, onTimer)
+				timer:stop()
+				if arena:getChildAt(i) == fireball then
+					fadeBitmapOut(fireball, 100, fireball)
+					if fireball.body ~= nil then
+						fireball.body.del = true
+					end
+				end
+			end
+		end
+	end
+
+
+-------------------------------------------
+-- Bite: Next enemy skill gives you 1 HP --
+-------------------------------------------
+	if self.skill == "bite" then
+		if optionsTable["SFX"] == "On" then sounds.bite:play() end
+		
+		if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then
+			arena.skillBut:setAlpha(0.1)
+		end
+		
+		-- GFX --
+		local bite = Bitmap.new(textures.gfx_bite)
+		bite:setScale(1, 1)
+		bite:setAnchorPoint(0.5, 0.5)
+		local textureW = bite:getWidth()
+		local textureH = bite:getHeight()
+		bite:setScale(30/textureW, 120/textureH)
+
+		local paddleX, paddleY = 0
+		
+		if side == 0 then
+			paddleX, paddleY = arena.rightPlayer.paddle.body:getPosition()
+			arena.rightPlayer.paddle:addChild(bite)
+			fadeBitmapIn(bite, 500, 0.5)
+			Timer.delayedCall(500, function()
+				fadeBitmapOut(bite, 500, arena.rightPlayer.paddle)
+			end)
+		else
+			paddleX, paddleY = arena.leftPlayer.paddle.body:getPosition()
+			arena.leftPlayer.paddle:addChild(bite)
+			fadeBitmapIn(bite, 500, 0.5)
+			Timer.delayedCall(500, function()
+				fadeBitmapOut(bite, 500, arena.leftPlayer.paddle)
+			end)
+		end
+		
+		-- Sets timer to check if skill is used --
+			local mpInit = 0
+			if side == 0 then
+				mpInit = arena.mp1
+			else
+				mpInit = arena.mp0
+			end
+			local function onTimer(timer)
+				if side == 0 then
+					if arena.mp1 < mpInit then
+						arena.score0 = arena.score0 + 1
+						arena.combatStats:update(arena.score0, arena.score1, arena.mp0, arena.mp1)
+						
+						timer:removeEventListener(Event.TIMER, onTimer)
+						timer:stop()
+						arena.leftPlayer.char.skill:endAction()
+					end
+				else
+					if arena.mp0 < mpInit then
+						arena.score1 = arena.score1 + 1
+						arena.combatStats:update(arena.score0, arena.score1, arena.mp0, arena.mp1)
+						
+						timer:removeEventListener(Event.TIMER, onTimer)
+						timer:stop()
+						arena.rightPlayer.char.skill:endAction()
+					end
+				end
+			end
+			local timer = Timer.new(33, 0)
+			timer:addEventListener(Event.TIMER, onTimer, timer)
+			timer:start()
+		
+		-- Action to end Skill --
+		self.endAction = function()
+			timer:removeEventListener(Event.TIMER, onTimer)
+			timer:stop()
+			if side == 0 then
+				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
+					arena.skillBut:setAlpha(0.4)
+				end
+				arena.leftPlayer.skillActive = false
+			else
+				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
+					arena.skillBut:setAlpha(0.4)
+				end
+				arena.rightPlayer.skillActive = false
+			end
+		end
+		
+		-- Sets timer to end skill --
+		Timer.delayedCall(self.basetime,  function()
+			--self:endAction() 
+		end)
+		
+		-- Action to force end --
+		self.forceEnd = function()
+			timer:removeEventListener(Event.TIMER, onTimer)
+			timer:stop()
+			
+			for i = arena.leftPlayer.paddle:getNumChildren(), 1, -1 do
+				if arena.leftPlayer.paddle:getChildAt(i) == bite then
+					fadeBitmapOut(bite, 100, arena.leftPlayer.paddle)
+				end
+			end
+			for i = arena.rightPlayer.paddle:getNumChildren(), 1, -1 do
+				if arena.rightPlayer.paddle:getChildAt(i) == bite then
+					fadeBitmapOut(bite, 100, arena.rightPlayer.paddle)
+				end
+			end
+		end
+	end
+
+
 end

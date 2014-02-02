@@ -50,6 +50,9 @@
    <file source="audio/bgm/bgm_boss1.mp3"/>
   </folder>
   <folder name="sfx">
+   <file source="audio/sfx/bite.wav"/>
+   <file source="audio/sfx/fireout.wav"/>
+   <file source="audio/sfx/explosion.wav"/>
    <file source="audio/sfx/alarm.wav"/>
    <file source="audio/sfx/fire.wav"/>
    <file source="audio/sfx/woosh.wav"/>
@@ -81,6 +84,10 @@
   <file source="imgs/pongball.png"/>
   <file source="imgs/paddle2.png"/>
   <folder name="gfx">
+   <file source="imgs/gfx/bite@2x.png"/>
+   <file source="imgs/gfx/bite.png"/>
+   <file source="imgs/gfx/fireball@2x.png"/>
+   <file source="imgs/gfx/fireball.png"/>
    <file source="imgs/gfx/target.png"/>
    <file source="imgs/gfx/flame@2x.png"/>
    <file source="imgs/gfx/flame.png"/>

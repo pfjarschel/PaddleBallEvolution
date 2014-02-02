@@ -54,6 +54,12 @@ function ArenaAI:basicCall()
 		if self.skill == "predict" then
 			self:predict()
 		end
+		if self.skill == "fireball" then
+			self:fireball()
+		end
+		if self.skill == "bite" then
+			self:bite()
+		end
 	end
 end
 function ArenaAI:initSkill()
@@ -252,9 +258,32 @@ function ArenaAI:predict()
 	local ballVx = arena.ball.body:getLinearVelocity()
 	local ballX = arena.ball.body:getPosition()
 	if self.side*ballVx > 0 and self.side*(ballX - WX/2 - XShift) < 0 then
-		local num = math.random(1, self.chance/4)
+		local num = math.random(1, self.chance/8)
 		if num == 1 then
 			self:initSkill()
 		end
+	end
+end
+
+
+--------------
+-- Fireball --
+--------------
+function ArenaAI:fireball()
+	-- Activate any time --
+	local num = math.random(1, self.chance/2)
+	if num == 1 then
+		self:initSkill()
+	end
+end
+
+----------
+-- Bite --
+----------
+function ArenaAI:bite()
+	-- Activate any time --
+	local num = math.random(1, self.chance/2)
+	if num == 1 then
+		self:initSkill()
 	end
 end

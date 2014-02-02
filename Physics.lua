@@ -15,6 +15,7 @@ function goPhysics(scale)
 	world = b2.World.new(0, 0)
 	debugDraw = b2.DebugDraw.new()
 	world:setDebugDraw(debugDraw)
+	--stage:addChild(debugDraw)
 	world:addEventListener(Event.BEGIN_CONTACT, contactHandler)
 end
 
@@ -27,10 +28,17 @@ function updatePhysics()
 		for i = 1, arena:getNumChildren() do
 			local sprite = arena:getChildAt(i)
 			if sprite.body then
-				local body = sprite.body
-				local bodyX, bodyY = body:getPosition()
-				sprite:setPosition(bodyX, bodyY)
-				sprite:setRotation(body:getAngle() * 180 / math.pi)
+				if not(sprite.body.del) then
+					local body = sprite.body
+					local bodyX, bodyY = body:getPosition()
+					sprite:setPosition(bodyX, bodyY)
+					sprite:setRotation(body:getAngle() * 180 / math.pi)
+				else
+					if sprite.body ~= nil then
+						world:destroyBody(sprite.body)
+						sprite.body = nil
+					end
+				end
 			end
 		end
 	end
