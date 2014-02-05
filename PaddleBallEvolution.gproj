@@ -1,0 +1,322 @@
+<project>
+ <properties autorotation="0" encryptAssets="0" fps="60" scaleMode="5" mouseToTouch="1" iosDevice="0" packageName="com.blackandwhitecat.paddleballevo" logicalHeight="800" logicalWidth="480" mouseTouchOrder="0" encryptCode="0" retinaDisplay="0" touchToMouse="1" assetsOnly="0" orientation="1" architecture="1">
+  <imageScales>
+   <scale suffix="@2x" scale="1.5"/>
+  </imageScales>
+ </properties>
+ <file source="physics.lua"/>
+ <file source="main.lua"/>
+ <file source="init.lua"/>
+ <folder name="include">
+  <folder name="colorPick">
+   <file source="include/colorPick/slidecolorpicker.lua"/>
+   <file source="include/colorPick/hue.png"/>
+   <file source="include/colorPick/brightness.png"/>
+   <file source="include/colorPick/arrows.png"/>
+  </folder>
+  <file source="include/TextWrap.lua"/>
+  <file source="include/strict.lua"/>
+  <file source="include/socket.lua"/>
+  <file source="include/scenemanager.lua"/>
+  <file source="include/easing.lua"/>
+ </folder>
+ <folder name="audio">
+  <file source="audio/win.mp3"/>
+  <file source="audio/lose.mp3"/>
+  <file source="audio/sel3.wav"/>
+  <file source="audio/sel2.wav"/>
+  <file source="audio/sel1.wav"/>
+  <file source="audio/sel_pause.wav"/>
+  <file source="audio/hit2.wav"/>
+  <file source="audio/hit1.wav"/>
+  <file source="audio/goal2.wav"/>
+  <file source="audio/goal1.wav"/>
+  <folder name="bgm">
+   <file source="audio/bgm/bgm_lost.mp3"/>
+   <file source="audio/bgm/bgm_fight7.mp3"/>
+   <file source="audio/bgm/bgm_credits.mp3"/>
+   <file source="audio/bgm/bgm_champion1.mp3"/>
+   <file source="audio/bgm/bgm_intro.mp3"/>
+   <file source="audio/bgm/bgm_fight6.mp3"/>
+   <file source="audio/bgm/bgm_fight5.mp3"/>
+   <file source="audio/bgm/bgm_fight4.mp3"/>
+   <file source="audio/bgm/bgm_fight3.mp3"/>
+   <file source="audio/bgm/bgm_fight2.mp3"/>
+   <file source="audio/bgm/bgm_fight1.mp3"/>
+   <file source="audio/bgm/bgm_boss4.mp3"/>
+   <file source="audio/bgm/bgm_boss3.mp3"/>
+   <file source="audio/bgm/bgm_boss2.mp3"/>
+   <file source="audio/bgm/bgm_boss1.mp3"/>
+  </folder>
+  <folder name="sfx">
+   <file source="audio/sfx/bite.wav"/>
+   <file source="audio/sfx/fireout.wav"/>
+   <file source="audio/sfx/explosion.wav"/>
+   <file source="audio/sfx/alarm.wav"/>
+   <file source="audio/sfx/fire.wav"/>
+   <file source="audio/sfx/woosh.wav"/>
+   <file source="audio/sfx/tractorbeam.wav"/>
+   <file source="audio/sfx/puff.wav"/>
+   <file source="audio/sfx/powerup2-over.wav"/>
+   <file source="audio/sfx/powerup2.wav"/>
+   <file source="audio/sfx/powerup1.wav"/>
+   <file source="audio/sfx/magic.wav"/>
+   <file source="audio/sfx/ice_break.wav"/>
+   <file source="audio/sfx/ice.wav"/>
+   <file source="audio/sfx/glass_ping.wav"/>
+   <file source="audio/sfx/crazyball_end.wav"/>
+   <file source="audio/sfx/crazyball.wav"/>
+   <file source="audio/sfx/bubbles.wav"/>
+  </folder>
+ </folder>
+ <folder name="imgs">
+  <folder name="misc">
+   <file source="imgs/misc/blackmedal@2x.png"/>
+   <file source="imgs/misc/blackmedal.png"/>
+   <file source="imgs/misc/trophy@2x.png"/>
+   <file source="imgs/misc/trophy.png"/>
+   <file source="imgs/misc/medal@2x.png"/>
+   <file source="imgs/misc/medal.png"/>
+  </folder>
+  <file source="imgs/paddle2@2x.png"/>
+  <file source="imgs/pongball@2x.png"/>
+  <file source="imgs/pongball.png"/>
+  <file source="imgs/paddle2.png"/>
+  <folder name="gfx">
+   <file source="imgs/gfx/bite@2x.png"/>
+   <file source="imgs/gfx/bite.png"/>
+   <file source="imgs/gfx/fireball@2x.png"/>
+   <file source="imgs/gfx/fireball.png"/>
+   <file source="imgs/gfx/target.png"/>
+   <file source="imgs/gfx/flame@2x.png"/>
+   <file source="imgs/gfx/flame.png"/>
+   <file source="imgs/gfx/tractorbeam@2x.png"/>
+   <file source="imgs/gfx/freeze@2x.png"/>
+   <file source="imgs/gfx/tractorbeam.png"/>
+   <file source="imgs/gfx/star.png"/>
+   <file source="imgs/gfx/mirror.png"/>
+   <file source="imgs/gfx/arrow.png"/>
+   <file source="imgs/gfx/viscousfield.png"/>
+   <file source="imgs/gfx/freeze.png"/>
+   <file source="imgs/gfx/puff.png"/>
+  </folder>
+  <folder name="buttons">
+   <file source="imgs/buttons/survivalmodeBut1@2x.png"/>
+   <file source="imgs/buttons/survivalmodeBut1.png"/>
+   <file source="imgs/buttons/survivalmodeBut@2x.png"/>
+   <file source="imgs/buttons/survivalmodeBut.png"/>
+   <file source="imgs/buttons/skillBut1@2x.png"/>
+   <file source="imgs/buttons/skillBut1.png"/>
+   <file source="imgs/buttons/skillBut@2x.png"/>
+   <file source="imgs/buttons/skillBut.png"/>
+   <file source="imgs/buttons/returnBut1@2x.png"/>
+   <file source="imgs/buttons/returnBut1.png"/>
+   <file source="imgs/buttons/returnBut@2x.png"/>
+   <file source="imgs/buttons/returnBut.png"/>
+   <file source="imgs/buttons/restartBut1@2x.png"/>
+   <file source="imgs/buttons/restartBut1.png"/>
+   <file source="imgs/buttons/restartBut@2x.png"/>
+   <file source="imgs/buttons/restartBut.png"/>
+   <file source="imgs/buttons/quicktourBut1@2x.png"/>
+   <file source="imgs/buttons/quicktourBut1.png"/>
+   <file source="imgs/buttons/quicktourBut@2x.png"/>
+   <file source="imgs/buttons/quicktourBut.png"/>
+   <file source="imgs/buttons/plusBut1@2x.png"/>
+   <file source="imgs/buttons/plusBut1.png"/>
+   <file source="imgs/buttons/plusBut@2x.png"/>
+   <file source="imgs/buttons/plusBut.png"/>
+   <file source="imgs/buttons/nextBut1@2x.png"/>
+   <file source="imgs/buttons/nextBut1.png"/>
+   <file source="imgs/buttons/nextBut@2x.png"/>
+   <file source="imgs/buttons/nextBut.png"/>
+   <file source="imgs/buttons/newBut1@2x.png"/>
+   <file source="imgs/buttons/newBut1.png"/>
+   <file source="imgs/buttons/newBut@2x.png"/>
+   <file source="imgs/buttons/newBut.png"/>
+   <file source="imgs/buttons/minusBut1@2x.png"/>
+   <file source="imgs/buttons/minusBut1.png"/>
+   <file source="imgs/buttons/minusBut@2x.png"/>
+   <file source="imgs/buttons/minusBut.png"/>
+   <file source="imgs/buttons/menuBut1@2x.png"/>
+   <file source="imgs/buttons/menuBut1.png"/>
+   <file source="imgs/buttons/menuBut@2x.png"/>
+   <file source="imgs/buttons/menuBut.png"/>
+   <file source="imgs/buttons/loadBut1@2x.png"/>
+   <file source="imgs/buttons/loadBut1.png"/>
+   <file source="imgs/buttons/loadBut0@2x.png"/>
+   <file source="imgs/buttons/loadBut0.png"/>
+   <file source="imgs/buttons/loadBut@2x.png"/>
+   <file source="imgs/buttons/loadBut.png"/>
+   <file source="imgs/buttons/help1@2x.png"/>
+   <file source="imgs/buttons/help1.png"/>
+   <file source="imgs/buttons/help@2x.png"/>
+   <file source="imgs/buttons/help.png"/>
+   <file source="imgs/buttons/goBut1@2x.png"/>
+   <file source="imgs/buttons/goBut1.png"/>
+   <file source="imgs/buttons/goBut@2x.png"/>
+   <file source="imgs/buttons/goBut.png"/>
+   <file source="imgs/buttons/gear1@2x.png"/>
+   <file source="imgs/buttons/gear1.png"/>
+   <file source="imgs/buttons/gear@2x.png"/>
+   <file source="imgs/buttons/gear.png"/>
+   <file source="imgs/buttons/forwardBut1@2x.png"/>
+   <file source="imgs/buttons/forwardBut1.png"/>
+   <file source="imgs/buttons/forwardBut@2x.png"/>
+   <file source="imgs/buttons/forwardBut.png"/>
+   <file source="imgs/buttons/exitBut1@2x.png"/>
+   <file source="imgs/buttons/exitBut1.png"/>
+   <file source="imgs/buttons/exitBut@2x.png"/>
+   <file source="imgs/buttons/exitBut.png"/>
+   <file source="imgs/buttons/controlarrows@2x.png"/>
+   <file source="imgs/buttons/controlarrows.png"/>
+   <file source="imgs/buttons/classicmodeBut1@2x.png"/>
+   <file source="imgs/buttons/classicmodeBut1.png"/>
+   <file source="imgs/buttons/classicmodeBut@2x.png"/>
+   <file source="imgs/buttons/classicmodeBut.png"/>
+   <file source="imgs/buttons/careermodeBut1@2x.png"/>
+   <file source="imgs/buttons/careermodeBut1.png"/>
+   <file source="imgs/buttons/careermodeBut@2x.png"/>
+   <file source="imgs/buttons/careermodeBut.png"/>
+   <file source="imgs/buttons/backBut1@2x.png"/>
+   <file source="imgs/buttons/backBut1.png"/>
+   <file source="imgs/buttons/backBut@2x.png"/>
+   <file source="imgs/buttons/backBut.png"/>
+   <file source="imgs/buttons/arenamodeBut1@2x.png"/>
+   <file source="imgs/buttons/arenamodeBut1.png"/>
+   <file source="imgs/buttons/arenamodeBut@2x.png"/>
+   <file source="imgs/buttons/arenamodeBut.png"/>
+   <file source="imgs/buttons/againBut1@2x.png"/>
+   <file source="imgs/buttons/againBut1.png"/>
+   <file source="imgs/buttons/againBut@2x.png"/>
+   <file source="imgs/buttons/againBut.png"/>
+   <file source="imgs/buttons/about1@2x.png"/>
+   <file source="imgs/buttons/about1.png"/>
+   <file source="imgs/buttons/about@2x.png"/>
+   <file source="imgs/buttons/about.png"/>
+  </folder>
+  <folder name="backs">
+   <folder name="arenas">
+    <file source="imgs/backs/arenas/wormhole.png"/>
+    <file source="imgs/backs/arenas/whitehole.png"/>
+    <file source="imgs/backs/arenas/blackhole.png"/>
+    <file source="imgs/backs/arenas/wind.png"/>
+    <file source="imgs/backs/arenas/viscous.png"/>
+    <file source="imgs/backs/arenas/black.png"/>
+    <file source="imgs/backs/arenas/suddendeath.png"/>
+    <file source="imgs/backs/arenas/normal.png"/>
+    <file source="imgs/backs/arenas/nullmagic.png"/>
+    <file source="imgs/backs/arenas/magicfield.png"/>
+    <file source="imgs/backs/arenas/ice.png"/>
+    <file source="imgs/backs/arenas/lava.png"/>
+   </folder>
+   <file source="imgs/backs/bluesmoke.png"/>
+   <file source="imgs/backs/mainmenubg.png"/>
+   <file source="imgs/backs/splash.png"/>
+   <file source="imgs/backs/pongbg.png"/>
+   <file source="imgs/backs/pausebg.png"/>
+   <file source="imgs/backs/interface.png"/>
+   <file source="imgs/backs/black.png"/>
+  </folder>
+ </folder>
+ <folder name="fonts">
+  <file source="fonts/anita.ttf"/>
+ </folder>
+ <folder name="classes">
+  <file source="classes/mainmenu_arena2.lua"/>
+  <file source="classes/editcustom.lua"/>
+  <file source="classes/tourLevelUp.lua"/>
+  <file source="classes/arenatour.lua"/>
+  <file source="classes/mainmenu_quicktour2.lua"/>
+  <file source="classes/mainmenu_quicktour.lua"/>
+  <file source="classes/mainmenu_career.lua"/>
+  <file source="classes/mainmenu_about.lua"/>
+  <file source="classes/arenaai.lua"/>
+  <file source="classes/splash.lua"/>
+  <file source="classes/mainmenu_options.lua"/>
+  <file source="classes/mainmenu_help.lua"/>
+  <file source="classes/skills.lua"/>
+  <file source="classes/player.lua"/>
+  <file source="classes/paddle.lua"/>
+  <file source="classes/menubut.lua"/>
+  <file source="classes/mainmenu_classic.lua"/>
+  <file source="classes/mainmenu_arena.lua"/>
+  <file source="classes/mainmenu.lua"/>
+  <file source="classes/combatstats.lua"/>
+  <file source="classes/char.lua"/>
+  <file source="classes/blackscreen.lua"/>
+  <file source="classes/ball.lua"/>
+  <file source="classes/arenasurvival.lua"/>
+  <file source="classes/arenaclassic.lua"/>
+  <file source="classes/arenaarena.lua"/>
+  <folder name="loaders">
+   <file source="classes/loaders/arenas.lua"/>
+   <file source="classes/loaders/skillTable.lua"/>
+   <file source="classes/loaders/customclass.lua"/>
+   <file source="classes/loaders/quickTourData.lua"/>
+   <file source="classes/loaders/music_normalmodes.lua"/>
+   <file source="classes/loaders/music_menu.lua"/>
+   <file source="classes/loaders/music_arenamode.lua"/>
+   <file source="classes/loaders/sounds_normalmodes.lua"/>
+   <file source="classes/loaders/sounds_menu.lua"/>
+   <file source="classes/loaders/sounds_arenamode.lua"/>
+   <file source="classes/loaders/textures_normalmodes.lua"/>
+   <file source="classes/loaders/textures_menu.lua"/>
+   <file source="classes/loaders/textures_arenamode.lua"/>
+   <file source="classes/loaders/options.lua"/>
+   <file source="classes/loaders/fonts.lua"/>
+   <file source="classes/loaders/classtable.lua"/>
+  </folder>
+ </folder>
+ <dependency from="init.lua" to="physics.lua"/>
+ <dependency from="init.lua" to="include/TextWrap.lua"/>
+ <dependency from="init.lua" to="include/strict.lua"/>
+ <dependency from="init.lua" to="include/socket.lua"/>
+ <dependency from="init.lua" to="include/scenemanager.lua"/>
+ <dependency from="init.lua" to="include/easing.lua"/>
+ <dependency from="init.lua" to="include/colorPick/slidecolorpicker.lua"/>
+ <dependency from="init.lua" to="classes/loaders/fonts.lua"/>
+ <dependency from="classes/arenaarena.lua" to="classes/player.lua"/>
+ <dependency from="classes/arenaarena.lua" to="classes/combatstats.lua"/>
+ <dependency from="classes/arenaarena.lua" to="classes/ball.lua"/>
+ <dependency from="classes/arenaclassic.lua" to="classes/player.lua"/>
+ <dependency from="classes/arenaclassic.lua" to="classes/combatstats.lua"/>
+ <dependency from="classes/arenaclassic.lua" to="classes/ball.lua"/>
+ <dependency from="classes/arenasurvival.lua" to="classes/player.lua"/>
+ <dependency from="classes/arenasurvival.lua" to="classes/combatstats.lua"/>
+ <dependency from="classes/arenasurvival.lua" to="classes/ball.lua"/>
+ <dependency from="classes/char.lua" to="classes/skills.lua"/>
+ <dependency from="classes/char.lua" to="classes/loaders/classtable.lua"/>
+ <dependency from="classes/loaders/classtable.lua" to="init.lua"/>
+ <dependency from="classes/loaders/classtable.lua" to="include/strict.lua"/>
+ <dependency from="classes/loaders/classtable.lua" to="include/socket.lua"/>
+ <dependency from="classes/loaders/classtable.lua" to="include/scenemanager.lua"/>
+ <dependency from="classes/loaders/classtable.lua" to="include/easing.lua"/>
+ <dependency from="classes/mainmenu.lua" to="classes/menubut.lua"/>
+ <dependency from="classes/mainmenu.lua" to="classes/mainmenu_classic.lua"/>
+ <dependency from="classes/mainmenu.lua" to="classes/mainmenu_arena.lua"/>
+ <dependency from="classes/mainmenu.lua" to="classes/blackscreen.lua"/>
+ <dependency from="classes/mainmenu.lua" to="classes/arenasurvival.lua"/>
+ <dependency from="classes/mainmenu.lua" to="classes/arenaclassic.lua"/>
+ <dependency from="classes/mainmenu.lua" to="classes/arenaarena.lua"/>
+ <dependency from="classes/mainmenu_arena.lua" to="classes/arenaarena.lua"/>
+ <dependency from="classes/mainmenu_classic.lua" to="classes/arenaclassic.lua"/>
+ <dependency from="classes/player.lua" to="classes/paddle.lua"/>
+ <dependency from="classes/player.lua" to="classes/char.lua"/>
+ <dependency from="main.lua" to="classes/mainmenu.lua"/>
+ <dependency from="main.lua" to="classes/loaders/arenas.lua"/>
+ <dependency from="main.lua" to="classes/loaders/skillTable.lua"/>
+ <dependency from="main.lua" to="classes/loaders/customclass.lua"/>
+ <dependency from="main.lua" to="classes/loaders/quickTourData.lua"/>
+ <dependency from="main.lua" to="classes/loaders/music_normalmodes.lua"/>
+ <dependency from="main.lua" to="classes/loaders/music_menu.lua"/>
+ <dependency from="main.lua" to="classes/loaders/music_arenamode.lua"/>
+ <dependency from="main.lua" to="classes/loaders/sounds_normalmodes.lua"/>
+ <dependency from="main.lua" to="classes/loaders/sounds_menu.lua"/>
+ <dependency from="main.lua" to="classes/loaders/sounds_arenamode.lua"/>
+ <dependency from="main.lua" to="classes/loaders/textures_normalmodes.lua"/>
+ <dependency from="main.lua" to="classes/loaders/textures_menu.lua"/>
+ <dependency from="main.lua" to="classes/loaders/textures_arenamode.lua"/>
+ <dependency from="main.lua" to="classes/loaders/options.lua"/>
+ <dependency from="main.lua" to="classes/loaders/fonts.lua"/>
+ <dependency from="main.lua" to="classes/loaders/classtable.lua"/>
+</project>
