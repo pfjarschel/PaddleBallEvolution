@@ -45,7 +45,7 @@ function MainMenu_About:init()
 	self:addChild(abouttitle)
 	
 	local aboutstring = "Made using the great Gideros Studio: www.giderosmobile.com\n \n"..
-					"Graphics, some SFX and Programming: Paulo F. Jarschel\n"..
+					"Graphics, Programming, and some SFX: Paulo F. Jarschel\n"..
 					"Music and SFX: http://freesfx.co.uk/ (Thank you so much!)\n \n"..
 					"Special thanks to the Gideros community and awesome open-source software: Inkscape, Gimp and Audacity!\n"
 	
@@ -62,7 +62,7 @@ function MainMenu_About:init()
 	copytext:setPosition(WX - copytext:getWidth() - 16, WY - copytext:getHeight())
 	self:addChild(copytext)
 	
-	self.returnBut = MenuBut.new(150, 40, textures.returnBut, textures.returnBut1)
+	self.returnBut = MenuBut.new(192, 40, textures.returnBut, textures.returnBut1)
 	self:addChild(self.returnBut)
 	self.returnBut.bitmap:setPosition(self.returnBut:getWidth()/2 + 10, WY/2 + 210)
 	self.returnBut:addEventListener(Event.TOUCHES_END, function(event)

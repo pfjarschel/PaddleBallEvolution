@@ -639,7 +639,7 @@ function TourLevelUp:init()
 		end
 	end)
 	
-	self.nextBut = MenuBut.new(150, 40, textures.nextBut, textures.nextBut1)
+	self.nextBut = MenuBut.new(192, 40, textures.nextBut, textures.nextBut1)
 	self:addChild(self.nextBut)
 	self.nextBut.bitmap:setPosition(WX0 - 16 - self.nextBut:getWidth()/2, WY0/2 + 210)
 	self.nextBut:addEventListener(Event.TOUCHES_END, function(event)
@@ -664,7 +664,7 @@ function TourLevelUp:init()
 		end
 	end)
 	
-	self.returnBut = MenuBut.new(150, 40, textures.returnBut, textures.returnBut1)
+	self.returnBut = MenuBut.new(192, 40, textures.returnBut, textures.returnBut1)
 	self:addChild(self.returnBut)
 	self.returnBut.bitmap:setPosition(self.returnBut:getWidth()/2 + 16, WY0/2 + 210)
 	self.returnBut:addEventListener(Event.TOUCHES_END, function(event)

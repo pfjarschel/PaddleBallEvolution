@@ -46,7 +46,7 @@ function MainMenu:init()
 	local textureH = menubg:getHeight()
 	menubg:setScale(WX/textureW, WY/textureH)
 	
-	self.careerBut = MenuBut.new(150, 40, textures.careermodeBut, textures.careermodeBut1)
+	self.careerBut = MenuBut.new(192, 40, textures.careermodeBut, textures.careermodeBut1)
 	self:addChild(self.careerBut)
 	self.careerBut.bitmap:setPosition(WX/2, WY/2 -0.4*self.careerBut.height)
 	self.careerBut:addEventListener(Event.TOUCHES_END, function(event)
@@ -56,7 +56,7 @@ function MainMenu:init()
 		end
 	end)
 	
-	self.quicktourBut = MenuBut.new(150, 40, textures.quicktourBut, textures.quicktourBut1)
+	self.quicktourBut = MenuBut.new(192, 40, textures.quicktourBut, textures.quicktourBut1)
 	self:addChild(self.quicktourBut)
 	self.quicktourBut.bitmap:setPosition(WX/2, WY/2 +0.8*self.quicktourBut.height)
 	self.quicktourBut:addEventListener(Event.TOUCHES_END, function(event)
@@ -66,7 +66,7 @@ function MainMenu:init()
 		end
 	end)
 	
-	self.arenaBut = MenuBut.new(150, 40, textures.arenaBut, textures.arenaBut1)
+	self.arenaBut = MenuBut.new(192, 40, textures.arenaBut, textures.arenaBut1)
 	self:addChild(self.arenaBut)
 	self.arenaBut.bitmap:setPosition(WX/2, WY/2 + 2*self.arenaBut.height)
 	self.arenaBut:addEventListener(Event.TOUCHES_END, function(event)
@@ -77,7 +77,7 @@ function MainMenu:init()
 		end
 	end)
 	
-	self.survivalBut = MenuBut.new(150, 40, textures.survivalmodeBut, textures.survivalmodeBut1)
+	self.survivalBut = MenuBut.new(192, 40, textures.survivalmodeBut, textures.survivalmodeBut1)
 	self:addChild(self.survivalBut)
 	self.survivalBut.bitmap:setPosition(WX/2, WY/2 + 3.2*self.survivalBut.height)
 	self.survivalBut:addEventListener(Event.TOUCHES_END, function(event)
@@ -88,7 +88,7 @@ function MainMenu:init()
 		end
 	end)
 	
-	self.classicBut = MenuBut.new(150, 40, textures.classicmodeBut, textures.classicmodeBut1)
+	self.classicBut = MenuBut.new(192, 40, textures.classicmodeBut, textures.classicmodeBut1)
 	self:addChild(self.classicBut)
 	self.classicBut.bitmap:setPosition(WX/2, WY/2 + 4.4*self.classicBut.height)
 	self.classicBut:addEventListener(Event.TOUCHES_END, function(event)
@@ -132,7 +132,7 @@ function MainMenu:init()
 		end
 	end)
 	
-	self.exitBut = MenuBut.new(150, 40, textures.exitBut, textures.exitBut1)
+	self.exitBut = MenuBut.new(192, 40, textures.exitBut, textures.exitBut1)
 	self:addChild(self.exitBut)
 	self.exitBut.bitmap:setPosition(WX - 32 - self.exitBut:getWidth()/2, WY/2 + 5*self.exitBut.height)
 	self.exitBut:addEventListener(Event.TOUCHES_END, function(event)

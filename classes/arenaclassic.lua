@@ -74,7 +74,7 @@ function ArenaClassic:openMenu()
 		self.pausebg:addChild(Bitmap.new(textures.pausebg))
 		
 		-- Adds Resume Button --
-		local resumeBut = MenuBut.new(150, 40, textures.returnBut, textures.returnBut1)
+		local resumeBut = MenuBut.new(192, 40, textures.returnBut, textures.returnBut1)
 		resumeBut.bitmap:setPosition(WX0/2, WY0/2 - 2*resumeBut:getHeight())
 		resumeBut:addEventListener(Event.TOUCHES_END, function(event)
 			if resumeBut:hitTestPoint(event.touch.x, event.touch.y) then
@@ -89,7 +89,7 @@ function ArenaClassic:openMenu()
 		self.pausebg:addChild(resumeBut)
 		
 		-- Adds Restart Button --
-		local restartBut = MenuBut.new(150, 40, textures.restartBut, textures.restartBut1)
+		local restartBut = MenuBut.new(192, 40, textures.restartBut, textures.restartBut1)
 		restartBut.bitmap:setPosition(WX0/2, WY0/2)
 		restartBut:addEventListener(Event.TOUCHES_END, function(event)
 			if restartBut:hitTestPoint(event.touch.x, event.touch.y) then
@@ -112,7 +112,7 @@ function ArenaClassic:openMenu()
 		self.pausebg:addChild(restartBut)
 		
 		-- Adds Quit Button --
-		local quitBut = MenuBut.new(150, 40, textures.exitBut, textures.exitBut1)
+		local quitBut = MenuBut.new(192, 40, textures.exitBut, textures.exitBut1)
 		quitBut.bitmap:setPosition(WX0/2, WY0/2 + 2*quitBut:getHeight())
 		quitBut:addEventListener(Event.TOUCHES_END, function(event)
 			if quitBut:hitTestPoint(event.touch.x, event.touch.y) then
@@ -298,9 +298,9 @@ function ArenaClassic:gameOver()
 	gameOverTextBox:setTextColor(0x419bd7)
 	gameOverTextBox:setPosition(0.5*WX0 - gameOverTextBox:getWidth()/2, 0.25*WY + gameOverTextBox:getHeight()/2)
 	
-	local againBut = MenuBut.new(150, 40, textures.againBut, textures.againBut1)
+	local againBut = MenuBut.new(192, 40, textures.againBut, textures.againBut1)
 	againBut.bitmap:setPosition(WX0/2, WY/2 + 100)
-	local exitBut = MenuBut.new(150, 40, textures.exitBut, textures.exitBut1)
+	local exitBut = MenuBut.new(192, 40, textures.exitBut, textures.exitBut1)
 	exitBut.bitmap:setPosition(exitBut:getWidth()/2 + 10, WY/2 + 210)
 	
 	againBut:addEventListener(Event.TOUCHES_END, function(event)

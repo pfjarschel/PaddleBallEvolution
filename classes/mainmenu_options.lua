@@ -174,7 +174,7 @@ function MainMenu_Options:init()
 	-----------------
 	-- Options End --
 	-----------------
-	self.returnBut = MenuBut.new(150, 40, textures.returnBut, textures.returnBut1)
+	self.returnBut = MenuBut.new(192, 40, textures.returnBut, textures.returnBut1)
 	self:addChild(self.returnBut)
 	self.returnBut.bitmap:setPosition(self.returnBut:getWidth()/2 + 10, WY/2 + 210)
 	self.returnBut:addEventListener(Event.TOUCHES_END, function(event)

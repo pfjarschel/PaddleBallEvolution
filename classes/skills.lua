@@ -1046,7 +1046,7 @@ function Skills:start(side)
 		arena.aiPlayer:aiRandomFactor()
 		
 		-- Sets timer to end skill --
-		Timer.delayedCall(self.basetime/5,  function()
+		Timer.delayedCall(self.basetime/2,  function()
 			self:endAction() 
 		end)
 		

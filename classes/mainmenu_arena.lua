@@ -448,7 +448,7 @@ function MainMenu_Arena:init()
 	end)
 	
 	-- Go or return --
-	self.goBut = MenuBut.new(150, 40, textures.goBut, textures.goBut1)
+	self.goBut = MenuBut.new(192, 40, textures.goBut, textures.goBut1)
 	self:addChild(self.goBut)
 	self.goBut.bitmap:setPosition(WX/2, WY/2 + 190)
 	self.goBut:addEventListener(Event.TOUCHES_END, function(event)
@@ -462,7 +462,7 @@ function MainMenu_Arena:init()
 		end
 	end)
 	
-	self.returnBut = MenuBut.new(150, 40, textures.returnBut, textures.returnBut1)
+	self.returnBut = MenuBut.new(192, 40, textures.returnBut, textures.returnBut1)
 	self:addChild(self.returnBut)
 	self.returnBut.bitmap:setPosition(self.returnBut:getWidth()/2 + 10, WY/2 + 210)
 	self.returnBut:addEventListener(Event.TOUCHES_END, function(event)

@@ -195,7 +195,25 @@
    <file source="imgs/buttons/about.png"/>
   </folder>
   <folder name="backs">
+   <file source="imgs/backs/splash@2x.png"/>
+   <file source="imgs/backs/pongbg@2x.png"/>
+   <file source="imgs/backs/pausebg@2x.png"/>
+   <file source="imgs/backs/mainmenubg@2x.png"/>
+   <file source="imgs/backs/interface@2x.png"/>
+   <file source="imgs/backs/bluesmoke@2x.png"/>
+   <file source="imgs/backs/black@2x.png"/>
    <folder name="arenas">
+    <file source="imgs/backs/arenas/wormhole@2x.png"/>
+    <file source="imgs/backs/arenas/wind@2x.png"/>
+    <file source="imgs/backs/arenas/whitehole@2x.png"/>
+    <file source="imgs/backs/arenas/viscous@2x.png"/>
+    <file source="imgs/backs/arenas/suddendeath@2x.png"/>
+    <file source="imgs/backs/arenas/nullmagic@2x.png"/>
+    <file source="imgs/backs/arenas/normal@2x.png"/>
+    <file source="imgs/backs/arenas/magicfield@2x.png"/>
+    <file source="imgs/backs/arenas/lava@2x.png"/>
+    <file source="imgs/backs/arenas/ice@2x.png"/>
+    <file source="imgs/backs/arenas/blackhole@2x.png"/>
     <file source="imgs/backs/arenas/wormhole.png"/>
     <file source="imgs/backs/arenas/whitehole.png"/>
     <file source="imgs/backs/arenas/blackhole.png"/>

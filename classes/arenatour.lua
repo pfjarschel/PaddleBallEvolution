@@ -86,7 +86,7 @@ function ArenaTour:openMenu()
 		self.pausebg:addChild(Bitmap.new(textures.pausebg))
 		
 		-- Adds Resume Button --
-		local resumeBut = MenuBut.new(150, 40, textures.returnBut, textures.returnBut1)
+		local resumeBut = MenuBut.new(192, 40, textures.returnBut, textures.returnBut1)
 		resumeBut.bitmap:setPosition(WX0/2, WY/2 - 2*resumeBut:getHeight())
 		resumeBut:addEventListener(Event.TOUCHES_END, function(event)
 			if resumeBut:hitTestPoint(event.touch.x, event.touch.y) then
@@ -102,7 +102,7 @@ function ArenaTour:openMenu()
 		self.pausebg:addChild(resumeBut)
 		
 		-- Adds Restart Button --
-		local restartBut = MenuBut.new(150, 40, textures.restartBut, textures.restartBut1)
+		local restartBut = MenuBut.new(192, 40, textures.restartBut, textures.restartBut1)
 		restartBut.bitmap:setPosition(WX0/2, WY/2)
 		restartBut:addEventListener(Event.TOUCHES_END, function(event)
 			if restartBut:hitTestPoint(event.touch.x, event.touch.y) then
@@ -138,7 +138,7 @@ function ArenaTour:openMenu()
 		self.pausebg:addChild(restartBut)
 		
 		-- Adds Quit Button --
-		local quitBut = MenuBut.new(150, 40, textures.exitBut, textures.exitBut1)
+		local quitBut = MenuBut.new(192, 40, textures.exitBut, textures.exitBut1)
 		quitBut.bitmap:setPosition(WX0/2, WY/2 + 2*quitBut:getHeight())
 		quitBut:addEventListener(Event.TOUCHES_END, function(event)
 			if quitBut:hitTestPoint(event.touch.x, event.touch.y) then
@@ -341,9 +341,9 @@ function ArenaTour:gameOver()
 	local gameOverString = nil
 	local gameOverTextBox = nil
 	local backdrawing = nil
-	local exitBut = MenuBut.new(150, 40, textures.exitBut, textures.exitBut1)
-	local againBut = MenuBut.new(150, 40, textures.restartBut, textures.restartBut1)
-	local nextBut = MenuBut.new(150, 40, textures.nextBut, textures.nextBut1)
+	local exitBut = MenuBut.new(192, 40, textures.exitBut, textures.exitBut1)
+	local againBut = MenuBut.new(192, 40, textures.restartBut, textures.restartBut1)
+	local nextBut = MenuBut.new(192, 40, textures.nextBut, textures.nextBut1)
 	
 	if (self.score0 > self.score1 and optionsTable["ArenaSide"] == "Left") or (self.score0 < self.score1 and optionsTable["ArenaSide"] == "Right") then
 		if self.stage < 10 then

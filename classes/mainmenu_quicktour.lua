@@ -46,7 +46,7 @@ function MainMenu_QuickTour:init()
 	end
 
 	-- New, Load, or return --
-	self.newBut = MenuBut.new(150, 40, textures.newBut, textures.newBut1)
+	self.newBut = MenuBut.new(192, 40, textures.newBut, textures.newBut1)
 	self:addChild(self.newBut)
 	self.newBut.bitmap:setPosition(WX/2, 0.5*WY + 40)
 	self.newBut:addEventListener(Event.TOUCHES_END, function(event)
@@ -60,7 +60,7 @@ function MainMenu_QuickTour:init()
 		end
 	end)
 	if tonumber(tourTable["QuickTourStage"]) > 0 then
-		self.loadBut = MenuBut.new(150, 40, textures.loadBut, textures.loadBut1)
+		self.loadBut = MenuBut.new(192, 40, textures.loadBut, textures.loadBut1)
 		self:addChild(self.loadBut)
 		self.loadBut.bitmap:setPosition(WX/2, 0.5*WY + 96)
 		self.loadBut:addEventListener(Event.TOUCHES_END, function(event)
@@ -94,12 +94,12 @@ function MainMenu_QuickTour:init()
 		statsTextBox:setPosition(WX0/2 + statsTextBox:getWidth()/2, WY/2 - 8)
 		self:addChild(statsTextBox)
 	else
-		self.loadBut = MenuBut.new(150, 40, textures.loadBut, textures.loadBut1, textures.loadBut0)
+		self.loadBut = MenuBut.new(192, 40, textures.loadBut, textures.loadBut1, textures.loadBut0)
 		self:addChild(self.loadBut)
 		self.loadBut.bitmap:setPosition(WX/2, 0.5*WY + 96)
 	end
 	
-	self.returnBut = MenuBut.new(150, 40, textures.returnBut, textures.returnBut1)
+	self.returnBut = MenuBut.new(192, 40, textures.returnBut, textures.returnBut1)
 	self:addChild(self.returnBut)
 	self.returnBut.bitmap:setPosition(self.returnBut:getWidth()/2 + 10, WY/2 + 210)
 	self.returnBut:addEventListener(Event.TOUCHES_END, function(event)

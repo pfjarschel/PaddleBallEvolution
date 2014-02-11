@@ -1045,7 +1045,7 @@ function EditCustomClass:init(menuplace)
 		samplePaddle:setColorTransform(classTable["Custom"][10][1], classTable["Custom"][10][2], classTable["Custom"][10][3])
 	end)
 	
-	self.returnBut = MenuBut.new(150, 40, textures.returnBut, textures.returnBut1)
+	self.returnBut = MenuBut.new(192, 40, textures.returnBut, textures.returnBut1)
 	self:addChild(self.returnBut)
 	self.returnBut.bitmap:setPosition(self.returnBut:getWidth()/2 + 16, WY0/2 + 210)
 	self.returnBut:addEventListener(Event.TOUCHES_END, function(event)

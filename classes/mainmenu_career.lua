@@ -32,17 +32,17 @@ function MainMenu_Career:init()
 	careertitle:setPosition(WX/4, WY/2 - 24)
 	self:addChild(careertitle)
 	
-	local careerstring = "Don't Worry, Career Mode will be available in the coming months!\n \n"..
+	local careerstring = "Career mode is available in the full version!\n \n"..
 					"In this mode, you will start with a basic character, and progress through various tournaments in different locations, while "..
 					"improving your stats by leveling up and acquiring special skills from defeated enemies.\n"..
-					"It will be available in the paid version only, which has not yet been released. When it does, you will receive the information in the update to follow.\n"
+					"Purchase full version here!\n"
 	
 	local careertext = TextWrap.new(careerstring, WX/1.1, "justify", 10, self.font)
 	careertext:setTextColor(0xffffff)
 	careertext:setPosition(WX/2 - careertext:getWidth()/2, WY/2 + 1.5*careertitle:getHeight() - 24)
 	self:addChild(careertext)
 	
-	self.returnBut = MenuBut.new(150, 40, textures.returnBut, textures.returnBut1)
+	self.returnBut = MenuBut.new(192, 40, textures.returnBut, textures.returnBut1)
 	self:addChild(self.returnBut)
 	self.returnBut.bitmap:setPosition(self.returnBut:getWidth()/2 + 10, WY/2 + 210)
 	self.returnBut:addEventListener(Event.TOUCHES_END, function(event)
