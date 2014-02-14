@@ -60,6 +60,12 @@ function ArenaAI:basicCall()
 		if self.skill == "bite" then
 			self:bite()
 		end
+		if self.skill == "dispel" then
+			self:dispel()
+		end
+		if self.skill == "headshrink" then
+			self:headshrink()
+		end
 	end
 end
 function ArenaAI:initSkill()
@@ -277,10 +283,37 @@ function ArenaAI:fireball()
 	end
 end
 
+
 ----------
 -- Bite --
 ----------
 function ArenaAI:bite()
+	-- Activate any time --
+	local num = math.random(1, self.chance/2)
+	if num == 1 then
+		self:initSkill()
+	end
+end
+
+
+------------
+-- Dispel --
+------------
+function ArenaAI:dispel()
+	-- Activate when opponent activates ability --
+	if arena.humanPlayer.skillActive then
+		local num = math.random(1, self.chance/10)
+		if num == 1 then
+			self:initSkill()
+		end
+	end
+end
+
+
+----------------
+-- Headshrink --
+----------------
+function ArenaAI:headshrink()
 	-- Activate any time --
 	local num = math.random(1, self.chance/2)
 	if num == 1 then

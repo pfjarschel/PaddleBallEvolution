@@ -90,15 +90,17 @@ function MainMenu_QuickTour2:init()
 	
 	local i = 1
 	for k, v in pairs(classTable) do
-		classNames[i] = k
-		classSkill[i] = classTable[classNames[i]][8]
-		classSkillDesc[i] = classTable[classNames[i]][9]
-		classAtk[i] = classTable[classNames[i]][1]
-		classMov[i] = classTable[classNames[i]][2]
-		classLif[i] = classTable[classNames[i]][3]
-		classSkl[i] = classTable[classNames[i]][5]
-		classDef[i] = classTable[classNames[i]][6]
-		i = i + 1
+		if classTable[k][12] ~=1 then
+			classNames[i] = k
+			classSkill[i] = classTable[classNames[i]][8]
+			classSkillDesc[i] = classTable[classNames[i]][9]
+			classAtk[i] = classTable[classNames[i]][1]
+			classMov[i] = classTable[classNames[i]][2]
+			classLif[i] = classTable[classNames[i]][3]
+			classSkl[i] = classTable[classNames[i]][5]
+			classDef[i] = classTable[classNames[i]][6]
+			i = i + 1
+		end
 	end
 	classNames[i] = "Random"
 	classSkill[i] = "Random"

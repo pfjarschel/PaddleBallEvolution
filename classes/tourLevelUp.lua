@@ -60,8 +60,10 @@ function TourLevelUp:init()
 	local classNames = {}
 	local i = 1
 	for k, v in pairs(classTable) do
-		classNames[i] = k
-		i = i + 1
+		if classTable[k][12] ~=1 then
+			classNames[i] = k
+			i = i + 1
+		end
 	end
 	local classok = false
 	local nextclass = nil

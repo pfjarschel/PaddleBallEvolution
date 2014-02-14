@@ -80,15 +80,17 @@ function EditCustomClass:init(menuplace)
 	local i = 1
 	local j = 1
 	for k, v in pairs(skillTable) do
-		skillNames[i] = k
-		skillFullNames[i] = v["Name"]
-		skillDescs[i] = v["Desc"]
-		if k == skill then
-			j = i
-			skillName = v["Name"]
-			skillDesc = v["Desc"]
+		if skillTable[k]["Locked"] ~=1 then
+			skillNames[i] = k
+			skillFullNames[i] = v["Name"]
+			skillDescs[i] = v["Desc"]
+			if k == skill then
+				j = i
+				skillName = v["Name"]
+				skillDesc = v["Desc"]
+			end
+			i = i + 1
 		end
-		i = i + 1
 	end
 
 	local skillTextBox = TextField.new(self.smallfont, "Skill: "..skillName)

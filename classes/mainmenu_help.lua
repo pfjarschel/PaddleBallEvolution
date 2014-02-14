@@ -58,7 +58,7 @@ function MainMenu_Help:init()
 	helpstrings[4] = "You can use the touch conrol area to move your paddle up and down, if you prefer touch controls. "..
 					"Alternatively, you can set in the options page two other control methods:\n \n \n \n"..
 					"Tilt: Tilt your device and the paddle moves accordingly.\n \n"..
-					"Keys: If your device has hardware keys, you can use the Up and Down buttons for movement, and Y to activate the special skill. \n"
+					"Keys: If your device has hardware keys, you can use the Up and Down buttons for movement, and any letter key to activate the special skill. \n"
 	helpstrings[5] = "There are 5 attributes that influence gameplay: \n \n \n \n"..
 					"Attack (Atk): Strength of your ball return.\n \n"..
 					"Movement (Mov): How fast your paddle moves. \n \n"..

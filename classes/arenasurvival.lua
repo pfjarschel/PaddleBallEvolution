@@ -208,7 +208,7 @@ end
 
 -- Handles Keys --
 local function onKeyDown(event)
-	if event.keyCode == 303 then
+	if event.keyCode == 303 or event.keyCode == 306 then
 		arena:openMenu()
 	end
 	if event.keyCode == 301 and arena.paused then

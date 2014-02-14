@@ -59,15 +59,15 @@ function TextureLoaderMenu:init()
 	self.aboutBut = Texture.new("imgs/buttons/about.png", true)
 	self.aboutBut1 = Texture.new("imgs/buttons/about1.png", true)
 	
-	self.mainmenubg = Texture.new("imgs/backs/mainmenubg.png", true)
+	self.mainmenubg = Texture.new("imgs/backs/mainmenubg.jpg", true)
 	
-	self.splash = Texture.new("imgs/backs/splash.png", true)
+	self.splash = Texture.new("imgs/backs/splash.jpg", true)
 	
-	self.black = Texture.new("imgs/backs/black.png", true)
+	self.black = Texture.new("imgs/backs/black.jpg", true)
 	
-	self.interface = Texture.new("imgs/backs/interface.png", true)
+	self.interface = Texture.new("imgs/backs/interface.jpg", true)
 	
-	self.bluesmoke = Texture.new("imgs/backs/bluesmoke.png", true)
+	self.bluesmoke = Texture.new("imgs/backs/bluesmoke.jpg", true)
 	
 	self.paddle2 = Texture.new("imgs/paddle2.png", true)
 end

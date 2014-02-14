@@ -2,7 +2,7 @@
 -- Table Containing Class Names and Aliases --
 ----------------------------------------------
 
--- The index is the class name, followed by Atk, Mov, Lif, Int, Skl, Def, Skill internal name, Skill Full Name, Skill Description, RGB colors, Full Name
+-- The index is the class name, followed by Atk, Mov, Lif, Int, Skl, Def, Skill internal name, Skill Full Name, Skill Description, RGB colors, Full Name, Locked
 
 classTable["Custom"] = {
 	10,
@@ -15,7 +15,8 @@ classTable["Custom"] = {
 	"None",
 	"Touch 'Edit' to select",
 	{0.5, 0.5, 0.5},
-	"Custom Class"
+	"Custom Class",
+	0
 }
 classTable["Warrior"] = {
 	18,
@@ -28,7 +29,8 @@ classTable["Warrior"] = {
 	"Power Shot",
 	"The next ball return will be VERY fast",
 	{0.6, 0.2, 0.2},
-	"Warrior"
+	"Warrior",
+	0
 }
 classTable["Acrobat"] = {
 	10,
@@ -41,7 +43,8 @@ classTable["Acrobat"] = {
 	"Curve Ball",
 	"Ball makes crazy curves",
 	{0.8, 0.8, 0.2},
-	"Acrobat"
+	"Acrobat",
+	0
 }
 classTable["Ninja"] = { 
 	14,
@@ -54,7 +57,8 @@ classTable["Ninja"] = {
 	"Invisiball",
 	"Ball turns invisible",
 	{0.05, 0.2, 0.5},
-	"Ninja"
+	"Ninja",
+	0
 }
 classTable["SwampMonster"] = {
 	14,
@@ -67,7 +71,8 @@ classTable["SwampMonster"] = {
 	"Viscous Field",
 	"Ball slows down a lot",
 	{0.6, 0.7, 0.2},
-	"Swamp Monster"
+	"Swamp Monster",
+	0
 }
 classTable["Archer"] = {
 	14,
@@ -80,7 +85,8 @@ classTable["Archer"] = {
 	"Arrow Ball",
 	"Ball moves in a straight line to the goal",
 	{0.2, 0.6, 0.2},
-	"Archer"
+	"Archer",
+	0
 }
 classTable["Illusionist"] = {
 	12,
@@ -92,8 +98,9 @@ classTable["Illusionist"] = {
 	"mirrorball",
 	"Mirror Ball",
 	"Ball is reflected to the other direction",
-	{0.8, 0.8, 0.8},
-	"Illusionist"
+	{0.7, 0.7, 0.7},
+	"Illusionist",
+	0
 }
 classTable["Barbarian"] = {
 	20,
@@ -106,7 +113,8 @@ classTable["Barbarian"] = {
 	"Berserk",
 	"Atk, Mov and Def greatly increased",
 	{0.8, 0.3, 0.1},
-	"Barbarian"
+	"Barbarian",
+	0
 }
 classTable["Thief"] = {
 	8,
@@ -119,7 +127,8 @@ classTable["Thief"] = {
 	"Steal",
 	"Steal ball and return with 2x its speed",
 	{0.4, 0.4, 0.4},
-	"Thief"
+	"Thief",
+	0
 }
 
 classTable["Mesmer"] = {
@@ -133,7 +142,8 @@ classTable["Mesmer"] = {
 	"Multiball",
 	"Creates illusions to confuse the enemy",
 	{0.6, 0.4, 1},
-	"Mesmer"
+	"Mesmer",
+	0
 }
 
 classTable["IceMan"] = {
@@ -147,7 +157,8 @@ classTable["IceMan"] = {
 	"Freeze",
 	"Freezes your opponent for some time",
 	{0.8, 0.8, 1},
-	"Ice Man"
+	"Ice Man",
+	0
 }
 
 classTable["CaveMan"] = {
@@ -161,7 +172,8 @@ classTable["CaveMan"] = {
 	"No Skill",
 	"+10 Attribute Points",
 	{0.4, 0.2, 0},
-	"Cave Man"
+	"Cave Man",
+	0
 }
 
 classTable["Scientist"] = {
@@ -175,7 +187,8 @@ classTable["Scientist"] = {
 	"Predict",
 	"Predicts ball trajectory",
 	{0.53, 0.75, 0.86},
-	"Scientist"
+	"Scientist",
+	0
 }
 
 classTable["Pyromancer"] = {
@@ -189,7 +202,8 @@ classTable["Pyromancer"] = {
 	"Fireball",
 	"Hurls a fireball that does 1 damage",
 	{1, 0.2, 0},
-	"Pyromancer"
+	"Pyromancer",
+	0
 }
 
 classTable["Vampire"] = {
@@ -203,5 +217,36 @@ classTable["Vampire"] = {
 	"Bite",
 	"Next enemy skill gives you 1 HP",
 	{0.21, 0.21, 0.43},
-	"Vampire"
+	"Vampire",
+	0
+}
+
+classTable["Exorcist"] = {
+	12,
+	8,
+	16,
+	10,
+	12,
+	12,
+	"dispel",
+	"Dispel",
+	"Cancels Enemy's skill",
+	{1, 1, 1},
+	"Exorcist",
+	1
+}
+
+classTable["Shaman"] = {
+	8,
+	10,
+	12,
+	10,
+	17,
+	13,
+	"headshrink",
+	"Headshrink",
+	"Decreases Enemy's paddle size",
+	{0.4, 0.45, 0},
+	"Shaman",
+	1
 }

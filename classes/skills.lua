@@ -179,7 +179,7 @@ function Skills:start(side)
 		end
 		
 		-- Sets ball alpha very low --
-		arena.ball:setAlpha(0.05)
+		arena.ball:setAlpha(0.03)
 		
 		-- Sets AI intelligence very bad --
 		arena.aiPlayer.char.intFactor = 7
@@ -807,12 +807,20 @@ function Skills:start(side)
 		
 		-- Action to end skill --
 		self.endAction = function()			
-			world:destroyBody(ball2.body)
-			ball2.body = nil
-			fadeBitmapOut(ball2, 500, arena)
-			world:destroyBody(ball3.body)
-			ball3.body = nil
-			fadeBitmapOut(ball3, 500, arena)
+			if arena:getChildAt(i) == ball2 then
+				if ball2.body ~= nil then
+					world:destroyBody(ball2.body)
+					ball2.body = nil
+				end
+				fadeBitmapOut(ball2, 500, arena)
+			end
+			if arena:getChildAt(i) == ball3 then
+				if ball2.body ~= nil then
+					world:destroyBody(ball3.body)
+					ball3.body = nil
+				end
+				fadeBitmapOut(ball3, 500, arena)
+			end
 			
 			arena.aiPlayer.AITarget = arena.ball
 			
@@ -1030,6 +1038,13 @@ function Skills:start(side)
 			end
 		end
 		
+		-- Set paddle movement towards target --
+		if side == 0 then
+			arena.leftPlayer.touchY = predictY
+		else
+			arena.rightPlayer.touchY = predictY
+		end
+		
 		-- GFX --
 		local target = Bitmap.new(textures.gfx_target)
 		target:setScale(1, 1)
@@ -1046,7 +1061,7 @@ function Skills:start(side)
 		arena.aiPlayer:aiRandomFactor()
 		
 		-- Sets timer to end skill --
-		Timer.delayedCall(self.basetime/2,  function()
+		Timer.delayedCall(self.basetime/4,  function()
 			self:endAction() 
 		end)
 		
@@ -1321,4 +1336,183 @@ function Skills:start(side)
 	end
 
 
+-----------------------------------
+-- Dispel: Cancels Enemy's skill --
+-----------------------------------
+	if self.skill == "dispel" then
+		if optionsTable["SFX"] == "On" then sounds.dispel:play() end
+		
+		if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then
+			arena.skillBut:setAlpha(0.1)
+		end
+		
+		-- End skill actions --
+		if arena.humanPlayer.skillActive then
+			arena.humanPlayer.char.skill:endAction()
+		end
+		if arena.aiPlayer.skillActive then
+			arena.aiPlayer.char.skill:endAction()
+		end
+		arena.humanPlayer.char.skill:forceEnd()
+		arena.aiPlayer.char.skill:forceEnd()
+		
+		-- Action to end Skill --
+		self.endAction = function()
+			if side == 0 then
+				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
+					arena.skillBut:setAlpha(0.4)
+				end
+				arena.leftPlayer.skillActive = false
+			else
+				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
+					arena.skillBut:setAlpha(0.4)
+				end
+				arena.rightPlayer.skillActive = false
+			end
+		end
+		
+		-- Sets timer to end skill --
+		Timer.delayedCall(self.basetime/10,  function()
+			self:endAction() 
+		end)
+		
+		-- Action to force end --
+		self.forceEnd = function()
+			
+		end
+	end
+	
+	
+-----------------------------------------------
+-- Headshrink: Decreases Enemy's paddle size --
+-----------------------------------------------
+	if self.skill == "headshrink" then
+		if optionsTable["SFX"] == "On" then sounds.powerup2over:play() end
+		
+		if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then
+			arena.skillBut:setAlpha(0.1)
+		end
+		
+		-- Decrease paddle size --
+		if side == 0 then
+			local defFactor = arena.rightPlayer.paddle.defFactor*0.5
+			
+			arena.rightPlayer.paddle.defFactor = defFactor
+			
+			local shape = b2.PolygonShape.new()
+			arena.rightPlayer.paddle.paddleH = arena.leftPlayer.paddle.basepaddleH*defFactor
+			arena.rightPlayer.paddle.body.paddleH = arena.leftPlayer.paddle.paddleH
+			shape:setAsBox(arena.rightPlayer.paddle.paddleW/2, arena.rightPlayer.paddle.paddleH/2, 0, 0, 0)
+			arena.rightPlayer.paddle.body:destroyFixture(arena.rightPlayer.paddle.fixture)
+			arena.rightPlayer.paddle.shape = shape
+			arena.rightPlayer.paddle.fixture = arena.rightPlayer.paddle.body:createFixture{
+				shape = shape, 
+				density = 10000,
+				restitution = 0, 
+				friction = 0,
+				fixedRotation = true,
+			}
+			arena.rightPlayer.paddle.fixture:setFilterData({categoryBits = 2, maskBits = 5, groupIndex = 0})
+			arena.rightPlayer.paddle.body:setAngle(arena.rightPlayer.paddle.side*math.pi)
+			arena.rightPlayer.paddle.bitmap:setScale(arena.rightPlayer.paddle.paddleW/arena.rightPlayer.paddle.textureW, arena.rightPlayer.paddle.paddleH/arena.rightPlayer.paddle.textureH)
+			arena.rightPlayer.paddle:setRotation(arena.rightPlayer.paddle.side*180)
+		else
+			local defFactor = arena.leftPlayer.paddle.defFactor*0.5
+
+			arena.leftPlayer.paddle.defFactor = defFactor
+			
+			local shape = b2.PolygonShape.new()
+			arena.leftPlayer.paddle.paddleH = arena.leftPlayer.paddle.basepaddleH*defFactor
+			arena.leftPlayer.paddle.body.paddleH = arena.leftPlayer.paddle.paddleH
+			shape:setAsBox(arena.leftPlayer.paddle.paddleW/2, arena.leftPlayer.paddle.paddleH/2, 0, 0, 0)
+			arena.leftPlayer.paddle.body:destroyFixture(arena.leftPlayer.paddle.fixture)
+			arena.leftPlayer.paddle.shape = shape
+			arena.leftPlayer.paddle.fixture = arena.leftPlayer.paddle.body:createFixture{
+				shape = shape, 
+				density = 10000,
+				restitution = 0, 
+				friction = 0,
+				fixedRotation = true,
+			}
+			arena.leftPlayer.paddle.fixture:setFilterData({categoryBits = 2, maskBits = 5, groupIndex = 0})
+			arena.leftPlayer.paddle.body:setAngle(arena.leftPlayer.paddle.side*math.pi)
+			arena.leftPlayer.paddle.bitmap:setScale(arena.leftPlayer.paddle.paddleW/arena.leftPlayer.paddle.textureW, arena.leftPlayer.paddle.paddleH/arena.leftPlayer.paddle.textureH)
+			arena.leftPlayer.paddle:setRotation(arena.leftPlayer.paddle.side*180)
+		end
+		
+		-- Action to end Skill --
+		self.endAction = function()
+			if side == 0 then
+				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
+					arena.skillBut:setAlpha(0.4)
+				end
+				arena.leftPlayer.skillActive = false
+				
+				local defFactor2 = 0.21 + (arena.rightPlayer.char.def)/11 -- 0.3 to 3
+				arena.rightPlayer.paddle.defFactor = defFactor2
+				
+				local shape2 = b2.PolygonShape.new()
+				arena.rightPlayer.paddle.paddleH = arena.rightPlayer.paddle.basepaddleH*defFactor2
+				arena.rightPlayer.paddle.body.paddleH = arena.rightPlayer.paddle.paddleH
+				shape2:setAsBox(arena.rightPlayer.paddle.paddleW/2, arena.rightPlayer.paddle.paddleH/2, 0, 0, 0)
+				arena.rightPlayer.paddle.body:destroyFixture(arena.rightPlayer.paddle.fixture)
+				arena.rightPlayer.paddle.shape = shape2
+				arena.rightPlayer.paddle.fixture = arena.rightPlayer.paddle.body:createFixture{
+					shape = shape2, 
+					density = 10000,
+					restitution = 0, 
+					friction = 0,
+					fixedRotation = true,
+				}
+				arena.rightPlayer.paddle.fixture:setFilterData({categoryBits = 2, maskBits = 5, groupIndex = 0})
+				arena.rightPlayer.paddle.body:setAngle(arena.rightPlayer.paddle.side*math.pi)
+				arena.rightPlayer.paddle.bitmap:setScale(arena.rightPlayer.paddle.paddleW/arena.rightPlayer.paddle.textureW, arena.rightPlayer.paddle.paddleH/arena.rightPlayer.paddle.textureH)
+				arena.rightPlayer.paddle:setRotation(arena.rightPlayer.paddle.side*180)
+			else
+				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
+					arena.skillBut:setAlpha(0.4)
+				end
+				arena.rightPlayer.skillActive = false
+				
+				local defFactor = 0.21 + (arena.leftPlayer.char.def)/11 -- 0.3 to 3
+				arena.leftPlayer.paddle.defFactor = defFactor
+	
+				local shape = b2.PolygonShape.new()
+				arena.leftPlayer.paddle.paddleH = arena.leftPlayer.paddle.basepaddleH*defFactor
+				arena.leftPlayer.paddle.body.paddleH = arena.leftPlayer.paddle.paddleH
+				shape:setAsBox(arena.leftPlayer.paddle.paddleW/2, arena.leftPlayer.paddle.paddleH/2, 0, 0, 0)
+				arena.leftPlayer.paddle.body:destroyFixture(arena.leftPlayer.paddle.fixture)
+				arena.leftPlayer.paddle.shape = shape
+				arena.leftPlayer.paddle.fixture = arena.leftPlayer.paddle.body:createFixture{
+					shape = shape, 
+					density = 10000,
+					restitution = 0, 
+					friction = 0,
+					fixedRotation = true,
+				}
+				arena.leftPlayer.paddle.fixture:setFilterData({categoryBits = 2, maskBits = 5, groupIndex = 0})
+				arena.leftPlayer.paddle.body:setAngle(arena.leftPlayer.paddle.side*math.pi)
+				arena.leftPlayer.paddle.bitmap:setScale(arena.leftPlayer.paddle.paddleW/arena.leftPlayer.paddle.textureW, arena.leftPlayer.paddle.paddleH/arena.leftPlayer.paddle.textureH)
+				arena.leftPlayer.paddle:setRotation(arena.leftPlayer.paddle.side*180)
+			end
+		end
+		
+		-- Sets timer to end skill --
+		Timer.delayedCall(self.basetime,  function()
+			--self:endAction() 
+		end)
+		
+		-- Action to force end --
+		self.forceEnd = function()
+			
+		end
+	end
+	
+	
+	
+	
+	
+	
+	
+	
 end

@@ -34,7 +34,7 @@ function MainMenu_Career:init()
 	
 	local careerstring = "Career mode is available in the full version!\n \n"..
 					"In this mode, you will start with a basic character, and progress through various tournaments in different locations, while "..
-					"improving your stats by leveling up and acquiring special skills from defeated enemies.\n"..
+					"improving your stats by leveling up and acquiring special skills from defeated enemies.\n \n"..
 					"Purchase full version here!\n"
 	
 	local careertext = TextWrap.new(careerstring, WX/1.1, "justify", 10, self.font)

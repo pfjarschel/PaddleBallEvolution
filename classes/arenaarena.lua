@@ -276,7 +276,7 @@ end
 
 -- Handles Keys --
 local function onKeyDown(event)
-	if event.keyCode == 303 then
+	if event.keyCode == 303 or event.keyCode == 306 then
 		arena:openMenu()
 	end
 	if event.keyCode == 301 and arena.paused then
@@ -292,7 +292,7 @@ local function onKeyDown(event)
 		if event.keyCode == 38 then
 			arena.humanPlayer.touchY = 0
 		end
-		if event.keyCode == 89 then
+		if event.keyCode >= 65 and event.keyCode <= 90 then
 			if optionsTable["ArenaSide"] == "Left" then
 				if arena.humanPlayer.skillActive == false and arena.ball.launched and arena.mp0 > 0 then
 					arena.humanPlayer.skillActive = true
@@ -557,7 +557,7 @@ function ArenaArena:init(dataTable)
 	-- Stop Current song and load another (bosses included) --
 	if optionsTable["Music"] == "On" then
 		local function nextSong()
-			local randNum = math.random(1, 11)
+			local randNum = math.random(1, 10)
 			self.songload = nil
 			if randNum < 8 then
 				self.songload = Sound.new(musics.fight[randNum])
@@ -578,8 +578,10 @@ function ArenaArena:init(dataTable)
 	local classNames = {}
 	local i = 1
 	for k, v in pairs(classTable) do
-		classNames[i] = k
-		i = i + 1
+		if classTable[k][12] ~=1 then
+			classNames[i] = k
+			i = i + 1
+		end
 	end
 	
 	-- Sets classes --

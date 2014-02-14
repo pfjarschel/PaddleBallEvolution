@@ -51,7 +51,7 @@ function MainMenu_About:init()
 	
 	local abouttext = TextWrap.new(aboutstring, WX/1.1, "justify", 15, self.font)
 	abouttext:setTextColor(0xffffff)
-	abouttext:setPosition(WX/2 - abouttext:getWidth()/2, WY/2 + 1.5*abouttitle:getHeight() - 24)
+	abouttext:setPosition(WX/2 - abouttext:getWidth()/2, WY/2 + 1.5*abouttitle:getHeight() - 32)
 	self:addChild(abouttext)
 	
 	local copystring = "@ 2014, Black & White Cat Studio\n"..

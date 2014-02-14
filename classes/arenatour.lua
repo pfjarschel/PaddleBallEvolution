@@ -278,7 +278,7 @@ end
 
 -- Handles Keys --
 local function onKeyDown(event)
-	if event.keyCode == 303 then
+	if event.keyCode == 303 or event.keyCode == 306 then
 		arena:openMenu()
 	end
 	if event.keyCode == 301 and arena.paused then
@@ -294,7 +294,7 @@ local function onKeyDown(event)
 		if event.keyCode == 38 then
 			arena.humanPlayer.touchY = 0
 		end
-		if event.keyCode == 89 then
+		if event.keyCode >= 65 and event.keyCode <= 90 then
 			if optionsTable["ArenaSide"] == "Left" then
 				if arena.humanPlayer.skillActive == false and arena.ball.launched and arena.mp0 > 0 then
 					arena.humanPlayer.skillActive = true
@@ -347,7 +347,11 @@ function ArenaTour:gameOver()
 	
 	if (self.score0 > self.score1 and optionsTable["ArenaSide"] == "Left") or (self.score0 < self.score1 and optionsTable["ArenaSide"] == "Right") then
 		if self.stage < 10 then
-			gameOverString = "You won this match!\n".."Now continue to the next stage!\n"
+			if self.stage == 9 then
+				gameOverString = "You won this match!\n".."Prepare for the Final Boss Fight!\n"
+			else
+				gameOverString = "You won this match!\n".."Now continue to the next stage!\n"
+			end
 			
 			backdrawing = Bitmap.new(textures.medal)
 			backdrawing:setScale(1, 1)
@@ -414,7 +418,7 @@ function ArenaTour:gameOver()
 				stage:addChild(nextBut)
 			end)
 		else
-			gameOverString = "You won the Tournament, impressive!\n".."Congratulations, you deserve it!\n"
+			gameOverString = "You won the Tournament!\n".."Congratulations, you deserve it! \\o/ \n"
 			if optionsTable["Music"] == "On" then
 				currSong:stop()
 				self.songload = nil
@@ -514,7 +518,7 @@ function ArenaTour:gameOver()
 	end
 	
 	gameOverTextBox = TextWrap.new(gameOverString, WX0, "center", 32, self.font)
-	gameOverTextBox:setTextColor(0x419bd7)
+	gameOverTextBox:setTextColor(0x50b0ff)
 	gameOverTextBox:setPosition(0.5*WX0 - gameOverTextBox:getWidth()/2, 0*WY + gameOverTextBox:getHeight()/2)
 	
 	exitBut.bitmap:setPosition(exitBut:getWidth()/2 + 10, WY/2 + 210)
@@ -668,7 +672,7 @@ function ArenaTour:init(dataTable)
 				self.songload = nil
 				self.songload = Sound.new(musics.fight[randNum])
 			else
-				local randNum = math.random(1, 4)
+				local randNum = math.random(1, 3)
 				self.songload = nil
 				self.songload = Sound.new(musics.boss[randNum])
 			end
@@ -686,8 +690,10 @@ function ArenaTour:init(dataTable)
 	local classNames = {}
 	local i = 1
 	for k, v in pairs(classTable) do
-		classNames[i] = k
-		i = i + 1
+		if classTable[k][12] ~=1 then
+			classNames[i] = k
+			i = i + 1
+		end
 	end
 	
 	-- Sets classes, different from previous --

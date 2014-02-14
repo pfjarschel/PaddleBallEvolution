@@ -35,5 +35,6 @@ function SoundLoaderArenaMode:init()
 	self.explosion = Sound.new("audio/sfx/explosion.wav")
 	self.alarm = Sound.new("audio/sfx/alarm.wav")
 	self.bite = Sound.new("audio/sfx/bite.wav")
+	self.dispel = Sound.new("audio/sfx/dispel.wav")
 end
 

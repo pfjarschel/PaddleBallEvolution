@@ -7,7 +7,7 @@
 arenasTable["Normal"] = {}
 arenasTable["Normal"]["Name"] = "Normal"
 arenasTable["Normal"]["Desc"] = "The normal PaddleBall Arena. No Special Effects"
-arenasTable["Normal"]["Image"] = "imgs/backs/arenas/normal.png"
+arenasTable["Normal"]["Image"] = "imgs/backs/arenas/normal.jpg"
 arenasTable["Normal"]["Init"] = function()
 end
 arenasTable["Normal"]["End"] = function()
@@ -18,10 +18,10 @@ end
 arenasTable["Lava"] = {}
 arenasTable["Lava"]["Name"] = "Lava"
 arenasTable["Lava"]["Desc"] = "Paddles can randomly melt (get smaller)"
-arenasTable["Lava"]["Image"] = "imgs/backs/arenas/lava.png"
+arenasTable["Lava"]["Image"] = "imgs/backs/arenas/lava.jpg"
 arenasTable["Lava"]["timer"] = Timer.new(1000, 0)
 arenasTable["Lava"]["onTimer"] = function()
-	local chance = 12
+	local chance = 10
 	local randNum = math.random(1, chance)
 	if randNum == 1 and arena.ball.launched then
 		if optionsTable["SFX"] == "On" then sounds.fire:play() end
@@ -173,10 +173,10 @@ end
 arenasTable["Ice"] = {}
 arenasTable["Ice"]["Name"] = "Ice"
 arenasTable["Ice"]["Desc"] = "Paddles can randomly freeze"
-arenasTable["Ice"]["Image"] = "imgs/backs/arenas/ice.png"
+arenasTable["Ice"]["Image"] = "imgs/backs/arenas/ice.jpg"
 arenasTable["Ice"]["timer"] = Timer.new(2000, 0)
 arenasTable["Ice"]["onTimer"] = function()
-	local chance = 5
+	local chance = 3
 	local randNum = math.random(1, chance)
 	if randNum == 1 and arena.ball.launched then
 		if optionsTable["SFX"] == "On" then sounds.ice:play() end
@@ -246,7 +246,7 @@ end
 arenasTable["MagicField"] = {}
 arenasTable["MagicField"]["Name"] = "Magic Field"
 arenasTable["MagicField"]["Desc"] = "Both players gain lots of Skill Points"
-arenasTable["MagicField"]["Image"] = "imgs/backs/arenas/magicfield.png"
+arenasTable["MagicField"]["Image"] = "imgs/backs/arenas/magicfield.jpg"
 arenasTable["MagicField"]["Init"] = function()
 	arena.mp0 = 99
 	arena.mp1 = 99
@@ -261,7 +261,7 @@ end
 arenasTable["NullMagicField"] = {}
 arenasTable["NullMagicField"]["Name"] = "Null-Magic Field"
 arenasTable["NullMagicField"]["Desc"] = "Both players have no Skill Points"
-arenasTable["NullMagicField"]["Image"] = "imgs/backs/arenas/nullmagic.png"
+arenasTable["NullMagicField"]["Image"] = "imgs/backs/arenas/nullmagic.jpg"
 arenasTable["NullMagicField"]["Init"] = function()
 	arena.mp0 = 0
 	arena.mp1 = 0
@@ -276,7 +276,7 @@ end
 arenasTable["SuddenDeath"] = {}
 arenasTable["SuddenDeath"]["Name"] = "Sudden Death"
 arenasTable["SuddenDeath"]["Desc"] = "Both players start with only 1 HP"
-arenasTable["SuddenDeath"]["Image"] = "imgs/backs/arenas/suddendeath.png"
+arenasTable["SuddenDeath"]["Image"] = "imgs/backs/arenas/suddendeath.jpg"
 arenasTable["SuddenDeath"]["Init"] = function()
 	arena.score0 = 1
 	arena.score1 = 1
@@ -291,7 +291,7 @@ end
 arenasTable["WormHole"] = {}
 arenasTable["WormHole"]["Name"] = "Worm Hole"
 arenasTable["WormHole"]["Desc"] = "Ball base speed is increased"
-arenasTable["WormHole"]["Image"] = "imgs/backs/arenas/wormhole.png"
+arenasTable["WormHole"]["Image"] = "imgs/backs/arenas/wormhole.jpg"
 arenasTable["WormHole"]["Init"] = function()
 	arena.ball.baseSpeed = arena.ball.baseSpeed0*1.5
 end
@@ -304,7 +304,7 @@ end
 arenasTable["Swamp"] = {}
 arenasTable["Swamp"]["Name"] = "Swamp"
 arenasTable["Swamp"]["Desc"] = "Ball base speed is decreased"
-arenasTable["Swamp"]["Image"] = "imgs/backs/arenas/viscous.png"
+arenasTable["Swamp"]["Image"] = "imgs/backs/arenas/viscous.jpg"
 arenasTable["Swamp"]["Init"] = function()
 	arena.ball.baseSpeed = arena.ball.baseSpeed0*0.75
 end
@@ -317,10 +317,10 @@ end
 arenasTable["GasCloud"] = {}
 arenasTable["GasCloud"]["Name"] = "Gas Cloud"
 arenasTable["GasCloud"]["Desc"] = "Strong Winds change ball direction"
-arenasTable["GasCloud"]["Image"] = "imgs/backs/arenas/wind.png"
+arenasTable["GasCloud"]["Image"] = "imgs/backs/arenas/wind.jpg"
 arenasTable["GasCloud"]["timer"] = Timer.new(1000, 0)
 arenasTable["GasCloud"]["onTimer"] = function()
-	local chance = 8
+	local chance = 7
 	local randNum = math.random(1, chance)
 	if randNum == 1 and arena.ball.launched then
 		if optionsTable["SFX"] == "On" then sounds.woosh:play() end
@@ -347,7 +347,7 @@ end
 arenasTable["BlackHole"] = {}
 arenasTable["BlackHole"]["Name"] = "Black Hole"
 arenasTable["BlackHole"]["Desc"] = "Ball is attracted to center of the arena"
-arenasTable["BlackHole"]["Image"] = "imgs/backs/arenas/blackhole.png"
+arenasTable["BlackHole"]["Image"] = "imgs/backs/arenas/blackhole.jpg"
 arenasTable["BlackHole"]["timer"] = Timer.new(33, 0)
 arenasTable["BlackHole"]["onTimer"] = function()
 	-- Applies force pointing to the center of the arena --
@@ -381,7 +381,7 @@ end
 arenasTable["WhiteHole"] = {}
 arenasTable["WhiteHole"]["Name"] = "White Hole"
 arenasTable["WhiteHole"]["Desc"] = "Ball is repelled by the center of the arena"
-arenasTable["WhiteHole"]["Image"] = "imgs/backs/arenas/whitehole.png"
+arenasTable["WhiteHole"]["Image"] = "imgs/backs/arenas/whitehole.jpg"
 arenasTable["WhiteHole"]["timer"] = Timer.new(33, 0)
 arenasTable["WhiteHole"]["onTimer"] = function()
 	-- Applies force pointing to the center of the arena --
