@@ -690,7 +690,7 @@ function ArenaTour:init(dataTable)
 	local classNames = {}
 	local i = 1
 	for k, v in pairs(classTable) do
-		if classTable[k][12] ~=1 then
+		if classTable[k][12] == 0 or mainLock == "unlocked" then
 			classNames[i] = k
 			i = i + 1
 		end

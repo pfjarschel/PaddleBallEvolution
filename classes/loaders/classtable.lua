@@ -231,7 +231,7 @@ classTable["Exorcist"] = {
 	"dispel",
 	"Dispel",
 	"Cancels Enemy's skill",
-	{1, 1, 1},
+	{1, 1, 0.87},
 	"Exorcist",
 	1
 }
@@ -248,5 +248,95 @@ classTable["Shaman"] = {
 	"Decreases Enemy's paddle size",
 	{0.4, 0.45, 0},
 	"Shaman",
+	1
+}
+
+classTable["ThunderWraith"] = {
+	10,
+	12,
+	10,
+	10,
+	20,
+	8,
+	"charge",
+	"Charge",
+	"Ball goes to random direction after charging",
+	{0, 0.53, 1},
+	"Thunder Wraith",
+	1
+}
+
+classTable["Gambler"] = {
+	13,
+	13,
+	13,
+	10,
+	10,
+	11,
+	"bet",
+	"Bet",
+	"Next goal does double damage",
+	{1, 0.8, 0},
+	"Gambler",
+	1
+}
+
+classTable["TimeMeddler"] = {
+	10,
+	8,
+	16,
+	10,
+	15,
+	11,
+	"reversetime",
+	"Reverse Time",
+	"Ball goes a little back in time",
+	{0.58, 0.15, 0.84},
+	"Time Meddler",
+	1
+}
+
+classTable["DireViper"] = {
+	13,
+	15,
+	12,
+	10,
+	12,
+	8,
+	"poison",
+	"Poison",
+	"Next enemy skill causes 1 damage",
+	{0, 0.85, 0.13},
+	"Dire Viper",
+	1
+}
+
+classTable["LightWraith"] = {
+	8,
+	10,
+	12,
+	10,
+	16,
+	14,
+	"shine",
+	"Shine",
+	"Obfuscates everyone for a short time",
+	{1, 1, 1},
+	"Light Wraith",
+	1
+}
+
+classTable["Siren"] = {
+	12,
+	13,
+	14,
+	10,
+	14,
+	7,
+	"charm",
+	"Charm",
+	"Attracts opponent",
+	{0.94, 0.17, 0.86},
+	"Siren",
 	1
 }

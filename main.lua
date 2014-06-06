@@ -207,7 +207,8 @@ else
 			skillName,
 			skillDesc,
 			{tonumber(customClass["ColorR"])/10, tonumber(customClass["ColorG"])/10, tonumber(customClass["ColorB"])/10},
-			"Custom Class"
+			"Custom Class",
+			0
 		}
 	end
 end

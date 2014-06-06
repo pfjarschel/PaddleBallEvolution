@@ -54,10 +54,10 @@ function Paddle:createBody()
 	-- necessary to avoid world lock, schedules action to next frame.                --
 	-----------------------------------------------------------------------------------
 	function self.body:collide(event)
+		local body1 = event.fixtureA:getBody()
+		local body2 = event.fixtureB:getBody()
 		Timer.delayedCall(0, function()
 			self:setAngle(self.side*math.pi)
-			local body1 = event.fixtureA:getBody()
-			local body2 = event.fixtureB:getBody()
 			if body1.name == "ball" or body2.name == "ball" then
 				local colX, colY = arena.ball.body:getPosition()
 				local padX, padY = self:getPosition()

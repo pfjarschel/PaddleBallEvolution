@@ -66,6 +66,24 @@ function ArenaAI:basicCall()
 		if self.skill == "headshrink" then
 			self:headshrink()
 		end
+		if self.skill == "charge" then
+			self:charge()
+		end
+		if self.skill == "bet" then
+			self:bet()
+		end
+		if self.skill == "reversetime" then
+			self:reversetime()
+		end
+		if self.skill == "poison" then
+			self:poison()
+		end
+		if self.skill == "shine" then
+			self:shine()
+		end
+		if self.skill == "charm" then
+			self:charm()
+		end
 	end
 end
 function ArenaAI:initSkill()
@@ -288,9 +306,9 @@ end
 -- Bite --
 ----------
 function ArenaAI:bite()
-	-- Activate any time --
-	local num = math.random(1, self.chance/2)
-	if num == 1 then
+	-- Activate any time, if opponent mp > 0 and no skill active --
+	local num = math.random(1, self.chance/4)
+	if num == 1 and arena.mp0 > 0 and arena.mp1 > 0 and (not arena.aiPlayer.skillActive) and (not arena.humanPlayer.skillActive) then
 		self:initSkill()
 	end
 end
@@ -318,5 +336,103 @@ function ArenaAI:headshrink()
 	local num = math.random(1, self.chance/2)
 	if num == 1 then
 		self:initSkill()
+	end
+end
+
+
+------------
+-- Charge --
+------------
+function ArenaAI:charge()
+	-- Activate when ball going away --
+	local ballVx = arena.ball.body:getLinearVelocity()
+	if self.side*ballVx < 0 then
+		local num = math.random(1, self.chance/4)
+		if num == 1 then
+			self:initSkill()
+		end
+	end
+end
+
+
+---------
+-- Bet --
+---------
+function ArenaAI:bet()
+	-- Activate only when ball is moving away from him --
+	local ballVx, ballVy = arena.ball.body:getLinearVelocity()
+	--local ballX = arena.ball.body:getPosition()
+	if self.side*ballVx < 0 then
+		local num = math.random(1, self.chance/4)
+		if num == 1 then
+			self:initSkill()
+		end
+	end
+end
+
+
+------------------
+-- Reverse Time --
+------------------
+function ArenaAI:reversetime()
+	-- Activate only when ball is moving torwards him, after crossing the field. If distance is high, increase chance. --
+	local ballVx, ballVy = arena.ball.body:getLinearVelocity()
+	local ballX, ballY = arena.ball.body:getPosition()
+	local paddleX, paddleY = arena.aiPlayer.paddle.body:getPosition()
+	
+	if self.side*ballVx > 0 and self.side*(ballX - WX/2 - XShift) > 0 then
+		local num = 0
+		if math.abs(ballY - paddleY) > WY/2 then
+			num = math.random(1, self.chance/5)
+		else
+			num = math.random(1, self.chance)
+		end
+		if num == 1 then
+			self:initSkill()
+		end
+	end
+end
+
+
+------------
+-- Poison --
+------------
+function ArenaAI:poison()
+	-- Activate any time, if opponent mp > 0 and no skill active --
+	local num = math.random(1, self.chance/4)
+	if num == 1 and arena.mp0 > 0 and arena.mp1 > 0 and (not arena.aiPlayer.skillActive) and (not arena.humanPlayer.skillActive) then
+		self:initSkill()
+	end
+end
+
+
+-----------
+-- Shine --
+-----------
+function ArenaAI:shine()
+	-- Activate only when ball is moving away from him, before crossing the field --
+	local ballVx = arena.ball.body:getLinearVelocity()
+	local ballX = arena.ball.body:getPosition()
+	if self.side*ballVx < 0 and self.side*(ballX - WX/2 - XShift) > 0 then
+		local num = math.random(1, self.chance/4)
+		if num == 1 then
+			self:initSkill()
+		end
+	end
+end
+
+
+-----------
+-- Charm --
+-----------
+function ArenaAI:charm()
+	-- Activate only when ball is moving away from her, before crossing the field --
+	local ballVx = arena.ball.body:getLinearVelocity()
+	local ballX = arena.ball.body:getPosition()
+	if self.side*ballVx < 0 and self.side*(ballX - WX/2 - XShift) > 0 then
+		local num = math.random(1, self.chance/6)
+		if num == 1 then
+			self:initSkill()
+		end
 	end
 end

@@ -86,3 +86,33 @@ skillTable["headshrink"] = {}
 skillTable["headshrink"]["Name"] = "Headshrink"
 skillTable["headshrink"]["Desc"] = "Decreases Enemy's paddle size"
 skillTable["headshrink"]["Locked"] = 1
+
+skillTable["charge"] = {}
+skillTable["charge"]["Name"] = "Charge"
+skillTable["charge"]["Desc"] = "Ball goes to random direction after charging"
+skillTable["charge"]["Locked"] = 1
+
+skillTable["bet"] = {}
+skillTable["bet"]["Name"] = "Bet"
+skillTable["bet"]["Desc"] = "Next goal does double damage"
+skillTable["bet"]["Locked"] = 1
+
+skillTable["reversetime"] = {}
+skillTable["reversetime"]["Name"] = "Reverse Time"
+skillTable["reversetime"]["Desc"] = "Ball goes a little back in time"
+skillTable["reversetime"]["Locked"] = 1
+
+skillTable["poison"] = {}
+skillTable["poison"]["Name"] = "Poison"
+skillTable["poison"]["Desc"] = "Next enemy skill causes 1 damage"
+skillTable["poison"]["Locked"] = 1
+
+skillTable["shine"] = {}
+skillTable["shine"]["Name"] = "Shine"
+skillTable["shine"]["Desc"] = "Obfuscates everyone for a short time"
+skillTable["shine"]["Locked"] = 1
+
+skillTable["charm"] = {}
+skillTable["charm"]["Name"] = "Charm"
+skillTable["charm"]["Desc"] = "Attracts opponent"
+skillTable["charm"]["Locked"] = 1

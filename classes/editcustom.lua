@@ -80,7 +80,7 @@ function EditCustomClass:init(menuplace)
 	local i = 1
 	local j = 1
 	for k, v in pairs(skillTable) do
-		if skillTable[k]["Locked"] ~=1 then
+		if skillTable[k]["Locked"] == 0 or mainLock == "unlocked" then
 			skillNames[i] = k
 			skillFullNames[i] = v["Name"]
 			skillDescs[i] = v["Desc"]
