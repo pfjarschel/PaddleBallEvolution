@@ -914,6 +914,7 @@ function Skills:start(side)
 		ice:setPosition(paddleX, paddleY)
 		fadeBitmapIn(ice, 500, 0.75)
 		
+		
 		-- Action to end skill --
 		self.endAction = function()
 			fadeBitmapOut(ice, 1000, arena)
@@ -1524,7 +1525,7 @@ function Skills:start(side)
 -- Charge : Ball goes to random direction after charging --
 -----------------------------------------------------------
 	if self.skill == "charge" then
-		if optionsTable["SFX"] == "On" then sounds.dispel:play() end
+		if optionsTable["SFX"] == "On" then sounds.spark:play() end
 		
 		if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then
 			arena.skillBut:setAlpha(0.1)
@@ -1537,6 +1538,19 @@ function Skills:start(side)
 		arena.endArena()
 		
 		-- GFX --
+		local spark = Bitmap.new(textures.gfx_spark)
+		spark:setScale(1, 1)
+		spark:setAnchorPoint(0.5, 0.5)
+		local textureW = spark:getWidth()
+		local textureH = spark:getHeight()
+		spark:setScale(2*arena.ball.radius/textureW, 2*arena.ball.radius/textureH)
+
+		local ballX, ballY = arena.ball.body:getPosition()
+		arena.ball:addChild(spark)
+		fadeBitmapIn(spark, self.basetime/4, 1)
+		Timer.delayedCall(100 + self.basetime/3, function()
+			fadeBitmapOut(spark, self.basetime/4, arena.ball)
+		end)
 		
 		-- Wait, then launch ball --
 		Timer.delayedCall(self.basetime/3,  function()
@@ -1579,7 +1593,11 @@ function Skills:start(side)
 		
 		-- Action to force end --
 		self.forceEnd = function()
-			
+			for i = arena.ball:getNumChildren(), 1, -1 do
+				if arena.ball:getChildAt(i) == spark then
+					fadeBitmapOut(spark, 100, arena.ball)
+				end
+			end
 		end
 	end	
 	
@@ -1588,11 +1606,23 @@ function Skills:start(side)
 -- Bet: Next goal does double damage --
 ---------------------------------------
 	if self.skill == "bet" then
-		if optionsTable["SFX"] == "On" then sounds.dispel:play() end
+		if optionsTable["SFX"] == "On" then sounds.dice:play() end
 		
 		if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then
 			arena.skillBut:setAlpha(0.1)
 		end
+		
+		-- GFX --
+		local chip = Bitmap.new(textures.gfx_chip)
+		chip:setScale(1, 1)
+		chip:setAnchorPoint(0.5, 0.5)
+		local textureW = chip:getWidth()
+		local textureH = chip:getHeight()
+		chip:setScale(2*arena.ball.radius/textureW, 2*arena.ball.radius/textureH)
+
+		local ballX, ballY = arena.ball.body:getPosition()
+		arena.ball:addChild(chip)
+		fadeBitmapIn(chip, 500, 0.8)
 		
 		-- Deals damage a bit before standard goal check --
 		local function checkAlmostGoal()
@@ -1632,7 +1662,11 @@ function Skills:start(side)
 		
 		-- Action to force end --
 		self.forceEnd = function()
-			
+			for i = arena.ball:getNumChildren(), 1, -1 do
+				if arena.ball:getChildAt(i) == chip then
+					arena.ball:removeChildAt(i)
+				end
+			end
 		end
 	end
 	
@@ -1641,7 +1675,8 @@ function Skills:start(side)
 -- Reverse Time: Ball goes a little back in time --
 ---------------------------------------------------
 	if self.skill == "reversetime" then
-		if optionsTable["SFX"] == "On" then sounds.dispel:play() end
+		local clocksound = nil
+		if optionsTable["SFX"] == "On" then clocksound = sounds.clock:play() end
 		
 		if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then
 			arena.skillBut:setAlpha(0.1)
@@ -1653,6 +1688,7 @@ function Skills:start(side)
 		
 		-- Action to end Skill --
 		self.endAction = function()
+			if optionsTable["SFX"] == "On" then clocksound:stop() end
 			local ballVx, ballVy = arena.ball.body:getLinearVelocity()
 			arena.ball.body:setLinearVelocity(-ballVx, -ballVy)
 			if side == 0 then
@@ -1691,7 +1727,7 @@ function Skills:start(side)
 		end
 		
 		-- GFX --
-		local bite = Bitmap.new(textures.gfx_bite)
+		local bite = Bitmap.new(textures.gfx_bite2)
 		bite:setScale(1, 1)
 		bite:setAnchorPoint(0.5, 0.5)
 		local textureW = bite:getWidth()
@@ -1793,7 +1829,7 @@ function Skills:start(side)
 -- Shine: Obfuscates everyone for a short time --
 -------------------------------------------------
 	if self.skill == "shine" then
-		if optionsTable["SFX"] == "On" then sounds.puff:play() end
+		if optionsTable["SFX"] == "On" then sounds.harp:play() end
 		
 		if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then
 			arena.skillBut:setAlpha(0.1)
@@ -1856,11 +1892,23 @@ function Skills:start(side)
 -- Charm: Attracts opponent --
 ------------------------------
 	if self.skill == "charm" then
-		if optionsTable["SFX"] == "On" then sounds.dispel:play() end
+		if optionsTable["SFX"] == "On" then sounds.kiss:play() end
 		
 		if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then
 			arena.skillBut:setAlpha(0.1)
 		end
+		
+		-- GFX --
+		local heart = Bitmap.new(textures.gfx_heart)
+		heart:setScale(1, 1)
+		heart:setAnchorPoint(0.5, 0.5)
+		arena:addChild(heart)
+		local textureW = heart:getWidth()
+		local textureH = heart:getHeight()
+		heart:setAlpha(0.8)
+		heart:setPosition(XShift + WX/2, WY/2)
+		scaleBitmapXY(heart, 1000, 2*160/textureW, 2*152/textureH, 0, 0)		
+		fadeBitmapOut(heart, 1000, arena)
 		
 		-- Attract --
 		local padX0 = 0
@@ -1871,24 +1919,26 @@ function Skills:start(side)
 			padX0 = arena.leftPlayer.paddle.body:getPosition()
 			arena.leftPlayer.paddle.body:setLinearVelocity(0.5*arena.ball.baseSpeed, 0)
 		end
+		Timer.delayedCall(self.basetime/5, function()
+			if (side == 0) then
+					arena.rightPlayer.paddle.body:setLinearVelocity(0.5*arena.ball.baseSpeed, 0)
+					Timer.delayedCall(self.basetime/5,  function()
+						arena.rightPlayer.paddle.body:setLinearVelocity(0, 0)
+						local padX, padY = arena.rightPlayer.paddle.body:getPosition()
+						arena.rightPlayer.paddle.body:setPosition(padX0, padY)
+					end)
+				else
+					arena.leftPlayer.paddle.body:setLinearVelocity(-0.5*arena.ball.baseSpeed, 0)
+					Timer.delayedCall(self.basetime/5,  function()
+						arena.leftPlayer.paddle.body:setLinearVelocity(0, 0)
+						local padX, padY = arena.leftPlayer.paddle.body:getPosition()
+						arena.leftPlayer.paddle.body:setPosition(padX0, padY)
+					end)
+			end
+		end)
 		
 		-- Action to end Skill --
 		self.endAction = function()
-			if (side == 0) then
-				arena.rightPlayer.paddle.body:setLinearVelocity(0.5*arena.ball.baseSpeed, 0)
-				Timer.delayedCall(self.basetime/5,  function()
-					arena.rightPlayer.paddle.body:setLinearVelocity(0, 0)
-					local padX, padY = arena.rightPlayer.paddle.body:getPosition()
-					arena.rightPlayer.paddle.body:setPosition(padX0, padY)
-				end)
-			else
-				arena.leftPlayer.paddle.body:setLinearVelocity(-0.5*arena.ball.baseSpeed, 0)
-				Timer.delayedCall(self.basetime/5,  function()
-					arena.leftPlayer.paddle.body:setLinearVelocity(0, 0)
-					local padX, padY = arena.leftPlayer.paddle.body:getPosition()
-					arena.leftPlayer.paddle.body:setPosition(padX0, padY)
-				end)
-			end
 			if side == 0 then
 				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
 					arena.skillBut:setAlpha(0.4)
@@ -1903,13 +1953,17 @@ function Skills:start(side)
 		end
 		
 		-- Sets timer to end skill --
-		Timer.delayedCall(self.basetime/5,  function()
+		Timer.delayedCall(self.basetime/2.5,  function()
 			self:endAction() 
 		end)
 		
 		-- Action to force end --
 		self.forceEnd = function()
-			
+			for i = arena:getNumChildren(), 1, -1 do
+				if arena:getChildAt(i) == heart then
+					fadeBitmapOut(heart, 500, arena)
+				end
+			end
 		end
 	end
 

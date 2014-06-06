@@ -43,12 +43,16 @@
    <file source="audio/bgm/bgm_fight3.mp3"/>
    <file source="audio/bgm/bgm_fight2.mp3"/>
    <file source="audio/bgm/bgm_fight1.mp3"/>
-   <file source="audio/bgm/bgm_boss4.mp3"/>
    <file source="audio/bgm/bgm_boss3.mp3"/>
    <file source="audio/bgm/bgm_boss2.mp3"/>
    <file source="audio/bgm/bgm_boss1.mp3"/>
   </folder>
   <folder name="sfx">
+   <file source="audio/sfx/kiss.wav"/>
+   <file source="audio/sfx/harp.wav"/>
+   <file source="audio/sfx/clock.wav"/>
+   <file source="audio/sfx/dice.wav"/>
+   <file source="audio/sfx/spark.wav"/>
    <file source="audio/sfx/dispel.wav"/>
    <file source="audio/sfx/bite.wav"/>
    <file source="audio/sfx/fireout.wav"/>
@@ -84,6 +88,13 @@
   <file source="imgs/pongball.png"/>
   <file source="imgs/paddle2.png"/>
   <folder name="gfx">
+   <file source="imgs/gfx/heart.png"/>
+   <file source="imgs/gfx/bite2@2x.png"/>
+   <file source="imgs/gfx/bite2.png"/>
+   <file source="imgs/gfx/chip@2x.png"/>
+   <file source="imgs/gfx/chip.png"/>
+   <file source="imgs/gfx/spark@2x.png"/>
+   <file source="imgs/gfx/spark.png"/>
    <file source="imgs/gfx/bite@2x.png"/>
    <file source="imgs/gfx/bite.png"/>
    <file source="imgs/gfx/fireball@2x.png"/>

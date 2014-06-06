@@ -36,5 +36,10 @@ function SoundLoaderArenaMode:init()
 	self.alarm = Sound.new("audio/sfx/alarm.wav")
 	self.bite = Sound.new("audio/sfx/bite.wav")
 	self.dispel = Sound.new("audio/sfx/dispel.wav")
+	self.spark = Sound.new("audio/sfx/spark.wav")
+	self.dice = Sound.new("audio/sfx/dice.wav")
+	self.clock = Sound.new("audio/sfx/clock.wav")
+	self.harp = Sound.new("audio/sfx/harp.wav")
+	self.kiss = Sound.new("audio/sfx/kiss.wav")
 end
 

@@ -64,6 +64,10 @@ function TextureLoaderArenaMode:init()
 	self.gfx_fireball = Texture.new("imgs/gfx/fireball.png", true)
 	self.gfx_target = Texture.new("imgs/gfx/target.png", true)
 	self.gfx_bite = Texture.new("imgs/gfx/bite.png", true)
+	self.gfx_bite2 = Texture.new("imgs/gfx/bite2.png", true)
+	self.gfx_spark = Texture.new("imgs/gfx/spark.png", true)
+	self.gfx_chip = Texture.new("imgs/gfx/chip.png", true)
+	self.gfx_heart = Texture.new("imgs/gfx/heart.png", true)
 	self.white= Texture.new("imgs/backs/white.png", true)
 end
 
