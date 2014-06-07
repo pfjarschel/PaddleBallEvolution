@@ -68,6 +68,7 @@ function TextureLoaderArenaMode:init()
 	self.gfx_spark = Texture.new("imgs/gfx/spark.png", true)
 	self.gfx_chip = Texture.new("imgs/gfx/chip.png", true)
 	self.gfx_heart = Texture.new("imgs/gfx/heart.png", true)
+	self.gfx_laugh = Texture.new("imgs/gfx/laugh.png", true)
 	self.white= Texture.new("imgs/backs/white.png", true)
 end
 

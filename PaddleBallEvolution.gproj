@@ -33,7 +33,6 @@
   <file source="audio/goal1.wav"/>
   <folder name="bgm">
    <file source="audio/bgm/bgm_lost.mp3"/>
-   <file source="audio/bgm/bgm_fight7.mp3"/>
    <file source="audio/bgm/bgm_credits.mp3"/>
    <file source="audio/bgm/bgm_champion1.mp3"/>
    <file source="audio/bgm/bgm_intro.mp3"/>
@@ -48,6 +47,10 @@
    <file source="audio/bgm/bgm_boss1.mp3"/>
   </folder>
   <folder name="sfx">
+   <file source="audio/sfx/portal2.wav"/>
+   <file source="audio/sfx/portal.wav"/>
+   <file source="audio/sfx/spider.wav"/>
+   <file source="audio/sfx/laugh.wav"/>
    <file source="audio/sfx/kiss.wav"/>
    <file source="audio/sfx/harp.wav"/>
    <file source="audio/sfx/clock.wav"/>
@@ -88,6 +91,7 @@
   <file source="imgs/pongball.png"/>
   <file source="imgs/paddle2.png"/>
   <folder name="gfx">
+   <file source="imgs/gfx/laugh.png"/>
    <file source="imgs/gfx/heart.png"/>
    <file source="imgs/gfx/bite2@2x.png"/>
    <file source="imgs/gfx/bite2.png"/>

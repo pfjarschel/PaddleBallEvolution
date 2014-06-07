@@ -116,3 +116,23 @@ skillTable["charm"] = {}
 skillTable["charm"]["Name"] = "Charm"
 skillTable["charm"]["Desc"] = "Attracts opponent"
 skillTable["charm"]["Locked"] = 1
+
+skillTable["confuse"] = {}
+skillTable["confuse"]["Name"] = "Confuse"
+skillTable["confuse"]["Desc"] = "Reverse controls"
+skillTable["confuse"]["Locked"] = 1
+
+skillTable["web"] = {}
+skillTable["web"]["Name"] = "Web"
+skillTable["web"]["Desc"] = "Ball sticks to paddle, then returns faster"
+skillTable["web"]["Locked"] = 1
+
+skillTable["portal"] = {}
+skillTable["portal"]["Name"] = "Portal"
+skillTable["portal"]["Desc"] = "Ball teleports when hitting paddle"
+skillTable["portal"]["Locked"] = 1
+
+skillTable["telekinesis"] = {}
+skillTable["telekinesis"]["Name"] = "Telekinesis"
+skillTable["telekinesis"]["Desc"] = "Ball follows paddle movement"
+skillTable["telekinesis"]["Locked"] = 1

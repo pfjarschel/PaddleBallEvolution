@@ -340,3 +340,63 @@ classTable["Siren"] = {
 	"Siren",
 	1
 }
+
+classTable["Joker"] = {
+	18,
+	13,
+	9,
+	10,
+	12,
+	8,
+	"confuse",
+	"Confuse",
+	"Reverse controls",
+	{0.95, 1, 0},
+	"Joker",
+	1
+}
+
+classTable["DireSpider"] = {
+	10,
+	18,
+	8,
+	10,
+	14,
+	10,
+	"web",
+	"Web",
+	"Ball sticks to paddle, then returns faster",
+	{0.45, 0.08, 0},
+	"Dire Spider",
+	1
+}
+
+classTable["PortalMaster"] = {
+	8,
+	8,
+	14,
+	10,
+	14,
+	16,
+	"portal",
+	"Portal",
+	"Ball teleports when hitting paddle",
+	{1, 0.6, 0.1},
+	"Portal Master",
+	1
+}
+
+classTable["Telekinetic"] = {
+	6,
+	18,
+	10,
+	10,
+	16,
+	10,
+	"telekinesis",
+	"Telekinesis",
+	"Ball follows paddle movement",
+	{0.63, 1, 0.80},
+	"Telekinetic",
+	1
+}

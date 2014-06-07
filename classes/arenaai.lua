@@ -84,6 +84,18 @@ function ArenaAI:basicCall()
 		if self.skill == "charm" then
 			self:charm()
 		end
+		if self.skill == "confuse" then
+			self:confuse()
+		end
+		if self.skill == "web" then
+			self:web()
+		end
+		if self.skill == "portal" then
+			self:portal()
+		end
+		if self.skill == "telekinesis" then
+			self:telekinesis()
+		end
 	end
 end
 function ArenaAI:initSkill()
@@ -431,6 +443,70 @@ function ArenaAI:charm()
 	local ballX = arena.ball.body:getPosition()
 	if self.side*ballVx < 0 and self.side*(ballX - WX/2 - XShift) > 0 then
 		local num = math.random(1, self.chance/6)
+		if num == 1 then
+			self:initSkill()
+		end
+	end
+end
+
+
+-------------
+-- Confuse --
+-------------
+function ArenaAI:confuse()
+	-- Activate only when ball is moving away form him, and close to goal --
+	local ballVx = arena.ball.body:getLinearVelocity()
+	local ballX = arena.ball.body:getPosition()
+	if self.side*ballVx < 0 and self.side*(ballX - WX/2 - XShift) < 0 then
+		local num = math.random(1, self.chance/4)
+		if num == 1 then
+			self:initSkill()
+		end
+	end
+end
+
+
+-----------
+-- Web --
+-----------
+function ArenaAI:web()
+	-- Activate only when ball is moving torwards him --
+	local ballVx = arena.ball.body:getLinearVelocity()
+	local ballX = arena.ball.body:getPosition()
+	if self.side*ballVx > 0 and self.side*(ballX - WX/2 - XShift) > 0 then
+		local num = math.random(1, self.chance/4)
+		if num == 1 then
+			self:initSkill()
+		end
+	end
+end
+
+
+------------
+-- Portal --
+------------
+function ArenaAI:portal()
+	-- Activate only when ball is moving torwards him --
+	local ballVx = arena.ball.body:getLinearVelocity()
+	local ballX = arena.ball.body:getPosition()
+	if self.side*ballVx > 0 and self.side*(ballX - WX/2 - XShift) > 0 then
+		local num = math.random(1, self.chance/4)
+		if num == 1 then
+			self:initSkill()
+		end
+	end
+end
+
+
+-----------------
+-- Telekinesis --
+-----------------
+function ArenaAI:telekinesis()
+	-- Activate only when ball is moving away from him --
+	local ballVx, ballVy = arena.ball.body:getLinearVelocity()
+	--local ballX = arena.ball.body:getPosition()
+	if self.side*ballVx < 0 then
+		local num = math.random(1, self.chance/4)
 		if num == 1 then
 			self:initSkill()
 		end

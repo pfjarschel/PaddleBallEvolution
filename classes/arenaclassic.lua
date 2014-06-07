@@ -429,7 +429,7 @@ function ArenaClassic:init(difficulty)
 	-- Stop Current song and load another (bosses not included) --
 	if optionsTable["Music"] == "On" then
 		local function nextSong()
-			local randNum = math.random(1, 7)
+			local randNum = math.random(1, 6)
 			self.songload = nil
 			self.songload = Sound.new(musics.fight[randNum])
 			currSong = nil

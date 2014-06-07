@@ -15,12 +15,10 @@ function MusicLoaderArenaMode:init()
 	self.fight[4] = "audio/bgm/bgm_fight4.mp3"
 	self.fight[5] = "audio/bgm/bgm_fight5.mp3"
 	self.fight[6] = "audio/bgm/bgm_fight6.mp3"
-	self.fight[7] = "audio/bgm/bgm_fight7.mp3"
 	
 	self.boss[1] = "audio/bgm/bgm_boss1.mp3"
 	self.boss[2] = "audio/bgm/bgm_boss2.mp3"
 	self.boss[3] = "audio/bgm/bgm_boss3.mp3"
-	self.boss[4] = "audio/bgm/bgm_boss4.mp3"
 	
 	self.champion[1] = "audio/bgm/bgm_champion1.mp3"
 	self.lost = "audio/bgm/bgm_lost.mp3"

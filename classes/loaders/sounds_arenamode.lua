@@ -41,5 +41,9 @@ function SoundLoaderArenaMode:init()
 	self.clock = Sound.new("audio/sfx/clock.wav")
 	self.harp = Sound.new("audio/sfx/harp.wav")
 	self.kiss = Sound.new("audio/sfx/kiss.wav")
+	self.laugh = Sound.new("audio/sfx/laugh.wav")
+	self.spider = Sound.new("audio/sfx/spider.wav")
+	self.portal = Sound.new("audio/sfx/portal.wav")
+	self.portal2 = Sound.new("audio/sfx/portal2.wav")
 end
 

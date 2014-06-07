@@ -1968,6 +1968,394 @@ function Skills:start(side)
 	end
 
 
+-------------------------------
+-- Confuse: Reverse Controls --
+-------------------------------
+	if self.skill == "confuse" then
+		if optionsTable["SFX"] == "On" then sounds.laugh:play() end
+		
+		if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then
+			arena.skillBut:setAlpha(0.1)
+		end
+		
+		-- GFX --
+		local laugh = Bitmap.new(textures.gfx_laugh)
+		laugh:setScale(1, 1)
+		laugh:setAnchorPoint(0.5, 0.5)
+		arena:addChild(laugh)
+		local textureW = laugh:getWidth()
+		local textureH = laugh:getHeight()
+		laugh:setAlpha(0.8)
+		laugh:setPosition(XShift + WX/2, WY/2)
+		scaleBitmapXY(laugh, 1000, 2*260/textureW, 2*160/textureH, 0, 0)		
+		fadeBitmapOut(laugh, 1000, arena)
+		
+		-- Make move factor negative --
+		if side == 0 then
+			arena.rightPlayer.char.movFactor = -arena.rightPlayer.char.movFactor
+		else
+			arena.leftPlayer.char.movFactor = -arena.leftPlayer.char.movFactor
+		end
+		
+				-- Action to end skill --
+		self.endAction = function()
+			if side == 0 then
+				arena.rightPlayer.char:updateAttr()
+				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
+					arena.skillBut:setAlpha(0.4)
+				end
+				arena.leftPlayer.skillActive = false
+			else
+				arena.leftPlayer.char:updateAttr()
+				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
+					arena.skillBut:setAlpha(0.4)
+				end
+				arena.rightPlayer.skillActive = false
+			end
+		end
+		
+		-- Sets timer to end skill --
+		Timer.delayedCall(self.basetime,  function()
+			--self:endAction() 
+		end)
+		
+		-- Action to force end --
+		self.forceEnd = function()
+			for i = arena:getNumChildren(), 1, -1 do
+				if arena:getChildAt(i) == laugh then
+					fadeBitmapOut(laugh, 500, arena)
+				end
+			end
+		end
+	end
+
+
+------------------------------------------------------
+-- Web: Ball sticks to paddle, then returns faster --
+------------------------------------------------------
+	if self.skill == "web" then
+		if optionsTable["SFX"] == "On" then sounds.spider:play() end
+		
+		if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then
+			arena.skillBut:setAlpha(0.1)
+		end
+		
+		-- Creates Web --
+		local web = Bitmap.new(textures.paddle2)
+		web:setColorTransform(1.5, 1.5, 1.5)
+		web:setScale(1, 1)
+		web:setAnchorPoint(0.5, 0.5)
+		local textureW = web:getWidth()
+		local textureH = web:getHeight()
+		local paddleX, paddleY, paddleW, paddleH = nil
+		if side == 0 then
+			paddleX, paddleY = arena.leftPlayer.paddle:getPosition()
+			paddleW = arena.leftPlayer.paddle:getWidth()
+			paddleH = 1.1*arena.leftPlayer.paddle:getHeight()
+		else
+			paddleX, paddleY = arena.rightPlayer.paddle:getPosition()
+			paddleW = arena.rightPlayer.paddle:getWidth()
+			paddleH = 1.1*arena.rightPlayer.paddle:getHeight()
+		end
+		
+		web:setScale(paddleW/(2*textureW), paddleH/textureH)
+		web:setPosition(paddleX + (1 - side*2)*paddleW/2, paddleY)
+		fadeBitmapIn(web, 300, 0.8)
+		
+		web.body = world:createBody{
+			type = b2.DYNAMIC_BODY,
+			position = {x = paddleX + (1 - side*2)*paddleW/2, y = paddleY},
+			angularDamping = 10000,
+			linearDamping = 0.5
+		}
+		web.body.name = "web"
+		web.body.del = false
+		web.shape = b2.PolygonShape.new()
+		web.shape:setAsBox(paddleW/4, paddleH/2, 0, 0, 0)
+		web.fixture = web.body:createFixture{
+			shape = web.shape, 
+			density = 10000,
+			restitution = 0, 
+			friction = 0,
+			fixedRotation = true,
+		}
+		web.fixture:setFilterData({categoryBits = 2, maskBits = 1, groupIndex = 0})
+		web.body:setAngle(side*math.pi)
+		
+		if side == 0 then
+			arena:addChild(web)
+		else
+			arena:addChild(web)
+		end	
+		
+		local launching = false
+		-- Web moves with paddle --
+		local function moveweb()
+			if launching then
+				self:endAction()
+				for i = arena:getNumChildren(), 1, -1 do
+					if arena:getChildAt(i) == web then
+						fadeBitmapOut(web, 100, arena)
+						if web.body ~= nil then
+							web.body.del = true
+						end
+					end
+				end
+			else
+				local padX, padY = nil
+				if side == 0 then
+					padX, padY = arena.leftPlayer.paddle:getPosition()
+				else
+					padX, padY = arena.rightPlayer.paddle:getPosition()
+				end
+				web.body:setPosition(paddleX + (1 - side*2)*paddleW/2, padY)
+			end
+		end
+		arena:addEventListener(Event.ENTER_FRAME, moveweb)
+		
+		-- Stop ball if it hits web --
+		local function moveball()
+		end
+		local collided = false
+		local basetime = self.basetime
+		local function endaction()
+		end
+		endaction = self.endAction
+		function web.body:collide(event)
+			if not collided then
+				collided = true
+				arena.endArena()
+				arena.ball.body:setLinearVelocity(0, 0)
+				local ballX0, ballY0 = arena.ball.body:getPosition()
+				local padX, padY = web.body:getPosition()
+				local dBallY = ballY0 - padY
+				
+				moveball = function()
+					local webX, webY = web.body:getPosition()
+					local newY = webY + dBallY
+					if newY > WY - WBounds - arena.ball.radius - 1 then
+						newY = WY - WBounds - arena.ball.radius - 1
+					end
+					if newY < WBounds + arena.ball.radius + 1 then
+						newY = WBounds + arena.ball.radius + 1
+					end
+					arena.ball.body:setPosition(ballX0, newY)
+				end
+				arena:addEventListener(Event.ENTER_FRAME, moveball)
+				
+				-- Timer to launch ball --
+				Timer.delayedCall(basetime/3, function()
+					arena:removeEventListener(Event.ENTER_FRAME, moveball)
+					arena.initArena()
+					launching = true
+					local setSpeed = nil
+					if side == 0 then
+						setSpeed = arena.ball.baseSpeed*arena.leftPlayer.char.atkFactor*2
+					else
+						setSpeed = -arena.ball.baseSpeed*arena.leftPlayer.char.atkFactor*2
+					end	
+					arena.ball.body:setLinearVelocity(setSpeed, 0)
+				end)
+			end
+		end		
+				
+		-- Action to end Skill --
+		self.endAction = function()
+			arena:removeEventListener(Event.ENTER_FRAME, moveweb)
+			arena:removeEventListener(Event.ENTER_FRAME, moveball)
+			for i = arena:getNumChildren(), 1, -1 do
+				if arena:getChildAt(i) == web then
+					fadeBitmapOut(web, 100, arena)
+					if web.body ~= nil then
+						web.body.del = true
+					end
+				end
+			end
+			if side == 0 then
+				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
+					arena.skillBut:setAlpha(0.4)
+				end
+				arena.leftPlayer.skillActive = false
+			else
+				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
+					arena.skillBut:setAlpha(0.4)
+				end
+				arena.rightPlayer.skillActive = false
+			end
+		end
+		
+		-- Sets timer to end skill --
+		Timer.delayedCall(self.basetime/3,  function()
+			--self:endAction() 
+		end)
+		
+		-- Action to force end --
+		self.forceEnd = function()
+			for i = arena:getNumChildren(), 1, -1 do
+				if arena:getChildAt(i) == web then
+					fadeBitmapOut(web, 100, arena)
+					if web.body ~= nil then
+						web.body.del = true
+					end
+				end
+			end
+		end
+	end	
+
+
+------------------------------------------------
+-- Portal: Ball teleports when hitting paddle --
+------------------------------------------------
+	if self.skill == "portal" then
+		if optionsTable["SFX"] == "On" then sounds.portal:play() end
+		
+		if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then
+			arena.skillBut:setAlpha(0.1)
+		end
+		
+		-- Gets velocity and position--
+		local ballVx0, ballVy0 = arena.ball.body:getLinearVelocity()
+		local ballX, ballY = arena.ball.body:getPosition()
+		
+		-- GFX --
+		local paddleX0, paddleY0 = nil
+		if side == 0 then
+			paddleX0, paddleY0 = arena.leftPlayer.paddle.body:getPosition()
+		else
+			paddleX0, paddleY0 = arena.rightPlayer.paddle.body:getPosition()
+		end
+		local portal = Bitmap.new(textures.paddle2)
+		portal:setColorTransform(0.3, 0.45, 1)
+		portal:setScale(1, 1)
+		portal:setAnchorPoint(0.5, 0.5)
+		arena:addChild(portal)
+		local textureW = portal:getWidth()
+		local textureH = portal:getHeight()
+		portal:setScale(15/textureW, 75/textureH)
+		portal:setPosition(XShift + WX/2, paddleY0)
+		portal:setRotation(side*180)
+		fadeBitmapIn(portal, 300, 1)
+		
+		-- Teleports --
+		local function checkteleport()
+			local ballVx0, ballVy0 = arena.ball.body:getLinearVelocity()
+			local ballX, ballY = arena.ball.body:getPosition()
+			local paddleX, paddleY = nil
+			if side == 0 then
+				paddleX, paddleY = arena.leftPlayer.paddle.body:getPosition()
+			else
+				paddleX, paddleY = arena.rightPlayer.paddle.body:getPosition()
+			end
+
+			if side == 0 and ballX <= paddleX + arena.ball.radius*3 and ballY > (paddleY - arena.leftPlayer.paddle.paddleH/2 - 1.2*arena.ball.radius) 
+			and ballY < (paddleY + arena.leftPlayer.paddle.paddleH/2 + 1.2*arena.ball.radius) then
+				if optionsTable["SFX"] == "On" then sounds.portal2:play() end
+				arena.ball.body:setPosition(XShift + WX/2, paddleY0)
+				arena.ball.body:setLinearVelocity(-ballVx0, -ballVy0)
+				self:endAction()
+			end
+			if side == 1 and ballX >= paddleX - arena.ball.radius*3 and ballY > (paddleY - arena.rightPlayer.paddle.paddleH/2 - 1.2*arena.ball.radius) 
+			and ballY < (paddleY + arena.rightPlayer.paddle.paddleH/2 + 1.2*arena.ball.radius) then
+				if optionsTable["SFX"] == "On" then sounds.portal2:play() end
+				arena.ball.body:setPosition(XShift + WX/2, paddleY0)
+				arena.ball.body:setLinearVelocity(-ballVx0, -ballVy0)
+				self:endAction()
+			end
+		end
+		arena:addEventListener(Event.ENTER_FRAME, checkteleport)
+		
+		-- Action to end Skill --
+		self.endAction = function()	
+			arena:removeEventListener(Event.ENTER_FRAME, checkteleport)
+			Timer.delayedCall(300, function()
+				for i = arena:getNumChildren(), 1, -1 do
+					if arena:getChildAt(i) == portal then
+						fadeBitmapOut(portal, 250, arena)
+					end
+				end
+			end)
+			if side == 0 then
+				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
+					arena.skillBut:setAlpha(0.4)
+				end
+				arena.leftPlayer.skillActive = false
+			else
+				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
+					arena.skillBut:setAlpha(0.4)
+				end
+				arena.rightPlayer.skillActive = false
+			end
+		end
+		
+		-- Sets timer to end skill --
+		Timer.delayedCall(self.basetime,  function()
+			--self:endAction()
+		end)
+		
+		-- Action to force end --
+		self.forceEnd = function()
+			for i = arena:getNumChildren(), 1, -1 do
+				if arena:getChildAt(i) == portal then
+					fadeBitmapOut(portal, 100, arena)
+				end
+			end
+		end
+	end
+
+
+------------------------------------------------------
+-- Telekinesis: Ball sticks to paddle, then returns faster --
+------------------------------------------------------
+	if self.skill == "telekinesis" then
+		if optionsTable["SFX"] == "On" then sounds.tractorbeam:play() end
+		
+		if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then
+			arena.skillBut:setAlpha(0.1)
+		end
+		
+		-- Ball moves with paddle --
+		local ballVx = arena.ball.body:getLinearVelocity()
+		local thistime = math.abs(1000*WX/(ballVx*20))
+		local function moveball()
+			ballVx = arena.ball.body:getLinearVelocity()
+			local paddleVx, paddleVy = nil
+			if side == 0 then
+				paddleVx, paddleVy = arena.leftPlayer.paddle.body:getLinearVelocity()
+			end
+			if side == 1 then
+				paddleVx, paddleVy = arena.rightPlayer.paddle.body:getLinearVelocity()
+			end
+			arena.ball.body:setLinearVelocity(ballVx, paddleVy)
+		end
+		arena:addEventListener(Event.ENTER_FRAME, moveball)
+				
+		-- Action to end Skill --
+		self.endAction = function()
+			arena:removeEventListener(Event.ENTER_FRAME, moveball)
+			if side == 0 then
+				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
+					arena.skillBut:setAlpha(0.4)
+				end
+				arena.leftPlayer.skillActive = false
+			else
+				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
+					arena.skillBut:setAlpha(0.4)
+				end
+				arena.rightPlayer.skillActive = false
+			end
+		end
+		
+		-- Sets timer to end skill --
+		Timer.delayedCall(thistime,  function()
+			self:endAction() 
+		end)
+		
+		-- Action to force end --
+		self.forceEnd = function()
+			
+		end
+	end	
+
 
 
 
