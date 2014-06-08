@@ -13,9 +13,11 @@ debugDraw = nil
 function goPhysics(scale)
 	b2.setScale(scale)
 	world = b2.World.new(0, 0)
-	debugDraw = b2.DebugDraw.new()
-	world:setDebugDraw(debugDraw)
-	stage:addChild(debugDraw)
+	
+	--debugDraw = b2.DebugDraw.new()
+	--world:setDebugDraw(debugDraw)
+	--stage:addChild(debugDraw)
+	
 	world:addEventListener(Event.BEGIN_CONTACT, contactHandler)
 end
 function stopPhysics()
@@ -53,13 +55,4 @@ function contactHandler(event)
 	local body2 = event.fixtureB:getBody()
 	body1:collide(event)
 	body2:collide(event)
-end
-
--- To enable debug drawing --
-function setDebugDraw(set)
-	if(set) then
-		stage:addChild(debugDraw)
-	else
-		stage:removeChild(debugDraw)
-	end
 end

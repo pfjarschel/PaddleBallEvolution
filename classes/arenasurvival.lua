@@ -33,7 +33,7 @@ local function onEnterFrame()
 		arena:tilt()
 	end
 	arena.humanPlayer:humanMove()
-	arena:moveAI()
+	arena.aiPlayer:aiMove()
 	arena:checkGoal()
 end
 
