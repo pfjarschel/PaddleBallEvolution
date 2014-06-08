@@ -510,17 +510,17 @@ end
 -----------------
 -- Telekinesis --
 -----------------
-function ArenaAI:telekinesis()
+--function ArenaAI:telekinesis()
 	-- Activate only when ball is moving away from him --
-	local ballVx, ballVy = arena.ball.body:getLinearVelocity()
+--	local ballVx, ballVy = arena.ball.body:getLinearVelocity()
 	--local ballX = arena.ball.body:getPosition()
-	if self.side*ballVx < 0 then
-		local num = math.random(1, self.chance/4)
-		if num == 1 then
-			self:initSkill()
-		end
-	end
-end
+--	if self.side*ballVx < 0 then
+--		local num = math.random(1, self.chance/4)
+--		if num == 1 then
+--			self:initSkill()
+--		end
+--	end
+--end
 
 
 -----------------

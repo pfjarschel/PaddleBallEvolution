@@ -28,6 +28,8 @@ ArenaArena.songload = nil
 ArenaArena.arenatype = nil
 function ArenaArena:initArena() end
 function ArenaArena:endArena() end
+function ArenaArena:unpauseArena() end
+function ArenaArena:pauseArena() end
 
 -- Tilt variables --
 local afx = 0
@@ -59,12 +61,12 @@ function ArenaArena:createBoundaries()
 		shape = shapeT, 
 		friction = 0,
 	}
-	self.fixtureT:setFilterData({categoryBits = 4, maskBits = 3, groupIndex = 0})
+	self.fixtureT:setFilterData({categoryBits = 4, maskBits = 11, groupIndex = 0})
 	self.fixtureB = self.bounds:createFixture{
 		shape = shapeB, 
 		friction = 0,
 	}
-	self.fixtureB:setFilterData({categoryBits = 4, maskBits = 3, groupIndex = 0})
+	self.fixtureB:setFilterData({categoryBits = 4, maskBits = 11, groupIndex = 0})
 	
 	function self.bounds:collide(event)
 		--print("bounds")
@@ -604,6 +606,8 @@ function ArenaArena:init(dataTable)
 		
 		self.initArena = arenasTable[self.arenatype]["Init"]
 		self.endArena = arenasTable[self.arenatype]["End"]
+		self.unpauseArena = arenasTable[self.arenatype]["Unpause"]
+		self.pauseArena = arenasTable[self.arenatype]["Pause"]
 	end
 	
 	self.bitmap = Bitmap.new(textures.pongbg)

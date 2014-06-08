@@ -132,10 +132,10 @@ skillTable["portal"]["Name"] = "Portal"
 skillTable["portal"]["Desc"] = "Ball teleports when hitting paddle"
 skillTable["portal"]["Locked"] = 1
 
-skillTable["telekinesis"] = {}
-skillTable["telekinesis"]["Name"] = "Telekinesis"
-skillTable["telekinesis"]["Desc"] = "Ball follows paddle movement"
-skillTable["telekinesis"]["Locked"] = 1
+--skillTable["telekinesis"] = {}
+--skillTable["telekinesis"]["Name"] = "Telekinesis"
+--skillTable["telekinesis"]["Desc"] = "Ball follows paddle movement"
+--skillTable["telekinesis"]["Locked"] = 1
 
 skillTable["crystalwall"] = {}
 skillTable["crystalwall"]["Name"] = "Crystal Wall"

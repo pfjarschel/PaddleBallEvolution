@@ -47,6 +47,8 @@
    <file source="audio/bgm/bgm_boss1.mp3"/>
   </folder>
   <folder name="sfx">
+   <file source="audio/sfx/rockhit.wav"/>
+   <file source="audio/sfx/explode.wav"/>
    <file source="audio/sfx/imp.wav"/>
    <file source="audio/sfx/earthquake.wav"/>
    <file source="audio/sfx/portal2.wav"/>
@@ -93,6 +95,10 @@
   <file source="imgs/pongball.png"/>
   <file source="imgs/paddle2.png"/>
   <folder name="gfx">
+   <file source="imgs/gfx/fan.png"/>
+   <file source="imgs/gfx/asteroid.png"/>
+   <file source="imgs/gfx/heal@2x.png"/>
+   <file source="imgs/gfx/heal.png"/>
    <file source="imgs/gfx/crystal.png"/>
    <file source="imgs/gfx/laugh.png"/>
    <file source="imgs/gfx/heart.png"/>
@@ -228,6 +234,16 @@
    <file source="imgs/backs/pongbg@2x.png"/>
    <file source="imgs/backs/pausebg@2x.png"/>
    <folder name="arenas">
+    <file source="imgs/backs/arenas/factory@2x.jpg"/>
+    <file source="imgs/backs/arenas/factory.jpg"/>
+    <file source="imgs/backs/arenas/asteroids@2x.jpg"/>
+    <file source="imgs/backs/arenas/asteroids.jpg"/>
+    <file source="imgs/backs/arenas/crystal@2x.jpg"/>
+    <file source="imgs/backs/arenas/crystal.jpg"/>
+    <file source="imgs/backs/arenas/leaves@2x.jpg"/>
+    <file source="imgs/backs/arenas/leaves.jpg"/>
+    <file source="imgs/backs/arenas/thunder@2x.jpg"/>
+    <file source="imgs/backs/arenas/thunder.jpg"/>
     <file source="imgs/backs/arenas/wormhole@2x.jpg"/>
     <file source="imgs/backs/arenas/wormhole.jpg"/>
     <file source="imgs/backs/arenas/wind@2x.jpg"/>

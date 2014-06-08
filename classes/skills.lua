@@ -1222,7 +1222,7 @@ function Skills:start(side)
 			restitution = 1, 
 			friction = 0,
 		}
-		fireball.fixture:setFilterData({categoryBits = 1, maskBits = 7, groupIndex = 0})
+		fireball.fixture:setFilterData({categoryBits = 1, maskBits = 15, groupIndex = 0})
 		
 		fireball.body:setLinearVelocity(arena.ball.baseSpeed0 - 2*side*arena.ball.baseSpeed0, 0)
 		fireball.body:setAngle(math.pi*side)
@@ -1612,7 +1612,7 @@ function Skills:start(side)
 		local ballVx0, ballVy0 = arena.ball.body:getLinearVelocity()
 		local ballV = math.sqrt(math.pow(ballVx0, 2) + math.pow(ballVy0, 2))
 		arena.ball.body:setLinearVelocity(0, 0)
-		arena.endArena()
+		arena.pauseArena()
 		
 		-- GFX --
 		local spark = Bitmap.new(textures.gfx_spark)
@@ -1645,7 +1645,7 @@ function Skills:start(side)
 			else
 				arena.ball:launch()
 			end
-			arena.initArena()
+			arena.unpauseArena()
 		end)
 		
 		-- Action to end Skill --
@@ -2245,7 +2245,7 @@ function Skills:start(side)
 		function web.body:collide(event)
 			if not collided then
 				collided = true
-				arena.endArena()
+				arena.pauseArena()
 				arena.ball.body:setLinearVelocity(0, 0)
 				local ballX0, ballY0 = arena.ball.body:getPosition()
 				local padX, padY = web.body:getPosition()
@@ -2266,8 +2266,8 @@ function Skills:start(side)
 				
 				-- Timer to launch ball --
 				Timer.delayedCall(basetime/3, function()
+					arena.unpauseArena()
 					arena:removeEventListener(Event.ENTER_FRAME, moveball)
-					arena.initArena()
 					launching = true
 					local setSpeed = nil
 					if side == 0 then
@@ -2430,56 +2430,56 @@ function Skills:start(side)
 
 
 -------------------------------------------------------------
--- Telekinesis: Ball sticks to paddle, then returns faster --
+-- Telekinesis: Ball sticks to paddle, then returns faster -- DISABLED FOR NOW!
 -------------------------------------------------------------
 	if self.skill == "telekinesis" then
-		if optionsTable["SFX"] == "On" then sounds.tractorbeam:play() end
-		
-		if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then
-			arena.skillBut:setAlpha(0.1)
-		end
-		
-		-- Ball moves with paddle --
-		local ballVx = arena.ball.body:getLinearVelocity()
-		local thistime = math.abs(1000*WX/(ballVx*20))
-		local function moveball()
-			ballVx = arena.ball.body:getLinearVelocity()
-			local paddleVx, paddleVy = nil
-			if side == 0 then
-				paddleVx, paddleVy = arena.leftPlayer.paddle.body:getLinearVelocity()
-			end
-			if side == 1 then
-				paddleVx, paddleVy = arena.rightPlayer.paddle.body:getLinearVelocity()
-			end
-			arena.ball.body:setLinearVelocity(ballVx, paddleVy)
-		end
-		arena:addEventListener(Event.ENTER_FRAME, moveball)
-				
-		-- Action to end Skill --
-		self.endAction = function()
-			arena:removeEventListener(Event.ENTER_FRAME, moveball)
-			if side == 0 then
-				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
-					arena.skillBut:setAlpha(0.4)
-				end
-				arena.leftPlayer.skillActive = false
-			else
-				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
-					arena.skillBut:setAlpha(0.4)
-				end
-				arena.rightPlayer.skillActive = false
-			end
-		end
-		
-		-- Sets timer to end skill --
-		Timer.delayedCall(thistime,  function()
-			self:endAction() 
-		end)
-		
-		-- Action to force end --
-		self.forceEnd = function()
-			
-		end
+--		if optionsTable["SFX"] == "On" then sounds.tractorbeam:play() end
+--		
+--		if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then
+--			arena.skillBut:setAlpha(0.1)
+--		end
+--		
+--		-- Ball moves with paddle --
+--		local ballVx = arena.ball.body:getLinearVelocity()
+--		local thistime = math.abs(1000*WX/(ballVx*20))
+--		local function moveball()
+--			ballVx = arena.ball.body:getLinearVelocity()
+--			local paddleVx, paddleVy = nil
+--			if side == 0 then
+--				paddleVx, paddleVy = arena.leftPlayer.paddle.body:getLinearVelocity()
+--			end
+--			if side == 1 then
+--				paddleVx, paddleVy = arena.rightPlayer.paddle.body:getLinearVelocity()
+--			end
+--			arena.ball.body:setLinearVelocity(ballVx, paddleVy)
+--		end
+--		arena:addEventListener(Event.ENTER_FRAME, moveball)
+--				
+--		-- Action to end Skill --
+--		self.endAction = function()
+--			arena:removeEventListener(Event.ENTER_FRAME, moveball)
+--			if side == 0 then
+--				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
+--					arena.skillBut:setAlpha(0.4)
+--				end
+--				arena.leftPlayer.skillActive = false
+--			else
+--				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
+--					arena.skillBut:setAlpha(0.4)
+--				end
+--				arena.rightPlayer.skillActive = false
+--			end
+--		end
+--		
+--		-- Sets timer to end skill --
+--		Timer.delayedCall(thistime,  function()
+--			self:endAction() 
+--		end)
+--		
+--		-- Action to force end --
+--		self.forceEnd = function()
+--			
+--		end
 	end	
 
 
@@ -2527,7 +2527,7 @@ function Skills:start(side)
 			friction = 0,
 			fixedRotation = true,
 		}
-		wall.fixture:setFilterData({categoryBits = 2, maskBits = 1, groupIndex = 0})
+		wall.fixture:setFilterData({categoryBits = 2, maskBits = 9, groupIndex = 0})
 		wall.body:setAngle(side*math.pi)
 		
 		arena:addChild(wall)

@@ -35,7 +35,7 @@ function Ball:createBody()
 		restitution = 1, 
 		friction = 0,
 	}
-	self.fixture:setFilterData({categoryBits = 1, maskBits = 6, groupIndex = 0})
+	self.fixture:setFilterData({categoryBits = 1, maskBits = 14, groupIndex = 0})
 	
 	--------------------------------------------------------------------------------
 	-- Collision handler. Play different souds depending on second collision body --

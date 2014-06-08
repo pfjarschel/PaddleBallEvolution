@@ -386,20 +386,20 @@ classTable["PortalMaster"] = {
 	1
 }
 
-classTable["Telekinetic"] = {
-	6,
-	18,
-	10,
-	10,
-	16,
-	10,
-	"telekinesis",
-	"Telekinesis",
-	"Ball follows paddle movement",
-	{0.63, 1, 0.80, 1},
-	"Telekinetic",
-	1
-}
+--classTable["Telekinetic"] = {
+--	6,
+--	18,
+--	10,
+--	10,
+--	16,
+--	10,
+--	"telekinesis",
+--	"Telekinesis",
+--	"Ball follows paddle movement",
+--	{0.63, 1, 0.80, 1},
+--	"Telekinetic",
+--	1
+--}
 
 classTable["CrystalWraith"] = {
 	10,
