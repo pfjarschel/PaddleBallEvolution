@@ -136,3 +136,18 @@ skillTable["telekinesis"] = {}
 skillTable["telekinesis"]["Name"] = "Telekinesis"
 skillTable["telekinesis"]["Desc"] = "Ball follows paddle movement"
 skillTable["telekinesis"]["Locked"] = 1
+
+skillTable["crystalwall"] = {}
+skillTable["crystalwall"]["Name"] = "Crystal Wall"
+skillTable["crystalwall"]["Desc"] = "Creates a solid wall that blocks everything"
+skillTable["crystalwall"]["Locked"] = 1
+
+skillTable["earthquake"] = {}
+skillTable["earthquake"]["Name"] = "Earthquake"
+skillTable["earthquake"]["Desc"] = "Shake everything!"
+skillTable["earthquake"]["Locked"] = 1
+
+skillTable["summonimp"] = {}
+skillTable["summonimp"]["Name"] = "Summon Imp"
+skillTable["summonimp"]["Desc"] = "Summon a little paddle to help you"
+skillTable["summonimp"]["Locked"] = 1

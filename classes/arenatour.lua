@@ -117,18 +117,12 @@ function ArenaTour:openMenu()
 				Timer.resumeAll()
 				Timer.stopAll()
 				stage:removeChild(self.pausebg)
-				world:destroyBody(self.ball.body)
-				self.ball.body = nil
-				world:destroyBody(self.humanPlayer.paddle.body)
-				world:destroyBody(self.aiPlayer.paddle.body)
-				world:destroyBody(self.bounds)
+				
 				local difficulty = self.difFactor*5
 				local class = tourTable["QuickTourClass"]
 				local class2 = tourTable["QuickTourOpponent"]
 				local stage = self.stage
 				local arenatype = self.arenatype
-				self = nil
-				arena = nil
 				
 				if optionsTable["SFX"] == "On" then sounds.sel3:play() end
 				
@@ -153,14 +147,7 @@ function ArenaTour:openMenu()
 				Timer.resumeAll()
 				Timer.stopAll()
 				stage:removeChild(self.pausebg)
-				world:destroyBody(self.ball.body)
-				self.ball.body = nil
-				world:destroyBody(self.humanPlayer.paddle.body)
-				world:destroyBody(self.aiPlayer.paddle.body)
-				world:destroyBody(self.bounds)
-				self = nil
-				arena = nil
-				
+								
 				if optionsTable["SFX"] == "On" then sounds.sel3:play() end
 				
 				sceneMan:changeScene("mainMenu", transTime, SceneManager.fade, easing.linear)
@@ -389,12 +376,7 @@ function ArenaTour:gameOver()
 					stage:removeChild(nextBut)
 					stage:removeChild(backdrawing)
 					stage:removeChild(bg)
-					world:destroyBody(self.ball.body)
-					self.ball.body = nil
-					world:destroyBody(self.humanPlayer.paddle.body)
-					world:destroyBody(self.aiPlayer.paddle.body)
-					world:destroyBody(self.bounds)
-					
+										
 					self.stage = self.stage + 1
 					tourTable["QuickTourStage"] = self.stage
 					tourTable["QuickTourPoints"] = tourTable["QuickTourPoints"] + 1
@@ -403,8 +385,6 @@ function ArenaTour:gameOver()
 					local class = tourTable["QuickTourClass"]
 					local class2 = tourTable["QuickTourOpponent"]
 					local stage = self.stage
-					self = nil
-					arena = nil
 					
 					if optionsTable["SFX"] == "On" then sounds.sel2:play() end
 					
@@ -493,18 +473,12 @@ function ArenaTour:gameOver()
 				stage:removeChild(againBut)
 				stage:removeChild(backdrawing)
 				stage:removeChild(bg)
-				world:destroyBody(self.ball.body)
-				self.ball.body = nil
-				world:destroyBody(self.humanPlayer.paddle.body)
-				world:destroyBody(self.aiPlayer.paddle.body)
-				world:destroyBody(self.bounds)
+				
 				local difficulty = self.difFactor*5
 				local class = tourTable["QuickTourClass"]
 				local class2 = tourTable["QuickTourOpponent"]
 				local stage = self.stage
 				local arenatype = self.arenatype
-				self = nil
-				arena = nil
 				
 				sceneMan:changeScene("arenaTour", transTime, SceneManager.fade, easing.linear, { userData = {difficulty, class, class2, stage, arenatype} })
 			end
@@ -546,12 +520,7 @@ function ArenaTour:gameOver()
 			end
 			stage:removeChild(bg)
 			stage:removeChild(backdrawing)
-			world:destroyBody(self.ball.body)
-			self.ball.body = nil
-			world:destroyBody(self.humanPlayer.paddle.body)
-			world:destroyBody(self.aiPlayer.paddle.body)
-			world:destroyBody(self.bounds)
-			
+						
 			local quicktourFile = io.open("|D|quicktour.txt", "w+")
 			for k, v in pairs(tourTable) do 
 				quicktourFile:write(k.."="..v.."\n")
@@ -636,6 +605,8 @@ end
 
 -- Initialization --
 function ArenaTour:init(dataTable)
+	stopPhysics()
+	goPhysics(PhysicsScale)	
 	textures = nil
 	textures = TextureLoaderArenaMode.new()
 	sounds = nil
@@ -843,8 +814,8 @@ function ArenaTour:init(dataTable)
 		self.rightPlayer = Player.new(1, true, self.difFactor, self.rightClass, -1)
 	end
 	
-	self.leftPlayer.paddle.bitmap:setColorTransform(classTable[self.leftClass][10][1], classTable[self.leftClass][10][2], classTable[self.leftClass][10][3])
-	self.rightPlayer.paddle.bitmap:setColorTransform(classTable[self.rightClass][10][1], classTable[self.rightClass][10][2], classTable[self.rightClass][10][3])
+	self.leftPlayer.paddle.bitmap:setColorTransform(classTable[self.leftClass][10][1], classTable[self.leftClass][10][2], classTable[self.leftClass][10][3], classTable[self.leftClass][10][4])
+	self.rightPlayer.paddle.bitmap:setColorTransform(classTable[self.rightClass][10][1], classTable[self.rightClass][10][2], classTable[self.rightClass][10][3], classTable[self.rightClass][10][4])
 	self.score0 = self.leftPlayer.char.lifFactor
 	self.score1 = self.rightPlayer.char.lifFactor
 	self.mp0 = self.leftPlayer.char.sklFactor

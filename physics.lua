@@ -15,8 +15,11 @@ function goPhysics(scale)
 	world = b2.World.new(0, 0)
 	debugDraw = b2.DebugDraw.new()
 	world:setDebugDraw(debugDraw)
-	--stage:addChild(debugDraw)
+	stage:addChild(debugDraw)
 	world:addEventListener(Event.BEGIN_CONTACT, contactHandler)
+end
+function stopPhysics()
+	world = nil
 end
 
 -- Function to be called at each frame, updates ojects --

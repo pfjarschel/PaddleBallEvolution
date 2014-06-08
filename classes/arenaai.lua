@@ -96,6 +96,15 @@ function ArenaAI:basicCall()
 		if self.skill == "telekinesis" then
 			self:telekinesis()
 		end
+		if self.skill == "crystalwall" then
+			self:crystalwall()
+		end
+		if self.skill == "earthquake" then
+			self:earthquake()
+		end
+		if self.skill == "summonimp" then
+			self:summonimp()
+		end
 	end
 end
 function ArenaAI:initSkill()
@@ -507,6 +516,56 @@ function ArenaAI:telekinesis()
 	--local ballX = arena.ball.body:getPosition()
 	if self.side*ballVx < 0 then
 		local num = math.random(1, self.chance/4)
+		if num == 1 then
+			self:initSkill()
+		end
+	end
+end
+
+
+-----------------
+-- Crystal Wall --
+-----------------
+function ArenaAI:crystalwall()
+	-- Activate only when ball is moving torwards him, before crossing the field --
+	local ballVx, ballVy = arena.ball.body:getLinearVelocity()
+	local ballX, ballY = arena.ball.body:getPosition()
+	
+	if self.side*ballVx > 0 and self.side*(ballX - WX/2 - XShift) < 0 then
+		local num = math.random(1, self.chance/5)
+		if num == 1 then
+			self:initSkill()
+		end
+	end
+end
+
+
+----------------
+-- Earthquake --
+----------------
+function ArenaAI:earthquake()
+	-- Activate only when ball is moving away from him --
+	local ballVx, ballVy = arena.ball.body:getLinearVelocity()
+	--local ballX = arena.ball.body:getPosition()
+	if self.side*ballVx < 0 then
+		local num = math.random(1, self.chance/4)
+		if num == 1 then
+			self:initSkill()
+		end
+	end
+end
+
+
+-----------------
+-- Summon Imp --
+-----------------
+function ArenaAI:summonimp()
+	-- Activate only when ball is moving torwards him, before crossing the field --
+	local ballVx, ballVy = arena.ball.body:getLinearVelocity()
+	local ballX, ballY = arena.ball.body:getPosition()
+	
+	if self.side*ballVx > 0 and self.side*(ballX - WX/2 - XShift) < 0 then
+		local num = math.random(1, self.chance/6)
 		if num == 1 then
 			self:initSkill()
 		end

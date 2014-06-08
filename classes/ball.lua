@@ -60,6 +60,9 @@ function Ball:createBody()
 			local setBallVx = (math.abs(ballVx)/ballVx)*math.sqrt(ballV*ballV - setBallVy*setBallVy)
 			self:setLinearVelocity(setBallVx, setBallVy)
 		end
+		
+		ballCollideO0(event)
+		ballCollideO1(event)
 	end
 end
 

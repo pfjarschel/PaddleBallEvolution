@@ -14,7 +14,7 @@ classTable["Custom"] = {
 	"none",
 	"None",
 	"Touch 'Edit' to select",
-	{0.5, 0.5, 0.5},
+	{0.5, 0.5, 0.5, 1},
 	"Custom Class",
 	0
 }
@@ -28,7 +28,7 @@ classTable["Warrior"] = {
 	"powershot",
 	"Power Shot",
 	"The next ball return will be VERY fast",
-	{0.6, 0.2, 0.2},
+	{0.6, 0.2, 0.2, 1},
 	"Warrior",
 	0
 }
@@ -42,7 +42,7 @@ classTable["Acrobat"] = {
 	"curveball",
 	"Curve Ball",
 	"Ball makes crazy curves",
-	{0.8, 0.8, 0.2},
+	{0.8, 0.8, 0.2, 1},
 	"Acrobat",
 	0
 }
@@ -56,7 +56,7 @@ classTable["Ninja"] = {
 	"invisiball",
 	"Invisiball",
 	"Ball turns invisible",
-	{0.05, 0.2, 0.5},
+	{0.05, 0.2, 0.5, 1},
 	"Ninja",
 	0
 }
@@ -70,7 +70,7 @@ classTable["SwampMonster"] = {
 	"viscousfield",
 	"Viscous Field",
 	"Ball slows down a lot",
-	{0.6, 0.7, 0.2},
+	{0.6, 0.7, 0.2, 1},
 	"Swamp Monster",
 	0
 }
@@ -84,7 +84,7 @@ classTable["Archer"] = {
 	"arrowball",
 	"Arrow Ball",
 	"Ball moves in a straight line to the goal",
-	{0.2, 0.6, 0.2},
+	{0.2, 0.6, 0.2, 1},
 	"Archer",
 	0
 }
@@ -98,7 +98,7 @@ classTable["Illusionist"] = {
 	"mirrorball",
 	"Mirror Ball",
 	"Ball is reflected to the other direction",
-	{0.7, 0.7, 0.7},
+	{0.7, 0.7, 0.7, 1},
 	"Illusionist",
 	0
 }
@@ -112,7 +112,7 @@ classTable["Barbarian"] = {
 	"berserk",
 	"Berserk",
 	"Atk, Mov and Def greatly increased",
-	{0.8, 0.3, 0.1},
+	{0.8, 0.3, 0.1, 1},
 	"Barbarian",
 	0
 }
@@ -126,7 +126,7 @@ classTable["Thief"] = {
 	"steal",
 	"Steal",
 	"Steal ball and return with 2x its speed",
-	{0.4, 0.4, 0.4},
+	{0.4, 0.4, 0.4, 1},
 	"Thief",
 	0
 }
@@ -141,7 +141,7 @@ classTable["Mesmer"] = {
 	"multiball",
 	"Multiball",
 	"Creates illusions to confuse the enemy",
-	{0.6, 0.4, 1},
+	{0.6, 0.4, 1, 1},
 	"Mesmer",
 	0
 }
@@ -156,7 +156,7 @@ classTable["IceMan"] = {
 	"freeze",
 	"Freeze",
 	"Freezes your opponent for some time",
-	{0.8, 0.8, 1},
+	{0.8, 0.8, 1, 1},
 	"Ice Man",
 	0
 }
@@ -171,7 +171,7 @@ classTable["CaveMan"] = {
 	"noskill",
 	"No Skill",
 	"+10 Attribute Points",
-	{0.4, 0.2, 0},
+	{0.4, 0.2, 0, 1},
 	"Cave Man",
 	0
 }
@@ -186,7 +186,7 @@ classTable["Scientist"] = {
 	"predict",
 	"Predict",
 	"Predicts ball trajectory",
-	{0.53, 0.75, 0.86},
+	{0.53, 0.75, 0.86, 1},
 	"Scientist",
 	0
 }
@@ -201,7 +201,7 @@ classTable["Pyromancer"] = {
 	"fireball",
 	"Fireball",
 	"Hurls a fireball that does 1 damage",
-	{1, 0.2, 0},
+	{1, 0.2, 0, 1},
 	"Pyromancer",
 	0
 }
@@ -216,7 +216,7 @@ classTable["Vampire"] = {
 	"bite",
 	"Bite",
 	"Next enemy skill gives you 1 HP",
-	{0.21, 0.21, 0.43},
+	{0.21, 0.21, 0.43, 1},
 	"Vampire",
 	0
 }
@@ -231,7 +231,7 @@ classTable["Exorcist"] = {
 	"dispel",
 	"Dispel",
 	"Cancels Enemy's skill",
-	{1, 1, 0.87},
+	{1, 1, 0.87, 1},
 	"Exorcist",
 	1
 }
@@ -246,7 +246,7 @@ classTable["Shaman"] = {
 	"headshrink",
 	"Headshrink",
 	"Decreases Enemy's paddle size",
-	{0.4, 0.45, 0},
+	{0.4, 0.45, 0, 1},
 	"Shaman",
 	1
 }
@@ -261,7 +261,7 @@ classTable["ThunderWraith"] = {
 	"charge",
 	"Charge",
 	"Ball goes to random direction after charging",
-	{0, 0.53, 1},
+	{0, 0.53, 1, 0.4},
 	"Thunder Wraith",
 	1
 }
@@ -276,7 +276,7 @@ classTable["Gambler"] = {
 	"bet",
 	"Bet",
 	"Next goal does double damage",
-	{1, 0.8, 0},
+	{1, 0.8, 0, 1},
 	"Gambler",
 	1
 }
@@ -291,7 +291,7 @@ classTable["TimeMeddler"] = {
 	"reversetime",
 	"Reverse Time",
 	"Ball goes a little back in time",
-	{0.58, 0.15, 0.84},
+	{0.58, 0.15, 0.84, 1},
 	"Time Meddler",
 	1
 }
@@ -306,7 +306,7 @@ classTable["DireViper"] = {
 	"poison",
 	"Poison",
 	"Next enemy skill causes 1 damage",
-	{0, 0.85, 0.13},
+	{0, 0.85, 0.13, 1},
 	"Dire Viper",
 	1
 }
@@ -321,7 +321,7 @@ classTable["LightWraith"] = {
 	"shine",
 	"Shine",
 	"Obfuscates everyone for a short time",
-	{1, 1, 1},
+	{1, 1, 1, 0.4},
 	"Light Wraith",
 	1
 }
@@ -336,7 +336,7 @@ classTable["Siren"] = {
 	"charm",
 	"Charm",
 	"Attracts opponent",
-	{0.94, 0.17, 0.86},
+	{0.94, 0.17, 0.86, 1},
 	"Siren",
 	1
 }
@@ -351,7 +351,7 @@ classTable["Joker"] = {
 	"confuse",
 	"Confuse",
 	"Reverse controls",
-	{0.95, 1, 0},
+	{0.95, 1, 0, 1},
 	"Joker",
 	1
 }
@@ -366,7 +366,7 @@ classTable["DireSpider"] = {
 	"web",
 	"Web",
 	"Ball sticks to paddle, then returns faster",
-	{0.45, 0.08, 0},
+	{0.45, 0.08, 0, 1},
 	"Dire Spider",
 	1
 }
@@ -381,7 +381,7 @@ classTable["PortalMaster"] = {
 	"portal",
 	"Portal",
 	"Ball teleports when hitting paddle",
-	{1, 0.6, 0.1},
+	{1, 0.6, 0.1, 1},
 	"Portal Master",
 	1
 }
@@ -396,7 +396,52 @@ classTable["Telekinetic"] = {
 	"telekinesis",
 	"Telekinesis",
 	"Ball follows paddle movement",
-	{0.63, 1, 0.80},
+	{0.63, 1, 0.80, 1},
 	"Telekinetic",
+	1
+}
+
+classTable["CrystalWraith"] = {
+	10,
+	10,
+	10,
+	10,
+	12,
+	18,
+	"crystalwall",
+	"Crystal Wall",
+	"Creates a solid wall that blocks everything",
+	{0.8, 0.8, 1, 0.4},
+	"Crystal Wraith",
+	1
+}
+
+classTable["Giant"] = {
+	16,
+	5,
+	15,
+	10,
+	6,
+	18,
+	"earthquake",
+	"Earthquake",
+	"Shake everything!",
+	{0.45, 0.27, 0.27, 1},
+	"Giant",
+	1
+}
+
+classTable["Summoner"] = {
+	8,
+	12,
+	12,
+	10,
+	20,
+	8,
+	"summonimp",
+	"Summon Imp",
+	"Summon a little paddle to help you",
+	{0.55, 0.31, 0.39, 1},
+	"Summoner",
 	1
 }

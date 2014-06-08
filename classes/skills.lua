@@ -212,10 +212,22 @@ function Skills:start(side)
 		local puff2 = nil
 		
 		-- Action to end skill --
+		local finished = false
 		self.endAction = function()
+			if optionsTable["SFX"] == "On" then sounds.puff:play() end
+			finished = true
+			
 			arena.ball:setAlpha(1)
 			arena.aiPlayer.char:updateAttr()
 			arena.aiPlayer:aiRandomFactor()
+			
+			if side == 0 then
+				ballCollideO0 = function(event)
+				end
+			else
+				ballCollideO1 = function(event)
+				end
+			end
 			
 			ballX, ballY = 0
 			ballX, ballY = arena.ball.body:getPosition()
@@ -246,10 +258,35 @@ function Skills:start(side)
 			end
 		end
 		
+		-- End if ball hits enemy --
+		local function endaction()
+		end
+		endaction = self.endAction
+		if side == 0 then
+			ballCollideO0 = function(event)
+				local body1 = event.fixtureA:getBody()
+				local body2 = event.fixtureB:getBody()
+				if (((body1 == arena.rightPlayer.paddle.body or body2 == arena.rightPlayer.paddle.body) and side == 0)
+				or ((body1 == arena.leftPlayer.paddle.body or body2 == arena.leftPlayer.paddle.body) and side == 1)) then
+					endaction()
+				end
+			end
+		else
+			ballCollideO1 = function(event)
+				local body1 = event.fixtureA:getBody()
+				local body2 = event.fixtureB:getBody()
+				if (((body1 == arena.rightPlayer.paddle.body or body2 == arena.rightPlayer.paddle.body) and side == 0)
+				or ((body1 == arena.leftPlayer.paddle.body or body2 == arena.leftPlayer.paddle.body) and side == 1)) then
+					endaction()
+				end
+			end
+		end
+		
 		-- Sets timer to end skill --
-		Timer.delayedCall(self.basetime/3, function()
-			self:endAction()
-			if optionsTable["SFX"] == "On" then sounds.puff:play() end
+		Timer.delayedCall(self.basetime/2, function()
+			if not finished then
+				self:endAction()
+			end
 		end)
 		
 		-- Action to force end --
@@ -312,9 +349,28 @@ function Skills:start(side)
 		end)
 		
 		-- Action to end Skill --
+		local finished = false
 		self.endAction = function()
+			finished = true
 			stage:removeEventListener(Event.ENTER_FRAME, curveball)
-			arena.ball.bitmap:setScale(2*arena.ball.radius/textures.pongball:getWidth())
+			Timer.delayedCall(550, function()
+				arena.ball.bitmap:setScale(2*arena.ball.radius/textures.pongball:getWidth())
+			end)
+			
+			if side == 0 then
+				ballCollideO0 = function(event)
+				end
+			else
+				ballCollideO1 = function(event)
+				end
+			end
+			
+			if optionsTable["SFX"] == "On" then sounds.crazyball_end:play() end
+			
+			-- Returns ball to previous state --
+			local ballVxRet = arena.ball.body:getLinearVelocity()
+			arena.ball.body:setLinearVelocity(math.abs(ballVxRet*ballVx0)/ballVxRet, ballVy0)
+			
 			if side == 0 then
 				arena.leftPlayer.skillActive = false
 				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
@@ -328,14 +384,35 @@ function Skills:start(side)
 			end
 		end 
 		
+		-- End if ball hits enemy --
+		local function endaction()
+		end
+		endaction = self.endAction
+		if side == 0 then
+			ballCollideO0 = function(event)
+				local body1 = event.fixtureA:getBody()
+				local body2 = event.fixtureB:getBody()
+				if (((body1 == arena.rightPlayer.paddle.body or body2 == arena.rightPlayer.paddle.body) and side == 0)
+				or ((body1 == arena.leftPlayer.paddle.body or body2 == arena.leftPlayer.paddle.body) and side == 1)) then
+					endaction()
+				end
+			end
+		else
+			ballCollideO1 = function(event)
+				local body1 = event.fixtureA:getBody()
+				local body2 = event.fixtureB:getBody()
+				if (((body1 == arena.rightPlayer.paddle.body or body2 == arena.rightPlayer.paddle.body) and side == 0)
+				or ((body1 == arena.leftPlayer.paddle.body or body2 == arena.leftPlayer.paddle.body) and side == 1)) then
+					endaction()
+				end
+			end
+		end
+		
 		-- Sets timer to end skill --
 		Timer.delayedCall(self.basetime/2, function()
-			self:endAction() 
-			if optionsTable["SFX"] == "On" then sounds.crazyball_end:play() end
-			
-			-- Returns ball to previous state --
-			local ballVxRet = arena.ball.body:getLinearVelocity()
-			arena.ball.body:setLinearVelocity(math.abs(ballVxRet*ballVx0)/ballVxRet, ballVy0)
+			if not finished then
+				self:endAction()
+			end
 		end)
 		
 		-- Action to force end --
@@ -1849,16 +1926,28 @@ function Skills:start(side)
 		white:setScale(WX/textureW, WY/textureH)
 		white:setPosition(WX/2 + XShift, WY/2)
 		white:setAlpha(0)
-		fadeBitmapIn(white, 100, 1)
-		Timer.delayedCall(500,  function()
-			fadeBitmapOut(white, (self.basetime/2), arena)
-		end)
+		fadeBitmapIn(white, 300, 1)
 		
 		
 		-- Action to end skill --
+		local finished = false
 		self.endAction = function()
+			finished = true
 			arena.aiPlayer.char:updateAttr()
+			for i = arena:getNumChildren(), 1, -1 do
+				if arena:getChildAt(i) == white then
+					fadeBitmapOut(white, self.basetime/6, arena)
+				end
+			end
 			
+			if side == 0 then
+				ballCollideO0 = function(event)
+				end
+			else
+				ballCollideO1 = function(event)
+				end
+			end
+
 			if side == 0 then
 				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
 					arena.skillBut:setAlpha(0.4)
@@ -1872,9 +1961,35 @@ function Skills:start(side)
 			end
 		end
 		
+		-- End if ball hits enemy --
+		local function endaction()
+		end
+		endaction = self.endAction
+		if side == 0 then
+			ballCollideO0 = function(event)
+				local body1 = event.fixtureA:getBody()
+				local body2 = event.fixtureB:getBody()
+				if (((body1 == arena.rightPlayer.paddle.body or body2 == arena.rightPlayer.paddle.body) and side == 0)
+				or ((body1 == arena.leftPlayer.paddle.body or body2 == arena.leftPlayer.paddle.body) and side == 1)) then
+					endaction()
+				end
+			end
+		else
+			ballCollideO1 = function(event)
+				local body1 = event.fixtureA:getBody()
+				local body2 = event.fixtureB:getBody()
+				if (((body1 == arena.rightPlayer.paddle.body or body2 == arena.rightPlayer.paddle.body) and side == 0)
+				or ((body1 == arena.leftPlayer.paddle.body or body2 == arena.leftPlayer.paddle.body) and side == 1)) then
+					endaction()
+				end
+			end
+		end
+		
 		-- Sets timer to end skill --
-		Timer.delayedCall((500 + self.basetime/2),  function()
-			self:endAction()
+		Timer.delayedCall((self.basetime/3),  function()
+			if not finished then
+				self:endAction()
+			end
 		end)
 		
 		-- Action to force end --
@@ -2082,11 +2197,20 @@ function Skills:start(side)
 		web.fixture:setFilterData({categoryBits = 2, maskBits = 1, groupIndex = 0})
 		web.body:setAngle(side*math.pi)
 		
+		arena:addChild(web)
+		
+		-- Disable paddle collision handler --
+		local function tempcolhandler(event)
+		end
 		if side == 0 then
-			arena:addChild(web)
+			tempcolhandler = arena.leftPlayer.paddle.body.collide
+			arena.leftPlayer.paddle.body.collide = function()
+			end
 		else
-			arena:addChild(web)
-		end	
+			tempcolhandler = arena.rightPlayer.paddle.body.collide
+			arena.rightPlayer.paddle.body.collide = function()
+			end
+		end
 		
 		local launching = false
 		-- Web moves with paddle --
@@ -2118,9 +2242,6 @@ function Skills:start(side)
 		end
 		local collided = false
 		local basetime = self.basetime
-		local function endaction()
-		end
-		endaction = self.endAction
 		function web.body:collide(event)
 			if not collided then
 				collided = true
@@ -2163,6 +2284,11 @@ function Skills:start(side)
 		self.endAction = function()
 			arena:removeEventListener(Event.ENTER_FRAME, moveweb)
 			arena:removeEventListener(Event.ENTER_FRAME, moveball)
+			if side == 0 then
+				arena.leftPlayer.paddle.body.collide = tempcolhandler
+			else
+				arena.rightPlayer.paddle.body.collide = tempcolhandler
+			end
 			for i = arena:getNumChildren(), 1, -1 do
 				if arena:getChildAt(i) == web then
 					fadeBitmapOut(web, 100, arena)
@@ -2303,9 +2429,9 @@ function Skills:start(side)
 	end
 
 
-------------------------------------------------------
+-------------------------------------------------------------
 -- Telekinesis: Ball sticks to paddle, then returns faster --
-------------------------------------------------------
+-------------------------------------------------------------
 	if self.skill == "telekinesis" then
 		if optionsTable["SFX"] == "On" then sounds.tractorbeam:play() end
 		
@@ -2356,6 +2482,405 @@ function Skills:start(side)
 		end
 	end	
 
+
+---------------------------------------------------------------
+-- Crystal Wall: Creates a solid wall that blocks everything --
+---------------------------------------------------------------
+	if self.skill == "crystalwall" then
+		if optionsTable["SFX"] == "On" then sounds.ice:play() end
+		
+		if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then
+			arena.skillBut:setAlpha(0.1)
+		end
+		
+		-- Creates Wall --
+		local wall = Bitmap.new(textures.gfx_crystal)
+		--wall:setColorTransform(1, 1, 1)
+		wall:setScale(1, 1)
+		wall:setAnchorPoint(0.5, 0.5)
+		local textureW = wall:getWidth()
+		local textureH = wall:getHeight()
+		local posX = 0
+		if side == 0 then
+			posX = XShift + WX/3
+		else
+			posX = XShift + WX - WX/3
+		end
+		wall:setScale(15/textureW, WY/textureH)
+		wall:setPosition(posX, WY/2)
+		fadeBitmapIn(wall, 500, 0.8)
+		
+		wall.body = world:createBody{
+			type = b2.DYNAMIC_BODY,
+			position = {x = posX, y = WY/2},
+			angularDamping = 10000,
+			linearDamping = 0.5
+		}
+		wall.body.name = "wall"
+		wall.body.del = false
+		wall.shape = b2.PolygonShape.new()
+		wall.shape:setAsBox(15/2, WY/2, 0, 0, 0)
+		wall.fixture = wall.body:createFixture{
+			shape = wall.shape, 
+			density = 10000,
+			restitution = 1.5, 
+			friction = 0,
+			fixedRotation = true,
+		}
+		wall.fixture:setFilterData({categoryBits = 2, maskBits = 1, groupIndex = 0})
+		wall.body:setAngle(side*math.pi)
+		
+		arena:addChild(wall)
+		
+		-- Action to end Skill --
+		self.endAction = function()			
+			for i = arena:getNumChildren(), 1, -1 do
+				if arena:getChildAt(i) == wall then
+					fadeBitmapOut(wall, 500, arena)
+					if wall.body ~= nil then
+						wall.body.del = true
+					end
+				end
+			end
+			if side == 0 then
+				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
+					arena.skillBut:setAlpha(0.4)
+				end
+				arena.leftPlayer.skillActive = false
+			else
+				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
+					arena.skillBut:setAlpha(0.4)
+				end
+				arena.rightPlayer.skillActive = false
+			end
+		end
+		
+		-- Collision handler --
+		local wallhp = 3
+		local function endaction()
+		end
+		endaction = self.endAction
+		function wall.body:collide(event)
+			wallhp = wallhp - 1
+			if wallhp > 0 then
+				if optionsTable["SFX"] == "On" then sounds.glass_ping:play() end
+				
+			else
+				if optionsTable["SFX"] == "On" then sounds.ice_break:play() end
+				endaction()
+			end
+		end	
+		
+		-- Sets timer to end skill --
+		Timer.delayedCall(self.basetime,  function()
+			--self:endAction() 
+		end)
+		
+		-- Action to force end --
+		self.forceEnd = function()
+			for i = arena:getNumChildren(), 1, -1 do
+				if arena:getChildAt(i) == wall then
+					fadeBitmapOut(wall, 100, arena)
+					if wall.body ~= nil then
+						wall.body.del = true
+					end
+				end
+			end
+		end
+	end	
+
+
+-----------------------------------
+-- Earthquake: Shake everything! --
+-----------------------------------
+	if self.skill == "earthquake" then
+		local quakesound = nil
+		if optionsTable["SFX"] == "On" then quakesound = sounds.earthquake:play() end
+		
+		if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then
+			arena.skillBut:setAlpha(0.1)
+		end
+		
+		-- Shake! --
+		local arenaX, arenaY = arena:getPosition()
+		local function shake()
+			arena:setPosition(arenaX + math.random(-50, 50), arenaY + math.random(-50, 50))
+			arena.ball.body:applyLinearImpulse(math.random(-1,1), math.random(-1,1), 0, 0)
+			arena.leftPlayer.paddle.body:applyLinearImpulse(0, math.random(-1,1), 0, 0)
+			arena.rightPlayer.paddle.body:applyLinearImpulse(0, math.random(-1,1), 0, 0)
+		end
+		arena:addEventListener(Event.ENTER_FRAME, shake)		
+		
+		-- Sets AI intelligence bad --
+		arena.aiPlayer.char.intFactor = 3
+		arena.aiPlayer:aiRandomFactor()
+		
+		-- End Action --
+		local finished = false
+		self.endAction = function()
+			finished = true
+			quakesound:stop()
+			arena:removeEventListener(Event.ENTER_FRAME, shake)
+			if side == 0 then
+				ballCollideO0 = function(event)
+				end
+			else
+				ballCollideO1 = function(event)
+				end
+			end
+			arena:setPosition(arenaX, arenaY)
+			arena.aiPlayer.char:updateAttr()
+			arena.aiPlayer:aiRandomFactor()
+			if side == 0 then
+				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
+					arena.skillBut:setAlpha(0.4)
+				end
+				arena.leftPlayer.skillActive = false
+			else
+				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
+					arena.skillBut:setAlpha(0.4)
+				end
+				arena.rightPlayer.skillActive = false
+			end
+		end
+		
+		-- End if ball hits enemy --
+		local function endaction()
+		end
+		endaction = self.endAction
+		if side == 0 then
+			ballCollideO0 = function(event)
+				local body1 = event.fixtureA:getBody()
+				local body2 = event.fixtureB:getBody()
+				if (((body1 == arena.rightPlayer.paddle.body or body2 == arena.rightPlayer.paddle.body) and side == 0)
+				or ((body1 == arena.leftPlayer.paddle.body or body2 == arena.leftPlayer.paddle.body) and side == 1)) then
+					endaction()
+				end
+			end
+		else
+			ballCollideO1 = function(event)
+				local body1 = event.fixtureA:getBody()
+				local body2 = event.fixtureB:getBody()
+				if (((body1 == arena.rightPlayer.paddle.body or body2 == arena.rightPlayer.paddle.body) and side == 0)
+				or ((body1 == arena.leftPlayer.paddle.body or body2 == arena.leftPlayer.paddle.body) and side == 1)) then
+					endaction()
+				end
+			end
+		end
+		
+		-- Sets timer to end skill --
+		Timer.delayedCall(self.basetime/2,  function()
+			if not finished then
+				self:endAction()
+			end 
+		end)
+		
+		-- Action to force end --
+		self.forceEnd = function()
+			
+		end
+	end	
+
+
+----------------------------------------------------
+-- Summon Imp: Summon a little paddle to help you --
+----------------------------------------------------
+	if self.skill == "summonimp" then
+		if optionsTable["SFX"] == "On" then sounds.imp:play() end
+		
+		if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then
+			arena.skillBut:setAlpha(0.1)
+		end
+		
+		-- Creates Imp --
+		local imp = Bitmap.new(textures.paddle2)
+		imp:setColorTransform(0, 1, 0, 0.5)
+		imp:setScale(1, 1)
+		imp:setAnchorPoint(0.5, 0.5)
+		local textureW = imp:getWidth()
+		local textureH = imp:getHeight()
+		local posX = 0
+		if side == 0 then
+			posX = XShift + WX/3
+		else
+			posX = XShift + WX - WX/3
+		end
+		imp:setScale(15/textureW, 0.3*75/textureH)
+		imp:setPosition(posX, WY/2)
+		fadeBitmapIn(imp, 300, 1)
+		
+		imp.body = world:createBody{
+			type = b2.DYNAMIC_BODY,
+			position = {x = posX, y = WY/2},
+			angularDamping = 10000,
+			linearDamping = 0.5
+		}
+		imp.body.name = "imp"
+		imp.body.del = false
+		imp.shape = b2.PolygonShape.new()
+		imp.shape:setAsBox(15/2, 0.3*75/2, 0, 0, 0)
+		imp.fixture = imp.body:createFixture{
+			shape = imp.shape, 
+			density = 10000,
+			restitution = 0, 
+			friction = 0,
+			fixedRotation = true,
+		}
+		imp.fixture:setFilterData({categoryBits = 2, maskBits = 5, groupIndex = 0})
+		imp.body:setAngle(side*math.pi)
+		
+		arena:addChild(imp)
+		
+		-- Moves Imp --
+		local framecount = 0
+		local function moveimp()
+			framecount = framecount + 1
+			local randomFactor = 0
+			if framecount % 120 == 0 then
+				randomFactor = (3.2 - 1*1)*1.1*math.random(-0.3*75/2, 0.3*75/2)/0.3
+			end
+			-- Gets positions and velocities --
+			local ballX, ballY = arena.ball.body:getPosition()
+			local padX, padY = imp.body:getPosition()
+			local ballDist = math.sqrt(math.pow(padX - ballX, 2) + math.pow(padY - ballY, 2))
+			local ballVx, ballVy = arena.ball.body:getLinearVelocity()
+			local ballVx0 = ballVx
+			local ballVy0 = ballVy
+			local ballV0 = math.sqrt(ballVx*ballVx + ballVy*ballVy)
+			if ballVy == 0 then
+				ballVy = 0.001
+			end
+			ballVx = ballVx*PhysicsScale
+			ballVy = ballVy*PhysicsScale
+			local padVx, padVy = imp.body:getLinearVelocity()
+			
+			-- Prediction Initialization, any values --
+			local predictX = XShift + WX/2
+			local predictY = 0
+			local dy = 0
+			local maxdelta = WY - 0.3*75/2 - WBounds
+			
+			-- Predict Y coordinate of ball when it pass over the paddle line, if ball is moving towards paddle --
+			if side == 0 and ballVx < 0  then
+				
+				-- Calculates ball X position when it hits a boundary, until X means it is behind a paddle --
+				while predictX > (padX + 15/2 + arena.ball.radius) do
+					if ballVy > 0 then
+						dy = WY - WBounds - ballY - arena.ball.radius
+						predictX = ballX - math.abs(ballVx)*dy/math.abs(ballVy)
+						ballVy = -ballVy
+						ballY = WY - WBounds - arena.ball.radius
+						ballX = predictX
+					else
+						dy = ballY - WBounds - arena.ball.radius
+						predictX = ballX  - math.abs(ballVx)*dy/math.abs(ballVy)
+						ballVy = -ballVy
+						ballY = WBounds + arena.ball.radius
+						ballX = predictX
+					end
+				end
+				
+				-- After last position is found, calculates the ball Y position when crossing the paddle line --
+				if ballVy > 0 then
+					predictY = 12 + math.abs(ballVy)*(padX + 15/2 + arena.ball.radius - ballX)/math.abs(ballVx)
+				else
+					predictY = -12 + WY - math.abs(ballVy)*(padX + 15/2 + arena.ball.radius - ballX)/math.abs(ballVx)
+				end
+				
+				-----------------------------------------------------------------------------------------------
+				-- Applies velocity proportional to the difference between paddle Y position and prediction. --
+				-- The random factor starts very big and gets smaller when ball approaches paddle            --
+				-----------------------------------------------------------------------------------------------
+				local deltaY = predictY - padY + (ballDist*math.abs(ballVy0/ballV0)/120)*randomFactor
+				imp.body:setLinearVelocity(padVx, 1.5*(deltaY/maxdelta)*arena.ball.baseSpeedMov)
+
+			-- Same thing, to the other side --
+			elseif side == 1 and ballVx > 0 then
+				while predictX < (padX - 15/2 - arena.ball.radius) do
+					if ballVy > 0 then
+						dy = WY - WBounds - ballY - arena.ball.radius
+						predictX = ballX + math.abs(ballVx)*dy/math.abs(ballVy)
+						ballVy = -ballVy
+						ballY = WY - WBounds - arena.ball.radius
+						ballX = predictX
+					else
+						dy = ballY - WBounds - arena.ball.radius
+						predictX = ballX  + math.abs(ballVx)*dy/math.abs(ballVy)
+						ballVy = -ballVy
+						ballY = WBounds + arena.ball.radius
+						ballX = predictX
+					end
+				end
+				if ballVy > 0 then
+					predictY = 12 + math.abs(ballVy)*(ballX - padX + 15/2 + arena.ball.radius)/math.abs(ballVx)
+				else
+					predictY = -12 + WY - math.abs(ballVy)*(ballX - padX + 15/2 + arena.ball.radius)/math.abs(ballVx)
+				end
+				
+				local deltaY = predictY - padY + (ballDist*math.abs(ballVy0/ballV0)/120)*randomFactor
+				imp.body:setLinearVelocity(padVx, 1.5*(deltaY/maxdelta)*arena.ball.baseSpeedMov)
+			-- If ball is not moving towards paddle, move paddle to the position opposite to opponent --
+			else
+				local opponentX, opponentY = nil
+				if self.side == 0 then
+					opponentX, opponentY = arena.rightPlayer.paddle.body:getPosition()
+				else
+					opponentX, opponentY = arena.leftPlayer.paddle.body:getPosition()
+				end
+				local opositOp = WY - opponentY
+				local deltaOp = opositOp - padY
+				imp.body:setLinearVelocity(padVx, 1.5*(deltaOp/maxdelta)*arena.ball.baseSpeedMov/2)
+			end
+		end
+		
+		arena:addEventListener(Event.ENTER_FRAME, moveimp)
+		
+		-- Action to end Skill --
+		self.endAction = function()	
+			arena:removeEventListener(Event.ENTER_FRAME, moveimp)
+			for i = arena:getNumChildren(), 1, -1 do
+				if arena:getChildAt(i) == imp then
+					fadeBitmapOut(imp, 300, arena)
+					if imp.body ~= nil then
+						imp.body.del = true
+					end
+				end
+			end
+			if side == 0 then
+				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
+					arena.skillBut:setAlpha(0.4)
+				end
+				arena.leftPlayer.skillActive = false
+			else
+				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
+					arena.skillBut:setAlpha(0.4)
+				end
+				arena.rightPlayer.skillActive = false
+			end
+		end
+		
+		-- Collision handler --
+		function imp.body:collide(event)
+			
+		end	
+		
+		-- Sets timer to end skill --
+		Timer.delayedCall(self.basetime,  function()
+			--self:endAction() 
+		end)
+		
+		-- Action to force end --
+		self.forceEnd = function()
+			for i = arena:getNumChildren(), 1, -1 do
+				if arena:getChildAt(i) == imp then
+					fadeBitmapOut(imp, 100, arena)
+					if imp.body ~= nil then
+						imp.body.del = true
+					end
+				end
+			end
+		end
+	end	
 
 
 

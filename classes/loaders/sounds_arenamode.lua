@@ -45,5 +45,7 @@ function SoundLoaderArenaMode:init()
 	self.spider = Sound.new("audio/sfx/spider.wav")
 	self.portal = Sound.new("audio/sfx/portal.wav")
 	self.portal2 = Sound.new("audio/sfx/portal2.wav")
+	self.earthquake = Sound.new("audio/sfx/earthquake.wav")
+	self.imp = Sound.new("audio/sfx/imp.wav")
 end
 

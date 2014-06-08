@@ -149,6 +149,14 @@ function scaleBitmapXY(bitmap, totaltime, targetScaleX, targetScaleY, initialSca
 end
 	
 
+-------------------------------
+-- Functions to be overriden --
+-------------------------------
+function ballCollideO0(event)
+end
+function ballCollideO1(event)
+end
+
 
 -------------------------
 -- Main Initialization --

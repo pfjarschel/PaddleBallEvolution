@@ -33,7 +33,7 @@ local function onEnterFrame()
 		arena:tilt()
 	end
 	arena.humanPlayer:humanMove()
-	arena.aiPlayer:aiMove()
+	arena:moveAI()
 	arena:checkGoal()
 end
 
@@ -94,14 +94,6 @@ function ArenaSurvival:openMenu()
 			if restartBut:hitTestPoint(event.touch.x, event.touch.y) then
 				event:stopPropagation()
 				stage:removeChild(self.pausebg)
-				world:destroyBody(self.ball.body)
-				self.ball.body = nil
-				world:destroyBody(self.humanPlayer.paddle.body)
-				world:destroyBody(self.aiPlayer.paddle.body)
-				world:destroyBody(self.bounds)
-				local difficulty = self.difFactor*5
-				self = nil
-				arena = nil
 				
 				if optionsTable["SFX"] == "On" then sounds.sel3:play() end
 				
@@ -117,13 +109,6 @@ function ArenaSurvival:openMenu()
 			if quitBut:hitTestPoint(event.touch.x, event.touch.y) then
 				event:stopPropagation()
 				stage:removeChild(self.pausebg)
-				world:destroyBody(self.ball.body)
-				self.ball.body = nil
-				world:destroyBody(self.humanPlayer.paddle.body)
-				world:destroyBody(self.aiPlayer.paddle.body)
-				world:destroyBody(self.bounds)
-				self = nil
-				arena = nil
 				
 				if optionsTable["SFX"] == "On" then sounds.sel3:play() end
 				
@@ -293,13 +278,6 @@ function ArenaSurvival:gameOver()
 			stage:removeChild(againBut)
 			stage:removeChild(backdrawing)
 			stage:removeChild(bg)
-			world:destroyBody(self.ball.body)
-			self.ball.body = nil
-			world:destroyBody(self.humanPlayer.paddle.body)
-			world:destroyBody(self.aiPlayer.paddle.body)
-			world:destroyBody(self.bounds)
-			self = nil
-			arena = nil
 			
 			if optionsTable["SFX"] == "On" then sounds.sel2:play() end
 			
@@ -315,13 +293,6 @@ function ArenaSurvival:gameOver()
 			stage:removeChild(againBut)
 			stage:removeChild(backdrawing)
 			stage:removeChild(bg)
-			world:destroyBody(self.ball.body)
-			self.ball.body = nil
-			world:destroyBody(self.humanPlayer.paddle.body)
-			world:destroyBody(self.aiPlayer.paddle.body)
-			world:destroyBody(self.bounds)
-			self = nil
-			arena = nil
 			
 			if optionsTable["SFX"] == "On" then sounds.sel3:play() end
 			
@@ -424,6 +395,8 @@ end
 
 -- Initialization --
 function ArenaSurvival:init(difficulty)
+	stopPhysics()
+	goPhysics(PhysicsScale)	
 	textures = nil
 	textures = TextureLoaderNormalModes.new()
 	sounds = nil

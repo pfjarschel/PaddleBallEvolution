@@ -47,6 +47,8 @@
    <file source="audio/bgm/bgm_boss1.mp3"/>
   </folder>
   <folder name="sfx">
+   <file source="audio/sfx/imp.wav"/>
+   <file source="audio/sfx/earthquake.wav"/>
    <file source="audio/sfx/portal2.wav"/>
    <file source="audio/sfx/portal.wav"/>
    <file source="audio/sfx/spider.wav"/>
@@ -91,6 +93,7 @@
   <file source="imgs/pongball.png"/>
   <file source="imgs/paddle2.png"/>
   <folder name="gfx">
+   <file source="imgs/gfx/crystal.png"/>
    <file source="imgs/gfx/laugh.png"/>
    <file source="imgs/gfx/heart.png"/>
    <file source="imgs/gfx/bite2@2x.png"/>
