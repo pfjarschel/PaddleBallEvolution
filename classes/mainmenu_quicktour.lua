@@ -1,5 +1,5 @@
 ------------------------------------------
--- Class for the Main Menu - Arena Mode --
+-- Class for the Main Menu - Quick Tour --
 ------------------------------------------
 
 MainMenu_QuickTour = Core.class(Sprite)

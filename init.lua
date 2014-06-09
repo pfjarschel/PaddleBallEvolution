@@ -47,3 +47,5 @@ optionsTable = {}
 tourTable = {}
 customClass = {}
 arenasTable = {}
+careerTable = {}
+Worlds = {}
