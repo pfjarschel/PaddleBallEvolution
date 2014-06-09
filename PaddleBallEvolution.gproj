@@ -275,6 +275,7 @@
   <file source="fonts/anita.ttf"/>
  </folder>
  <folder name="classes">
+  <file source="classes/worldSel.lua"/>
   <file source="classes/careerStats.lua"/>
   <file source="classes/mainmenu_arena2.lua"/>
   <file source="classes/editcustom.lua"/>
@@ -303,6 +304,7 @@
   <file source="classes/arenaclassic.lua"/>
   <file source="classes/arenaarena.lua"/>
   <folder name="loaders">
+   <file source="classes/loaders/worlds.lua"/>
    <file source="classes/loaders/careerData.lua"/>
    <file source="classes/loaders/lock.lua"/>
    <file source="classes/loaders/arenas.lua"/>
