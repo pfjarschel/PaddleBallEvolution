@@ -34,7 +34,7 @@ function CareerStats:init(previous)
 	menubg:setScale(1, 1)
 	local textureW = menubg:getWidth()
 	local textureH = menubg:getHeight()
-	menubg:setScale(WX/textureW, WY/textureH)
+	menubg:setScale(WX0/textureW, WY/textureH)
 	--menubg:setAlpha(0.25)
 	self:addChild(menubg)
 	
@@ -46,6 +46,7 @@ function CareerStats:init(previous)
 	local skillName = ""
 	local skillDesc = ""
 	local j = 1
+	local maxworld = tonumber(careerTable["World"])
 	if tonumber(careerTable["World"]) > 1 then
 		for i = 1, tonumber(careerTable["World"]) - 1, 1 do
 			skillNames[i] = skillTable[Worlds[i]["Skill"]]["sName"]
@@ -644,79 +645,81 @@ function CareerStats:init(previous)
 	end
 	
 	-- Skill Selection --
-	self.prevBut = MenuBut.new(30, 30, textures.backBut, textures.backBut1)
-	self:addChild(self.prevBut)
-	self.prevBut.bitmap:setPosition(0.5*WX0 - 256, 30)
-	self.prevBut:addEventListener(Event.TOUCHES_END, function(event)
-		if self.prevBut:hitTestPoint(event.touch.x, event.touch.y) then
-			j = j - 1
-			if j < 1 then j = tablelength(skillNames) end
-			
-			self:removeChild(skillTextBox)
-			self:removeChild(skillDTextBox)
-			
-			skill = skillNames[j]
-			if skill == "none" or skill == "noskill" then
+	if tonumber(careerTable["World"]) > 2 then
+		self.prevBut = MenuBut.new(30, 30, textures.backBut, textures.backBut1)
+		self:addChild(self.prevBut)
+		self.prevBut.bitmap:setPosition(0.5*WX0 - 256, 30)
+		self.prevBut:addEventListener(Event.TOUCHES_END, function(event)
+			if self.prevBut:hitTestPoint(event.touch.x, event.touch.y) then
 				j = j - 1
 				if j < 1 then j = tablelength(skillNames) end
+				
+				self:removeChild(skillTextBox)
+				self:removeChild(skillDTextBox)
+				
+				skill = skillNames[j]
+				if skill == "none" or skill == "noskill" then
+					j = j - 1
+					if j < 1 then j = tablelength(skillNames) end
+				end
+				
+				skill = skillNames[j]
+				skillName = skillFullNames[j]
+				skillDesc = skillDescs[j]
+				
+				skillTextBox = TextField.new(self.smallfont, "Skill: "..skillName)
+				skillTextBox:setTextColor(0xffffff)
+				skillTextBox:setPosition(0.5*WX0 - skillTextBox:getWidth()/2, 30)
+				self:addChild(skillTextBox)
+				
+				skillDTextBox = TextField.new(self.xsmallfont, skillDesc)
+				skillDTextBox:setTextColor(0xffffff)
+				skillDTextBox:setPosition(0.5*WX0 - skillDTextBox:getWidth()/2, 50)
+				self:addChild(skillDTextBox)
+				
+				careerTable["CurSkill"] = skill
+				
+				if optionsTable["SFX"] == "On" then sounds.sel1:play() end
 			end
-			
-			skill = skillNames[j]
-			skillName = skillFullNames[j]
-			skillDesc = skillDescs[j]
-			
-			skillTextBox = TextField.new(self.smallfont, "Skill: "..skillName)
-			skillTextBox:setTextColor(0xffffff)
-			skillTextBox:setPosition(0.5*WX0 - skillTextBox:getWidth()/2, 30)
-			self:addChild(skillTextBox)
-			
-			skillDTextBox = TextField.new(self.xsmallfont, skillDesc)
-			skillDTextBox:setTextColor(0xffffff)
-			skillDTextBox:setPosition(0.5*WX0 - skillDTextBox:getWidth()/2, 50)
-			self:addChild(skillDTextBox)
-			
-			careerTable["CurSkill"] = skill
-			
-			if optionsTable["SFX"] == "On" then sounds.sel1:play() end
-		end
-	end)
-	
-	self.nextBut = MenuBut.new(30, 30, textures.forwardBut, textures.forwardBut1)
-	self:addChild(self.nextBut)
-	self.nextBut.bitmap:setPosition(0.5*WX0 + 256, 30)
-	self.nextBut:addEventListener(Event.TOUCHES_END, function(event)
-		if self.nextBut:hitTestPoint(event.touch.x, event.touch.y) then
-			j = j + 1
-			if j > tablelength(skillNames) then j = 1 end
-			
-			self:removeChild(skillTextBox)
-			self:removeChild(skillDTextBox)
-			
-			skill = skillNames[j]
-			if skill == "none" or skill == "noskill" then
+		end)
+		
+		self.nextBut = MenuBut.new(30, 30, textures.forwardBut, textures.forwardBut1)
+		self:addChild(self.nextBut)
+		self.nextBut.bitmap:setPosition(0.5*WX0 + 256, 30)
+		self.nextBut:addEventListener(Event.TOUCHES_END, function(event)
+			if self.nextBut:hitTestPoint(event.touch.x, event.touch.y) then
 				j = j + 1
 				if j > tablelength(skillNames) then j = 1 end
+				
+				self:removeChild(skillTextBox)
+				self:removeChild(skillDTextBox)
+				
+				skill = skillNames[j]
+				if skill == "none" or skill == "noskill" then
+					j = j + 1
+					if j > tablelength(skillNames) then j = 1 end
+				end
+				
+				skill = skillNames[j]
+				skillName = skillFullNames[j]
+				skillDesc = skillDescs[j]
+				
+				skillTextBox = TextField.new(self.smallfont, "Skill: "..skillName)
+				skillTextBox:setTextColor(0xffffff)
+				skillTextBox:setPosition(0.5*WX0 - skillTextBox:getWidth()/2, 30)
+				self:addChild(skillTextBox)
+				
+				skillDTextBox = TextField.new(self.xsmallfont, skillDesc)
+				skillDTextBox:setTextColor(0xffffff)
+				skillDTextBox:setPosition(0.5*WX0 - skillDTextBox:getWidth()/2, 50)
+				self:addChild(skillDTextBox)
+				
+				careerTable["CurSkill"] = skill
+				
+				if optionsTable["SFX"] == "On" then sounds.sel1:play() end
 			end
-			
-			skill = skillNames[j]
-			skillName = skillFullNames[j]
-			skillDesc = skillDescs[j]
-			
-			skillTextBox = TextField.new(self.smallfont, "Skill: "..skillName)
-			skillTextBox:setTextColor(0xffffff)
-			skillTextBox:setPosition(0.5*WX0 - skillTextBox:getWidth()/2, 30)
-			self:addChild(skillTextBox)
-			
-			skillDTextBox = TextField.new(self.xsmallfont, skillDesc)
-			skillDTextBox:setTextColor(0xffffff)
-			skillDTextBox:setPosition(0.5*WX0 - skillDTextBox:getWidth()/2, 50)
-			self:addChild(skillDTextBox)
-			
-			careerTable["CurSkill"] = skill
-			
-			if optionsTable["SFX"] == "On" then sounds.sel1:play() end
-		end
-	end)
+		end)
+	end
 	
 	-- Color Pick! --
 	if tonumber(careerTable["World"]) == 0 then
@@ -728,7 +731,7 @@ function CareerStats:init(previous)
 		samplePaddle:setAnchorPoint(0.5, 0.5)
 		samplePaddle:setScale(15/textureWp,75/textureHp)
 		samplePaddle:setRotation(-90)
-		samplePaddle:setPosition(WX0 - 100, WY - 72)
+		samplePaddle:setPosition(WX0/2, WY - 72)
 		
 		local slideColorPicker = SlideColorPicker.new()
 		local function onColorChanged(e)
@@ -740,7 +743,7 @@ function CareerStats:init(previous)
 		slideColorPicker:addEventListener("COLOR_CHANGED", onColorChanged)
 		self:addChild(slideColorPicker)
 		slideColorPicker:setScale(0.75, 0.5)
-		slideColorPicker:setPosition(WX/2 - slideColorPicker:getWidth()/2, WY - slideColorPicker:getHeight() - 32)
+		slideColorPicker:setPosition(WX0/2 - slideColorPicker:getWidth()/2, WY - slideColorPicker:getHeight() - 8)
 		Timer.delayedCall(100, function()
 			samplePaddle:setColorTransform(1, 1, 1)
 		end)

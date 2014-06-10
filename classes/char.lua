@@ -66,9 +66,9 @@ function Char:init(class, stage, world)
 		self.def = 3
 		
 		if self.stage ~= 0 and self.stage ~= -1 then
-			local points = 10 + (self.stage - 1) + 3*(self.world - 1)
+			local points = 10 + (self.stage - 1) + 3*(tonumber(careerTable["World"]) - 1)
 			if self.stage == 5 then
-				points = points - 1 + 2*self.world
+				points = points - 1 + 2*tonumber(careerTable["World"])
 			end
 			for i = 1, points, 1 do
 				local newatk = 0

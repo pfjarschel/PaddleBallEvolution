@@ -10,6 +10,7 @@ function FontLoader:init()
 	self.anitaMed = TTFont.new("fonts/anita.ttf", 35, false)
 	self.anitaSmall = TTFont.new("fonts/anita.ttf", 25, false)
 	self.anitaSmaller = TTFont.new("fonts/anita.ttf", 20, false)
+	self.anitaEvenSmaller = TTFont.new("fonts/anita.ttf", 17, false)
 	self.anitaVerySmall = TTFont.new("fonts/anita.ttf", 15, false)
 end
 

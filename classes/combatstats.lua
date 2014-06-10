@@ -43,13 +43,13 @@ function CombatStats:update(hp1, hp2, mp1, mp2)
 		arena:addChild(self.mp2Text)
 		
 		if optionsTable["ArenaSide"] == "Left" then
-			if arena.mp0 == 0 or arena.leftPlayer.skillActive then 
+			if arena.mp0 == 0 or arena.leftPlayer.skillActive or arena.leftPlayer.char.skill.skill == "noskill" then 
 				arena.skillBut:setAlpha(0.1)
 			else
 				arena.skillBut:setAlpha(0.4)
 			end
 		else
-			if arena.mp1 == 0 or arena.rightPlayer.skillActive then
+			if arena.mp1 == 0 or arena.rightPlayer.skillActive  or arena.rightPlayer.char.skill.skill == "noskill" then
 				arena.skillBut:setAlpha(0.1)
 			else
 				arena.skillBut:setAlpha(0.4)

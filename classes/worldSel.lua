@@ -27,22 +27,12 @@ function WorldSel:init(dataTable)
 	self:addChild(menubg)
 	local textureW = menubg:getWidth()
 	local textureH = menubg:getHeight()
-	menubg:setScale(WX/textureW, WY/textureH)
+	menubg:setScale(WX0/textureW, WY/textureH)
 	
 	-- World Selection --
 	local wi = tonumber(careerTable["World"])
 	if wi > tablelength(Worlds) then wi = tablelength(Worlds) end	
 	local stagelv = tonumber(careerTable["Stage"])
-	
-	local WorldTextBox = TextField.new(self.font, "World "..tostring(wi)..": \n"..Worlds[wi]["Name"])
-	WorldTextBox:setTextColor(0xffffff)
-	WorldTextBox:setPosition(WX0/2 - WorldTextBox:getWidth()/2, 50)
-	self:addChild(WorldTextBox)
-	
-	local InfoTextBox = TextWrap.new(Worlds[wi]["Info"], 380, "center", 7, self.smallfont)
-	InfoTextBox:setTextColor(0xffffff)
-	InfoTextBox:setPosition(WX0/2 - InfoTextBox:getWidth()/2, WY - InfoTextBox:getHeight())
-	self:addChild(InfoTextBox)
 	
 	local worldImg = Bitmap.new(Texture.new(Worlds[wi]["Img"], true))
 	worldImg:setScale(1,1)
@@ -52,6 +42,16 @@ function WorldSel:init(dataTable)
 	worldImg:setScale(240/worldImgW)
 	self:addChild(worldImg)
 	worldImg:setPosition(WX0/2, WY/2)
+	
+	local WorldTextBox = TextField.new(self.font, "World "..tostring(wi)..": \n"..Worlds[wi]["Name"])
+	WorldTextBox:setTextColor(0xffffff)
+	WorldTextBox:setPosition(WX0/2 - WorldTextBox:getWidth()/2, 50)
+	self:addChild(WorldTextBox)
+	
+	local InfoTextBox = TextWrap.new(Worlds[wi]["Info"], 380, "center", 7, self.smallfont)
+	InfoTextBox:setTextColor(0xffffff)
+	InfoTextBox:setPosition(WX0/2 - InfoTextBox:getWidth()/2, 380)
+	self:addChild(InfoTextBox)
 	
 	local medalTex1 = Texture.new("imgs/misc/medal.png", true)
 	local trophyTex1 = Texture.new("imgs/misc/trophysmall.png", true)
@@ -67,7 +67,7 @@ function WorldSel:init(dataTable)
 	local x0 = WX0/2 - 2*xgap
 	
 	local medal1, medal2, medal3, medal4, medal5 = nil
-	if stagelv > 1 then
+	if stagelv > 1 or tonumber(careerTable["World"]) > tablelength(Worlds) then
 		medal1 = Bitmap.new(medalTex1)
 	else
 		medal1 = Bitmap.new(medalTex0)
@@ -78,7 +78,7 @@ function WorldSel:init(dataTable)
 	medal1:setPosition(x0, y0)
 	self:addChild(medal1)
 	
-	if stagelv > 2 then
+	if stagelv > 2 or tonumber(careerTable["World"]) > tablelength(Worlds) then
 		medal2 = Bitmap.new(medalTex1)
 	else
 		medal2 = Bitmap.new(medalTex0)
@@ -89,7 +89,7 @@ function WorldSel:init(dataTable)
 	medal2:setPosition(x0 + xgap, y0)
 	self:addChild(medal2)
 	
-	if stagelv > 3 then
+	if stagelv > 3 or tonumber(careerTable["World"]) > tablelength(Worlds) then
 		medal3 = Bitmap.new(medalTex1)
 	else
 		medal3 = Bitmap.new(medalTex0)
@@ -100,7 +100,7 @@ function WorldSel:init(dataTable)
 	medal3:setPosition(x0 + 2*xgap, y0)
 	self:addChild(medal3)
 	
-	if stagelv > 4 then
+	if stagelv > 4 or tonumber(careerTable["World"]) > tablelength(Worlds) then
 		medal4 = Bitmap.new(medalTex1)
 	else
 		medal4 = Bitmap.new(medalTex0)
@@ -111,7 +111,7 @@ function WorldSel:init(dataTable)
 	medal4:setPosition(x0 + 3*xgap, y0)
 	self:addChild(medal4)
 	
-	if stagelv > 5 then
+	if stagelv > 5 or tonumber(careerTable["World"]) > tablelength(Worlds) then
 		medal5 = Bitmap.new(trophyTex1)
 	else
 		medal5 = Bitmap.new(trophyTex0)
@@ -274,39 +274,42 @@ function WorldSel:init(dataTable)
 		self:removeChild(InfoTextBox)
 		InfoTextBox = TextWrap.new(Worlds[wi]["Info"], 380, "center", 7, self.smallfont)
 		InfoTextBox:setTextColor(0xffffff)
-		InfoTextBox:setPosition(WX0/2 - InfoTextBox:getWidth()/2, WY - InfoTextBox:getHeight())
+		InfoTextBox:setPosition(WX0/2 - InfoTextBox:getWidth()/2, 380)
 		self:addChild(InfoTextBox)
 	end
 	
-	self.prevBut = MenuBut.new(40, 40, textures.backBut, textures.backBut1)
-	self:addChild(self.prevBut)
-	self.prevBut.bitmap:setPosition(32, WY/2)
-	self.prevBut:addEventListener(Event.TOUCHES_END, function(event)
-		if self.prevBut:hitTestPoint(event.touch.x, event.touch.y) then
-			wi = wi - 1
-			--if wi < 1 then wi = tablelength(Worlds) end -- Unlock all
-			if wi < 1 then wi = tonumber(careerTable["World"]) end -- Normal Lock
-			
-			updateWorldData()
-			
-			if optionsTable["SFX"] == "On" then sounds.sel1:play() end
-		end
-	end)
-	
-	self.nextBut = MenuBut.new(40, 40, textures.forwardBut, textures.forwardBut1)
-	self:addChild(self.nextBut)
-	self.nextBut.bitmap:setPosition(WX0 - 32, WY/2)
-	self.nextBut:addEventListener(Event.TOUCHES_END, function(event)
-		if self.nextBut:hitTestPoint(event.touch.x, event.touch.y) then
-			wi = wi + 1
-			--if wi > tablelength(Worlds) then wi = 1 end -- Unlock all
-			if wi > tonumber(careerTable["World"]) then wi = 1 end -- Normal lock
-			
-			updateWorldData()
-			
-			if optionsTable["SFX"] == "On" then sounds.sel1:play() end
-		end
-	end)
+	if tonumber(careerTable["World"]) > 1 then
+		self.prevBut = MenuBut.new(40, 40, textures.backBut, textures.backBut1)
+		self:addChild(self.prevBut)
+		self.prevBut.bitmap:setPosition(32, WY/2)
+		self.prevBut:addEventListener(Event.TOUCHES_END, function(event)
+			if self.prevBut:hitTestPoint(event.touch.x, event.touch.y) then
+				wi = wi - 1
+				--if wi < 1 then wi = tablelength(Worlds) end -- Unlock all
+				if wi < 1 then wi = tonumber(careerTable["World"]) end -- Normal Lock
+				if wi > tablelength(Worlds) then wi = tablelength(Worlds) end	
+				
+				updateWorldData()
+				
+				if optionsTable["SFX"] == "On" then sounds.sel1:play() end
+			end
+		end)
+		
+		self.nextBut = MenuBut.new(40, 40, textures.forwardBut, textures.forwardBut1)
+		self:addChild(self.nextBut)
+		self.nextBut.bitmap:setPosition(WX0 - 32, WY/2)
+		self.nextBut:addEventListener(Event.TOUCHES_END, function(event)
+			if self.nextBut:hitTestPoint(event.touch.x, event.touch.y) then
+				wi = wi + 1
+				--if wi > tonumber(careerTable["World"]) or wi > tablelength(Worlds) then wi = 1 end -- Unlock all
+				if wi > tonumber(careerTable["World"]) or wi > tablelength(Worlds) then wi = 1 end -- Normal lock
+				
+				updateWorldData()
+				
+				if optionsTable["SFX"] == "On" then sounds.sel1:play() end
+			end
+		end)
+	end
 	
 	-- Go or return --
 	self.goBut = MenuBut.new(192, 40, textures.goBut, textures.goBut1)
@@ -315,7 +318,11 @@ function WorldSel:init(dataTable)
 	self.goBut:addEventListener(Event.TOUCHES_END, function(event)
 		if self.goBut:hitTestPoint(event.touch.x, event.touch.y) then
 			if optionsTable["SFX"] == "On" then sounds.sel2:play() end
-			sceneMan:changeScene("arenaCareer", transTime, SceneManager.fade, easing.linear, { userData = {tonumber(careerTable["World"]), tonumber(careerTable["Stage"]), "new"} })
+			if wi == tonumber(careerTable["World"]) then
+				sceneMan:changeScene("arenaCareer", transTime, SceneManager.fade, easing.linear, { userData = {tonumber(careerTable["World"]), tonumber(careerTable["Stage"]), "new"} })
+			else
+				sceneMan:changeScene("arenaCareer", transTime, SceneManager.fade, easing.linear, { userData = {wi, 5, "new"} })
+			end
 		end
 	end)
 	

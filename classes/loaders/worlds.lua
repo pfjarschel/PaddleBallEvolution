@@ -21,8 +21,8 @@ Worlds[2]["Img"] = "imgs/worlds/medievil.png"
 
 Worlds[3] = {}
 Worlds[3]["Name"] = "Medievil - Barbarian Camp"
-Worlds[3]["Info"] = "You've shown your value to the Warriors, so they elected you to be their champion on a Quest to save their Kingdom! "..
-	"Your first task is to deal with a tribe of barbarians harassing the small villages around the castle."
+Worlds[3]["Info"] = "You've shown your value to the Warriors, so they chose you to be their champion on a Quest to save their Kingdom! "..
+	"Your first task is to deal with a tribe of barbarians harassing small villages."
 Worlds[3]["Skill"] = "berserk"
 Worlds[3]["Thug"] = "Tribesman"
 Worlds[3]["Boss"] = "Tribe Chief"

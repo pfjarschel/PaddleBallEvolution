@@ -190,27 +190,31 @@ function ArenaCareer:addSkillBut()
 	self.skillBut:setAlpha(0.4)
 	self:addChild(self.skillBut)
 	
-	self.skillBut:addEventListener(Event.TOUCHES_END, function(event)
-		-- Skill needs to be inactive (over) to function, and ball launched --
-		if self.skillBut:hitTestPoint(event.touch.x, event.touch.y) then
-			event:stopPropagation()
-			if optionsTable["ArenaSide"] == "Left" then
-				if self.humanPlayer.skillActive == false and self.ball.launched and self.mp0 > 0 then
-					self.humanPlayer.skillActive = true
-					self.humanPlayer.char.skill:start(0)
-					self.mp0 = self.mp0 - 1
-					self.combatStats:update(self.score0, self.score1, self.mp0, self.mp1)
-				end
-			else
-				if self.humanPlayer.skillActive == false and self.ball.launched and self.mp1 > 0 then
-					self.humanPlayer.skillActive = true
-					self.humanPlayer.char.skill:start(1)
-					self.mp1 = self.mp1 - 1
-					self.combatStats:update(self.score0, self.score1, self.mp0, self.mp1)
+	if careerTable["CurSkill"] == "Unskilled" then
+		self.skillBut:setAlpha(0.1)
+	else
+		self.skillBut:addEventListener(Event.TOUCHES_END, function(event)
+			-- Skill needs to be inactive (over) to function, and ball launched --
+			if self.skillBut:hitTestPoint(event.touch.x, event.touch.y) then
+				event:stopPropagation()
+				if optionsTable["ArenaSide"] == "Left" then
+					if self.humanPlayer.skillActive == false and self.ball.launched and self.mp0 > 0 then
+						self.humanPlayer.skillActive = true
+						self.humanPlayer.char.skill:start(0)
+						self.mp0 = self.mp0 - 1
+						self.combatStats:update(self.score0, self.score1, self.mp0, self.mp1)
+					end
+				else
+					if self.humanPlayer.skillActive == false and self.ball.launched and self.mp1 > 0 then
+						self.humanPlayer.skillActive = true
+						self.humanPlayer.char.skill:start(1)
+						self.mp1 = self.mp1 - 1
+						self.combatStats:update(self.score0, self.score1, self.mp0, self.mp1)
+					end
 				end
 			end
-		end
-	end)
+		end)
+	end
 end
 
 -- Inserts control arrows, handles touch --
@@ -396,63 +400,109 @@ function ArenaCareer:gameOver()
 				stage:addChild(nextBut)
 			end)
 		else
-			if self.world < tablelength(Worlds) then
-				gameOverString = "You completed this World!\n".."Skill learned: "..skillTable[Worlds[tonumber(careerTable["World"])]["Skill"]]["Name"].."\n"
-			else
-				gameOverString = "You saved the Universe!\n".."Congratulations, you deserve it! \\o/ \n"
-			end
-			if optionsTable["Music"] == "On" then
-				currSong:stop()
-				self.songload = nil
-				self.songload = Sound.new(musics.champion[1])
-				currSong = nil
-				currSong = self.songload:play()
-			end
-			
-			backdrawing = Bitmap.new(textures.trophy)
-			backdrawing:setScale(1, 1)
-
-			local textureW = backdrawing:getWidth()
-			local textureH = backdrawing:getHeight()
-			backdrawing:setAnchorPoint(0.5, 0.5)
-			backdrawing:setScale(WY*1.2/textureH)
-			backdrawing:setPosition(WX0/2, WY/2)
-			backdrawing:setAlpha(0.4)
-			
-			careerTable["World"] = tonumber(careerTable["World"]) + 1
-			careerTable["Stage"] = 1
-			careerTable["Points"] = tonumber(careerTable["Points"]) + 3
-			careerTable["CurSkill"] = Worlds[tonumber(careerTable["World"]) - 1]["Skill"]
-			local careerFile = io.open("|D|career.txt", "w+")
-			for k, v in pairs(careerTable) do 
-				careerFile:write(k.."="..v.."\n")
-			end	
-			careerFile:close()
-			
-			nextBut.bitmap:setPosition(WX0/2, WY/2 + 100)
-			nextBut:addEventListener(Event.TOUCHES_END, function(event)
-				if nextBut:hitTestPoint(event.touch.x, event.touch.y) then
-					event:stopPropagation()
-					Timer.resumeAll()
-					Timer.stopAll()
-					if self.humanPlayer.skillActive then
-						self.humanPlayer.char.skill:endAction()
-					end
-					if self.aiPlayer.skillActive then
-						self.aiPlayer.char.skill:endAction()
-					end
-					self:endArena()
-					stage:removeChild(gameOverTextBox)
-					stage:removeChild(exitBut)
-					stage:removeChild(nextBut)
-					stage:removeChild(backdrawing)
-					stage:removeChild(bg)
-					
-					if optionsTable["SFX"] == "On" then sounds.sel2:play() end
-					
-					sceneMan:changeScene("careerStats", transTime, SceneManager.fade, easing.linear)
+			if self.world == tonumber(careerTable["World"]) then
+				if self.world < tablelength(Worlds) then
+					gameOverString = "You completed this World!\n".."Skill learned: "..skillTable[Worlds[tonumber(careerTable["World"])]["Skill"]]["Name"].."\n"
+				else
+					gameOverString = "You saved the Universe!\n".."Congratulations, you deserve it! \\o/ \n"
 				end
-			end)
+				if optionsTable["Music"] == "On" then
+					currSong:stop()
+					self.songload = nil
+					self.songload = Sound.new(musics.champion[1])
+					currSong = nil
+					currSong = self.songload:play()
+				end
+				
+				backdrawing = Bitmap.new(textures.trophy)
+				backdrawing:setScale(1, 1)
+
+				local textureW = backdrawing:getWidth()
+				local textureH = backdrawing:getHeight()
+				backdrawing:setAnchorPoint(0.5, 0.5)
+				backdrawing:setScale(WY*1.2/textureH)
+				backdrawing:setPosition(WX0/2, WY/2)
+				backdrawing:setAlpha(0.4)
+				
+				careerTable["World"] = tonumber(careerTable["World"]) + 1
+				careerTable["Stage"] = 1
+				careerTable["Points"] = tonumber(careerTable["Points"]) + 3
+				careerTable["CurSkill"] = Worlds[tonumber(careerTable["World"]) - 1]["Skill"]
+				local careerFile = io.open("|D|career.txt", "w+")
+				for k, v in pairs(careerTable) do 
+					careerFile:write(k.."="..v.."\n")
+				end	
+				careerFile:close()
+				
+				nextBut.bitmap:setPosition(WX0/2, WY/2 + 100)
+				nextBut:addEventListener(Event.TOUCHES_END, function(event)
+					if nextBut:hitTestPoint(event.touch.x, event.touch.y) then
+						event:stopPropagation()
+						Timer.resumeAll()
+						Timer.stopAll()
+						if self.humanPlayer.skillActive then
+							self.humanPlayer.char.skill:endAction()
+						end
+						if self.aiPlayer.skillActive then
+							self.aiPlayer.char.skill:endAction()
+						end
+						self:endArena()
+						stage:removeChild(gameOverTextBox)
+						stage:removeChild(exitBut)
+						stage:removeChild(nextBut)
+						stage:removeChild(backdrawing)
+						stage:removeChild(bg)
+						
+						if optionsTable["SFX"] == "On" then sounds.sel2:play() end
+						
+						sceneMan:changeScene("careerStats", transTime, SceneManager.fade, easing.linear)
+					end
+				end)
+			else
+				gameOverString = "You defeated this Boss Again!\n"
+				if optionsTable["Music"] == "On" then
+					currSong:stop()
+					self.songload = nil
+					self.songload = Sound.new(musics.champion[1])
+					currSong = nil
+					currSong = self.songload:play()
+				end
+				
+				backdrawing = Bitmap.new(textures.trophy)
+				backdrawing:setScale(1, 1)
+
+				local textureW = backdrawing:getWidth()
+				local textureH = backdrawing:getHeight()
+				backdrawing:setAnchorPoint(0.5, 0.5)
+				backdrawing:setScale(WY*1.2/textureH)
+				backdrawing:setPosition(WX0/2, WY/2)
+				backdrawing:setAlpha(0.4)
+				
+				nextBut.bitmap:setPosition(WX0/2, WY/2 + 100)
+				nextBut:addEventListener(Event.TOUCHES_END, function(event)
+					if nextBut:hitTestPoint(event.touch.x, event.touch.y) then
+						event:stopPropagation()
+						Timer.resumeAll()
+						Timer.stopAll()
+						if self.humanPlayer.skillActive then
+							self.humanPlayer.char.skill:endAction()
+						end
+						if self.aiPlayer.skillActive then
+							self.aiPlayer.char.skill:endAction()
+						end
+						self:endArena()
+						stage:removeChild(gameOverTextBox)
+						stage:removeChild(exitBut)
+						stage:removeChild(nextBut)
+						stage:removeChild(backdrawing)
+						stage:removeChild(bg)
+						
+						if optionsTable["SFX"] == "On" then sounds.sel2:play() end
+						
+						sceneMan:changeScene("worldSel", transTime, SceneManager.fade, easing.linear)
+					end
+				end)
+			end
 			
 			Timer.delayedCall(transTime/2, function ()
 				stage:addChild(bg)
@@ -633,7 +683,7 @@ function ArenaCareer:init(dataTable)
 	musics = MusicLoaderArenaMode.new()
 	gc()
 	
-	local difficulty = careerTable["Dif"]
+	local difficulty = 3 + 4*(careerTable["World"] - 1)/27
 	self.world = dataTable[1]
 	self.stage = dataTable[2]
 	self.arenatype = dataTable[3]
@@ -680,7 +730,7 @@ function ArenaCareer:init(dataTable)
 	end
 	
 	local font = fonts.anitaSmall
-	local font2 = fonts.anitaSmaller
+	local font2 = fonts.anitaEvenSmaller
 	local classText = nil
 	local classTextAI = nil
 	if optionsTable["ArenaSide"] == "Left" then
@@ -707,7 +757,7 @@ function ArenaCareer:init(dataTable)
 	
 	local stagename = "Fight "..self.stage
 	if stagename == "Fight 5" then
-		stagename = "Boss Fight!"
+		stagename = "Boss!"
 	end
 	local stageText = TextField.new(font2, Worlds[self.world]["Name"]..": "..stagename)
 	stageText:setTextColor(0xffffff)

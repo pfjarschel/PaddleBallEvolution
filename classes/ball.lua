@@ -76,17 +76,16 @@ end
 
 -- Launch Ball --
 function Ball:launch()
-	local vx0 = 0
 	local launchSpeed = 2*self.baseSpeed/3
-	while math.abs(vx0) < launchSpeed/4 do 
-		vx0 = math.random(-launchSpeed*0.8, launchSpeed*0.8)
-	end
-	local vy0 = math.sqrt(launchSpeed*launchSpeed - vx0*vx0)
-	local direction = math.pow(-1, math.random(1,10000))
+	local launchangle = math.random(60, 76)
+	local vx0 = launchSpeed*math.cos(math.pi*launchangle/180)
+	local vy0 = launchSpeed*math.sin(math.pi*launchangle/180)
+	local directionx = math.pow(-1, math.random(1,10000))
+	local directiony = math.pow(-1, math.random(1,10000))
 	local launchTime = math.random(300, 3000)
 	Timer.delayedCall(launchTime, function ()
 		if self.body ~= nil then
-			self.body:setLinearVelocity(vx0, direction*vy0)
+			self.body:setLinearVelocity(directionx*vx0, directiony*vy0)
 			self.launched = true
 		end
 	end)

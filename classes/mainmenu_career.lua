@@ -26,7 +26,7 @@ function MainMenu_Career:init()
 		self:addChild(menubg)
 		local textureW = menubg:getWidth()
 		local textureH = menubg:getHeight()
-		menubg:setScale(WX/textureW, WY/textureH)
+		menubg:setScale(WX0/textureW, WY/textureH)
 		
 		-- Check if there is a saved tour --
 		local careerFile = io.open("|D|career.txt", "r")
@@ -48,7 +48,7 @@ function MainMenu_Career:init()
 		-- New, Load, or return --
 		self.newBut = MenuBut.new(192, 40, textures.newBut, textures.newBut1)
 		self:addChild(self.newBut)
-		self.newBut.bitmap:setPosition(WX/2, 0.5*WY + 40)
+		self.newBut.bitmap:setPosition(WX0/2, 0.5*WY + 40)
 		self.newBut:addEventListener(Event.TOUCHES_END, function(event)
 			if self.newBut:hitTestPoint(event.touch.x, event.touch.y) then
 				if optionsTable["SFX"] == "On" then sounds.sel2:play() end
@@ -75,7 +75,7 @@ function MainMenu_Career:init()
 		if tonumber(careerTable["World"]) > 0 then
 			self.loadBut = MenuBut.new(192, 40, textures.loadBut, textures.loadBut1)
 			self:addChild(self.loadBut)
-			self.loadBut.bitmap:setPosition(WX/2, 0.5*WY + 96)
+			self.loadBut.bitmap:setPosition(WX0/2, 0.5*WY + 96)
 			self.loadBut:addEventListener(Event.TOUCHES_END, function(event)
 				if self.loadBut:hitTestPoint(event.touch.x, event.touch.y) then
 					if optionsTable["SFX"] == "On" then sounds.sel2:play() end
@@ -91,6 +91,11 @@ function MainMenu_Career:init()
 			if stagename == ", Stage 5" then
 				stagename = ", Boss Stage!"
 			end
+			stagename = "World "..careerTable["World"]..stagename
+			if tonumber(careerTable["World"]) > tablelength(Worlds) then
+				stagename = "Universe Saved!"
+			end
+			
 			local skillname = ""
 			if careerTable["CurSkill"] == "Unskilled" then
 				skillname = "Unskilled"
@@ -99,7 +104,7 @@ function MainMenu_Career:init()
 			end
 			
 			local stats = "Saved game info:\n \n"..
-						"World "..careerTable["World"]..stagename.."\n \n"..
+						stagename.."\n \n"..
 						"Current Skill: "..skillname.."\n \n"..
 						--"Difficulty: "..careerTable["Dif"].."\n \n"..
 						"Atk: "..(3 + careerTable["Atk"]).."\n"..
@@ -111,10 +116,21 @@ function MainMenu_Career:init()
 			statsTextBox:setTextColor(0xffffff)
 			statsTextBox:setPosition(WX0/2 + statsTextBox:getWidth()/2, WY/2 - 8)
 			self:addChild(statsTextBox)
+			
+			local samplePaddle = Bitmap.new(textures.paddle2)
+			samplePaddle:setScale(1, 1)
+			self:addChild(samplePaddle)
+			local textureWp = samplePaddle:getWidth()
+			local textureHp = samplePaddle:getHeight()
+			samplePaddle:setAnchorPoint(0.5, 0.5)
+			samplePaddle:setScale(15/textureWp,75/textureHp)
+			samplePaddle:setRotation(-90)
+			samplePaddle:setPosition(4*WX0/5 + 17, WY - 64)
+			samplePaddle:setColorTransform(careerTable["R"]/255, careerTable["G"]/255, careerTable["B"]/255, 1)
 		else
 			self.loadBut = MenuBut.new(192, 40, textures.loadBut, textures.loadBut1, textures.loadBut0)
 			self:addChild(self.loadBut)
-			self.loadBut.bitmap:setPosition(WX/2, 0.5*WY + 96)
+			self.loadBut.bitmap:setPosition(WX0/2, 0.5*WY + 96)
 		end
 		
 		self.returnBut = MenuBut.new(192, 40, textures.returnBut, textures.returnBut1)
@@ -142,13 +158,13 @@ function MainMenu_Career:init()
 		self:addChild(bg)
 		local textureW = bg:getWidth()
 		local textureH = bg:getHeight()
-		bg:setScale(WX/textureW, WY/textureH)
+		bg:setScale(WX0/textureW, WY/textureH)
 		
 		local careertitlestring = "Career Mode Info"
 		
-		local careertitle = TextWrap.new(careertitlestring, WX/2, "center", 5, self.biggerfont)
+		local careertitle = TextWrap.new(careertitlestring, WX0/2, "center", 5, self.biggerfont)
 		careertitle:setTextColor(0xffffff)
-		careertitle:setPosition(WX/4, WY/2 - 24)
+		careertitle:setPosition(WX0/4, WY/2 - 24)
 		self:addChild(careertitle)
 		
 		local careerstring = "Career mode is available in the full version!\n \n"..
@@ -156,9 +172,9 @@ function MainMenu_Career:init()
 						"improving your stats by leveling up and acquiring special skills from defeated enemies.\n \n"..
 						"Purchase full version at Google Play Store!\n"
 		
-		local careertext = TextWrap.new(careerstring, WX/1.1, "justify", 10, self.font)
+		local careertext = TextWrap.new(careerstring, WX0/1.1, "justify", 10, self.font)
 		careertext:setTextColor(0xffffff)
-		careertext:setPosition(WX/2 - careertext:getWidth()/2, WY/2 + 1.5*careertitle:getHeight() - 24)
+		careertext:setPosition(WX0/2 - careertext:getWidth()/2, WY/2 + 1.5*careertitle:getHeight() - 24)
 		self:addChild(careertext)
 		
 		self.returnBut = MenuBut.new(192, 40, textures.returnBut, textures.returnBut1)
