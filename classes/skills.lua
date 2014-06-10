@@ -57,6 +57,14 @@ function Skills:start(side)
 			arena.rightPlayer.paddle.body.atkFactor = arena.rightPlayer.paddle.atkFactor*10
 		end
 		
+		-- Get Color --
+		local colort = nil
+		if side == 0 then
+			colort = arena.leftPlayer.paddle.bitmap:getColorTransform()
+		else
+			colort = arena.rightPlayer.paddle.bitmap:getColorTransform()
+		end
+		
 		-- GFX --
 		if side == 0 then
 			arena.leftPlayer.paddle.bitmap:setColorTransform(1, 0, 0)
@@ -71,14 +79,14 @@ function Skills:start(side)
 				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
 					arena.skillBut:setAlpha(0.4)
 				end
-				arena.leftPlayer.paddle.bitmap:setColorTransform(classTable[arena.leftClass][10][1], classTable[arena.leftClass][10][2], classTable[arena.leftClass][10][3])
+				arena.leftPlayer.paddle.bitmap:setColorTransform(colort)
 				arena.leftPlayer.skillActive = false
 			else
 				arena.rightPlayer.paddle.body.atkFactor = arena.rightPlayer.paddle.atkFactor
 				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
 					arena.skillBut:setAlpha(0.4)
 				end
-				arena.rightPlayer.paddle.bitmap:setColorTransform(classTable[arena.rightClass][10][1], classTable[arena.rightClass][10][2], classTable[arena.rightClass][10][3])
+				arena.rightPlayer.paddle.bitmap:setColorTransform(colort)
 				arena.rightPlayer.skillActive = false
 			end
 		end
@@ -629,6 +637,14 @@ function Skills:start(side)
 			arena.rightPlayer.paddle:setRotation(arena.rightPlayer.paddle.side*180)
 		end
 		
+		-- Get Color --
+		local colort = nil
+		if side == 0 then
+			colort = arena.leftPlayer.paddle.bitmap:getColorTransform()
+		else
+			colort = arena.rightPlayer.paddle.bitmap:getColorTransform()
+		end
+		
 		-- Action to end skill --
 		self.endAction = function()
 			if side == 0 then
@@ -657,7 +673,7 @@ function Skills:start(side)
 				arena.leftPlayer.paddle.body:setAngle(arena.leftPlayer.paddle.side*math.pi)
 				arena.leftPlayer.paddle.bitmap:setScale(arena.leftPlayer.paddle.paddleW/arena.leftPlayer.paddle.textureW, arena.leftPlayer.paddle.paddleH/arena.leftPlayer.paddle.textureH)
 				arena.leftPlayer.paddle:setRotation(arena.leftPlayer.paddle.side*180)
-				arena.leftPlayer.paddle.bitmap:setColorTransform(classTable[arena.leftClass][10][1], classTable[arena.leftClass][10][2], classTable[arena.leftClass][10][3])
+				arena.leftPlayer.paddle.bitmap:setColorTransform(colort)
 				
 				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
 					arena.skillBut:setAlpha(0.4)
@@ -689,7 +705,7 @@ function Skills:start(side)
 				arena.rightPlayer.paddle.body:setAngle(arena.rightPlayer.paddle.side*math.pi)
 				arena.rightPlayer.paddle.bitmap:setScale(arena.rightPlayer.paddle.paddleW/arena.rightPlayer.paddle.textureW, arena.rightPlayer.paddle.paddleH/arena.rightPlayer.paddle.textureH)
 				arena.rightPlayer.paddle:setRotation(arena.rightPlayer.paddle.side*180)
-				arena.rightPlayer.paddle.bitmap:setColorTransform(classTable[arena.rightClass][10][1], classTable[arena.rightClass][10][2], classTable[arena.rightClass][10][3])
+				arena.rightPlayer.paddle.bitmap:setColorTransform(colort)
 				
 				if (side == 0 and optionsTable["ArenaSide"] == "Left") or (side == 1 and optionsTable["ArenaSide"] == "Right") then 
 					arena.skillBut:setAlpha(0.4)

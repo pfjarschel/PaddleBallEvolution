@@ -214,7 +214,7 @@ else
 			customClass["skill"],
 			skillName,
 			skillDesc,
-			{tonumber(customClass["ColorR"])/10, tonumber(customClass["ColorG"])/10, tonumber(customClass["ColorB"])/10},
+			{tonumber(customClass["ColorR"])/255, tonumber(customClass["ColorG"])/255, tonumber(customClass["ColorB"])/255},
 			"Custom Class",
 			0
 		}
@@ -233,6 +233,7 @@ sceneMan = SceneManager.new({
 	["mainMenu_Career"] = MainMenu_Career,
 	["careerStats"] = CareerStats,
 	["worldSel"] = WorldSel,
+	["arenaCareer"] = ArenaCareer,
 	["arenaTour"] = ArenaTour,
 	["tourLevelUp"] = TourLevelUp,
 	["editCustom"] = EditCustomClass,

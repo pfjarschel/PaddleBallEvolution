@@ -98,7 +98,7 @@ function MainMenu_Career:init()
 				skillname = skillTable[careerTable["CurSkill"]]["Name"]
 			end
 			
-			local stats = "Saved game Info:\n \n"..
+			local stats = "Saved game info:\n \n"..
 						"World "..careerTable["World"]..stagename.."\n \n"..
 						"Current Skill: "..skillname.."\n \n"..
 						--"Difficulty: "..careerTable["Dif"].."\n \n"..

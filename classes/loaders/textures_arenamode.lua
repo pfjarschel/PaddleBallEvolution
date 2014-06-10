@@ -18,6 +18,22 @@ function TextureLoaderArenaMode:init()
 	self.minusBut = Texture.new("imgs/buttons/minusBut.png", true)
 	self.minusBut1 = Texture.new("imgs/buttons/minusBut1.png", true)
 	
+	self.goBut = Texture.new("imgs/buttons/goBut.png", true)
+	self.goBut1 = Texture.new("imgs/buttons/goBut1.png", true)
+	
+	self.newBut = Texture.new("imgs/buttons/newBut.png", true)
+	self.newBut1 = Texture.new("imgs/buttons/newBut1.png", true)
+	
+	self.loadBut = Texture.new("imgs/buttons/loadBut.png", true)
+	self.loadBut1 = Texture.new("imgs/buttons/loadBut1.png", true)
+	self.loadBut0 = Texture.new("imgs/buttons/loadBut0.png", true)
+	
+	self.backBut = Texture.new("imgs/buttons/backBut.png", true)
+	self.backBut1 = Texture.new("imgs/buttons/backBut1.png", true)
+	
+	self.forwardBut = Texture.new("imgs/buttons/forwardBut.png", true)
+	self.forwardBut1 = Texture.new("imgs/buttons/forwardBut1.png", true)
+	
 	self.controlarrows = Texture.new("imgs/buttons/controlarrows.png", true)
 	
 	self.againBut = Texture.new("imgs/buttons/againBut.png", true)
@@ -52,6 +68,8 @@ function TextureLoaderArenaMode:init()
 	self.blackmedal = Texture.new("imgs/misc/blackmedal.png", true)
 	
 	self.trophy= Texture.new("imgs/misc/trophy.png", true)
+	
+	self.mainmenubg = Texture.new("imgs/backs/mainmenubg.jpg", true)
 	
 	self.gfx_freeze = Texture.new("imgs/gfx/freeze.png", true)
 	self.gfx_viscousfield = Texture.new("imgs/gfx/viscousfield.png", true)

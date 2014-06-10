@@ -12,7 +12,8 @@ Char.int = nil
 Char.skl = nil
 Char.def = nil
 Char.skill = nil
-Char.Stage = 5
+Char.stage = 1
+Char.world = 1
 
 Char.atkFactor = nil
 Char.dexFactor = nil
@@ -32,8 +33,9 @@ function Char:updateAttr()
 end
 
 -- Initialization, load from charTable if not standard char --
-function Char:init(class, stage)
+function Char:init(class, stage, world)
 	self.stage = stage
+	self.world = world
 	if class == "classic" then
 		self.atk = 10
 		self.mov = 20
@@ -55,6 +57,82 @@ function Char:init(class, stage)
 		self.int = 1
 		self.skl = 10
 		self.def = 1
+	elseif class == "career" then
+		self.atk = 3
+		self.mov = 3
+		self.lif = 3
+		self.int = 10 + 2*self.stage
+		self.skl = 3
+		self.def = 3
+		
+		if self.stage ~= 0 and self.stage ~= -1 then
+			local points = 10 + (self.stage - 1) + 3*(self.world - 1)
+			if self.stage == 5 then
+				points = points - 1 + 2*self.world
+			end
+			for i = 1, points, 1 do
+				local newatk = 0
+				local newmov = 0
+				local newlif = 0
+				local newskl = 0
+				local newdef = 0
+				local randNum = math.random(1,5)
+				if randNum == 1 then
+					newatk = 1
+				elseif randNum == 2 then
+					newmov = 1
+				elseif randNum == 3 then
+					newlif = 1
+				elseif randNum == 4 then
+					newskl = 1
+				else
+					newdef = 1
+				end
+				while newatk > 30 or newmov > 30 or newlif > 30 or newskl > 30 or newdef > 30 do
+					local randNum = math.random(1,5)
+					if randNum == 1 then
+						newatk = 1
+					elseif randNum == 2 then
+						newmov = 1
+					elseif randNum == 3 then
+						newlif = 1
+					elseif randNum == 4 then
+						newskl = 1
+					else
+						newdef = 1
+					end
+				end
+				self.atk = self.atk + newatk
+				self.mov = self.mov + newmov
+				self.lif = self.lif + newlif
+				self.skl = self.skl + newskl
+				self.def = self.def + newdef
+			end
+			self.skill = Skills.new(Worlds[self.world]["Skill"])
+		end
+		
+		if self.stage == -1 then
+			self.atk = self.atk + careerTable["Atk"]
+			self.mov = self.mov + careerTable["Mov"]
+			self.lif = self.lif + careerTable["Lif"]
+			self.int = self.int + 2
+			self.skl = self.skl + careerTable["Skl"]
+			self.def = self.def + careerTable["Def"]
+			
+			if careerTable["CurSkill"] == "Unskilled" then
+				self.skill = Skills.new("noskill")
+			else
+				self.skill = Skills.new(careerTable["CurSkill"])
+			end
+		end
+
+		--print(self.atk)
+		--print(self.mov)
+		--print(self.lif)
+		--print(self.int)
+		--print(self.skl)
+		--print(self.def)
+		--print("--")
 	else
 		self.atk = classTable[class][1]
 		self.mov = classTable[class][2]

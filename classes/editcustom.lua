@@ -1035,9 +1035,9 @@ function EditCustomClass:init(menuplace)
 	local slideColorPicker = SlideColorPicker.new()
 	local function onColorChanged(e)
 		samplePaddle:setColorTransform(e.r/255, e.g/255, e.b/255)
-		customClass["ColorR"] = e.r/25.5
-		customClass["ColorG"] = e.g/25.5
-		customClass["ColorB"] = e.b/25.5
+		customClass["ColorR"] = e.r
+		customClass["ColorG"] = e.g
+		customClass["ColorB"] = e.b
 	end
 	slideColorPicker:addEventListener("COLOR_CHANGED", onColorChanged)
 	self:addChild(slideColorPicker)
