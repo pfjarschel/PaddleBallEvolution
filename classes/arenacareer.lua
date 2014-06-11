@@ -781,7 +781,8 @@ function ArenaCareer:init(dataTable)
 	if optionsTable["ArenaSide"] == "Left" then
 		classText = TextField.new(font, "You")
 		if self.stage ~= 5 then
-			classTextAI = TextField.new(font, Worlds[self.world]["Thug"])
+			local randname = math.random(1, tablelength(Worlds[self.world]["Thug"]))
+			classTextAI = TextField.new(font, Worlds[self.world]["Thug"][randname])
 		else
 			classTextAI = TextField.new(font, Worlds[self.world]["Boss"])
 		end
