@@ -81,6 +81,33 @@ function MainMenu_Arena:init()
 		end
 	end)
 	
+	-- Load Career Class --
+	local curSkill = careerTable["CurSkill"]
+	local curSkillName = ""
+	local curSkillDesc = ""
+	if curSkill == "Unskilled" then
+		curSkill = "noskill"
+		curSkillName = "Unskilled"
+		curSkillDesc = "No skill learned yet!"
+	else
+		curSkillName = skillTable[curSkill]["Name"]
+		curSkillDesc = skillTable[curSkill]["Desc"]
+	end
+	classTable["Career"] = {
+		3 + careerTable["Atk"],
+		3 + careerTable["Mov"],
+		3 + careerTable["Lif"],
+		10,
+		3 + careerTable["Skl"],
+		3 + careerTable["Def"],
+		curSkill,
+		curSkillName,
+		curSkillDesc,
+		{careerTable["R"]/255, careerTable["G"]/255, careerTable["B"]/255, 1},
+		"Career Class",
+		1
+	}
+	
 	-- Creates class names table --
 	local classNames = {}
 	local classSkill = {}

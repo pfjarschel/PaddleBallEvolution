@@ -15,7 +15,6 @@ function SoundLoaderArenaMode:init()
 	self.goal1 = Sound.new("audio/goal1.wav")
 	self.goal2 = Sound.new("audio/goal2.wav")
 	self.winstring = "audio/win.mp3"
-	self.losestring = "audio/lose.mp3"
 	
 	self.powerup1 = Sound.new("audio/sfx/powerup1.wav")
 	self.powerup2 = Sound.new("audio/sfx/powerup2.wav")

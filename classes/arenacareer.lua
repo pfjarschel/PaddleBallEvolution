@@ -151,6 +151,17 @@ function ArenaCareer:openMenu()
 								
 				if optionsTable["SFX"] == "On" then sounds.sel3:play() end
 				
+				if optionsTable["Music"] == "On" then
+					if not(currSong == nil) then
+						currSong:stop()
+					end
+					self.songload = nil
+					self.songload = Sound.new(musics.credits)
+					currSong = nil
+					currSong = self.songload:play(0, true, false)
+					gc()
+				end
+				
 				sceneMan:changeScene("worldSel", transTime, SceneManager.fade, easing.linear)
 			end
 		end)
@@ -369,7 +380,7 @@ function ArenaCareer:gameOver()
 			end	
 			careerFile:close()
 			
-			nextBut.bitmap:setPosition(WX0/2, WY/2 + 100)
+			nextBut.bitmap:setPosition(WX0 - nextBut:getWidth()/2 - 10, WY/2 + 210)
 			nextBut:addEventListener(Event.TOUCHES_END, function(event)
 				if nextBut:hitTestPoint(event.touch.x, event.touch.y) then
 					event:stopPropagation()
@@ -389,6 +400,17 @@ function ArenaCareer:gameOver()
 					stage:removeChild(bg)
 					
 					if optionsTable["SFX"] == "On" then sounds.sel2:play() end
+					
+					if optionsTable["Music"] == "On" then
+						if not(currSong == nil) then
+							currSong:stop()
+						end
+						self.songload = nil
+						self.songload = Sound.new(musics.credits)
+						currSong = nil
+						currSong = self.songload:play(0, true, false)
+						gc()
+					end
 					
 					sceneMan:changeScene("worldSel", transTime, SceneManager.fade, easing.linear)
 				end
@@ -434,7 +456,7 @@ function ArenaCareer:gameOver()
 				end	
 				careerFile:close()
 				
-				nextBut.bitmap:setPosition(WX0/2, WY/2 + 100)
+				nextBut.bitmap:setPosition(WX0 - nextBut:getWidth()/2 - 10, WY/2 + 210)
 				nextBut:addEventListener(Event.TOUCHES_END, function(event)
 					if nextBut:hitTestPoint(event.touch.x, event.touch.y) then
 						event:stopPropagation()
@@ -454,6 +476,17 @@ function ArenaCareer:gameOver()
 						stage:removeChild(bg)
 						
 						if optionsTable["SFX"] == "On" then sounds.sel2:play() end
+						
+						if optionsTable["Music"] == "On" then
+							if not(currSong == nil) then
+								currSong:stop()
+							end
+							self.songload = nil
+							self.songload = Sound.new(musics.credits)
+							currSong = nil
+							currSong = self.songload:play(0, true, false)
+							gc()
+						end
 						
 						sceneMan:changeScene("careerStats", transTime, SceneManager.fade, easing.linear)
 					end
@@ -478,7 +511,7 @@ function ArenaCareer:gameOver()
 				backdrawing:setPosition(WX0/2, WY/2)
 				backdrawing:setAlpha(0.4)
 				
-				nextBut.bitmap:setPosition(WX0/2, WY/2 + 100)
+				nextBut.bitmap:setPosition(WX0 - nextBut:getWidth()/2 - 10, WY/2 + 210)
 				nextBut:addEventListener(Event.TOUCHES_END, function(event)
 					if nextBut:hitTestPoint(event.touch.x, event.touch.y) then
 						event:stopPropagation()
@@ -498,6 +531,17 @@ function ArenaCareer:gameOver()
 						stage:removeChild(bg)
 						
 						if optionsTable["SFX"] == "On" then sounds.sel2:play() end
+						
+						if optionsTable["Music"] == "On" then
+							if not(currSong == nil) then
+								currSong:stop()
+							end
+							self.songload = nil
+							self.songload = Sound.new(musics.credits)
+							currSong = nil
+							currSong = self.songload:play(0, true, false)
+							gc()
+						end
 						
 						sceneMan:changeScene("worldSel", transTime, SceneManager.fade, easing.linear)
 					end
@@ -530,7 +574,7 @@ function ArenaCareer:gameOver()
 		backdrawing:setPosition(WX0/2, WY/2)
 		backdrawing:setAlpha(0.5)
 			
-		againBut.bitmap:setPosition(WX0/2, WY/2 + 100)
+		againBut.bitmap:setPosition(WX0 - againBut:getWidth()/2 - 10, WY/2 + 210)
 		
 		againBut:addEventListener(Event.TOUCHES_END, function(event)
 			if againBut:hitTestPoint(event.touch.x, event.touch.y) then
@@ -702,15 +746,15 @@ function ArenaCareer:init(dataTable)
 		XShift = 0
 	end
 	
-	-- Stop Current song and load another (bosses if stage == 10) --
+	-- Stop Current song and load another (bosses if stage == 5) --
 	if optionsTable["Music"] == "On" then
 		local function nextSong()
 			if self.stage < 5 then
-				local randNum = math.random(1, 6)
+				local randNum = math.random(1, 5)
 				self.songload = nil
 				self.songload = Sound.new(musics.fight[randNum])
 			else
-				local randNum = math.random(1, 3)
+				local randNum = math.random(1, 2)
 				self.songload = nil
 				self.songload = Sound.new(musics.boss[randNum])
 			end
@@ -718,6 +762,7 @@ function ArenaCareer:init(dataTable)
 			currSong = self.songload:play()
 			currSong:addEventListener(Event.COMPLETE, nextSong)
 			gc()
+			print("changed song")
 		end
 		
 		currSong:stop()
@@ -822,7 +867,7 @@ function ArenaCareer:init(dataTable)
 	else
 		self.leftPlayer = Player.new(0, false, self.difFactor, self.leftClass, self.stage, self.world)
 		self.rightPlayer = Player.new(1, true, self.difFactor, self.rightClass, -1, self.world)
-		self.rightPlayer.paddle.bitmap:setColorTransform(careerTable["R"], careerTable["G"], careerTable["B"], 1)
+		self.rightPlayer.paddle.bitmap:setColorTransform(careerTable["R"]/255, careerTable["G"]/255, careerTable["B"]/255, 1)
 		self.leftPlayer.paddle.bitmap:setColorTransform(math.random(0, 1000)/1000, math.random(0, 1000)/1000, math.random(0, 1000)/1000, 1)
 	end
 	

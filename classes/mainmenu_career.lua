@@ -21,6 +21,17 @@ function MainMenu_Career:init()
 		self.medfont = fonts.anitaSmall
 		self.biggerfont = fonts.anitaMed
 		
+		if optionsTable["Music"] == "On" then
+			if not(currSong == nil) then
+				currSong:stop()
+			end
+			self.songload = nil
+			self.songload = Sound.new(musics.credits)
+			currSong = nil
+			currSong = self.songload:play(0, true, false)
+			gc()
+		end
+		
 		local menubg = Bitmap.new(textures.mainmenubg)
 		menubg:setScale(1, 1)
 		self:addChild(menubg)

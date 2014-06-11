@@ -221,6 +221,22 @@ else
 	end
 end
 
+local careerFile = io.open("|D|career.txt", "r")
+if not careerFile then
+	local createFile = io.open("|D|career.txt", "w+")
+	for k, v in pairs(careerTable) do 
+		createFile:write(k.."="..v.."\n")
+	end
+	createFile:close()
+else
+	local lines = lines_from("|D|career.txt")
+	for i = 1, table.getn(lines), 1 do
+		for k1, v1 in string.gmatch(lines[i], "(%w+)=(%w+)") do
+			careerTable[k1] = v1
+		end
+	end
+end
+
 -- Create scenes for the Scene Manager --
 sceneMan = SceneManager.new({
 	["splash"] = Splash,

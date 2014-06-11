@@ -16,6 +16,5 @@ function SoundLoaderNormalModes:init()
 	self.goal2 = Sound.new("audio/goal2.wav")
 	self.powerup1 = Sound.new("audio/sfx/powerup1.wav")
 	self.winstring = "audio/win.mp3"
-	self.losestring = "audio/lose.mp3"
 end
 

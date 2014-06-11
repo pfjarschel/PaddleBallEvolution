@@ -46,10 +46,11 @@ function MainMenu_About:init()
 	
 	local aboutstring = "Made using the great Gideros Studio: www.giderosmobile.com\n \n"..
 					"Graphics, Programming, and some SFX: Paulo F. Jarschel\n"..
-					"Music and SFX: http://freesfx.co.uk/ (Thank you so much!)\n \n"..
+					"Planet Textures: Planet Creator (https://code.google.com/p/planetcreator/)\n"..
+					"Music and SFX: http://freesfx.co.uk/ (Thank you so much!)\n"..
 					"Special thanks to the Gideros community and awesome open-source software: Inkscape, Gimp and Audacity!\n"
 	
-	local abouttext = TextWrap.new(aboutstring, WX/1.1, "justify", 15, self.font)
+	local abouttext = TextWrap.new(aboutstring, WX/1.1, "justify", 10, self.font)
 	abouttext:setTextColor(0xffffff)
 	abouttext:setPosition(WX/2 - abouttext:getWidth()/2, WY/2 + 1.5*abouttitle:getHeight() - 32)
 	self:addChild(abouttext)

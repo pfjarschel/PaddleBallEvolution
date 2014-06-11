@@ -11,5 +11,4 @@ MusicLoaderMenu.champion = {}
 function MusicLoaderMenu:init()
 	self.intro = "audio/bgm/bgm_intro.mp3"
 	self.credits = "audio/bgm/bgm_credits.mp3"
-	
 end

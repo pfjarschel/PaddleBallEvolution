@@ -13,10 +13,24 @@ classTable["Custom"] = {
 	10,
 	"none",
 	"None",
-	"Touch 'Edit' to select",
+	"Touch the gear to select",
 	{0.5, 0.5, 0.5, 1},
 	"Custom Class",
 	0
+}
+classTable["Career"] = {
+	10,
+	10,
+	10,
+	10,
+	10,
+	10,
+	"none",
+	"None",
+	"None",
+	{1, 1, 1, 1},
+	"Career Class",
+	1
 }
 classTable["Warrior"] = {
 	18,

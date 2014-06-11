@@ -364,7 +364,7 @@ function ArenaArena:gameOver()
 		if optionsTable["Music"] == "On" then
 			currSong:stop()
 			self.songload = nil
-			self.songload = Sound.new(sounds.losestring)
+			self.songload = Sound.new(musics.lost)
 			currSong = nil
 			currSong = self.songload:play()
 		end
@@ -536,12 +536,12 @@ function ArenaArena:init(dataTable)
 	-- Stop Current song and load another (bosses included) --
 	if optionsTable["Music"] == "On" then
 		local function nextSong()
-			local randNum = math.random(1, 9)
+			local randNum = math.random(1, 7)
 			self.songload = nil
-			if randNum < 7 then
+			if randNum < 6 then
 				self.songload = Sound.new(musics.fight[randNum])
 			else
-				self.songload = Sound.new(musics.boss[randNum - 6])
+				self.songload = Sound.new(musics.boss[randNum - 5])
 			end
 			currSong = nil
 			currSong = self.songload:play()

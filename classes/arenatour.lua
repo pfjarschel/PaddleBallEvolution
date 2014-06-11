@@ -641,11 +641,11 @@ function ArenaTour:init(dataTable)
 	if optionsTable["Music"] == "On" then
 		local function nextSong()
 			if self.stage < 10 then
-				local randNum = math.random(1, 6)
+				local randNum = math.random(1, 5)
 				self.songload = nil
 				self.songload = Sound.new(musics.fight[randNum])
 			else
-				local randNum = math.random(1, 3)
+				local randNum = math.random(1, 2)
 				self.songload = nil
 				self.songload = Sound.new(musics.boss[randNum])
 			end
