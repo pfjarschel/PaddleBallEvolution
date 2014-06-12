@@ -22,6 +22,8 @@ Char.intFactor = nil
 Char.sklFactor = nil
 Char.defFactor = nil
 
+function Char:randomskill() end
+
 -- Calculates attributes modification factors --
 function Char:updateAttr()
 	self.atkFactor = 0.24 + self.atk/16.5 -- 0.3 to 2
@@ -88,7 +90,7 @@ function Char:init(class, stage, world)
 				else
 					newdef = 1
 				end
-				while newatk > 30 or newmov > 30 or newlif > 30 or newskl > 30 or newdef > 30 do
+				while self.atk + newatk > 40 or self.atk + newmov > 40 or self.atk + newlif > 40 or self.atk + newskl > 40 or self.atk + newdef > 40 do
 					local randNum = math.random(1,5)
 					if randNum == 1 then
 						newatk = 1
@@ -108,7 +110,17 @@ function Char:init(class, stage, world)
 				self.skl = self.skl + newskl
 				self.def = self.def + newdef
 			end
-			self.skill = Skills.new(Worlds[self.world]["Skill"])
+			
+			self.randomskill = function()
+				local randw = math.random(1, tablelength(Worlds) - 2)
+				self.skill = Skills.new(Worlds[randw]["Skill"])
+			end
+			
+			if Worlds[self.world]["Skill"] == "any" then
+				self:randomskill()
+			else
+				self.skill = Skills.new(Worlds[self.world]["Skill"])
+			end
 		end
 		
 		if self.stage == -1 then

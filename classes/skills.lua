@@ -573,6 +573,14 @@ function Skills:start(side)
 			arena.skillBut:setAlpha(0.1)
 		end
 		
+		-- Get Color --
+		local colort = {}
+		if side == 0 then
+			colort[1], colort[2], colort[3] = arena.leftPlayer.paddle.bitmap:getColorTransform()
+		else
+			colort[1], colort[2], colort[3] = arena.rightPlayer.paddle.bitmap:getColorTransform()
+		end
+		
 		-- GFX --
 		if side == 0 then
 			arena.leftPlayer.paddle.bitmap:setColorTransform(1, 0, 0)
@@ -635,14 +643,6 @@ function Skills:start(side)
 			arena.rightPlayer.paddle.body:setAngle(arena.rightPlayer.paddle.side*math.pi)
 			arena.rightPlayer.paddle.bitmap:setScale(arena.rightPlayer.paddle.paddleW/arena.rightPlayer.paddle.textureW, arena.rightPlayer.paddle.paddleH/arena.rightPlayer.paddle.textureH)
 			arena.rightPlayer.paddle:setRotation(arena.rightPlayer.paddle.side*180)
-		end
-		
-		-- Get Color --
-		local colort = {}
-		if side == 0 then
-			colort[1], colort[2], colort[3] = arena.leftPlayer.paddle.bitmap:getColorTransform()
-		else
-			colort[1], colort[2], colort[3] = arena.rightPlayer.paddle.bitmap:getColorTransform()
 		end
 		
 		-- Action to end skill --
@@ -2897,7 +2897,6 @@ function Skills:start(side)
 			end
 		end
 	end	
-
 
 
 

@@ -449,7 +449,7 @@ function ArenaCareer:gameOver()
 				careerTable["World"] = tonumber(careerTable["World"]) + 1
 				careerTable["Stage"] = 1
 				careerTable["Points"] = tonumber(careerTable["Points"]) + 3
-				careerTable["CurSkill"] = Worlds[tonumber(careerTable["World"]) - 1]["Skill"]
+				--careerTable["CurSkill"] = Worlds[tonumber(careerTable["World"]) - 1]["Skill"]
 				local careerFile = io.open("|D|career.txt", "w+")
 				for k, v in pairs(careerTable) do 
 					careerFile:write(k.."="..v.."\n")
@@ -685,6 +685,10 @@ function ArenaCareer:checkGoal()
 			self.aiPlayer.paddle:reset()
 			self:initArena()
 			gc()
+			if self.world > 27 then
+				self.aiPlayer.char:randomskill()
+				self.AI = ArenaAI.new(self.aiPlayer.char.skill.skill)
+			end
 		end
 	end
 	
@@ -762,7 +766,6 @@ function ArenaCareer:init(dataTable)
 			currSong = self.songload:play()
 			currSong:addEventListener(Event.COMPLETE, nextSong)
 			gc()
-			print("changed song")
 		end
 		
 		currSong:stop()

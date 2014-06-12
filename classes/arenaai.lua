@@ -105,6 +105,9 @@ function ArenaAI:basicCall()
 		if self.skill == "summonimp" then
 			self:summonimp()
 		end
+		if self.skill == "any" then
+			self:any()
+		end
 	end
 end
 function ArenaAI:initSkill()

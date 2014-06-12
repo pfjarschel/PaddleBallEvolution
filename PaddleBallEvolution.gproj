@@ -80,6 +80,20 @@
  </folder>
  <folder name="imgs">
   <folder name="worlds">
+   <file source="imgs/worlds/evil@2x.png"/>
+   <file source="imgs/worlds/evil.png"/>
+   <file source="imgs/worlds/portalworld@2x.png"/>
+   <file source="imgs/worlds/portalworld.png"/>
+   <file source="imgs/worlds/nivlek@2x.png"/>
+   <file source="imgs/worlds/nivlek.png"/>
+   <file source="imgs/worlds/lune@2x.png"/>
+   <file source="imgs/worlds/lune.png"/>
+   <file source="imgs/worlds/inferno@2x.png"/>
+   <file source="imgs/worlds/inferno.png"/>
+   <file source="imgs/worlds/soleil@2x.png"/>
+   <file source="imgs/worlds/soleil.png"/>
+   <file source="imgs/worlds/yegast@2x.png"/>
+   <file source="imgs/worlds/yegast.png"/>
    <file source="imgs/worlds/medievil@2x.png"/>
    <file source="imgs/worlds/medievil.png"/>
    <file source="imgs/worlds/lab@2x.png"/>
@@ -332,11 +346,11 @@
   </folder>
  </folder>
  <dependency from="init.lua" to="physics.lua"/>
- <dependency from="init.lua" to="include/TextWrap.lua"/>
  <dependency from="init.lua" to="include/strict.lua"/>
- <dependency from="init.lua" to="include/socket.lua"/>
  <dependency from="init.lua" to="include/scenemanager.lua"/>
+ <dependency from="init.lua" to="include/TextWrap.lua"/>
  <dependency from="init.lua" to="include/easing.lua"/>
+ <dependency from="init.lua" to="include/socket.lua"/>
  <dependency from="init.lua" to="include/colorPick/slidecolorpicker.lua"/>
  <dependency from="init.lua" to="classes/loaders/fonts.lua"/>
  <dependency from="classes/arenaarena.lua" to="classes/player.lua"/>
@@ -352,36 +366,36 @@
  <dependency from="classes/char.lua" to="classes/loaders/classtable.lua"/>
  <dependency from="classes/loaders/classtable.lua" to="init.lua"/>
  <dependency from="classes/loaders/classtable.lua" to="include/strict.lua"/>
- <dependency from="classes/loaders/classtable.lua" to="include/socket.lua"/>
  <dependency from="classes/loaders/classtable.lua" to="include/scenemanager.lua"/>
  <dependency from="classes/loaders/classtable.lua" to="include/easing.lua"/>
+ <dependency from="classes/loaders/classtable.lua" to="include/socket.lua"/>
  <dependency from="classes/mainmenu.lua" to="classes/menubut.lua"/>
- <dependency from="classes/mainmenu.lua" to="classes/mainmenu_classic.lua"/>
  <dependency from="classes/mainmenu.lua" to="classes/mainmenu_arena.lua"/>
- <dependency from="classes/mainmenu.lua" to="classes/blackscreen.lua"/>
- <dependency from="classes/mainmenu.lua" to="classes/arenasurvival.lua"/>
+ <dependency from="classes/mainmenu.lua" to="classes/mainmenu_classic.lua"/>
  <dependency from="classes/mainmenu.lua" to="classes/arenaclassic.lua"/>
+ <dependency from="classes/mainmenu.lua" to="classes/blackscreen.lua"/>
  <dependency from="classes/mainmenu.lua" to="classes/arenaarena.lua"/>
+ <dependency from="classes/mainmenu.lua" to="classes/arenasurvival.lua"/>
  <dependency from="classes/mainmenu.lua" to="classes/loaders/lock.lua"/>
  <dependency from="classes/mainmenu_arena.lua" to="classes/arenaarena.lua"/>
  <dependency from="classes/mainmenu_classic.lua" to="classes/arenaclassic.lua"/>
  <dependency from="classes/player.lua" to="classes/paddle.lua"/>
  <dependency from="classes/player.lua" to="classes/char.lua"/>
  <dependency from="main.lua" to="classes/mainmenu.lua"/>
- <dependency from="main.lua" to="classes/loaders/arenas.lua"/>
- <dependency from="main.lua" to="classes/loaders/skillTable.lua"/>
- <dependency from="main.lua" to="classes/loaders/customclass.lua"/>
  <dependency from="main.lua" to="classes/loaders/quickTourData.lua"/>
- <dependency from="main.lua" to="classes/loaders/music_normalmodes.lua"/>
  <dependency from="main.lua" to="classes/loaders/music_menu.lua"/>
+ <dependency from="main.lua" to="classes/loaders/customclass.lua"/>
+ <dependency from="main.lua" to="classes/loaders/arenas.lua"/>
  <dependency from="main.lua" to="classes/loaders/music_arenamode.lua"/>
  <dependency from="main.lua" to="classes/loaders/sounds_normalmodes.lua"/>
+ <dependency from="main.lua" to="classes/loaders/music_normalmodes.lua"/>
+ <dependency from="main.lua" to="classes/loaders/skillTable.lua"/>
  <dependency from="main.lua" to="classes/loaders/sounds_menu.lua"/>
- <dependency from="main.lua" to="classes/loaders/sounds_arenamode.lua"/>
  <dependency from="main.lua" to="classes/loaders/textures_normalmodes.lua"/>
- <dependency from="main.lua" to="classes/loaders/textures_menu.lua"/>
- <dependency from="main.lua" to="classes/loaders/textures_arenamode.lua"/>
  <dependency from="main.lua" to="classes/loaders/options.lua"/>
  <dependency from="main.lua" to="classes/loaders/fonts.lua"/>
+ <dependency from="main.lua" to="classes/loaders/sounds_arenamode.lua"/>
+ <dependency from="main.lua" to="classes/loaders/textures_menu.lua"/>
  <dependency from="main.lua" to="classes/loaders/classtable.lua"/>
+ <dependency from="main.lua" to="classes/loaders/textures_arenamode.lua"/>
 </project>

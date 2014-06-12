@@ -47,8 +47,11 @@ function CareerStats:init(previous)
 	local skillDesc = ""
 	local j = 1
 	local maxworld = tonumber(careerTable["World"])
-	if tonumber(careerTable["World"]) > 1 then
-		for i = 1, tonumber(careerTable["World"]) - 1, 1 do
+	if maxworld > tablelength(Worlds) then
+		maxworld = tablelength(Worlds)
+	end
+	if maxworld > 1 then
+		for i = 1, maxworld - 1, 1 do
 			skillNames[i] = skillTable[Worlds[i]["Skill"]]["sName"]
 			skillFullNames[i] = skillTable[Worlds[i]["Skill"]]["Name"]
 			skillDescs[i] = skillTable[Worlds[i]["Skill"]]["Desc"]

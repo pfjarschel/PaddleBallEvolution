@@ -22,13 +22,13 @@ skillTable["powershot"]["Locked"] = 0
 
 skillTable["curveball"] = {}
 skillTable["curveball"]["Name"] = "Curve Ball"
-skillTable["curveball"]["sName"] = "curveall"
+skillTable["curveball"]["sName"] = "curveball"
 skillTable["curveball"]["Desc"] = "Ball makes crazy curves"
 skillTable["curveball"]["Locked"] = 0
 
 skillTable["invisiball"] = {}
 skillTable["invisiball"]["Name"] = "Invisiball"
-skillTable["invisiball"]["name"] = "invisiball"
+skillTable["invisiball"]["sName"] = "invisiball"
 skillTable["invisiball"]["Desc"] = "Ball turns invisible"
 skillTable["invisiball"]["Locked"] = 0
 
@@ -155,7 +155,7 @@ skillTable["web"]["Locked"] = 1
 skillTable["portal"] = {}
 skillTable["portal"]["Name"] = "Portal"
 skillTable["portal"]["sName"] = "portal"
-skillTable["portal"]["Desc"] = "Ball teleports when hitting paddle"
+skillTable["portal"]["Desc"] = "Ball teleports when it hits the paddle"
 skillTable["portal"]["Locked"] = 1
 
 --skillTable["telekinesis"] = {}
