@@ -136,7 +136,7 @@ function MainMenu_Career:init()
 			samplePaddle:setAnchorPoint(0.5, 0.5)
 			samplePaddle:setScale(15/textureWp,75/textureHp)
 			samplePaddle:setRotation(-90)
-			samplePaddle:setPosition(4*WX0/5 + 17, WY - 64)
+			samplePaddle:setPosition(4*WX0/5 + 16, WY - 64)
 			samplePaddle:setColorTransform(careerTable["R"]/255, careerTable["G"]/255, careerTable["B"]/255, 1)
 		else
 			self.loadBut = MenuBut.new(192, 40, textures.loadBut, textures.loadBut1, textures.loadBut0)
@@ -180,7 +180,7 @@ function MainMenu_Career:init()
 		
 		local careerstring = "Career mode is available in the full version!\n \n"..
 						"In this mode, you will start with a basic character, and progress through various tournaments in different locations, while "..
-						"improving your stats by leveling up and acquiring special skills from defeated enemies.\n \n"..
+						"improving your stats by leveling up and acquiring special skills from defeated enemies. Of course, while you are at it, you may as well save the universe.\n \n"..
 						"Purchase full version at Google Play Store!\n"
 		
 		local careertext = TextWrap.new(careerstring, WX0/1.1, "justify", 10, self.font)

@@ -725,32 +725,36 @@ function CareerStats:init(previous)
 	end
 	
 	-- Color Pick! --
-	if tonumber(careerTable["World"]) == 0 then
-		local samplePaddle = Bitmap.new(textures.paddle2)
-		samplePaddle:setScale(1, 1)
-		self:addChild(samplePaddle)
-		local textureWp = samplePaddle:getWidth()
-		local textureHp = samplePaddle:getHeight()
-		samplePaddle:setAnchorPoint(0.5, 0.5)
-		samplePaddle:setScale(15/textureWp,75/textureHp)
-		samplePaddle:setRotation(-90)
-		samplePaddle:setPosition(WX0/2, WY - 72)
-		
-		local slideColorPicker = SlideColorPicker.new()
-		local function onColorChanged(e)
-			samplePaddle:setColorTransform(e.r/255, e.g/255, e.b/255)
-			careerTable["R"] = e.r
-			careerTable["G"] = e.g
-			careerTable["B"] = e.b
-		end
-		slideColorPicker:addEventListener("COLOR_CHANGED", onColorChanged)
-		self:addChild(slideColorPicker)
-		slideColorPicker:setScale(0.75, 0.5)
-		slideColorPicker:setPosition(WX0/2 - slideColorPicker:getWidth()/2, WY - slideColorPicker:getHeight() - 8)
-		Timer.delayedCall(100, function()
-			samplePaddle:setColorTransform(1, 1, 1)
-		end)
+	--if tonumber(careerTable["World"]) == 0 then
+	local samplePaddle = Bitmap.new(textures.paddle2)
+	samplePaddle:setScale(1, 1)
+	self:addChild(samplePaddle)
+	local textureWp = samplePaddle:getWidth()
+	local textureHp = samplePaddle:getHeight()
+	samplePaddle:setAnchorPoint(0.5, 0.5)
+	samplePaddle:setScale(15/textureWp,75/textureHp)
+	samplePaddle:setRotation(-90)
+	samplePaddle:setPosition(WX0/2, WY - 72)
+	
+	local tempr = careerTable["R"]
+	local tempg = careerTable["G"]
+	local tempb = careerTable["B"]
+	
+	local slideColorPicker = SlideColorPicker.new()
+	local function onColorChanged(e)
+		samplePaddle:setColorTransform(e.r/255, e.g/255, e.b/255)
+		tempr = e.r
+		tempg = e.g
+		tempb = e.b
 	end
+	self:addChild(slideColorPicker)
+	slideColorPicker:setScale(0.75, 0.5)
+	slideColorPicker:setPosition(WX0/2 - slideColorPicker:getWidth()/2, WY - slideColorPicker:getHeight() - 8)
+	Timer.delayedCall(100, function()
+		samplePaddle:setColorTransform(careerTable["R"]/255, careerTable["G"]/255, careerTable["B"]/255)
+		slideColorPicker:addEventListener("COLOR_CHANGED", onColorChanged)
+	end)
+	--end
 	
 	-- Nav Buttons --
 	self.goBut = MenuBut.new(192, 40, textures.goBut, textures.goBut1)
@@ -770,6 +774,10 @@ function CareerStats:init(previous)
 				careerTable["World"] = 1
 				careerTable["Stage"] = 1
 			end
+			careerTable["R"] = tempr
+			careerTable["G"] = tempg
+			careerTable["B"] = tempb
+			
 			local careerFile = io.open("|D|career.txt", "w+")
 			for k, v in pairs(careerTable) do 
 				careerFile:write(k.."="..v.."\n")
