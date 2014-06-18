@@ -70,7 +70,7 @@ function Char:init(class, stage, world)
 		if self.stage ~= 0 and self.stage ~= -1 then
 			local points = 10 + (self.stage - 1) + 3*(tonumber(careerTable["World"]) - 1)
 			if self.stage == 5 then
-				points = points - 1 + 2*tonumber(careerTable["World"])
+				points = points + tonumber(careerTable["World"])
 			end
 			for i = 1, points, 1 do
 				local newatk = 0
@@ -90,26 +90,41 @@ function Char:init(class, stage, world)
 				else
 					newdef = 1
 				end
-				while self.atk + newatk > 40 or self.atk + newmov > 40 or self.atk + newlif > 40 or self.atk + newskl > 40 or self.atk + newdef > 40 do
-					local randNum = math.random(1,5)
-					if randNum == 1 then
-						newatk = 1
-					elseif randNum == 2 then
-						newmov = 1
-					elseif randNum == 3 then
-						newlif = 1
-					elseif randNum == 4 then
-						newskl = 1
-					else
-						newdef = 1
-					end
-				end
+				
 				self.atk = self.atk + newatk
 				self.mov = self.mov + newmov
 				self.lif = self.lif + newlif
 				self.skl = self.skl + newskl
 				self.def = self.def + newdef
+				
+				if self.atk > 30 then 
+					self.atk = self.atk - 1
+					i = i - 1
+				end
+				if self.mov > 30 then 
+					self.mov = self.mov - 1
+					i = i - 1
+				end
+				if self.lif > 30 then 
+					self.lif = self.lif - 1
+					i = i - 1
+				end
+				if self.skl > 30 then 
+					self.skl = self.skl - 1
+					i = i - 1
+				end
+				if self.def > 30 then 
+					self.def = self.def - 1
+					i = i - 1
+				end
 			end
+			--print(self.atk)
+			--print(self.mov)
+			--print(self.lif)
+			--print(self.int)
+			--print(self.skl)
+			--print(self.def)
+			--print("--")
 			
 			self.randomskill = function()
 				local randw = math.random(1, tablelength(Worlds) - 2)

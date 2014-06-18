@@ -41,16 +41,16 @@ function WorldSel:init(dataTable)
 	local worldImgH = worldImg:getHeight()
 	worldImg:setScale(240/worldImgW)
 	self:addChild(worldImg)
-	worldImg:setPosition(WX0/2, WY/2)
+	worldImg:setPosition(WX0/2, WY/2 - 18)
 	
 	local WorldTextBox = TextField.new(self.font, "World "..tostring(wi)..": \n"..Worlds[wi]["Name"])
 	WorldTextBox:setTextColor(0xffffff)
-	WorldTextBox:setPosition(WX0/2 - WorldTextBox:getWidth()/2, 50)
+	WorldTextBox:setPosition(WX0/2 - WorldTextBox:getWidth()/2, 32)
 	self:addChild(WorldTextBox)
 	
 	local InfoTextBox = TextWrap.new(Worlds[wi]["Info"], 380, "center", 5, self.smallfont)
 	InfoTextBox:setTextColor(0xffffff)
-	InfoTextBox:setPosition(WX0/2 - InfoTextBox:getWidth()/2, 380)
+	InfoTextBox:setPosition(WX0/2 - InfoTextBox:getWidth()/2, 362)
 	self:addChild(InfoTextBox)
 	
 	local medalTex1 = Texture.new("imgs/misc/medal.png", true)
@@ -62,7 +62,7 @@ function WorldSel:init(dataTable)
 	local trophyW = trophyTex1:getWidth()
 	local trophyH = trophyTex1:getHeight()
 	
-	local y0 = WY/5.5
+	local y0 = WY/5.5 - 18
 	local xgap = 48
 	local x0 = WX0/2 - 2*xgap
 	
@@ -131,7 +131,7 @@ function WorldSel:init(dataTable)
 		local worldImgH = worldImg:getHeight()
 		worldImg:setScale(240/worldImgW)
 		self:addChild(worldImg)
-		worldImg:setPosition(WX0/2, WY/2)
+		worldImg:setPosition(WX0/2, WY/2 - 18)
 		
 		self:removeChild(medal1)
 		self:removeChild(medal2)
@@ -268,13 +268,13 @@ function WorldSel:init(dataTable)
 		self:removeChild(WorldTextBox)
 		WorldTextBox = TextField.new(self.font, "World "..tostring(wi)..": \n"..Worlds[wi]["Name"])
 		WorldTextBox:setTextColor(0xffffff)
-		WorldTextBox:setPosition(WX0/2 - WorldTextBox:getWidth()/2, 50)
+		WorldTextBox:setPosition(WX0/2 - WorldTextBox:getWidth()/2, 32)
 		self:addChild(WorldTextBox)
 		
 		self:removeChild(InfoTextBox)
 		InfoTextBox = TextWrap.new(Worlds[wi]["Info"], 380, "center", 5, self.smallfont)
 		InfoTextBox:setTextColor(0xffffff)
-		InfoTextBox:setPosition(WX0/2 - InfoTextBox:getWidth()/2, 380)
+		InfoTextBox:setPosition(WX0/2 - InfoTextBox:getWidth()/2, 362)
 		self:addChild(InfoTextBox)
 	end
 	

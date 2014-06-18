@@ -149,31 +149,31 @@ function CareerStats:init(previous)
 								self:removeChild(self.incAtk)
 							end
 						end
-						self:addChild(self.incAtk)
+						if baseAtk + addAtk < 30 then self:addChild(self.incAtk) end
 						for i = self:getNumChildren(), 1, -1 do
 							if self:getChildAt(i) == self.incMov then
 								self:removeChild(self.incMov)
 							end
 						end
-						self:addChild(self.incMov)
+						if baseMov + addMov < 30 then self:addChild(self.incMov) end
 						for i = self:getNumChildren(), 1, -1 do
 							if self:getChildAt(i) == self.incLif then
 								self:removeChild(self.incLif)
 							end
 						end
-						self:addChild(self.incLif)
+						if baseLif + addLif < 30 then self:addChild(self.incLif) end
 						for i = self:getNumChildren(), 1, -1 do
 							if self:getChildAt(i) == self.incSkl then
 								self:removeChild(self.incSkl)
 							end
 						end
-						self:addChild(self.incSkl)
+						if baseSkl + addSkl < 30 then self:addChild(self.incSkl) end
 						for i = self:getNumChildren(), 1, -1 do
 							if self:getChildAt(i) == self.incDef then
 								self:removeChild(self.incDef)
 							end
 						end
-						self:addChild(self.incDef)
+						if baseDef + addDef < 30 then self:addChild(self.incDef) end
 					end
 					if tonumber(careerTable["Atk"]) == addAtk then
 						self:removeChild(self.decAtk)
@@ -184,7 +184,7 @@ function CareerStats:init(previous)
 			end
 		end)
 		self.incAtk = MenuBut.new(30, 30, textures.plusBut, textures.plusBut1)
-		self:addChild(self.incAtk)
+		if baseAtk + addAtk < 30 then self:addChild(self.incAtk) end
 		self.incAtk.bitmap:setPosition(WX0 - 64, 131)
 		self.incAtk:addEventListener(Event.TOUCHES_END, function(event)
 			if self.incAtk:hitTestPoint(event.touch.x, event.touch.y) then
@@ -214,11 +214,30 @@ function CareerStats:init(previous)
 						self:addChild(self.decAtk)
 					end
 					if points == 0 then
-						self:removeChild(self.incAtk)
-						self:removeChild(self.incMov)
-						self:removeChild(self.incLif)
-						self:removeChild(self.incSkl)
-						self:removeChild(self.incDef)
+						for i = self:getNumChildren(), 1, -1 do
+							if self:getChildAt(i) == self.incAtk then
+								self:removeChild(self.incAtk)
+							end
+							if self:getChildAt(i) == self.incMov then
+								self:removeChild(self.incMov)
+							end
+							if self:getChildAt(i) == self.incLif then
+								self:removeChild(self.incLif)
+							end
+							if self:getChildAt(i) == self.incDef then
+								self:removeChild(self.incDef)
+							end
+							if self:getChildAt(i) == self.incSkl then
+								self:removeChild(self.incSkl)
+							end
+						end
+					end
+					if baseAtk + addAtk == 30 then
+						for i = self:getNumChildren(), 1, -1 do
+							if self:getChildAt(i) == self.incAtk then
+								self:removeChild(self.incAtk)
+							end
+						end
 					end
 				end
 				
@@ -247,38 +266,38 @@ function CareerStats:init(previous)
 					self:removeChild(pointsTextBox)
 					pointsTextBox:setText("Available Attribute Points: "..points)
 					self:addChild(pointsTextBox)
-					
+
 					if points > 0 then
 						for i = self:getNumChildren(), 1, -1 do
 							if self:getChildAt(i) == self.incAtk then
 								self:removeChild(self.incAtk)
 							end
 						end
-						self:addChild(self.incAtk)
+						if baseAtk + addAtk < 30 then self:addChild(self.incAtk) end
 						for i = self:getNumChildren(), 1, -1 do
 							if self:getChildAt(i) == self.incMov then
 								self:removeChild(self.incMov)
 							end
 						end
-						self:addChild(self.incMov)
+						if baseMov + addMov < 30 then self:addChild(self.incMov) end
 						for i = self:getNumChildren(), 1, -1 do
 							if self:getChildAt(i) == self.incLif then
 								self:removeChild(self.incLif)
 							end
 						end
-						self:addChild(self.incLif)
+						if baseLif + addLif < 30 then self:addChild(self.incLif) end
 						for i = self:getNumChildren(), 1, -1 do
 							if self:getChildAt(i) == self.incSkl then
 								self:removeChild(self.incSkl)
 							end
 						end
-						self:addChild(self.incSkl)
+						if baseSkl + addSkl < 30 then self:addChild(self.incSkl) end
 						for i = self:getNumChildren(), 1, -1 do
 							if self:getChildAt(i) == self.incDef then
 								self:removeChild(self.incDef)
 							end
 						end
-						self:addChild(self.incDef)
+						if baseDef + addDef < 30 then self:addChild(self.incDef) end
 					end
 					if tonumber(careerTable["Mov"]) == addMov then
 						self:removeChild(self.decMov)
@@ -289,7 +308,7 @@ function CareerStats:init(previous)
 			end
 		end)	
 		self.incMov = MenuBut.new(30, 30, textures.plusBut, textures.plusBut1)
-		self:addChild(self.incMov)
+		if baseMov + addMov < 30 then self:addChild(self.incMov) end
 		self.incMov.bitmap:setPosition(WX0 - 64, 131 + 1*56*resFix)
 		self.incMov:addEventListener(Event.TOUCHES_END, function(event)
 			if self.incMov:hitTestPoint(event.touch.x, event.touch.y) then
@@ -319,11 +338,30 @@ function CareerStats:init(previous)
 						self:addChild(self.decMov)
 					end
 					if points == 0 then
-						self:removeChild(self.incAtk)
-						self:removeChild(self.incMov)
-						self:removeChild(self.incLif)
-						self:removeChild(self.incSkl)
-						self:removeChild(self.incDef)
+						for i = self:getNumChildren(), 1, -1 do
+							if self:getChildAt(i) == self.incAtk then
+								self:removeChild(self.incAtk)
+							end
+							if self:getChildAt(i) == self.incMov then
+								self:removeChild(self.incMov)
+							end
+							if self:getChildAt(i) == self.incLif then
+								self:removeChild(self.incLif)
+							end
+							if self:getChildAt(i) == self.incDef then
+								self:removeChild(self.incDef)
+							end
+							if self:getChildAt(i) == self.incSkl then
+								self:removeChild(self.incSkl)
+							end
+						end
+					end
+					if baseMov + addMov == 30 then
+						for i = self:getNumChildren(), 1, -1 do
+							if self:getChildAt(i) == self.incMov then
+								self:removeChild(self.incMov)
+							end
+						end
 					end
 				end
 				
@@ -359,31 +397,31 @@ function CareerStats:init(previous)
 								self:removeChild(self.incAtk)
 							end
 						end
-						self:addChild(self.incAtk)
+						if baseAtk + addAtk < 30 then self:addChild(self.incAtk) end
 						for i = self:getNumChildren(), 1, -1 do
 							if self:getChildAt(i) == self.incMov then
 								self:removeChild(self.incMov)
 							end
 						end
-						self:addChild(self.incMov)
+						if baseMov + addMov < 30 then self:addChild(self.incMov) end
 						for i = self:getNumChildren(), 1, -1 do
 							if self:getChildAt(i) == self.incLif then
 								self:removeChild(self.incLif)
 							end
 						end
-						self:addChild(self.incLif)
+						if baseLif + addLif < 30 then self:addChild(self.incLif) end
 						for i = self:getNumChildren(), 1, -1 do
 							if self:getChildAt(i) == self.incSkl then
 								self:removeChild(self.incSkl)
 							end
 						end
-						self:addChild(self.incSkl)
+						if baseSkl + addSkl < 30 then self:addChild(self.incSkl) end
 						for i = self:getNumChildren(), 1, -1 do
 							if self:getChildAt(i) == self.incDef then
 								self:removeChild(self.incDef)
 							end
 						end
-						self:addChild(self.incDef)
+						if baseDef + addDef < 30 then self:addChild(self.incDef) end
 					end
 					if tonumber(careerTable["Lif"]) == addLif then
 						self:removeChild(self.decLif)
@@ -394,7 +432,7 @@ function CareerStats:init(previous)
 			end
 		end)	
 		self.incLif = MenuBut.new(30, 30, textures.plusBut, textures.plusBut1)
-		self:addChild(self.incLif)
+		if baseLif + addLif < 30 then self:addChild(self.incLif) end
 		self.incLif.bitmap:setPosition(WX0 - 64, 131 + 2*56*resFix)
 		self.incLif:addEventListener(Event.TOUCHES_END, function(event)
 			if self.incLif:hitTestPoint(event.touch.x, event.touch.y) then
@@ -424,11 +462,30 @@ function CareerStats:init(previous)
 						self:addChild(self.decLif)
 					end
 					if points == 0 then
-						self:removeChild(self.incAtk)
-						self:removeChild(self.incMov)
-						self:removeChild(self.incLif)
-						self:removeChild(self.incSkl)
-						self:removeChild(self.incDef)
+						for i = self:getNumChildren(), 1, -1 do
+							if self:getChildAt(i) == self.incAtk then
+								self:removeChild(self.incAtk)
+							end
+							if self:getChildAt(i) == self.incMov then
+								self:removeChild(self.incMov)
+							end
+							if self:getChildAt(i) == self.incLif then
+								self:removeChild(self.incLif)
+							end
+							if self:getChildAt(i) == self.incDef then
+								self:removeChild(self.incDef)
+							end
+							if self:getChildAt(i) == self.incSkl then
+								self:removeChild(self.incSkl)
+							end
+						end
+					end
+					if baseLif + addLif == 30 then
+						for i = self:getNumChildren(), 1, -1 do
+							if self:getChildAt(i) == self.incLif then
+								self:removeChild(self.incLif)
+							end
+						end
 					end
 				end
 				
@@ -464,31 +521,31 @@ function CareerStats:init(previous)
 								self:removeChild(self.incAtk)
 							end
 						end
-						self:addChild(self.incAtk)
+						if baseAtk + addAtk < 30 then self:addChild(self.incAtk) end
 						for i = self:getNumChildren(), 1, -1 do
 							if self:getChildAt(i) == self.incMov then
 								self:removeChild(self.incMov)
 							end
 						end
-						self:addChild(self.incMov)
+						if baseMov + addMov < 30 then self:addChild(self.incMov) end
 						for i = self:getNumChildren(), 1, -1 do
 							if self:getChildAt(i) == self.incLif then
 								self:removeChild(self.incLif)
 							end
 						end
-						self:addChild(self.incLif)
+						if baseLif + addLif < 30 then self:addChild(self.incLif) end
 						for i = self:getNumChildren(), 1, -1 do
 							if self:getChildAt(i) == self.incSkl then
 								self:removeChild(self.incSkl)
 							end
 						end
-						self:addChild(self.incSkl)
+						if baseSkl + addSkl < 30 then self:addChild(self.incSkl) end
 						for i = self:getNumChildren(), 1, -1 do
 							if self:getChildAt(i) == self.incDef then
 								self:removeChild(self.incDef)
 							end
 						end
-						self:addChild(self.incDef)
+						if baseDef + addDef < 30 then self:addChild(self.incDef) end
 					end
 					if tonumber(careerTable["Skl"]) == addSkl then
 						self:removeChild(self.decSkl)
@@ -499,7 +556,7 @@ function CareerStats:init(previous)
 			end
 		end)	
 		self.incSkl = MenuBut.new(30, 30, textures.plusBut, textures.plusBut1)
-		self:addChild(self.incSkl)
+		if baseSkl + addSkl < 30 then self:addChild(self.incSkl) end
 		self.incSkl.bitmap:setPosition(WX0 - 64, 131 + 3*56*resFix)
 		self.incSkl:addEventListener(Event.TOUCHES_END, function(event)
 			if self.incSkl:hitTestPoint(event.touch.x, event.touch.y) then
@@ -529,11 +586,30 @@ function CareerStats:init(previous)
 						self:addChild(self.decSkl)
 					end
 					if points == 0 then
-						self:removeChild(self.incAtk)
-						self:removeChild(self.incMov)
-						self:removeChild(self.incLif)
-						self:removeChild(self.incSkl)
-						self:removeChild(self.incDef)
+						for i = self:getNumChildren(), 1, -1 do
+							if self:getChildAt(i) == self.incAtk then
+								self:removeChild(self.incAtk)
+							end
+							if self:getChildAt(i) == self.incMov then
+								self:removeChild(self.incMov)
+							end
+							if self:getChildAt(i) == self.incLif then
+								self:removeChild(self.incLif)
+							end
+							if self:getChildAt(i) == self.incDef then
+								self:removeChild(self.incDef)
+							end
+							if self:getChildAt(i) == self.incSkl then
+								self:removeChild(self.incSkl)
+							end
+						end
+					end
+					if baseSkl + addSkl == 30 then
+						for i = self:getNumChildren(), 1, -1 do
+							if self:getChildAt(i) == self.incSkl then
+								self:removeChild(self.incSkl)
+							end
+						end
 					end
 				end
 				
@@ -569,31 +645,31 @@ function CareerStats:init(previous)
 								self:removeChild(self.incAtk)
 							end
 						end
-						self:addChild(self.incAtk)
+						if baseAtk + addAtk < 30 then self:addChild(self.incAtk) end
 						for i = self:getNumChildren(), 1, -1 do
 							if self:getChildAt(i) == self.incMov then
 								self:removeChild(self.incMov)
 							end
 						end
-						self:addChild(self.incMov)
+						if baseMov + addMov < 30 then self:addChild(self.incMov) end
 						for i = self:getNumChildren(), 1, -1 do
 							if self:getChildAt(i) == self.incLif then
 								self:removeChild(self.incLif)
 							end
 						end
-						self:addChild(self.incLif)
+						if baseLif + addLif < 30 then self:addChild(self.incLif) end
 						for i = self:getNumChildren(), 1, -1 do
 							if self:getChildAt(i) == self.incSkl then
 								self:removeChild(self.incSkl)
 							end
 						end
-						self:addChild(self.incSkl)
+						if baseSkl + addSkl < 30 then self:addChild(self.incSkl) end
 						for i = self:getNumChildren(), 1, -1 do
 							if self:getChildAt(i) == self.incDef then
 								self:removeChild(self.incDef)
 							end
 						end
-						self:addChild(self.incDef)
+						if baseDef + addDef < 30 then self:addChild(self.incDef) end
 					end
 					if tonumber(careerTable["Def"]) == addDef then
 						self:removeChild(self.decDef)
@@ -604,7 +680,7 @@ function CareerStats:init(previous)
 			end
 		end)	
 		self.incDef = MenuBut.new(30, 30, textures.plusBut, textures.plusBut1)
-		self:addChild(self.incDef)
+		if baseDef + addDef < 30 then self:addChild(self.incDef) end
 		self.incDef.bitmap:setPosition(WX0 - 64, 131 + 4*56*resFix)
 		self.incDef:addEventListener(Event.TOUCHES_END, function(event)
 			if self.incDef:hitTestPoint(event.touch.x, event.touch.y) then
@@ -634,11 +710,30 @@ function CareerStats:init(previous)
 						self:addChild(self.decDef)
 					end
 					if points == 0 then
-						self:removeChild(self.incAtk)
-						self:removeChild(self.incMov)
-						self:removeChild(self.incLif)
-						self:removeChild(self.incSkl)
-						self:removeChild(self.incDef)
+						for i = self:getNumChildren(), 1, -1 do
+							if self:getChildAt(i) == self.incAtk then
+								self:removeChild(self.incAtk)
+							end
+							if self:getChildAt(i) == self.incMov then
+								self:removeChild(self.incMov)
+							end
+							if self:getChildAt(i) == self.incLif then
+								self:removeChild(self.incLif)
+							end
+							if self:getChildAt(i) == self.incDef then
+								self:removeChild(self.incDef)
+							end
+							if self:getChildAt(i) == self.incSkl then
+								self:removeChild(self.incSkl)
+							end
+						end
+					end
+					if baseDef + addDef == 30 then
+						for i = self:getNumChildren(), 1, -1 do
+							if self:getChildAt(i) == self.incDef then
+								self:removeChild(self.incDef)
+							end
+						end
 					end
 				end
 				

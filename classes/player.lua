@@ -19,6 +19,7 @@ Player.correctAIY = 23
 Player.difFactor = 1
 Player.skillActive = false
 Player.AITarget = nil
+Player.Follow = false
 
 ---------------------------------------------------------------------------------------
 -- Sets new random factor to be added to AI ball location prediction. Difficulty and --
@@ -125,9 +126,14 @@ function Player:aiMove()
 			else
 				opponentX, opponentY = arena.leftPlayer.paddle.body:getPosition()
 			end
+			local delta0 = opponentY - padY
 			local opositOp = WY - opponentY
 			local deltaOp = opositOp - padY
-			self.paddle.body:setLinearVelocity(padVx, self.char.movFactor*(deltaOp/maxdelta)*self.AITarget.baseSpeedMov/2)
+			if self.Follow then
+				self.paddle.body:setLinearVelocity(padVx, self.char.movFactor*(delta0/maxdelta)*self.AITarget.baseSpeedMov/2)
+			else
+				self.paddle.body:setLinearVelocity(padVx, self.char.movFactor*(deltaOp/maxdelta)*self.AITarget.baseSpeedMov/2)
+			end
 		end
 	end
 end

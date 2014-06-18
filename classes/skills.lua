@@ -336,13 +336,18 @@ function Skills:start(side)
 			local ballX, ballY = arena.ball.body:getPosition()
 			local ballVx, ballVy = arena.ball.body:getLinearVelocity()
 			
-			if ballVy > 7.5*(ballV0^0.49) then
-				direction = direction*-1
-			elseif ballVy < -7.5*(ballV0^0.49) then
-				direction = direction*-1
+			if ballVx == 0 and ballVy == 0 then
+				ballVx0 = 0
+				ballVy0 = 0
+				self:endAction()
+			else
+				if ballVy > 7.5*(ballV0^0.49) then
+					direction = direction*-1
+				elseif ballVy < -7.5*(ballV0^0.49) then
+					direction = direction*-1
+				end
+				arena.ball.body:applyForce(0, direction*crazyFactor, ballX, ballY)
 			end
-		
-			arena.ball.body:applyForce(0, direction*crazyFactor, ballX, ballY)
 		end
 		
 		-- Adds event listener only if ball is launched --
@@ -361,7 +366,7 @@ function Skills:start(side)
 		self.endAction = function()
 			finished = true
 			stage:removeEventListener(Event.ENTER_FRAME, curveball)
-			Timer.delayedCall(550, function()
+			Timer.delayedCall(600, function()
 				arena.ball.bitmap:setScale(2*arena.ball.radius/textures.pongball:getWidth())
 			end)
 			
@@ -376,8 +381,9 @@ function Skills:start(side)
 			if optionsTable["SFX"] == "On" then sounds.crazyball_end:play() end
 			
 			-- Returns ball to previous state --
-			local ballVxRet = arena.ball.body:getLinearVelocity()
-			arena.ball.body:setLinearVelocity(math.abs(ballVxRet*ballVx0)/ballVxRet, ballVy0)
+			--local ballVxRet = arena.ball.body:getLinearVelocity()
+			--arena.ball.body:setLinearVelocity(math.abs(ballVxRet*ballVx0)/ballVxRet, ballVy0)
+			arena.ball.body:setLinearVelocity(ballVx0, ballVy0)
 			
 			if side == 0 then
 				arena.leftPlayer.skillActive = false
@@ -425,7 +431,7 @@ function Skills:start(side)
 		
 		-- Action to force end --
 		self.forceEnd = function()
-		
+			arena.ball.bitmap:setScale(2*arena.ball.radius/textures.pongball:getWidth())
 		end
 	end
 	
@@ -2215,6 +2221,9 @@ function Skills:start(side)
 		
 		arena:addChild(web)
 		
+		-- AI moves towards player position --
+		arena.aiPlayer.Follow = true
+		
 		-- Disable paddle collision handler --
 		local function tempcolhandler(event)
 		end
@@ -2300,6 +2309,7 @@ function Skills:start(side)
 		self.endAction = function()
 			arena:removeEventListener(Event.ENTER_FRAME, moveweb)
 			arena:removeEventListener(Event.ENTER_FRAME, moveball)
+			arena.aiPlayer.Follow = false
 			if side == 0 then
 				arena.leftPlayer.paddle.body.collide = tempcolhandler
 			else

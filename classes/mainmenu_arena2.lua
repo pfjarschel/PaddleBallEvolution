@@ -44,12 +44,17 @@ function MainMenu_Arena2:init(dataTable)
 	local arenaDescs = {}
 	local arenaImgs = {}
 	
-	local i = 1
-	for k, v in pairs(arenasTable) do
-		arenaNames[i] = k
-		arenaDescs[i] = arenasTable[arenaNames[i]]["Desc"]
-		arenaImgs[i] = arenasTable[arenaNames[i]]["Image"]
-		i = i + 1
+	local i = 2
+	arenaNames[1] = "Normal"
+	arenaDescs[1] = arenasTable[arenaNames[1]]["Desc"]
+	arenaImgs[1] = arenasTable[arenaNames[1]]["Image"]
+	for k, v in pairsByKeys(arenasTable) do
+		if k ~= "Normal" then
+			arenaNames[i] = k
+			arenaDescs[i] = arenasTable[arenaNames[i]]["Desc"]
+			arenaImgs[i] = arenasTable[arenaNames[i]]["Image"]
+			i = i + 1
+		end
 	end
 	arenaNames[i] = "Random"
 	arenaDescs[i] = "Random effect!"
